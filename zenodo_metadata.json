@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "upload_type": "software",
+    "publication_type": "other",
+    "publication_date": "2026-10-28",
+    "title": "Protocol A: a four-condition control protocol for evaluating geometric markers as out-of-distribution predictors",
+    "creators": [
+      {
+        "name": "Zhou, Ranxi",
+        "affiliation": "Hunan University of Chinese Medicine, Department of Computer Science and Technology"
+      }
+    ],
+    "description": "<p>Code, data, and analysis for <em>When Do Geometric Markers Predict Generalization? A Controlled Analysis of Task-Relevance and Shift Type</em>.</p><p>Representational-geometry markers (effective dimension, effective utility, participation ratio, numerical rank, and others) have been proposed as cheap, training-free predictors of out-of-distribution (OOD) performance, and have been reported to outperform in-distribution (ID) test accuracy as a model-selection criterion. This record packages a four-condition control protocol for evaluating any such claim, and the data needed to check it.</p><p><strong>Protocol A</strong> requires, before an association is reported as evidence: (C1) ID matching, restricting to models with near-identical ID accuracy; (C2) group residualization, regressing out architecture or learning-rate-family main effects; (C3) dual correlation statistics, requiring Pearson and Spearman to agree in sign with |rho| &ge; 0.5; and (C4) cross-group sign consistency. The protocol is applied symmetrically to the candidate marker and to the accuracy baseline.</p><p><strong>Contents.</strong> The code archive contains the 17 active analysis and training scripts, the two released per-model datasets from Chou et al. (ICLR 2026) redistributed unmodified, the per-model measurements of 80 models trained by the author (48 ResNet-18, 16 ShuffleNetV2-x1.0, 16 RegNetY-400MF), every table and report produced by the pipeline, the figures, and the manuscript source.</p><p><strong>Self-verification.</strong> Running <code>bash run_all.sh verify</code> re-derives all 133 numbers reported in the manuscript directly from the shipped data, using the same protocol as the analysis scripts, and checks each against the value written in the paper. It requires no GPU and no downloads, and completes in about a minute. The same check runs automatically on every push of the accompanying GitHub repository, so the reproducibility claim is continuously machine-verified rather than asserted.</p><p><strong>Checkpoints.</strong> The 80 trained model checkpoints (2.4 GB) are included as two tar archives: <code>checkpoints_resnet18.tar</code> (48 ResNet-18 models) and <code>checkpoints_newarch.tar</code> (16 ShuffleNetV2-x1.0 and 16 RegNetY-400MF models). One model diverged during training and is excluded from every analysis; it is retained in the archive because the exclusion is part of the reported procedure.</p><p><strong>Third-party data.</strong> The files under <code>data/official/</code> are the per-model measurement releases of Chou, Kirsanov, Yang &amp; Chung (2026), redistributed unmodified under that repository's MIT license and remain the copyright of their original authors. CIFAR-10, CIFAR-100, CIFAR-10-C and Tiny-ImageNet are not redistributed here; download scripts are provided instead.</p>",
+    "access_right": "open",
+    "license": "mit",
+    "keywords": [
+      "representational geometry",
+      "out-of-distribution generalization",
+      "model selection",
+      "Simpson's paradox",
+      "evaluation protocol",
+      "manifold capacity",
+      "reproducibility",
+      "audit"
+    ],
+    "notes": "<p>Associated manuscript: <em>When Do Geometric Markers Predict Generalization? A Controlled Analysis of Task-Relevance and Shift Type</em>, under review at Transactions on Machine Learning Research. A GitHub repository with continuous integration that re-derives all 133 reported numbers on every push accompanies this record; its URL is given in the related identifiers.</p><p>Version 1.0. Future versions will be published as separate Zenodo versions with the same concept DOI.</p>",
+    "related_identifiers": [
+      {
+        "identifier": "https://github.com/zhouranxi/brainai-protocol-a",
+        "relation": "isSupplementTo",
+        "resource_type": "software"
+      },
+      {
+        "identifier": "https://arxiv.org/abs/2603.01879",
+        "relation": "isDerivedFrom",
+        "resource_type": "publication-article",
+        "scheme": "url"
+      }
+    ],
+    "version": "1.0.0",
+    "language": "eng"
+  }
+}
