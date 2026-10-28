@@ -1,0 +1,51 @@
+name: verify
+
+# Re-derive every number reported in the paper directly from the shipped data.
+# This is the machine-readable form of the paper's central claim: that its
+# reported values are reproducible from the released artifacts alone.
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    name: Re-derive all reported numbers
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install analysis dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy scipy pandas scikit-learn matplotlib
+
+      - name: Verify every reported number against the raw data
+        run: python code/audit_claims.py
+
+      - name: Check the verification passed
+        run: |
+          python code/audit_claims.py > /tmp/audit.log 2>&1
+          cat /tmp/audit.log
+          grep -q "FAIL: 0" /tmp/audit.log || (echo "::error::audit reported failures"; exit 1)
+          echo "All reported numbers reproduce from the shipped data."
+
+      - name: Regenerate figures
+        run: python code/make_figures.py --outdir /tmp/figs
+
+      - name: Upload regenerated figures
+        uses: actions/upload-artifact@v4
+        with:
+          name: figures-regenerated
+          path: /tmp/figs
+          retention-days: 7
