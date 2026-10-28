@@ -84,7 +84,8 @@ def main() -> int:
                  "with scopes 'deposit:write' and 'deposit:actions'.")
 
     base = SANDBOX if args.sandbox else PROD
-    auth = {"Authorization": f"Bearer {token}"}
+    auth = {"Authorization": f"Bearer {token}",
+            "User-Agent": "ProtocolA-ZenodoPublisher/1.0 (academic release)"}
     json_headers = {**auth, "Content-Type": "application/json"}
     timeout = args.timeout or None
 
@@ -164,9 +165,24 @@ def main() -> int:
     listed = r.json().get("files", [])
     print()
     print("Files on the server:")
+    ok_all = True
     for f in listed:
         print(f"  {f.get('key')}  {human(f.get('size', 0))}  "
               f"checksum={f.get('checksum', '')[:16]}...")
+        local = files_dir / f.get("key", "")
+        if local.exists() and f.get("checksum"):
+            import hashlib as _h
+            h = _h.md5()
+            with local.open("rb") as fp:
+                for chunk in iter(lambda: fp.read(1 << 20), b""):
+                    h.update(chunk)
+            same = h.hexdigest() == f["checksum"]
+            ok_all = ok_all and same
+            print(f"      md5 local {'==' if same else '!='} server  "
+                  f"{'OK' if same else 'MISMATCH'}")
+    if not ok_all:
+        print("  !! checksum mismatch — do not publish until resolved")
+        return 6
     if len(listed) != len(files):
         print(f"  !! expected {len(files)} files, server reports {len(listed)}")
         return 4
