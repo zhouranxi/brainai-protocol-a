@@ -1,7 +1,9 @@
 # Large binary artifacts
 *.pt filter=lfs diff=lfs merge=lfs -text
 *.pkl filter=lfs diff=lfs merge=lfs -text
-*.pdf filter=lfs diff=lfs merge=lfs -text
+
+# PDFs are a few megabytes at most and are committed directly; routing them
+# through LFS would need the LFS batch API, which the REST API does not expose.
 
 # Text
 *.py text eol=lf
@@ -13,5 +15,5 @@
 *.yml text eol=lf
 *.cff text eol=lf
 
-# Figures: keep PNG as-is (already compressed), PDF via LFS
+# Figures: keep PNG as-is (already compressed)
 *.png binary
