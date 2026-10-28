@@ -1,0 +1,27 @@
+{
+  "records": [
+    {
+      "participation_ratio": 10.258634567260742,
+      "dimension": 32.11954790165782,
+      "radius": 0.7249399740980582,
+      "utility": 0.8249238143984573
+    },
+    {
+      "participation_ratio": 10.258634567260742,
+      "dimension": 33.843707105659895,
+      "radius": 0.6934624242014442,
+      "utility": 0.7463050640760699
+    },
+    {
+      "participation_ratio": 10.258634567260742,
+      "dimension": 32.25999544974727,
+      "radius": 0.7383373361745549,
+      "utility": 0.8394842865695791
+    }
+  ],
+  "reference": {
+    "dimension": 1.3009,
+    "radius": 0.524,
+    "utility": 0.19
+  }
+}

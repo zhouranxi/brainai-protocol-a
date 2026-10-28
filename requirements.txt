@@ -1,0 +1,13 @@
+# Reference environment: Python 3.12.3, CUDA 13.0, 4x NVIDIA RTX 3090
+# Install torch/torchvision with the CUDA 13.0 wheels:
+#   pip install torch==2.14.1 torchvision==0.29.1 --index-url https://download.pytorch.org/whl/cu130
+torch==2.14.1
+torchvision==0.29.1
+numpy==2.5.4
+scipy==1.18.1
+pandas==3.1.0
+scikit-learn==1.9.1
+matplotlib>=3.8
+Pillow>=10.0
+pyarrow>=15.0
+tqdm>=4.66

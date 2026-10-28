@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+title: "When Do Geometric Markers Predict Generalization? A Controlled Analysis of Task-Relevance and Shift Type"
+message: "If you use this archive, please cite the associated paper."
+type: software
+authors:
+  - family-names: Zhou
+    given-names: Ranxi
+    affiliation: "Hunan University of Chinese Medicine, Department of Computer Science and Technology"
+keywords:
+  - representational geometry
+  - out-of-distribution generalization
+  - model selection
+  - Simpson's paradox
+  - evaluation protocol
+license: MIT
+version: 1.0.0
+date-released: "2026-10-27"

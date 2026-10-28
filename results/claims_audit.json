@@ -1,0 +1,1344 @@
+[
+  {
+    "section": "4.2",
+    "quantity": "D_eff vs OOD (full sample)",
+    "paper": 0.94,
+    "recomputed": 0.9405,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.2",
+    "quantity": "D_eff vs ID acc (full sample)",
+    "paper": 0.5,
+    "recomputed": 0.5019,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.2",
+    "quantity": "PR vs OOD (full sample)",
+    "paper": 0.88,
+    "recomputed": 0.8748,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.2",
+    "quantity": "PR vs ID acc (full sample)",
+    "paper": 0.42,
+    "recomputed": 0.4191,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "D_eff subset r (pre-C2)",
+    "paper": 0.932,
+    "recomputed": 0.9321,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "D_eff resid r (C1+C2)",
+    "paper": 0.925,
+    "recomputed": 0.925,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "D_eff Spearman rho",
+    "paper": 0.847,
+    "recomputed": 0.8474,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "Psi_eff subset r (pre-C2)",
+    "paper": 0.934,
+    "recomputed": 0.9344,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "Psi_eff resid r (C1+C2)",
+    "paper": 0.901,
+    "recomputed": 0.9014,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "Psi_eff Spearman rho",
+    "paper": 0.769,
+    "recomputed": 0.7688,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "R_eff subset r (pre-C2)",
+    "paper": -0.547,
+    "recomputed": -0.547,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "R_eff resid r (C1+C2)",
+    "paper": -0.584,
+    "recomputed": -0.5843,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "R_eff Spearman rho",
+    "paper": -0.639,
+    "recomputed": -0.6393,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "PR subset r (pre-C2)",
+    "paper": 0.858,
+    "recomputed": 0.8578,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "PR resid r (C1+C2)",
+    "paper": 0.659,
+    "recomputed": 0.6586,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "PR Spearman rho",
+    "paper": 0.503,
+    "recomputed": 0.5026,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "numrank subset r (pre-C2)",
+    "paper": -0.212,
+    "recomputed": -0.2119,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "numrank resid r (C1+C2)",
+    "paper": 0.436,
+    "recomputed": 0.4363,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "numrank Spearman rho",
+    "paper": 0.57,
+    "recomputed": 0.5697,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "NC1 subset r (pre-C2)",
+    "paper": 0.019,
+    "recomputed": 0.0193,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "NC1 resid r (C1+C2)",
+    "paper": -0.145,
+    "recomputed": -0.145,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "NC1 Spearman rho",
+    "paper": -0.146,
+    "recomputed": -0.1459,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "ID acc subset r (pre-C2)",
+    "paper": -0.045,
+    "recomputed": -0.0447,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "ID acc resid r (C1+C2)",
+    "paper": 0.392,
+    "recomputed": 0.3922,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "ID acc Spearman rho",
+    "paper": 0.365,
+    "recomputed": 0.3652,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "n_subset",
+    "paper": 106,
+    "recomputed": 106,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "ID span (pp)",
+    "paper": 1.92,
+    "recomputed": 1.92,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table2",
+    "quantity": "OOD span preserved %",
+    "paper": 91.8,
+    "recomputed": 91.7564,
+    "tol": 0.06,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table3",
+    "quantity": "ID acc per-arch signs",
+    "paper": "+0.48/-0.48/+0.46/+0.24/+0.42",
+    "recomputed": "+0.48/-0.48/+0.46/+0.24/+0.42",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "3.3",
+    "quantity": "no-C1: 80-model pooled r",
+    "paper": 0.44,
+    "recomputed": 0.4426,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "3.3",
+    "quantity": "no-C1: 80-model C1+C2 r",
+    "paper": -0.63,
+    "recomputed": -0.6281,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "3.3",
+    "quantity": "no-C3: center_alignment r",
+    "paper": 0.48,
+    "recomputed": 0.4829,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "3.3",
+    "quantity": "no-C3: center_alignment rho",
+    "paper": 0.4,
+    "recomputed": 0.4003,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "3.3",
+    "quantity": "no-C4: PR resid r",
+    "paper": 0.66,
+    "recomputed": 0.6586,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.4",
+    "quantity": "D_eff band range (224)",
+    "paper": "0.89-0.93",
+    "recomputed": 0.9035,
+    "tol": [
+      0.89,
+      0.93
+    ],
+    "kind": "range",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.4",
+    "quantity": "D_eff band range (80)",
+    "paper": "0.71-0.78",
+    "recomputed": 0.7128,
+    "tol": [
+      0.71,
+      0.78
+    ],
+    "kind": "range",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.4",
+    "quantity": "baseline band range (224)",
+    "paper": "0.39-0.57",
+    "recomputed": 0.3922,
+    "tol": [
+      0.39,
+      0.57
+    ],
+    "kind": "range",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.4",
+    "quantity": "baseline band range (80)",
+    "paper": "-0.63--0.77",
+    "recomputed": -0.7671,
+    "tol": [
+      -0.77,
+      -0.61
+    ],
+    "kind": "range",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7",
+    "quantity": "numrank C100",
+    "paper": 0.87,
+    "recomputed": 0.8698,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7",
+    "quantity": "numrank Tiny",
+    "paper": 0.853,
+    "recomputed": 0.8526,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7",
+    "quantity": "smoothness C100",
+    "paper": 0.832,
+    "recomputed": 0.8323,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7",
+    "quantity": "smoothness Tiny",
+    "paper": 0.792,
+    "recomputed": 0.7925,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7",
+    "quantity": "PR C100",
+    "paper": 0.701,
+    "recomputed": 0.7009,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7",
+    "quantity": "PR Tiny",
+    "paper": 0.707,
+    "recomputed": 0.7068,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7",
+    "quantity": "ID acc C100",
+    "paper": -0.439,
+    "recomputed": -0.4392,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7",
+    "quantity": "ID acc Tiny",
+    "paper": -0.338,
+    "recomputed": -0.3377,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7-C4",
+    "quantity": "baseline per-family lr=0.125",
+    "paper": -0.802,
+    "recomputed": -0.8015,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7-C4",
+    "quantity": "baseline per-family lr=0.25",
+    "paper": -0.603,
+    "recomputed": -0.6032,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7-C4",
+    "quantity": "baseline per-family lr=0.5",
+    "paper": -0.33,
+    "recomputed": -0.3303,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7-C4",
+    "quantity": "baseline per-family lr=1.0",
+    "paper": 0.694,
+    "recomputed": 0.6944,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7-conv",
+    "quantity": "converged per-family lr=0.125",
+    "paper": -0.966,
+    "recomputed": -0.9658,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7-conv",
+    "quantity": "converged per-family lr=0.25",
+    "paper": -0.603,
+    "recomputed": -0.6032,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7-conv",
+    "quantity": "converged per-family lr=0.5",
+    "paper": -0.33,
+    "recomputed": -0.3303,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7-conv",
+    "quantity": "converged baseline aggregate C100",
+    "paper": -0.658,
+    "recomputed": -0.6577,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7-conv",
+    "quantity": "converged baseline aggregate Tiny",
+    "paper": -0.513,
+    "recomputed": -0.5132,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "self-GLUE vs ID acc",
+    "paper": -0.17,
+    "recomputed": -0.17,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "self-GLUE vs C100",
+    "paper": 0.908,
+    "recomputed": 0.9078,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "self-GLUE vs Tiny",
+    "paper": 0.919,
+    "recomputed": 0.9192,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "PR vs ID acc",
+    "paper": -0.074,
+    "recomputed": -0.0741,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "PR vs C100",
+    "paper": 0.951,
+    "recomputed": 0.9507,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "PR vs Tiny",
+    "paper": 0.945,
+    "recomputed": 0.9448,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "numrank vs ID acc",
+    "paper": -0.044,
+    "recomputed": -0.0436,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "numrank vs C100",
+    "paper": 0.944,
+    "recomputed": 0.9443,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "numrank vs Tiny",
+    "paper": 0.949,
+    "recomputed": 0.9487,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "smoothness vs ID acc",
+    "paper": -0.09,
+    "recomputed": -0.0903,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "smoothness vs C100",
+    "paper": 0.899,
+    "recomputed": 0.8987,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "smoothness vs Tiny",
+    "paper": 0.878,
+    "recomputed": 0.8778,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "ID acc vs C100",
+    "paper": -0.045,
+    "recomputed": -0.0453,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "ID acc vs Tiny",
+    "paper": -0.027,
+    "recomputed": -0.0272,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "fog ID acc pooled rho",
+    "paper": 0.987,
+    "recomputed": 0.9871,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "fog ID acc resid rho",
+    "paper": 0.918,
+    "recomputed": 0.918,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "brightness ID acc pooled rho",
+    "paper": 0.994,
+    "recomputed": 0.9944,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "brightness ID acc resid rho",
+    "paper": 0.968,
+    "recomputed": 0.9679,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "contrast ID acc pooled rho",
+    "paper": 0.965,
+    "recomputed": 0.9646,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "contrast ID acc resid rho",
+    "paper": 0.772,
+    "recomputed": 0.7718,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "gaussian_noise ID acc pooled rho",
+    "paper": 0.182,
+    "recomputed": 0.1817,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "gaussian_noise ID acc resid rho",
+    "paper": -0.087,
+    "recomputed": -0.0871,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "pixelate ID acc pooled rho",
+    "paper": -0.122,
+    "recomputed": -0.1222,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "pixelate ID acc resid rho",
+    "paper": 0.215,
+    "recomputed": 0.2155,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "jpeg_compression ID acc pooled rho",
+    "paper": 0.122,
+    "recomputed": 0.1224,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6",
+    "quantity": "jpeg_compression ID acc resid rho",
+    "paper": -0.01,
+    "recomputed": -0.0105,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "healthy model count",
+    "paper": 79,
+    "recomputed": 79,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.5",
+    "quantity": "B1_fig3_224/dimension_id bootstrap CI",
+    "paper": "[+0.879,+0.955] rr=1.00",
+    "recomputed": "[+0.879,+0.955] rr=1.00",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.5",
+    "quantity": "B1_fig3_224/utility_id bootstrap CI",
+    "paper": "[+0.842,+0.938] rr=1.00",
+    "recomputed": "[+0.842,+0.938] rr=1.00",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.5",
+    "quantity": "B2_official_80/dimension_id bootstrap CI",
+    "paper": "[+0.581,+0.833] rr=1.00",
+    "recomputed": "[+0.581,+0.833] rr=1.00",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.5",
+    "quantity": "B3_own_48/id_numerical_rank bootstrap CI",
+    "paper": "[+0.797,+0.923] rr=1.00",
+    "recomputed": "[+0.797,+0.923] rr=1.00",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.5",
+    "quantity": "B1_fig3_224/acc_test bootstrap CI",
+    "paper": "[+0.215,+0.622] rr=0.13",
+    "recomputed": "[+0.215,+0.622] rr=0.13",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.5",
+    "quantity": "B2_official_80/acc_test bootstrap CI",
+    "paper": "[-0.825,-0.417] rr=0.80",
+    "recomputed": "[-0.825,-0.417] rr=0.80",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.5",
+    "quantity": "B3_own_48/acc_test bootstrap CI",
+    "paper": "[-0.659,-0.181] rr=0.23",
+    "recomputed": "[-0.659,-0.181] rr=0.23",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7b",
+    "quantity": "own GLUE vs C100 (r)",
+    "paper": 0.91,
+    "recomputed": 0.9078,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7b",
+    "quantity": "own GLUE vs C100 (rho)",
+    "paper": 0.92,
+    "recomputed": 0.9241,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7b",
+    "quantity": "official dimension vs OOD, ResNet18 (r)",
+    "paper": 0.87,
+    "recomputed": 0.8652,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7b",
+    "quantity": "official dimension vs OOD, ResNet18 (rho)",
+    "paper": 0.87,
+    "recomputed": 0.8657,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7b",
+    "quantity": "official ResNet18 matched n",
+    "paper": 41,
+    "recomputed": 41,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "PR C100",
+    "paper": 0.941,
+    "recomputed": 0.9405,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "PR Tiny",
+    "paper": 0.948,
+    "recomputed": 0.9481,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "smoothness C100",
+    "paper": 0.956,
+    "recomputed": 0.9556,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "smoothness Tiny",
+    "paper": 0.93,
+    "recomputed": 0.9302,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "numrank C100",
+    "paper": 0.943,
+    "recomputed": 0.9426,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "numrank Tiny",
+    "paper": 0.952,
+    "recomputed": 0.9519,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "ID acc C100",
+    "paper": 0.153,
+    "recomputed": 0.1527,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "ID acc Tiny",
+    "paper": 0.145,
+    "recomputed": 0.1447,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "cross-arch subset n",
+    "paper": 36,
+    "recomputed": 36,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6-self",
+    "quantity": "corruption scenario count",
+    "paper": 19,
+    "recomputed": 19,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6-self",
+    "quantity": "scenarios where ID acc ranks 1st",
+    "paper": 11,
+    "recomputed": 11,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6-self",
+    "quantity": "noise scenario ranks",
+    "paper": "gaussian_noise=8/impulse_noise=7/shot_noise=8/speckle_noise=7",
+    "recomputed": "gaussian_noise=8/impulse_noise=7/shot_noise=8/speckle_noise=7",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6-self",
+    "quantity": "contrast ID acc rank (self-built)",
+    "paper": 7,
+    "recomputed": 7,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.6-self",
+    "quantity": "contrast ID acc rho (self-built)",
+    "paper": 0.087,
+    "recomputed": 0.0872,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "3.2",
+    "quantity": "sensitivity band set (executed)",
+    "paper": "0.5/1/2/3/5",
+    "recomputed": "0.5/1/2/3/5",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "3.2",
+    "quantity": "b=8 is degenerate on 224 (n)",
+    "paper": 223,
+    "recomputed": 223,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ResNet18 PR C100",
+    "paper": 0.701,
+    "recomputed": 0.7009,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ResNet18 PR Tiny",
+    "paper": 0.707,
+    "recomputed": 0.7068,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ResNet18 ID acc C100",
+    "paper": -0.439,
+    "recomputed": -0.4392,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ResNet18 ID acc Tiny",
+    "paper": -0.338,
+    "recomputed": -0.3377,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 PR C100",
+    "paper": 0.988,
+    "recomputed": 0.9877,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 PR Tiny",
+    "paper": 0.985,
+    "recomputed": 0.9854,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 ID acc C100",
+    "paper": -0.637,
+    "recomputed": -0.637,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 ID acc Tiny",
+    "paper": -0.584,
+    "recomputed": -0.5844,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch RegNetY PR C100",
+    "paper": 0.659,
+    "recomputed": 0.6591,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch RegNetY PR Tiny",
+    "paper": 0.536,
+    "recomputed": 0.5362,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch RegNetY ID acc C100",
+    "paper": 0.053,
+    "recomputed": 0.0531,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch RegNetY ID acc Tiny",
+    "paper": -0.019,
+    "recomputed": -0.019,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "cross-arch PR rho C100",
+    "paper": 0.982,
+    "recomputed": 0.9822,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "cross-arch PR rho Tiny",
+    "paper": 0.981,
+    "recomputed": 0.981,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "cross-arch smoothness rho C100",
+    "paper": 0.971,
+    "recomputed": 0.9714,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "cross-arch smoothness rho Tiny",
+    "paper": 0.961,
+    "recomputed": 0.9614,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "cross-arch numrank rho C100",
+    "paper": 0.967,
+    "recomputed": 0.9668,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "cross-arch numrank rho Tiny",
+    "paper": 0.966,
+    "recomputed": 0.9656,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "partial r controlling ID acc: self-GLUE",
+    "paper": 0.686,
+    "recomputed": 0.6862,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "partial r controlling ID acc: PR",
+    "paper": 0.756,
+    "recomputed": 0.756,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "partial r controlling ID acc: numrank",
+    "paper": 0.849,
+    "recomputed": 0.849,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7c",
+    "quantity": "partial r controlling ID acc: smoothness",
+    "paper": 0.861,
+    "recomputed": 0.8613,
+    "tol": 0.006,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "provenance",
+    "quantity": "224/80 release model-key overlap",
+    "paper": "0 (disjoint)",
+    "recomputed": 0,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": "verified separately (key intersection empty)"
+  }
+]
