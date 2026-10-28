@@ -11,6 +11,10 @@ from the raw data.
 > directly from the raw data using the same protocol as the analysis scripts and checks each
 > against the value written in the paper. It is the fastest way to confirm that this repository
 > and the manuscript agree — no GPU, no downloads, about a minute.
+>
+> The same check runs automatically on every push (`.github/workflows/verify.yml`), so the
+> repository's headline claim — *every reported number is reproducible from the released
+> artifacts* — is continuously machine-verified rather than asserted.
 
 ---
 
