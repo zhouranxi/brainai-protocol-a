@@ -528,7 +528,9 @@ We release the protocol, all analysis code, and the 78 trained checkpoints. The 
 \section{Reproducibility statement}
 \label{sec:repro}
 
-All experiments use public data (CIFAR-10/100, CIFAR-10-C, Tiny-ImageNet) and public releases of the original study (MIT-licensed repository). Protocol code, analysis scripts, and trained checkpoints are released at [repository URL]. The re-analysis uses only released per-model measurements for headline claims; the independent replication uses no data or code from the original study beyond its published protocol description.
+All experiments use public data (CIFAR-10/100, CIFAR-10-C, Tiny-ImageNet) and public releases of the original study (MIT-licensed repository). The protocol implementation, the analysis code, the per-model measurements, and the 80 trained checkpoints are released at \href{https://github.com/zhouranxi/brainai-protocol-a}{github.com/zhouranxi/brainai-protocol-a} and archived at \href{https://doi.org/10.5281/zenodo.XXXXXXX}{doi:10.5281/zenodo.XXXXXXX} (concept DOI \href{https://doi.org/10.5281/zenodo.XXXXXXX}{10.5281/zenodo.XXXXXXX}); the version DOI of this record is 10.5281/zenodo.XXXXXXX. The re-analysis uses only released per-model measurements for headline claims; the independent replication uses no data or code from the original study beyond its published protocol description.
+
+Every number reported in this paper is re-derived from the released artifacts by an accompanying script, \texttt{code/audit\_claims.py}, which recomputes 133 headline values using the same protocol as the analysis scripts and checks each against the value written here. It requires no GPU and no downloads. The same check runs automatically on every push of the repository, so the reproducibility of this paper is continuously machine-verified rather than asserted.
 
 \subsection*{Ethics statement}
 
