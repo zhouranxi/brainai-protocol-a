@@ -41,6 +41,22 @@ PROD = "https://zenodo.org/api"
 SANDBOX = "https://sandbox.zenodo.org/api"
 
 
+def _token_from_config() -> str | None:
+    """Read the access token from ~/.config/zenodo.json if it is there."""
+    for path in (Path.home() / ".config" / "zenodo.json",
+                 Path.home() / ".zenodo.json"):
+        if path.exists():
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            tok = data.get("token")
+            if tok:
+                print(f"Using token from {path}")
+                return tok
+    return None
+
+
 def human(n: float) -> str:
     for unit in ("B", "KB", "MB", "GB"):
         if n < 1024 or unit == "GB":
@@ -79,9 +95,13 @@ def main() -> int:
 
     token = os.environ.get("ZENODO_TOKEN")
     if not token:
-        sys.exit("ZENODO_TOKEN is not set.\n"
-                 "Create a token at https://zenodo.org/account/settings/applications/tokens/new/\n"
-                 "with scopes 'deposit:write' and 'deposit:actions'.")
+        token = _token_from_config()
+    if not token:
+        sys.exit("No Zenodo token found.\n"
+                 "Either export ZENODO_TOKEN, or create one at\n"
+                 "  https://zenodo.org/account/settings/applications/tokens/new/\n"
+                 "with scopes 'deposit:write' and 'deposit:actions', and save it as\n"
+                 "  ~/.config/zenodo.json   (a JSON object with a 'token' field)")
 
     base = SANDBOX if args.sandbox else PROD
     auth = {"Authorization": f"Bearer {token}",
