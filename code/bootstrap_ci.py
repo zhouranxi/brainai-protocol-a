@@ -232,7 +232,7 @@ def main():
     w("")
 
     # ================= B3: 自建 48 组 =================
-    own = json.load(open(ROOT / "data" / "self_trained" / "ind_validation_results.json"))
+    own = json.load(open(_find_data_file("ind_validation_results.json")))
     rows = own["rows"]
     id3 = np.array([r["id_acc"] * 100 for r in rows])       # 百分数
     ood3 = np.array([r["c100_probe_acc"] * 100 for r in rows])

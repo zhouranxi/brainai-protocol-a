@@ -48,15 +48,28 @@ def group_residual(v, groups):
     return v - A @ beta
 
 
+def _find_data_file(name):
+    """Locate a shipped data file under any of the layouts we publish."""
+    for cand in (ROOT / "data" / "self_trained" / name,
+                 ROOT / "results" / name,
+                 ROOT / name):
+        if cand.exists():
+            return cand
+    raise FileNotFoundError(f"{name} not found under {ROOT}")
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--ind", default=str(ROOT / "data" / "self_trained" / "ind_validation_results.json"))
-    ap.add_argument("--mod", default=str(ROOT / "data" / "self_trained" / "mod_arch_results.json"))
+    ap.add_argument("--ind", default=None, help="path to ind_validation_results.json")
+    ap.add_argument("--mod", default=None, help="path to mod_arch_results.json")
     ap.add_argument("--outdir", default=str(ROOT / "results"))
     ap.add_argument("--band", type=float, default=2.0)
     ap.add_argument("--min-acc", type=float, default=0.3,
                     help="剔除发散模型（id_acc 低于此值）")
     args = ap.parse_args()
+    if not args.ind:
+        args.ind = str(_find_data_file("ind_validation_results.json"))
+    if not args.mod:
+        args.mod = str(_find_data_file("mod_arch_results.json"))
     os.makedirs(args.outdir, exist_ok=True)
 
     rows = []

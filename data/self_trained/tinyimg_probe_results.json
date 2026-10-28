@@ -1,0 +1,196 @@
+{
+  "rows": [
+    {
+      "ckpt": "resnet18_lr0.125_wd0.0001_s0",
+      "tinyimg_probe_acc": 0.10209999978542328
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd0.0001_s1",
+      "tinyimg_probe_acc": 0.08340000361204147
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd0.0001_s2",
+      "tinyimg_probe_acc": 0.08969999849796295
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd0.0002_s0",
+      "tinyimg_probe_acc": 0.08429999649524689
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd0.0002_s1",
+      "tinyimg_probe_acc": 0.10080000013113022
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd0.0002_s2",
+      "tinyimg_probe_acc": 0.08630000054836273
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd2.5e-05_s0",
+      "tinyimg_probe_acc": 0.11429999768733978
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd2.5e-05_s1",
+      "tinyimg_probe_acc": 0.10300000011920929
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd2.5e-05_s2",
+      "tinyimg_probe_acc": 0.11630000174045563
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd5e-05_s0",
+      "tinyimg_probe_acc": 0.11670000106096268
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd5e-05_s1",
+      "tinyimg_probe_acc": 0.13019999861717224
+    },
+    {
+      "ckpt": "resnet18_lr0.125_wd5e-05_s2",
+      "tinyimg_probe_acc": 0.11259999871253967
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd0.0001_s0",
+      "tinyimg_probe_acc": 0.07259999960660934
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd0.0001_s1",
+      "tinyimg_probe_acc": 0.06830000132322311
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd0.0001_s2",
+      "tinyimg_probe_acc": 0.08380000293254852
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd0.0002_s0",
+      "tinyimg_probe_acc": 0.07530000060796738
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd0.0002_s1",
+      "tinyimg_probe_acc": 0.07779999822378159
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd0.0002_s2",
+      "tinyimg_probe_acc": 0.07460000365972519
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd2.5e-05_s0",
+      "tinyimg_probe_acc": 0.08269999921321869
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd2.5e-05_s1",
+      "tinyimg_probe_acc": 0.10999999940395355
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd2.5e-05_s2",
+      "tinyimg_probe_acc": 0.07519999891519547
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd5e-05_s0",
+      "tinyimg_probe_acc": 0.07289999723434448
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd5e-05_s1",
+      "tinyimg_probe_acc": 0.07880000025033951
+    },
+    {
+      "ckpt": "resnet18_lr0.25_wd5e-05_s2",
+      "tinyimg_probe_acc": 0.07829999923706055
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd0.0001_s0",
+      "tinyimg_probe_acc": 0.049300000071525574
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd0.0001_s1",
+      "tinyimg_probe_acc": 0.06199999898672104
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd0.0001_s2",
+      "tinyimg_probe_acc": 0.05530000105500221
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd0.0002_s0",
+      "tinyimg_probe_acc": 0.0478999987244606
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd0.0002_s1",
+      "tinyimg_probe_acc": 0.05270000174641609
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd0.0002_s2",
+      "tinyimg_probe_acc": 0.05119999870657921
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd2.5e-05_s0",
+      "tinyimg_probe_acc": 0.06620000302791595
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd2.5e-05_s1",
+      "tinyimg_probe_acc": 0.07069999724626541
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd2.5e-05_s2",
+      "tinyimg_probe_acc": 0.07069999724626541
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd5e-05_s0",
+      "tinyimg_probe_acc": 0.0786999985575676
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd5e-05_s1",
+      "tinyimg_probe_acc": 0.07119999825954437
+    },
+    {
+      "ckpt": "resnet18_lr0.5_wd5e-05_s2",
+      "tinyimg_probe_acc": 0.055399999022483826
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd0.0001_s0",
+      "tinyimg_probe_acc": 0.039500001817941666
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd0.0001_s1",
+      "tinyimg_probe_acc": 0.042500000447034836
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd0.0001_s2",
+      "tinyimg_probe_acc": 0.04149999842047691
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd0.0002_s0",
+      "tinyimg_probe_acc": 0.03700000047683716
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd0.0002_s1",
+      "tinyimg_probe_acc": 0.03739999979734421
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd0.0002_s2",
+      "tinyimg_probe_acc": 0.03200000151991844
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd2.5e-05_s0",
+      "tinyimg_probe_acc": 0.057500001043081284
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd2.5e-05_s1",
+      "tinyimg_probe_acc": 0.04580000042915344
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd2.5e-05_s2",
+      "tinyimg_probe_acc": 0.05570000037550926
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd5e-05_s0",
+      "tinyimg_probe_acc": 0.04390000179409981
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd5e-05_s1",
+      "tinyimg_probe_acc": 0.04170000180602074
+    },
+    {
+      "ckpt": "resnet18_lr1.0_wd5e-05_s2",
+      "tinyimg_probe_acc": 0.04320000112056732
+    }
+  ]
+}

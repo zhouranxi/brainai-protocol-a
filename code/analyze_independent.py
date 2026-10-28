@@ -68,10 +68,19 @@ def group_residual(v, groups):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--results", default=str(ROOT / "data" / "self_trained" / "ind_validation_results.json"))
+    ap.add_argument("--results", default=None, help="path to ind_validation_results.json")
     ap.add_argument("--outdir", default=str(ROOT / "results"))
     ap.add_argument("--band", type=float, default=2.0)
     args = ap.parse_args()
+    if not args.results:
+        for cand in (ROOT / "data" / "self_trained" / "ind_validation_results.json",
+                     ROOT / "results" / "ind_validation_results.json",
+                     ROOT / "ind_validation_results.json"):
+            if cand.exists():
+                args.results = str(cand)
+                break
+    if not args.results or not Path(args.results).exists():
+        raise FileNotFoundError("ind_validation_results.json not found")
     os.makedirs(args.outdir, exist_ok=True)
 
     with open(args.results) as f:

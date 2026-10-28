@@ -105,7 +105,15 @@ def main():
     args = ap.parse_args()
     if args.outdir:
         globals()["RES"] = Path(args.outdir)
-    src = Path(args.data) if args.data else (ROOT / "data" / "self_trained")
+    if args.data:
+        src = Path(args.data)
+    else:
+        for cand in (ROOT / "data" / "self_trained", ROOT / "results", ROOT):
+            if (cand / "ind_validation_results.json").exists():
+                src = cand
+                break
+        else:
+            raise FileNotFoundError("ind_validation_results.json not found")
     ind = json.load(open(src / "ind_validation_results.json"))["rows"]
     converged = [r for r in ind if r["lr"] != 1.0]
 

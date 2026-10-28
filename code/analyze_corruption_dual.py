@@ -74,9 +74,16 @@ def main():
     if args.data:
         src = Path(args.data)
     else:
-        _off = ROOT / "data" / "official" / "df_fig15-20.pkl"
-        _flat = ROOT / "results" / "official_df_fig15-20.pkl"
-        src = _off.parent if _off.exists() else _flat.parent
+        for cand in (ROOT / "data" / "official", ROOT / "results", ROOT):
+            for name in ("df_fig15-20.pkl", "official_df_fig15-20.pkl"):
+                if (cand / name).exists():
+                    src = cand
+                    break
+            else:
+                continue
+            break
+        else:
+            raise FileNotFoundError("df_fig15-20.pkl not found")
     d = pd.read_pickle(src / "official_df_fig15-20.pkl")
     out = {"band": BAND, "scenarios": {}}
 
