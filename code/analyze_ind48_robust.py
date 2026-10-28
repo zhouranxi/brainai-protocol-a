@@ -103,6 +103,8 @@ def main():
     ap.add_argument("--outdir", default=None)
     ap.add_argument("--data", default=None, help="dir holding ind_validation_results.json")
     args = ap.parse_args()
+    if getattr(args, "outdir", None):
+        Path(args.outdir).mkdir(parents=True, exist_ok=True)
     if args.outdir:
         globals()["RES"] = Path(args.outdir)
     if args.data:

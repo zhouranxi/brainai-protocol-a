@@ -69,22 +69,31 @@ def main():
     ap.add_argument("--outdir", default=None)
     ap.add_argument("--data", default=None)
     args = ap.parse_args()
+    if getattr(args, "outdir", None):
+        Path(args.outdir).mkdir(parents=True, exist_ok=True)
     if args.outdir:
         globals()["RES"] = Path(args.outdir)
     if args.data:
         src = Path(args.data)
     else:
+        src = None
         for cand in (ROOT / "data" / "official", ROOT / "results", ROOT):
             for name in ("df_fig15-20.pkl", "official_df_fig15-20.pkl"):
                 if (cand / name).exists():
                     src = cand
                     break
-            else:
-                continue
-            break
-        else:
+            if src is not None:
+                break
+        if src is None:
             raise FileNotFoundError("df_fig15-20.pkl not found")
-    d = pd.read_pickle(src / "official_df_fig15-20.pkl")
+    _pkl = None
+    for _name in ("df_fig15-20.pkl", "official_df_fig15-20.pkl"):
+        if (src / _name).exists():
+            _pkl = src / _name
+            break
+    if _pkl is None:
+        raise FileNotFoundError(f"df_fig15-20.pkl not found under {src}")
+    d = pd.read_pickle(_pkl)
     out = {"band": BAND, "scenarios": {}}
 
     L = []

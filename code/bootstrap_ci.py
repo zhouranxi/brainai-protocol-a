@@ -45,6 +45,16 @@ GENERIC = ["participation_ratio_id", "numerical_rank_id", "nc1_id",
            "mean_covariance_id", "sparsity_id"]
 
 
+def _find_data_file(name):
+    """Locate a shipped data file under any of the layouts we publish."""
+    for cand in (ROOT / "data" / "self_trained" / name,
+                 ROOT / "results" / name,
+                 ROOT / name):
+        if cand.exists():
+            return cand
+    raise FileNotFoundError(f"{name} not found under {ROOT}")
+
+
 def safe_corr(x, y):
     x = np.asarray(x, float)
     y = np.asarray(y, float)
