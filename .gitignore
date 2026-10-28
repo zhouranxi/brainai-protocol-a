@@ -1,9 +1,25 @@
 __pycache__/
 *.pyc
 .venv/
+venv/
 runs/
 data/raw/
 data/cifar100/
 data/cifar10c/
 data/tinyimagenet/
 .ipynb_checkpoints/
+
+# LaTeX build artifacts
+*.aux
+*.blg
+*.bbl
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.pdf.bak
+build-*.log
+
+# Local state
+*.state.json
