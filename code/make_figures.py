@@ -127,15 +127,22 @@ save(fig, "fig2_scatter")
 # Simpson's paradox on OFFICIAL 80-model data (gaussian_noise): pooled acc_test
 # vs OOD probe is positive; within every architecture it flips negative.
 import pandas as pd
-def _locate_pkl(name):
-    for cand in (RES / name, ROOT / "data" / "official" / name,
-                 ROOT / "results" / name, ROOT / name):
-        if cand.exists():
-            return cand
-    raise FileNotFoundError(name)
+def _locate_pkl(*names):
+    """Locate a released pickle under any of the layouts we ship.
+
+    The file is called df_fig15-20.pkl in the packaged data/ layout and
+    official_df_fig15-20.pkl in the flat working-directory layout, so both
+    spellings are accepted.
+    """
+    for name in names:
+        for cand in (RES / name, ROOT / "data" / "official" / name,
+                     ROOT / "results" / name, ROOT / name):
+            if cand.exists():
+                return cand
+    raise FileNotFoundError(" / ".join(names))
 
 
-odf = pd.read_pickle(_locate_pkl("official_df_fig15-20.pkl"))["gaussian_noise"]
+odf = pd.read_pickle(_locate_pkl("df_fig15-20.pkl", "official_df_fig15-20.pkl"))["gaussian_noise"]
 ox = odf["acc_test"].to_numpy()
 oy = odf["acc_lp_ood"].to_numpy()
 ofam = odf["arch_name"].to_numpy()
