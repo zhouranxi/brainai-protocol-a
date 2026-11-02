@@ -11,15 +11,27 @@ Motivation (adversarial review 2026-10-27):
     We therefore report the full-48 result AND the 36-model converged-family
     result side by side.
 
+Each bootstrap entry reports the C3 robust rate (the fraction of replicates in
+which sign(r) == sign(rho) and |rho| >= 0.5) alongside P(r > 0).  The two are
+different statistics and must not be interchanged: P(r > 0) is a one-sided
+sign frequency, the robust rate additionally requires the rank criterion.  The
+bootstrap and the C3 criterion are imported from code/bootstrap_ci.py so that
+this script cannot drift from the definition used elsewhere in the paper.
+
 Outputs: results/ind48_robust_report.md, results/ind48_robust_results.json
 """
 from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from bootstrap_ci import bootstrap_ci as shared_bootstrap_ci  # noqa: E402
+from bootstrap_ci import summarize as shared_summarize  # noqa: E402
 
 def _find_root():
     """Locate the package root: the nearest ancestor containing results/ and code/.
@@ -75,26 +87,44 @@ def resid_corr(rows, xkey, ykey):
 
 
 def bootstrap_ci(rows, xkey, ykey, B=B_BOOT, seed=SEED):
-    rng = np.random.default_rng(seed)
-    lrs = sorted({r["lr"] for r in rows})
-    groups = {l: [r for r in rows if r["lr"] == l] for l in lrs}
-    out = []
-    for _ in range(B):
-        samp = []
-        for l in lrs:
-            g = groups[l]
-            idx = rng.integers(0, len(g), len(g))
-            samp += [g[i] for i in idx]
-        s = id_matched(samp)
-        if len(s) < 10:
-            continue
-        out.append(resid_corr(s, xkey, ykey))
-    out = np.array(out)
+    """Bootstrap one (predictor, target) pair through the shared Protocol-A code.
+
+    The resampling, the ID-matched re-selection, the group residualization and
+    the C3 criterion all live in code/bootstrap_ci.py, so this script cannot
+    drift from the definition used for the official releases.  The shared
+    bootstrap is stratified over the same grouping variable (the lr family) and
+    uses the same band, seed and replicate count as the previous local
+    implementation, so the reported CI is unchanged; only the reported
+    statistics set grows.
+
+    `acc_test` is the shared implementation's name for the ID-accuracy
+    baseline, so `xkey == "id_acc"` maps onto it.
+    """
+    id_acc = np.array([r["id_acc"] * 100 for r in rows], float)
+    ood_acc = np.array([r[ykey] * 100 for r in rows], float)
+    groups = np.array([float(r["lr"]) for r in rows])
+    marker_vals = {}
+    if xkey != "id_acc":
+        marker_vals[xkey] = np.array([r[xkey] for r in rows], float)
+    stats = shared_bootstrap_ci(id_acc, ood_acc, groups, marker_vals,
+                                BAND, B, seed, min_n=10)
+    summ = shared_summarize(stats)
+    key = "acc_test" if xkey == "id_acc" else xkey
+    s = summ[key]
+    if s is None:
+        return {"ci95": [float("nan"), float("nan")], "mean": float("nan"),
+                "p_positive": float("nan"), "robust_rate": float("nan"),
+                "n_valid": 0}
+    # P(r>0) is a one-sided sign frequency; the C3 robust rate additionally
+    # requires sign(r) == sign(rho) and |rho| >= 0.5.  They are distinct
+    # statistics and both are reported.
+    r = np.array([v for v in stats[key]["r"] if not np.isnan(v)])
     return {
-        "ci95": [float(np.percentile(out, 2.5)), float(np.percentile(out, 97.5))],
-        "mean": float(out.mean()),
-        "p_positive": float((out > 0).mean()),
-        "n_valid": int(len(out)),
+        "ci95": [float(s["r_ci"][0]), float(s["r_ci"][1])],
+        "mean": float(s["r_mean"]),
+        "p_positive": float((r > 0).mean()),
+        "robust_rate": float(s["robust_rate"]),
+        "n_valid": int(s["n_valid"]),
     }
 
 
@@ -202,12 +232,16 @@ def main():
         w("")
         w("**Bootstrap 95% CI（剔除 lr=1.0 敏感性口径见下）**")
         w("")
-        w("| 预测器 | 目标 | 95% CI | 均值 | P(r>0) |")
-        w("|---|---|---|---|---|")
+        w("`P(r>0)` 是单侧符号频率；`稳健率` 是 C3 判据（sign(r)=sign(ρ) 且 |ρ|≥0.5）"
+          "在 bootstrap replicate 中通过的比例。两者是不同的统计量，不可互换。")
+        w("")
+        w("| 预测器 | 目标 | 95% CI | 均值 | P(r>0) | 稳健率 (C3) |")
+        w("|---|---|---|---|---|---|")
         for xk, lbl in MARKERS:
             for tk, tn in TARGETS:
                 b = e["bootstrap"][xk][tn]
-                w(f"| {lbl} | {tn} | [{b['ci95'][0]:+.3f}, {b['ci95'][1]:+.3f}] | {b['mean']:+.3f} | {b['p_positive']:.1%} |")
+                w(f"| {lbl} | {tn} | [{b['ci95'][0]:+.3f}, {b['ci95'][1]:+.3f}] | "
+                  f"{b['mean']:+.3f} | {b['p_positive']:.1%} | {b['robust_rate']:.1%} |")
         w("")
     w("## 结论")
     w("")
@@ -216,9 +250,22 @@ def main():
     w("2. **收敛族 36 组**：基线负号更强且**三族全负**（−0.966/−0.603/−0.330），"
       "C4 通过，bootstrap CI 全部排除零（P(r>0)≈0%）。")
     w("3. 几何量在两个口径下都稳定为正（numerical rank +0.870→+0.892），"
-      "bootstrap 稳健率 100%。")
+      "其 bootstrap 稳健率为 100%（numerical rank / local smoothness）；"
+      "participation ratio 稳健率较低（54%–67%），因其中位 Spearman ρ 接近 0.5 阈值。")
     w("4. → 论文表述应从「基线负号复现」改为「**基线符号不稳定（全量）/ 稳定为负（收敛族）**」，"
       "这更契合「基线不是稳定锚」的核心论点。")
+    w("")
+    w("## 稳健率口径说明")
+    w("")
+    w("论文表 3 的「Bootstrap robust rate」列必须填 `robust_rate`（C3 判据通过比例），"
+      "不能填 `P(r>0)`。两者的差距在基线上尤其大：")
+    w("")
+    w("- 全量 48 组 / CIFAR-100 / 基线：P(r>0)=0.2%，稳健率=25.1%。")
+    w("- 收敛族 36 组 / CIFAR-100 / 基线：P(r>0)=0.0%，稳健率=82.9%。")
+    w("")
+    w("原因：基线的残差化 r 在两种口径下都稳定为负且 |ρ| 通常 ≥ 0.5，"
+      "所以 C3 判据在绝大多数 replicate 中通过；P(r>0) 只问符号是否为正，"
+      "与 C3 的通过与否几乎无关。")
     w("")
     w("## 修订要求")
     w("")

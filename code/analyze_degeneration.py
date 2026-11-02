@@ -50,8 +50,21 @@ def find_root() -> Path:
 
 ROOT = find_root()
 
-# The degradation sweep, transcribed from the smoke-test summary
-# (logs/smoke-summary.log, 2026-10-25). resnet50, 960 samples, seed 0/1/2.
+# The degradation sweep, transcribed from a smoke-test summary produced on
+# 2026-10-25 with ResNet-50 on a non-CIFAR image set (960 samples, seeds 0/1/2).
+#
+# PROVENANCE WARNING: the summary log this table was transcribed from is NOT
+# part of the released artifacts, and the per-seed values behind these means
+# were not kept. The numbers below are therefore constants with no re-derivable
+# source, and nothing in this repository can regenerate them. They are retained
+# because the paper reports them, and the paper states their provenance
+# explicitly (measurement paper, Table 3 caption and Limitations); they must
+# not be read as a reproducible experiment.
+#
+# This is a diagnostic smoke test, not one of the paper's experiments: it is a
+# single architecture on a different image distribution from the recipe sweep
+# below, and it is used only to illustrate that the degradation comparison
+# cannot separate the two readings.
 DEGENERATION = {
     "clean":  {"dim": 316, "smooth": 0.934, "probe": 0.531},
     "occ30":  {"dim": 287, "smooth": 0.910, "probe": 0.438},

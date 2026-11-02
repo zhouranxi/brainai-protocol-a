@@ -253,7 +253,7 @@ Marker & ref.\ impl., 224 & ref.\ impl., 80 & our impl., 48 & class \\
 \hline
 `dimension` & $+0.925$ & $+0.737$ & $+0.919$ & robust \\
 `radius` & $-0.584$ & $+0.153$ & $+0.602$ & \textbf{sign flips} \\
-`utility` & $+0.901$ & $+0.808$ & $+0.342$ & magnitude collapse \\
+`utility` & $+0.901$ & $+0.808$ & $+0.342$ & consistent sign, variable magnitude \\
 `center alignment` & $+0.483$ & $+0.581$ & --- & robust \\
 `participation ratio` (per class) & $+0.659$ & $+0.592$ & $+0.947$ & robust \\
 `participation ratio` (global) & $+0.877$ & $+0.734$ & $+0.895$ & robust \\
@@ -264,8 +264,11 @@ Marker & ref.\ impl., 224 & ref.\ impl., 80 & our impl., 48 & class \\
 \end{tabular}
 \caption{Selected entries of the stability map, at a matching bandwidth of
 $\pm1$ pp. Pearson $r$ after ID matching and architecture residualisation. The
-full map, with Spearman coefficients, sample sizes and a bandwidth sweep, is in
-the released results directory.}
+``class'' column reproduces the classification assigned by the analysis script
+and stored in \texttt{results/marker\_stability\_map.json}; the discussion
+below interprets some of those classes further. The full map, with Spearman
+coefficients, sample sizes and a bandwidth sweep, is in the released results
+directory.}
 \label{tab:map}
 \end{table}
 
@@ -360,7 +363,13 @@ noise & 271 & 0.899 & 0.309 \\
 \hline
 \end{tabular}
 \caption{One network under three degraded inputs. The marker falls by 59\% and
-the probe accuracy by 50\% between the clean and the 70\%-occluded condition.}
+the probe accuracy by 50\% between the clean and the 70\%-occluded condition.
+\textbf{Provenance:} these four rows come from a development smoke test
+(ResNet-50, three seeds, averaged) rather than from the CIFAR-trained networks
+used elsewhere in this paper, and the per-seed measurements behind them were not
+retained; they are reported as a diagnostic illustration and are not
+independently reproducible from the released artifacts. See
+Limitations~\ref{sec:limitations}.}
 \label{tab:degen}
 \end{table}
 
@@ -430,8 +439,12 @@ correlation between local smoothness and accuracy is $-0.053$ ($p=0.891$). The
 effective dimension takes the same value for all nine networks, so the
 correlation is undefined -- the marker does not vary at all in the region where
 the representation is best, and so cannot order it. The direct comparison is
-stark: the best and the second-best recipe differ in test accuracy by 0.003
-and in local smoothness by 0.074.
+stark: the best and the second-best recipe differ in test accuracy by 0.001
+and in local smoothness by 0.074. (The accuracy difference is smaller than the
+seed-to-seed spread of either recipe, so it should not be read as a ranking at
+all; what the comparison establishes is that the smoothness gap is two orders
+of magnitude larger than the accuracy gap, not that the top two recipes are
+distinguishable.)
 
 \paragraph{The marker measures the recipe, not the network.}
 Removing the recipe mean from both variables and correlating the residuals
@@ -503,7 +516,14 @@ make the more confident claims in the literature easier to evaluate.
 \item The degradation sweep is a single network with three seeds, reported as
       the mean. It is a diagnostic rather than an experiment: it establishes
       that the degradation sweep cannot discriminate the two readings, not
-      that any particular marker fails.
+      that any particular marker fails. Two further caveats apply to
+      Table~\ref{tab:degen} specifically. The network is a ResNet-50 measured
+      on a non-CIFAR image set, not one of the CIFAR-trained networks used in
+      the recipe sweep; and the per-seed measurements behind the reported means
+      were not retained, so those four rows cannot be re-derived from anything
+      in the released artifacts. We keep the table because it illustrates the
+      point of the section, but a reader should treat it as an illustration
+      with a stated provenance rather than as a reproducible measurement.
 \item We evaluate the markers against one OOD target per cell (a class-level
       linear probe in each). Whether the stability classes reported here depend
       on the choice of target is an open question.

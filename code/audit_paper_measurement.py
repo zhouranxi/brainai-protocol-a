@@ -48,10 +48,31 @@ def locate(*names):
 
 CHECKS = []
 
+# Sections whose reported numbers are checked for internal consistency with the
+# released analysis outputs but cannot be re-derived from primary measurements,
+# because the underlying measurements were not released. Listing them here makes
+# the gap visible in the audit output instead of leaving a false impression of
+# full reproducibility.
+UNREPRODUCIBLE = set()
+
 
 def check(section, name, paper, recomputed, tol=0.006):
     CHECKS.append({"section": section, "name": name, "paper": float(paper),
                    "recomputed": float(recomputed), "ok": bool(abs(paper - recomputed) <= tol)})
+
+
+def check_text(section, name, needle, present, tex):
+    """Assert that the manuscript literally contains (or does not contain) a string.
+
+    A number can be recomputed correctly and still be missing from the paper,
+    or the paper can still carry a value the data no longer supports.  These
+    checks tie the audited value to the manuscript text itself.
+    """
+    found = needle in tex
+    CHECKS.append({"section": section, "name": name,
+                   "paper": "present" if present else "absent",
+                   "recomputed": "present" if found else "absent",
+                   "ok": bool(found == present)})
 
 
 def gres(v, g):
@@ -176,6 +197,29 @@ def main() -> int:
         av = av - np.array([av[rec == nm].mean() for nm in rec])
         check("recipe", f"{mk} within-recipe r", expect, float(pearsonr(rv, av)[0]))
 
+    # ---- AUC: can the marker detect a collapsed run? ----
+    #
+    # The collapsed runs are identified by recipe: the two recipes that failed
+    # to train (aug_ls, plain_short), three seeds each. The released JSON does
+    # not carry a per-run training-accuracy field, so the label is derived from
+    # the recipe list recorded in results/c2_stratified_report.md rather than
+    # from a threshold on a stored measurement. The AUC itself is recomputed
+    # from the released per-marker values.
+    COLLAPSED = {"aug_ls", "plain_short"}
+    n_fail = sum(1 for r in data if r["name"] in COLLAPSED)
+    check("auc", "collapsed run count", 6, n_fail, tol=0)
+    for mk, exp_auc in [("criticality_proxy", 0.866),
+                        ("effective_dim", 0.750),
+                        ("local_smoothness", 0.750),
+                        ("spectral_entropy", 0.606)]:
+        y = np.array([1 if r["name"] in COLLAPSED else 0 for r in data], int)
+        x = np.array([r[mk] for r in data], dtype=float)
+        # rank-based AUC that does not depend on the sign of the association
+        ranks = np.argsort(np.argsort(x))
+        n1 = int(y.sum()); n0 = len(y) - n1
+        auc = (ranks[y == 1].sum() - n1 * (n1 - 1) / 2) / (n1 * n0)
+        check("auc", f"{mk} AUC", exp_auc, float(max(auc, 1 - auc)), tol=0.001)
+
     # the high cluster
     HIGH = {"best", "aug_only", "noise20_aug"}
     sub = [r for r in data if r["name"] in HIGH]
@@ -189,19 +233,147 @@ def main() -> int:
     # the direct counter-example quoted in the text
     best = np.mean([r["test_acc"] for r in data if r["name"] == "best"])
     aug = np.mean([r["test_acc"] for r in data if r["name"] == "aug_only"])
-    check("recipe", "best vs aug_only acc gap", 0.003, abs(best - aug))
+    check("recipe", "best vs aug_only acc gap", 0.001, abs(best - aug), tol=0.0005)
     bs = np.mean([r["local_smoothness"] for r in data if r["name"] == "best"])
     as_ = np.mean([r["local_smoothness"] for r in data if r["name"] == "aug_only"])
     check("recipe", "best vs aug_only smoothness gap", 0.074, abs(bs - as_))
 
-    # ---- the degradation sweep (transcribed from the smoke-test summary) ----
-    DEG = {"clean": (316, 0.531), "occ30": (287, 0.438),
-           "occ70": (128, 0.264), "noise": (271, 0.309)}
-    check("degen", "clean dim", 316, DEG["clean"][0], tol=0)
-    check("degen", "occ70 dim", 128, DEG["occ70"][0], tol=0)
-    check("degen", "occ70 probe", 0.264, DEG["occ70"][1], tol=0)
+    # ---- the degradation sweep ----
+    #
+    # These values have no re-derivable source: they were transcribed from a
+    # development smoke-test summary that is not part of the released
+    # artifacts, and the per-seed measurements behind them were not retained.
+    # The previous version of this check compared the constants against copies
+    # of themselves, so it could never fail and protected nothing.
+    #
+    # What this version does is weaker but honest: it checks the paper's
+    # numbers against the values the analysis script actually emits, so that a
+    # change to either side is caught, and it records the provenance gap
+    # explicitly so the gap is not silently forgotten. It does NOT re-derive
+    # the measurements, and it must not be read as doing so.
+    degen_path = None
+    for cand in (ROOT / "results" / "degeneration_analysis.json",):
+        if cand.exists():
+            degen_path = cand
+            break
+    if degen_path is None:
+        raise SystemExit("degeneration_analysis.json not found; cannot audit "
+                         "the degradation table")
+    deg = json.loads(degen_path.read_text(encoding="utf-8"))["degeneration"]
+    check("degen", "clean dim", 316, deg["clean"]["dim"], tol=0)
+    check("degen", "clean probe", 0.531, deg["clean"]["probe"], tol=0)
+    check("degen", "occ70 dim", 128, deg["occ70"]["dim"], tol=0)
+    check("degen", "occ70 probe", 0.264, deg["occ70"]["probe"], tol=0)
+    check("degen", "noise dim", 271, deg["noise"]["dim"], tol=0)
+    check("degen", "noise probe", 0.309, deg["noise"]["probe"], tol=0)
     check("degen", "dim drop pct", 59, round(100 * (316 - 128) / 316))
     check("degen", "probe drop pct", 50, round(100 * (0.531 - 0.264) / 0.531))
+    UNREPRODUCIBLE.add("degen")
+
+    # ---- Table 1's class column: the classification assigned by the script --
+    #
+    # The manuscript reproduces the label that the analysis script assigned to
+    # each marker.  The label is read out of results/marker_stability_map.json
+    # and compared with what the manuscript prints, so a re-classification
+    # cannot silently leave the table stale.
+    #
+    # The manuscript shortens some of the script's labels for the table; the
+    # mapping below records which script label each rendered label stands for,
+    # so the comparison is against the script's own classification and not
+    # against a constant copied out of the manuscript.
+    CLASS_RENDER = {
+        "dimension": "robust",
+        "radius": r"\textbf{sign flips}",
+        "utility": "consistent sign, variable magnitude",
+        "center alignment": "robust",
+        "participation ratio (per class)": "robust",
+        "participation ratio (global)": "robust",
+        "numerical rank (per class)": "magnitude varies",
+        "mean angle": r"\textbf{sign flips}",
+        "NC1": "sign flip (Spearman)",
+    }
+    # script label -> the rendered form(s) the manuscript may use for it
+    RENDER_OF = {
+        "robust": {"robust"},
+        "SIGN FLIPS (Pearson)": {r"\textbf{sign flips}", "sign flips"},
+        "SIGN FLIPS (Spearman)": {"sign flip (Spearman)", r"\textbf{sign flip (Spearman)}"},
+        "consistent sign, variable magnitude": {"consistent sign, variable magnitude",
+                                                "magnitude varies"},
+    }
+    map_by_marker = {r["marker"]: r for r in table["rows"]}
+    for marker, rendered in CLASS_RENDER.items():
+        script_class = map_by_marker.get(marker, {}).get("classification")
+        allowed = RENDER_OF.get(script_class, {script_class})
+        ok = rendered in allowed if script_class is not None else False
+        CHECKS.append({"section": "class", "name": f"{marker} classification",
+                       "paper": rendered, "recomputed": script_class, "ok": bool(ok)})
+
+    # ---- Table 1 as rendered in the manuscript ----
+    #
+    # The class column is parsed out of the manuscript's own table so that the
+    # label the reader actually sees is compared against the label the
+    # analysis script assigned -- not against a constant copied out of the
+    # manuscript.  A substring test would not notice an appended character,
+    # so the comparison is on the whole cell.
+    if TEX.exists():
+        tex = TEX.read_text(encoding="utf-8")
+        i = tex.find("Marker & ref")
+        seg = tex[i:tex.find(r"\end{tabular}", i)] if i >= 0 else ""
+        rows = {}
+        for line in seg.split("\n"):
+            if "&" not in line or line.lstrip().startswith("Marker"):
+                continue
+            cells = [c.strip() for c in line.rsplit("\\\\", 1)[0].split("&")]
+            if len(cells) < 5:
+                continue
+            # the marker cell is "`name`" or "`name` (qualifier)"; the script
+            # keys the map on "name (qualifier)" or "name"
+            label = cells[0]
+            m = re.match(r"`([^`]+)`\s*(?:\(([^)]*)\))?$", label)
+            if not m:
+                continue
+            name, qualifier = m.group(1), m.group(2)
+            label = f"{name} ({qualifier})" if qualifier else name
+            rows[label] = cells[4]
+        for marker in CLASS_RENDER:
+            rendered = rows.get(marker)
+            script_class = map_by_marker.get(marker, {}).get("classification")
+            allowed = RENDER_OF.get(script_class, set())
+            ok = rendered is not None and rendered in allowed
+            CHECKS.append({"section": "class-text",
+                           "name": f"{marker} class cell as rendered",
+                           "paper": script_class, "recomputed": rendered,
+                           "ok": bool(ok)})
+        # the two strings that changed this round
+        check_text("text", "main.tex: utility class label",
+                   "consistent sign, variable magnitude", True, tex)
+        # The old table label was "magnitude collapse"; it must be gone from
+        # the table row.  (The phrase still appears in the surrounding prose,
+        # where it describes the collapse itself, so the check is anchored to
+        # the table row rather than to the bare string.)
+        check_text("text", "main.tex: utility class label (old) absent from table row",
+                   "`utility` & $+0.901$ & $+0.808$ & $+0.342$ & magnitude collapse",
+                   False, tex)
+        check_text("text", "main.tex: utility class label (in the table row)",
+                   "`utility` & $+0.901$ & $+0.808$ & $+0.342$ & "
+                   "consistent sign, variable magnitude", True, tex)
+        check_text("text", "main.tex: best/aug_only accuracy gap",
+                   "differ in test accuracy by 0.001", True, tex)
+        check_text("text", "main.tex: best/aug_only accuracy gap (old) absent",
+                   "differ in test accuracy by 0.003", False, tex)
+
+    # ---- the best vs aug_only accuracy gap, recomputed ----
+    # This was 0.003 before; the tightened tolerance (0.0005) now pins the
+    # recomputed value, so a drift in either recipe's mean is caught.
+    best_acc = np.mean([r["test_acc"] for r in data if r["name"] == "best"])
+    aug_acc = np.mean([r["test_acc"] for r in data if r["name"] == "aug_only"])
+    check("recipe", "best vs aug_only acc gap (exact)", 0.001,
+          abs(best_acc - aug_acc), tol=0.0005)
+    check("recipe", "best mean test acc", 0.864333, best_acc, tol=0.0005)
+    check("recipe", "aug_only mean test acc", 0.865333, aug_acc, tol=0.0005)
+    # the gap is an order of magnitude smaller than the smoothness gap
+    check("recipe", "smoothness gap exceeds accuracy gap by >10x", 1,
+          int(abs(bs - as_) > 10 * abs(best_acc - aug_acc)), tol=0)
 
     # ---- report ----
     failed = [c for c in CHECKS if not c["ok"]]
@@ -213,17 +385,28 @@ def main() -> int:
             d[1] += 1
     print(f"checks: {len(CHECKS)}  pass: {len(CHECKS) - len(failed)}  FAIL: {len(failed)}")
     for sec, (n, p) in sorted(by_sec.items()):
-        print(f"  {sec}: {p}/{n}")
+        mark = "  (not independently reproducible)" if sec in UNREPRODUCIBLE else ""
+        print(f"  {sec}: {p}/{n}{mark}")
     for c in failed:
+        got = (f"{c['recomputed']:.4f}" if isinstance(c["recomputed"], float)
+               else str(c["recomputed"]))
         print(f"  MISMATCH [{c['section']}] {c['name']}: paper {c['paper']} "
-              f"recomputed {c['recomputed']:.4f}")
+              f"recomputed {got}")
 
     # also check the manuscript has no leftover placeholder numbers
     if TEX.exists():
         t = TEX.read_text(encoding="utf-8")
         stale = re.findall(r"XXXX+", t)
-        if stale:
-            print(f"  NOTE: {len(stale)} placeholder(s) left in main.tex")
+        # The OpenReview forum id is unknown until the submission is made; that
+        # one placeholder is expected and is replaced with the real id from
+        # the submission confirmation. Any other placeholder is a defect.
+        openreview_placeholder = t.count("forum?id=XXXX")
+        unexpected = len(stale) - openreview_placeholder
+        if openreview_placeholder:
+            print(f"  NOTE: {openreview_placeholder} expected OpenReview "
+                  f"placeholder(s) -- fill in the forum id after submission")
+        if unexpected > 0:
+            print(f"  NOTE: {unexpected} unexpected placeholder(s) left in main.tex")
         for must in ["+0.925", "-0.584", "+0.901", "-0.053", "-0.246"]:
             if must not in t:
                 print(f"  NOTE: main.tex does not contain {must!r} -- check the manuscript")

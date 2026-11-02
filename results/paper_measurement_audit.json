@@ -378,6 +378,41 @@
     "ok": true
   },
   {
+    "section": "auc",
+    "name": "collapsed run count",
+    "paper": 6.0,
+    "recomputed": 6.0,
+    "ok": true
+  },
+  {
+    "section": "auc",
+    "name": "criticality_proxy AUC",
+    "paper": 0.866,
+    "recomputed": 0.8657407407407407,
+    "ok": true
+  },
+  {
+    "section": "auc",
+    "name": "effective_dim AUC",
+    "paper": 0.75,
+    "recomputed": 0.75,
+    "ok": true
+  },
+  {
+    "section": "auc",
+    "name": "local_smoothness AUC",
+    "paper": 0.75,
+    "recomputed": 0.75,
+    "ok": true
+  },
+  {
+    "section": "auc",
+    "name": "spectral_entropy AUC",
+    "paper": 0.606,
+    "recomputed": 0.6064814814814815,
+    "ok": true
+  },
+  {
     "section": "recipe",
     "name": "high cluster local_smoothness r",
     "paper": -0.053,
@@ -401,7 +436,7 @@
   {
     "section": "recipe",
     "name": "best vs aug_only acc gap",
-    "paper": 0.003,
+    "paper": 0.001,
     "recomputed": 0.001000000000000112,
     "ok": true
   },
@@ -421,6 +456,13 @@
   },
   {
     "section": "degen",
+    "name": "clean probe",
+    "paper": 0.531,
+    "recomputed": 0.531,
+    "ok": true
+  },
+  {
+    "section": "degen",
     "name": "occ70 dim",
     "paper": 128.0,
     "recomputed": 128.0,
@@ -435,6 +477,20 @@
   },
   {
     "section": "degen",
+    "name": "noise dim",
+    "paper": 271.0,
+    "recomputed": 271.0,
+    "ok": true
+  },
+  {
+    "section": "degen",
+    "name": "noise probe",
+    "paper": 0.309,
+    "recomputed": 0.309,
+    "ok": true
+  },
+  {
+    "section": "degen",
     "name": "dim drop pct",
     "paper": 59.0,
     "recomputed": 59.0,
@@ -445,6 +501,195 @@
     "name": "probe drop pct",
     "paper": 50.0,
     "recomputed": 50.0,
+    "ok": true
+  },
+  {
+    "section": "class",
+    "name": "dimension classification",
+    "paper": "robust",
+    "recomputed": "robust",
+    "ok": true
+  },
+  {
+    "section": "class",
+    "name": "radius classification",
+    "paper": "\\textbf{sign flips}",
+    "recomputed": "SIGN FLIPS (Pearson)",
+    "ok": true
+  },
+  {
+    "section": "class",
+    "name": "utility classification",
+    "paper": "consistent sign, variable magnitude",
+    "recomputed": "consistent sign, variable magnitude",
+    "ok": true
+  },
+  {
+    "section": "class",
+    "name": "center alignment classification",
+    "paper": "robust",
+    "recomputed": "robust",
+    "ok": true
+  },
+  {
+    "section": "class",
+    "name": "participation ratio (per class) classification",
+    "paper": "robust",
+    "recomputed": "robust",
+    "ok": true
+  },
+  {
+    "section": "class",
+    "name": "participation ratio (global) classification",
+    "paper": "robust",
+    "recomputed": "robust",
+    "ok": true
+  },
+  {
+    "section": "class",
+    "name": "numerical rank (per class) classification",
+    "paper": "magnitude varies",
+    "recomputed": "consistent sign, variable magnitude",
+    "ok": true
+  },
+  {
+    "section": "class",
+    "name": "mean angle classification",
+    "paper": "\\textbf{sign flips}",
+    "recomputed": "SIGN FLIPS (Pearson)",
+    "ok": true
+  },
+  {
+    "section": "class",
+    "name": "NC1 classification",
+    "paper": "sign flip (Spearman)",
+    "recomputed": "SIGN FLIPS (Spearman)",
+    "ok": true
+  },
+  {
+    "section": "class-text",
+    "name": "dimension class cell as rendered",
+    "paper": "robust",
+    "recomputed": "robust",
+    "ok": true
+  },
+  {
+    "section": "class-text",
+    "name": "radius class cell as rendered",
+    "paper": "SIGN FLIPS (Pearson)",
+    "recomputed": "\\textbf{sign flips}",
+    "ok": true
+  },
+  {
+    "section": "class-text",
+    "name": "utility class cell as rendered",
+    "paper": "consistent sign, variable magnitude",
+    "recomputed": "consistent sign, variable magnitude",
+    "ok": true
+  },
+  {
+    "section": "class-text",
+    "name": "center alignment class cell as rendered",
+    "paper": "robust",
+    "recomputed": "robust",
+    "ok": true
+  },
+  {
+    "section": "class-text",
+    "name": "participation ratio (per class) class cell as rendered",
+    "paper": "robust",
+    "recomputed": "robust",
+    "ok": true
+  },
+  {
+    "section": "class-text",
+    "name": "participation ratio (global) class cell as rendered",
+    "paper": "robust",
+    "recomputed": "robust",
+    "ok": true
+  },
+  {
+    "section": "class-text",
+    "name": "numerical rank (per class) class cell as rendered",
+    "paper": "consistent sign, variable magnitude",
+    "recomputed": "magnitude varies",
+    "ok": true
+  },
+  {
+    "section": "class-text",
+    "name": "mean angle class cell as rendered",
+    "paper": "SIGN FLIPS (Pearson)",
+    "recomputed": "\\textbf{sign flips}",
+    "ok": true
+  },
+  {
+    "section": "class-text",
+    "name": "NC1 class cell as rendered",
+    "paper": "SIGN FLIPS (Spearman)",
+    "recomputed": "sign flip (Spearman)",
+    "ok": true
+  },
+  {
+    "section": "text",
+    "name": "main.tex: utility class label",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "text",
+    "name": "main.tex: utility class label (old) absent from table row",
+    "paper": "absent",
+    "recomputed": "absent",
+    "ok": true
+  },
+  {
+    "section": "text",
+    "name": "main.tex: utility class label (in the table row)",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "text",
+    "name": "main.tex: best/aug_only accuracy gap",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "text",
+    "name": "main.tex: best/aug_only accuracy gap (old) absent",
+    "paper": "absent",
+    "recomputed": "absent",
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "best vs aug_only acc gap (exact)",
+    "paper": 0.001,
+    "recomputed": 0.001000000000000112,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "best mean test acc",
+    "paper": 0.864333,
+    "recomputed": 0.8643333333333333,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "aug_only mean test acc",
+    "paper": 0.865333,
+    "recomputed": 0.8653333333333334,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "smoothness gap exceeds accuracy gap by >10x",
+    "paper": 1.0,
+    "recomputed": 1.0,
     "ok": true
   }
 ]

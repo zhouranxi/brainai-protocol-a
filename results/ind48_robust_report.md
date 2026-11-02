@@ -34,20 +34,22 @@ n=48 → ID 匹配后 n=46；族：[0.125, 0.25, 0.5, 1.0]
 
 **Bootstrap 95% CI（剔除 lr=1.0 敏感性口径见下）**
 
-| 预测器 | 目标 | 95% CI | 均值 | P(r>0) |
-|---|---|---|---|---|
-| Participation ratio (per-class) | CIFAR-100 | [+0.532, +0.810] | +0.693 | 100.0% |
-| Participation ratio (per-class) | Tiny-ImageNet | [+0.510, +0.822] | +0.696 | 100.0% |
-| Local smoothness | CIFAR-100 | [+0.741, +0.899] | +0.832 | 100.0% |
-| Local smoothness | Tiny-ImageNet | [+0.671, +0.875] | +0.793 | 100.0% |
-| Numerical rank | CIFAR-100 | [+0.800, +0.923] | +0.870 | 100.0% |
-| Numerical rank | Tiny-ImageNet | [+0.776, +0.919] | +0.854 | 100.0% |
-| Effective dim (PCA) | CIFAR-100 | [+0.565, +0.830] | +0.715 | 100.0% |
-| Effective dim (PCA) | Tiny-ImageNet | [+0.546, +0.838] | +0.709 | 100.0% |
-| Class separability | CIFAR-100 | [-0.847, -0.654] | -0.762 | 0.0% |
-| Class separability | Tiny-ImageNet | [-0.820, -0.581] | -0.721 | 0.0% |
-| ID accuracy (baseline) | CIFAR-100 | [-0.668, -0.173] | -0.448 | 0.2% |
-| ID accuracy (baseline) | Tiny-ImageNet | [-0.581, -0.063] | -0.346 | 1.1% |
+`P(r>0)` 是单侧符号频率；`稳健率` 是 C3 判据（sign(r)=sign(ρ) 且 |ρ|≥0.5）在 bootstrap replicate 中通过的比例。两者是不同的统计量，不可互换。
+
+| 预测器 | 目标 | 95% CI | 均值 | P(r>0) | 稳健率 (C3) |
+|---|---|---|---|---|---|
+| Participation ratio (per-class) | CIFAR-100 | [+0.532, +0.810] | +0.693 | 100.0% | 66.5% |
+| Participation ratio (per-class) | Tiny-ImageNet | [+0.510, +0.822] | +0.696 | 100.0% | 50.4% |
+| Local smoothness | CIFAR-100 | [+0.741, +0.899] | +0.832 | 100.0% | 100.0% |
+| Local smoothness | Tiny-ImageNet | [+0.671, +0.875] | +0.793 | 100.0% | 99.7% |
+| Numerical rank | CIFAR-100 | [+0.800, +0.923] | +0.870 | 100.0% | 100.0% |
+| Numerical rank | Tiny-ImageNet | [+0.776, +0.919] | +0.854 | 100.0% | 100.0% |
+| Effective dim (PCA) | CIFAR-100 | [+0.565, +0.830] | +0.715 | 100.0% | 99.5% |
+| Effective dim (PCA) | Tiny-ImageNet | [+0.546, +0.838] | +0.709 | 100.0% | 97.0% |
+| Class separability | CIFAR-100 | [-0.847, -0.654] | -0.762 | 0.0% | 99.6% |
+| Class separability | Tiny-ImageNet | [-0.820, -0.581] | -0.721 | 0.0% | 97.0% |
+| ID accuracy (baseline) | CIFAR-100 | [-0.668, -0.173] | -0.448 | 0.2% | 25.1% |
+| ID accuracy (baseline) | Tiny-ImageNet | [-0.581, -0.063] | -0.346 | 1.1% | 5.6% |
 
 ## 收敛族 36 组（剔除 lr=1.0）
 
@@ -74,27 +76,38 @@ n=36 → ID 匹配后 n=34；族：[0.125, 0.25, 0.5]
 
 **Bootstrap 95% CI（剔除 lr=1.0 敏感性口径见下）**
 
-| 预测器 | 目标 | 95% CI | 均值 | P(r>0) |
-|---|---|---|---|---|
-| Participation ratio (per-class) | CIFAR-100 | [+0.516, +0.813] | +0.691 | 100.0% |
-| Participation ratio (per-class) | Tiny-ImageNet | [+0.506, +0.838] | +0.707 | 100.0% |
-| Local smoothness | CIFAR-100 | [+0.716, +0.915] | +0.833 | 100.0% |
-| Local smoothness | Tiny-ImageNet | [+0.653, +0.893] | +0.802 | 100.0% |
-| Numerical rank | CIFAR-100 | [+0.819, +0.943] | +0.890 | 100.0% |
-| Numerical rank | Tiny-ImageNet | [+0.796, +0.938] | +0.879 | 100.0% |
-| Effective dim (PCA) | CIFAR-100 | [+0.563, +0.846] | +0.727 | 100.0% |
-| Effective dim (PCA) | Tiny-ImageNet | [+0.554, +0.857] | +0.728 | 100.0% |
-| Class separability | CIFAR-100 | [-0.880, -0.649] | -0.784 | 0.0% |
-| Class separability | Tiny-ImageNet | [-0.858, -0.573] | -0.746 | 0.0% |
-| ID accuracy (baseline) | CIFAR-100 | [-0.803, -0.420] | -0.636 | 0.0% |
-| ID accuracy (baseline) | Tiny-ImageNet | [-0.695, -0.217] | -0.486 | 0.1% |
+`P(r>0)` 是单侧符号频率；`稳健率` 是 C3 判据（sign(r)=sign(ρ) 且 |ρ|≥0.5）在 bootstrap replicate 中通过的比例。两者是不同的统计量，不可互换。
+
+| 预测器 | 目标 | 95% CI | 均值 | P(r>0) | 稳健率 (C3) |
+|---|---|---|---|---|---|
+| Participation ratio (per-class) | CIFAR-100 | [+0.516, +0.813] | +0.691 | 100.0% | 53.8% |
+| Participation ratio (per-class) | Tiny-ImageNet | [+0.506, +0.838] | +0.707 | 100.0% | 50.5% |
+| Local smoothness | CIFAR-100 | [+0.716, +0.915] | +0.833 | 100.0% | 99.9% |
+| Local smoothness | Tiny-ImageNet | [+0.653, +0.893] | +0.802 | 100.0% | 99.4% |
+| Numerical rank | CIFAR-100 | [+0.819, +0.943] | +0.890 | 100.0% | 100.0% |
+| Numerical rank | Tiny-ImageNet | [+0.796, +0.938] | +0.879 | 100.0% | 100.0% |
+| Effective dim (PCA) | CIFAR-100 | [+0.563, +0.846] | +0.727 | 100.0% | 97.8% |
+| Effective dim (PCA) | Tiny-ImageNet | [+0.554, +0.857] | +0.728 | 100.0% | 95.3% |
+| Class separability | CIFAR-100 | [-0.880, -0.649] | -0.784 | 0.0% | 98.1% |
+| Class separability | Tiny-ImageNet | [-0.858, -0.573] | -0.746 | 0.0% | 93.6% |
+| ID accuracy (baseline) | CIFAR-100 | [-0.803, -0.420] | -0.636 | 0.0% | 82.9% |
+| ID accuracy (baseline) | Tiny-ImageNet | [-0.695, -0.217] | -0.486 | 0.1% | 41.6% |
 
 ## 结论
 
 1. **全量 48 组**：基线残差化 −0.439/−0.338，但逐族符号为 −0.80/−0.60/−0.33/**+0.69**，按 C4 不通过——原稿「负号复现」的表述不成立。
 2. **收敛族 36 组**：基线负号更强且**三族全负**（−0.966/−0.603/−0.330），C4 通过，bootstrap CI 全部排除零（P(r>0)≈0%）。
-3. 几何量在两个口径下都稳定为正（numerical rank +0.870→+0.892），bootstrap 稳健率 100%。
+3. 几何量在两个口径下都稳定为正（numerical rank +0.870→+0.892），其 bootstrap 稳健率为 100%（numerical rank / local smoothness）；participation ratio 稳健率较低（54%–67%），因其中位 Spearman ρ 接近 0.5 阈值。
 4. → 论文表述应从「基线负号复现」改为「**基线符号不稳定（全量）/ 稳定为负（收敛族）**」，这更契合「基线不是稳定锚」的核心论点。
+
+## 稳健率口径说明
+
+论文表 3 的「Bootstrap robust rate」列必须填 `robust_rate`（C3 判据通过比例），不能填 `P(r>0)`。两者的差距在基线上尤其大：
+
+- 全量 48 组 / CIFAR-100 / 基线：P(r>0)=0.2%，稳健率=25.1%。
+- 收敛族 36 组 / CIFAR-100 / 基线：P(r>0)=0.0%，稳健率=82.9%。
+
+原因：基线的残差化 r 在两种口径下都稳定为负且 |ρ| 通常 ≥ 0.5，所以 C3 判据在绝大多数 replicate 中通过；P(r>0) 只问符号是否为正，与 C3 的通过与否几乎无关。
 
 ## 修订要求
 

@@ -833,73 +833,183 @@
   },
   {
     "section": "4.5",
-    "quantity": "B1_fig3_224/dimension_id bootstrap CI",
-    "paper": "[+0.879,+0.955] rr=1.00",
-    "recomputed": "[+0.879,+0.955] rr=1.00",
+    "quantity": "224 D_eff bootstrap CI",
+    "paper": "[+0.879,+0.955]",
+    "recomputed": "[+0.879,+0.955]",
     "tol": 0.002,
     "kind": "point",
     "pass": true,
-    "note": ""
+    "note": "CI from B1_fig3_224/dimension_id"
   },
   {
     "section": "4.5",
-    "quantity": "B1_fig3_224/utility_id bootstrap CI",
-    "paper": "[+0.842,+0.938] rr=1.00",
-    "recomputed": "[+0.842,+0.938] rr=1.00",
-    "tol": 0.002,
+    "quantity": "224 D_eff bootstrap robust rate",
+    "paper": "1.00",
+    "recomputed": "1.0000",
+    "tol": 0.005,
     "kind": "point",
     "pass": true,
-    "note": ""
+    "note": "robust rate from B1_fig3_224/dimension_id"
   },
   {
     "section": "4.5",
-    "quantity": "B2_official_80/dimension_id bootstrap CI",
-    "paper": "[+0.581,+0.833] rr=1.00",
-    "recomputed": "[+0.581,+0.833] rr=1.00",
+    "quantity": "224 Psi_eff bootstrap CI",
+    "paper": "[+0.842,+0.938]",
+    "recomputed": "[+0.842,+0.938]",
     "tol": 0.002,
     "kind": "point",
     "pass": true,
-    "note": ""
+    "note": "CI from B1_fig3_224/utility_id"
   },
   {
     "section": "4.5",
-    "quantity": "B3_own_48/id_numerical_rank bootstrap CI",
-    "paper": "[+0.797,+0.923] rr=1.00",
-    "recomputed": "[+0.797,+0.923] rr=1.00",
-    "tol": 0.002,
+    "quantity": "224 Psi_eff bootstrap robust rate",
+    "paper": "1.00",
+    "recomputed": "1.0000",
+    "tol": 0.005,
     "kind": "point",
     "pass": true,
-    "note": ""
+    "note": "robust rate from B1_fig3_224/utility_id"
   },
   {
     "section": "4.5",
-    "quantity": "B1_fig3_224/acc_test bootstrap CI",
-    "paper": "[+0.215,+0.622] rr=0.13",
-    "recomputed": "[+0.215,+0.622] rr=0.13",
+    "quantity": "224 ID accuracy bootstrap CI",
+    "paper": "[+0.215,+0.622]",
+    "recomputed": "[+0.215,+0.622]",
     "tol": 0.002,
     "kind": "point",
     "pass": true,
-    "note": ""
+    "note": "CI from B1_fig3_224/acc_test"
   },
   {
     "section": "4.5",
-    "quantity": "B2_official_80/acc_test bootstrap CI",
-    "paper": "[-0.825,-0.417] rr=0.80",
-    "recomputed": "[-0.825,-0.417] rr=0.80",
-    "tol": 0.002,
+    "quantity": "224 ID accuracy bootstrap robust rate",
+    "paper": "0.13",
+    "recomputed": "0.1330",
+    "tol": 0.005,
     "kind": "point",
     "pass": true,
-    "note": ""
+    "note": "robust rate from B1_fig3_224/acc_test"
   },
   {
     "section": "4.5",
-    "quantity": "B3_own_48/acc_test bootstrap CI",
-    "paper": "[-0.659,-0.181] rr=0.23",
-    "recomputed": "[-0.659,-0.181] rr=0.23",
+    "quantity": "80 D_eff bootstrap CI",
+    "paper": "[+0.581,+0.833]",
+    "recomputed": "[+0.581,+0.833]",
     "tol": 0.002,
     "kind": "point",
     "pass": true,
-    "note": ""
+    "note": "CI from B2_official_80/dimension_id"
+  },
+  {
+    "section": "4.5",
+    "quantity": "80 D_eff bootstrap robust rate",
+    "paper": "1.00",
+    "recomputed": "0.9980",
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": "robust rate from B2_official_80/dimension_id"
+  },
+  {
+    "section": "4.5",
+    "quantity": "80 ID accuracy bootstrap CI",
+    "paper": "[-0.825,-0.417]",
+    "recomputed": "[-0.825,-0.417]",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": "CI from B2_official_80/acc_test"
+  },
+  {
+    "section": "4.5",
+    "quantity": "80 ID accuracy bootstrap robust rate",
+    "paper": "0.80",
+    "recomputed": "0.7970",
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": "robust rate from B2_official_80/acc_test"
+  },
+  {
+    "section": "4.5",
+    "quantity": "ours(48) num.rank bootstrap CI",
+    "paper": "[+0.797,+0.923]",
+    "recomputed": "[+0.797,+0.923]",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": "CI from B3_own_48/id_numerical_rank"
+  },
+  {
+    "section": "4.5",
+    "quantity": "ours(48) num.rank bootstrap robust rate",
+    "paper": "1.00",
+    "recomputed": "0.9995",
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": "robust rate from B3_own_48/id_numerical_rank"
+  },
+  {
+    "section": "4.5",
+    "quantity": "ours(48) ID accuracy bootstrap CI",
+    "paper": "[-0.659,-0.181]",
+    "recomputed": "[-0.659,-0.181]",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": "CI from B3_own_48/acc_test"
+  },
+  {
+    "section": "4.5",
+    "quantity": "ours(48) ID accuracy bootstrap robust rate",
+    "paper": "0.25",
+    "recomputed": "0.2510",
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": "robust rate from ind48:full48/id_acc"
+  },
+  {
+    "section": "4.5",
+    "quantity": "ours(36) num.rank bootstrap CI",
+    "paper": "[+0.819,+0.943]",
+    "recomputed": "[+0.819,+0.943]",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": "CI from ind48:converged36/id_numerical_rank"
+  },
+  {
+    "section": "4.5",
+    "quantity": "ours(36) num.rank bootstrap robust rate",
+    "paper": "1.00",
+    "recomputed": "1.0000",
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": "robust rate from ind48:converged36/id_numerical_rank"
+  },
+  {
+    "section": "4.5",
+    "quantity": "ours(36) ID accuracy bootstrap CI",
+    "paper": "[-0.803,-0.420]",
+    "recomputed": "[-0.803,-0.420]",
+    "tol": 0.002,
+    "kind": "point",
+    "pass": true,
+    "note": "CI from ind48:converged36/id_acc"
+  },
+  {
+    "section": "4.5",
+    "quantity": "ours(36) ID accuracy bootstrap robust rate",
+    "paper": "0.83",
+    "recomputed": "0.8290",
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": "robust rate from ind48:converged36/id_acc"
   },
   {
     "section": "4.7b",
@@ -1340,5 +1450,2545 @@
     "kind": "point",
     "pass": true,
     "note": "verified separately (key intersection empty)"
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog pooled best marker (rho)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog resid best marker (rho)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog pooled rho of best",
+    "paper": 0.99,
+    "recomputed": 0.9897,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog ID-acc pooled rho",
+    "paper": 0.99,
+    "recomputed": 0.9897,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog ID-acc pooled rank",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog resid rho of best",
+    "paper": 0.934,
+    "recomputed": 0.934,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog ID-acc resid rho",
+    "paper": 0.934,
+    "recomputed": 0.934,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog ID-acc resid rank",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog n matched",
+    "paper": 43,
+    "recomputed": 43,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog pooled best rho (recomputed from pkl)",
+    "paper": 0.99,
+    "recomputed": 0.9897,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog ID-acc pooled rho (recomputed from pkl)",
+    "paper": 0.99,
+    "recomputed": 0.9897,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog resid best rho (recomputed from pkl)",
+    "paper": 0.934,
+    "recomputed": 0.934,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog ID-acc resid rho (recomputed from pkl)",
+    "paper": 0.934,
+    "recomputed": 0.934,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog pooled best marker (recomputed from pkl)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog ID-acc pooled rank (recomputed from pkl)",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog resid best marker (recomputed from pkl)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog ID-acc resid rank (recomputed from pkl)",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "fog marker count",
+    "paper": 12,
+    "recomputed": 12,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness pooled best marker (rho)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness resid best marker (rho)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness pooled rho of best",
+    "paper": 0.994,
+    "recomputed": 0.9938,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness ID-acc pooled rho",
+    "paper": 0.994,
+    "recomputed": 0.9938,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness ID-acc pooled rank",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness resid rho of best",
+    "paper": 0.973,
+    "recomputed": 0.9727,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness ID-acc resid rho",
+    "paper": 0.973,
+    "recomputed": 0.9727,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness ID-acc resid rank",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness n matched",
+    "paper": 43,
+    "recomputed": 43,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness pooled best rho (recomputed from pkl)",
+    "paper": 0.994,
+    "recomputed": 0.9938,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness ID-acc pooled rho (recomputed from pkl)",
+    "paper": 0.994,
+    "recomputed": 0.9938,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness resid best rho (recomputed from pkl)",
+    "paper": 0.973,
+    "recomputed": 0.9727,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness ID-acc resid rho (recomputed from pkl)",
+    "paper": 0.973,
+    "recomputed": 0.9727,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness pooled best marker (recomputed from pkl)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness ID-acc pooled rank (recomputed from pkl)",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness resid best marker (recomputed from pkl)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness ID-acc resid rank (recomputed from pkl)",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "brightness marker count",
+    "paper": 12,
+    "recomputed": 12,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast pooled best marker (rho)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast resid best marker (rho)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast pooled rho of best",
+    "paper": 0.975,
+    "recomputed": 0.9745,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast ID-acc pooled rho",
+    "paper": 0.975,
+    "recomputed": 0.9745,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast ID-acc pooled rank",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast resid rho of best",
+    "paper": 0.816,
+    "recomputed": 0.8164,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast ID-acc resid rho",
+    "paper": 0.816,
+    "recomputed": 0.8164,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast ID-acc resid rank",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast n matched",
+    "paper": 43,
+    "recomputed": 43,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast pooled best rho (recomputed from pkl)",
+    "paper": 0.975,
+    "recomputed": 0.9745,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast ID-acc pooled rho (recomputed from pkl)",
+    "paper": 0.975,
+    "recomputed": 0.9745,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast resid best rho (recomputed from pkl)",
+    "paper": 0.816,
+    "recomputed": 0.8164,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast ID-acc resid rho (recomputed from pkl)",
+    "paper": 0.816,
+    "recomputed": 0.8164,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast pooled best marker (recomputed from pkl)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast ID-acc pooled rank (recomputed from pkl)",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast resid best marker (recomputed from pkl)",
+    "paper": "acc_test",
+    "recomputed": "acc_test",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast ID-acc resid rank (recomputed from pkl)",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "contrast marker count",
+    "paper": 12,
+    "recomputed": 12,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise pooled best marker (rho)",
+    "paper": "mean_angle_id",
+    "recomputed": "mean_angle_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise resid best marker (rho)",
+    "paper": "sparsity_id",
+    "recomputed": "sparsity_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise pooled rho of best",
+    "paper": -0.632,
+    "recomputed": -0.632,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise ID-acc pooled rho",
+    "paper": 0.185,
+    "recomputed": 0.1851,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise ID-acc pooled rank",
+    "paper": 6,
+    "recomputed": 6,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise resid rho of best",
+    "paper": 0.299,
+    "recomputed": 0.2988,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise ID-acc resid rho",
+    "paper": -0.109,
+    "recomputed": -0.1092,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise ID-acc resid rank",
+    "paper": 6,
+    "recomputed": 6,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise n matched",
+    "paper": 43,
+    "recomputed": 43,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise pooled best rho (recomputed from pkl)",
+    "paper": -0.632,
+    "recomputed": -0.632,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise ID-acc pooled rho (recomputed from pkl)",
+    "paper": 0.185,
+    "recomputed": 0.1851,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise resid best rho (recomputed from pkl)",
+    "paper": 0.299,
+    "recomputed": 0.2988,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise ID-acc resid rho (recomputed from pkl)",
+    "paper": -0.109,
+    "recomputed": -0.1092,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise pooled best marker (recomputed from pkl)",
+    "paper": "mean_angle_id",
+    "recomputed": "mean_angle_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise ID-acc pooled rank (recomputed from pkl)",
+    "paper": 6,
+    "recomputed": 6,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise resid best marker (recomputed from pkl)",
+    "paper": "sparsity_id",
+    "recomputed": "sparsity_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise ID-acc resid rank (recomputed from pkl)",
+    "paper": 6,
+    "recomputed": 6,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "gaussian_noise marker count",
+    "paper": 12,
+    "recomputed": 12,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate pooled best marker (rho)",
+    "paper": "center_alignment_id",
+    "recomputed": "center_alignment_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate resid best marker (rho)",
+    "paper": "radius_id",
+    "recomputed": "radius_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate pooled rho of best",
+    "paper": -0.445,
+    "recomputed": -0.4454,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate ID-acc pooled rho",
+    "paper": -0.128,
+    "recomputed": -0.128,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate ID-acc pooled rank",
+    "paper": 10,
+    "recomputed": 10,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate resid rho of best",
+    "paper": -0.3,
+    "recomputed": -0.3004,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate ID-acc resid rho",
+    "paper": 0.191,
+    "recomputed": 0.1912,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate ID-acc resid rank",
+    "paper": 2,
+    "recomputed": 2,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate n matched",
+    "paper": 43,
+    "recomputed": 43,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate pooled best rho (recomputed from pkl)",
+    "paper": -0.445,
+    "recomputed": -0.4454,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate ID-acc pooled rho (recomputed from pkl)",
+    "paper": -0.128,
+    "recomputed": -0.128,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate resid best rho (recomputed from pkl)",
+    "paper": -0.3,
+    "recomputed": -0.3004,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate ID-acc resid rho (recomputed from pkl)",
+    "paper": 0.191,
+    "recomputed": 0.1912,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate pooled best marker (recomputed from pkl)",
+    "paper": "center_alignment_id",
+    "recomputed": "center_alignment_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate ID-acc pooled rank (recomputed from pkl)",
+    "paper": 10,
+    "recomputed": 10,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate resid best marker (recomputed from pkl)",
+    "paper": "radius_id",
+    "recomputed": "radius_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate ID-acc resid rank (recomputed from pkl)",
+    "paper": 2,
+    "recomputed": 2,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "pixelate marker count",
+    "paper": 12,
+    "recomputed": 12,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression pooled best marker (rho)",
+    "paper": "sparsity_id",
+    "recomputed": "sparsity_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression resid best marker (rho)",
+    "paper": "utility_id",
+    "recomputed": "utility_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression pooled rho of best",
+    "paper": -0.351,
+    "recomputed": -0.3511,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression ID-acc pooled rho",
+    "paper": 0.087,
+    "recomputed": 0.0869,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression ID-acc pooled rank",
+    "paper": 11,
+    "recomputed": 11,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression resid rho of best",
+    "paper": 0.262,
+    "recomputed": 0.2619,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression ID-acc resid rho",
+    "paper": -0.055,
+    "recomputed": -0.055,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression ID-acc resid rank",
+    "paper": 7,
+    "recomputed": 7,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression n matched",
+    "paper": 43,
+    "recomputed": 43,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression pooled best rho (recomputed from pkl)",
+    "paper": -0.351,
+    "recomputed": -0.3511,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression ID-acc pooled rho (recomputed from pkl)",
+    "paper": 0.087,
+    "recomputed": 0.0869,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression resid best rho (recomputed from pkl)",
+    "paper": 0.262,
+    "recomputed": 0.2619,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression ID-acc resid rho (recomputed from pkl)",
+    "paper": -0.055,
+    "recomputed": -0.055,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression pooled best marker (recomputed from pkl)",
+    "paper": "sparsity_id",
+    "recomputed": "sparsity_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression ID-acc pooled rank (recomputed from pkl)",
+    "paper": 11,
+    "recomputed": 11,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression resid best marker (recomputed from pkl)",
+    "paper": "utility_id",
+    "recomputed": "utility_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression ID-acc resid rank (recomputed from pkl)",
+    "paper": 7,
+    "recomputed": 7,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4",
+    "quantity": "jpeg_compression marker count",
+    "paper": 12,
+    "recomputed": 12,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "Protocol-A rho range, photometric (min)",
+    "paper": 0.816,
+    "recomputed": 0.8164,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "Protocol-A rho range, photometric (max)",
+    "paper": 0.973,
+    "recomputed": 0.9727,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "Protocol-A rho range, noise/compression (min)",
+    "paper": -0.109,
+    "recomputed": -0.1092,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "Protocol-A rho range, noise/compression (max)",
+    "paper": 0.191,
+    "recomputed": 0.1912,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "Protocol-A ID-acc rank span, noise/compression (min)",
+    "paper": 2,
+    "recomputed": 2,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "Protocol-A ID-acc rank span, noise/compression (max)",
+    "paper": 7,
+    "recomputed": 7,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "Protocol-A ID-acc rank, photometric",
+    "paper": "1/1/1",
+    "recomputed": "1/1/1",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "pooled ID-acc rho range, photometric (min)",
+    "paper": 0.975,
+    "recomputed": 0.9745,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "pooled ID-acc rho range, photometric (max)",
+    "paper": 0.994,
+    "recomputed": 0.9938,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "pixelate ID-acc resid rank",
+    "paper": 2,
+    "recomputed": 2,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "pixelate ID-acc pooled rho (negative)",
+    "paper": -0.128,
+    "recomputed": -0.128,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "pixelate ID-acc resid rho (positive)",
+    "paper": 0.191,
+    "recomputed": 0.1912,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "gaussian noise Protocol-A best marker",
+    "paper": "sparsity_id",
+    "recomputed": "sparsity_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "pixelate Protocol-A best marker",
+    "paper": "radius_id",
+    "recomputed": "radius_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "jpeg Protocol-A best marker",
+    "paper": "utility_id",
+    "recomputed": "utility_id",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "gaussian noise Protocol-A best rho",
+    "paper": 0.299,
+    "recomputed": 0.2988,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "pixelate Protocol-A best rho",
+    "paper": -0.3,
+    "recomputed": -0.3004,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "jpeg Protocol-A best rho",
+    "paper": 0.262,
+    "recomputed": 0.2619,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "gaussian_noise Protocol-A best/second gap",
+    "paper": 0.0699,
+    "recomputed": 0.0699,
+    "tol": 0.0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "pixelate Protocol-A best/second gap",
+    "paper": 0.1092,
+    "recomputed": 0.1092,
+    "tol": 0.0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "jpeg_compression Protocol-A best/second gap",
+    "paper": 0.0306,
+    "recomputed": 0.0306,
+    "tol": 0.0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "scenarios with best/second gap < 0.04 (Protocol A)",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "scenarios with best/second gap < 0.04 (pooled)",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "Table4-prose",
+    "quantity": "jpeg best/second gap < 0.04 (Protocol A)",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "224-release n",
+    "paper": 106,
+    "recomputed": 106,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "224-release ID~lr",
+    "paper": -0.451,
+    "recomputed": -0.4506,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "224-release OOD~lr",
+    "paper": -0.815,
+    "recomputed": -0.8147,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "224-release r, lr blocked",
+    "paper": 0.043,
+    "recomputed": 0.0433,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "80-release n",
+    "paper": 43,
+    "recomputed": 43,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "80-release ID~lr",
+    "paper": 0.089,
+    "recomputed": 0.089,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "80-release OOD~lr",
+    "paper": -0.487,
+    "recomputed": -0.4871,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "80-release r, lr blocked",
+    "paper": -0.67,
+    "recomputed": -0.6696,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "224-release Protocol-A r before blocking",
+    "paper": 0.392,
+    "recomputed": 0.3922,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "80-release Protocol-A r before blocking",
+    "paper": -0.628,
+    "recomputed": -0.6281,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "matched n (all 48)",
+    "paper": 45,
+    "recomputed": 45,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "matched n (converged)",
+    "paper": 34,
+    "recomputed": 34,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff resid r (all 48)",
+    "paper": 0.698,
+    "recomputed": 0.6975,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff rho (all 48)",
+    "paper": 0.64,
+    "recomputed": 0.6402,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff C4 sign (all 48)",
+    "paper": "fail",
+    "recomputed": "fail",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "Psi_eff resid r (all 48)",
+    "paper": 0.098,
+    "recomputed": 0.0983,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "Psi_eff rho (all 48)",
+    "paper": 0.276,
+    "recomputed": 0.2758,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "Psi_eff C4 sign (all 48)",
+    "paper": "fail",
+    "recomputed": "fail",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "R_eff resid r (all 48)",
+    "paper": 0.462,
+    "recomputed": 0.4621,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "R_eff rho (all 48)",
+    "paper": 0.484,
+    "recomputed": 0.4842,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "R_eff C4 sign (all 48)",
+    "paper": "pass",
+    "recomputed": "pass",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "ID acc resid r (all 48)",
+    "paper": -0.453,
+    "recomputed": -0.4533,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "ID acc rho (all 48)",
+    "paper": -0.428,
+    "recomputed": -0.4283,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "ID acc C4 sign (all 48)",
+    "paper": "fail",
+    "recomputed": "fail",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff resid r (converged)",
+    "paper": 0.714,
+    "recomputed": 0.7136,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff rho (converged)",
+    "paper": 0.667,
+    "recomputed": 0.6669,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff C4 sign (converged)",
+    "paper": "fail",
+    "recomputed": "fail",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "Psi_eff resid r (converged)",
+    "paper": 0.654,
+    "recomputed": 0.6538,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "Psi_eff rho (converged)",
+    "paper": 0.632,
+    "recomputed": 0.6315,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "Psi_eff C4 sign (converged)",
+    "paper": "pass",
+    "recomputed": "pass",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "R_eff resid r (converged)",
+    "paper": 0.659,
+    "recomputed": 0.659,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "R_eff rho (converged)",
+    "paper": 0.675,
+    "recomputed": 0.6752,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "R_eff C4 sign (converged)",
+    "paper": "pass",
+    "recomputed": "pass",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "ID acc resid r (converged)",
+    "paper": -0.658,
+    "recomputed": -0.6577,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "ID acc rho (converged)",
+    "paper": -0.635,
+    "recomputed": -0.6348,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "ID acc C4 sign (converged)",
+    "paper": "pass",
+    "recomputed": "pass",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "Psi_eff per-family signs (all 48)",
+    "paper": "+1/+1/+1/-1",
+    "recomputed": "+1/+1/+1/-1",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "ID-acc per-family signs (all 48)",
+    "paper": "-1/-1/-1/+1",
+    "recomputed": "-1/-1/-1/+1",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "ID-acc per-family signs (converged)",
+    "paper": "-1/-1/-1",
+    "recomputed": "-1/-1/-1",
+    "tol": null,
+    "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "bootstrap",
+    "quantity": "224 PR bootstrap robust rate",
+    "paper": 0.5535,
+    "recomputed": 0.5535,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "bootstrap",
+    "quantity": "224 D_eff bootstrap robust rate",
+    "paper": 1.0,
+    "recomputed": 1.0,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "trained model count",
+    "paper": 80,
+    "recomputed": 80,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "diverged model count",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "healthy model count (recomputed)",
+    "paper": 79,
+    "recomputed": 79,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "resnet18 trained models",
+    "paper": 48,
+    "recomputed": 48,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "resnet18 healthy models",
+    "paper": 48,
+    "recomputed": 48,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "shufflenet_v2_x1_0 trained models",
+    "paper": 16,
+    "recomputed": 16,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "shufflenet_v2_x1_0 healthy models",
+    "paper": 15,
+    "recomputed": 15,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "regnet_y_400mf trained models",
+    "paper": 16,
+    "recomputed": 16,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "regnet_y_400mf healthy models",
+    "paper": 16,
+    "recomputed": 16,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "cross-arch subset n (ShuffleNetV2 excluded)",
+    "paper": 36,
+    "recomputed": 36,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "ShuffleNetV2 models inside pooled band",
+    "paper": 0,
+    "recomputed": 0,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "pooled band lower bound (pp)",
+    "paper": 83.192,
+    "recomputed": 83.1922,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "pooled band upper bound (pp)",
+    "paper": 87.192,
+    "recomputed": 87.1922,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "ShuffleNetV2 healthy model count",
+    "paper": 15,
+    "recomputed": 15,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "ShuffleNetV2 ID-accuracy ceiling (pp)",
+    "paper": 81.91,
+    "recomputed": 81.91,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "ShuffleNetV2 ceiling below band lower bound",
+    "paper": 1,
+    "recomputed": 1,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 PR C100",
+    "paper": 0.988,
+    "recomputed": 0.9877,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 PR n",
+    "paper": 14,
+    "recomputed": 14,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 smoothness C100",
+    "paper": 0.993,
+    "recomputed": 0.9929,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 smoothness n",
+    "paper": 14,
+    "recomputed": 14,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 numrank C100",
+    "paper": 0.306,
+    "recomputed": 0.306,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 numrank n",
+    "paper": 14,
+    "recomputed": 14,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 ID acc C100",
+    "paper": -0.637,
+    "recomputed": -0.637,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch ShuffleNetV2 ID acc n",
+    "paper": 14,
+    "recomputed": 14,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch RegNetY n",
+    "paper": 13,
+    "recomputed": 13,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch RegNetY PR C100",
+    "paper": 0.659,
+    "recomputed": 0.6591,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch RegNetY ID acc C100",
+    "paper": 0.053,
+    "recomputed": 0.0531,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch RegNetY ID acc Tiny",
+    "paper": -0.019,
+    "recomputed": -0.019,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "4.7a",
+    "quantity": "within-arch RegNetY PR Tiny",
+    "paper": 0.536,
+    "recomputed": 0.5362,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "appendixA",
+    "quantity": "D_eff resid rho (80 release)",
+    "paper": 0.81,
+    "recomputed": 0.8052,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "appendixA",
+    "quantity": "Psi_eff resid rho (80 release)",
+    "paper": 0.8,
+    "recomputed": 0.799,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "appendixA",
+    "quantity": "ID acc resid rho (80 release)",
+    "paper": -0.61,
+    "recomputed": -0.6059,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "appendixA",
+    "quantity": "PR resid rho (80 release)",
+    "paper": 0.79,
+    "recomputed": 0.7936,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "appendixA",
+    "quantity": "mean_dist (avg) resid rho (80 release)",
+    "paper": 0.68,
+    "recomputed": 0.6805,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "appendixA",
+    "quantity": "raw pooled r, 80 release",
+    "paper": 0.4426,
+    "recomputed": 0.4426,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "appendixA",
+    "quantity": "raw pooled r, 224 release",
+    "paper": 0.4759,
+    "recomputed": 0.4759,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "setup",
+    "quantity": "224 union learning rates",
+    "paper": 13,
+    "recomputed": 13,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "setup",
+    "quantity": "224 union weight decays",
+    "paper": 9,
+    "recomputed": 9,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "setup",
+    "quantity": "224 architecture count",
+    "paper": 5,
+    "recomputed": 5,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "setup",
+    "quantity": "80 release scenario count",
+    "paper": 6,
+    "recomputed": 6,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "setup",
+    "quantity": "80 release model count",
+    "paper": 80,
+    "recomputed": 80,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-table4",
+    "quantity": "tab:shifttype row fog",
+    "paper": "ID accuracy | +0.990 | +0.990 | 1/12 | ID accuracy | +0.934 | +0.934 | 1/12",
+    "recomputed": "ID accuracy | +0.990 | +0.990 | 1/12 | ID accuracy | +0.934 | +0.934 | 1/12",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-table4",
+    "quantity": "tab:shifttype row brightness",
+    "paper": "ID accuracy | +0.994 | +0.994 | 1/12 | ID accuracy | +0.973 | +0.973 | 1/12",
+    "recomputed": "ID accuracy | +0.994 | +0.994 | 1/12 | ID accuracy | +0.973 | +0.973 | 1/12",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-table4",
+    "quantity": "tab:shifttype row contrast",
+    "paper": "ID accuracy | +0.975 | +0.975 | 1/12 | ID accuracy | +0.816 | +0.816 | 1/12",
+    "recomputed": "ID accuracy | +0.975 | +0.975 | 1/12 | ID accuracy | +0.816 | +0.816 | 1/12",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-table4",
+    "quantity": "tab:shifttype row gaussian_noise",
+    "paper": "mean angle | -0.632 | +0.185 | 6/12 | sparsity | +0.299 | -0.109 | 6/12",
+    "recomputed": "mean angle | -0.632 | +0.185 | 6/12 | sparsity | +0.299 | -0.109 | 6/12",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-table4",
+    "quantity": "tab:shifttype row pixelate",
+    "paper": "center alignment | -0.445 | -0.128 | 10/12 | effective radius | -0.300 | +0.191 | 2/12",
+    "recomputed": "center alignment | -0.445 | -0.128 | 10/12 | effective radius | -0.300 | +0.191 | 2/12",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-table4",
+    "quantity": "tab:shifttype row jpeg_compression",
+    "paper": "sparsity | -0.351 | +0.087 | 11/12 | effective utility | +0.262 | -0.055 | 7/12",
+    "recomputed": "sparsity | -0.351 | +0.087 | 11/12 | effective utility | +0.262 | -0.055 | 7/12",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-signmech",
+    "quantity": "tab:signmech row 224 models",
+    "paper": "106 | -0.451 | -0.815 | +0.043",
+    "recomputed": "106 | -0.451 | -0.815 | +0.043",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-signmech",
+    "quantity": "tab:signmech row 80 models",
+    "paper": "43 | +0.089 | -0.487 | -0.670",
+    "recomputed": "43 | +0.089 | -0.487 | -0.670",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-glueown",
+    "quantity": "tab:glueown row D_eff (own impl.)",
+    "paper": "+0.698 | +0.640 | fail",
+    "recomputed": "+0.698 | +0.640 | fail",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-glueown",
+    "quantity": "tab:glueown row Psi_eff (own impl.)",
+    "paper": "+0.098 | +0.276 | fail",
+    "recomputed": "+0.098 | +0.276 | fail",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-glueown",
+    "quantity": "tab:glueown row R_eff (own impl.)",
+    "paper": "+0.462 | +0.484 | pass",
+    "recomputed": "+0.462 | +0.484 | pass",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-glueown",
+    "quantity": "tab:glueown row ID accuracy",
+    "paper": "-0.453 | -0.428 | fail",
+    "recomputed": "-0.453 | -0.428 | fail",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-table3",
+    "quantity": "tab:bootstrap robust rate, ours (48, all)",
+    "paper": "25%",
+    "recomputed": "25%",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text-table3",
+    "quantity": "tab:bootstrap robust rate, ours (36, converged)",
+    "paper": "83%",
+    "recomputed": "83%",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '$-0.11$ to $+0.19$'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '2nd--7th'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '55\\\\%'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '$r=+0.71$'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '$r=+0.65$'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '$r=+0.66$'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains 'r=-0.66'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '79 healthy models out of 80 trained'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains 'none of its 15 healthy models'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '$r=+0.988$'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '$r=+0.993$'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '$r=+0.306$'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '$-0.64$'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '($n=13$)'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains '$n=45$'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains 'pooled $r=+0.44$'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex contains 'mean\\\\_dist (avg)'",
+    "paper": "present",
+    "recomputed": "present",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex must not contain '+0.918'",
+    "paper": "absent",
+    "recomputed": "absent",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex must not contain '+0.967$ & $+0.967$ & 1/12'",
+    "paper": "absent",
+    "recomputed": "absent",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex must not contain '-0.087$ & $-0.087$'",
+    "paper": "absent",
+    "recomputed": "absent",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex must not contain '23\\\\%'",
+    "paper": "absent",
+    "recomputed": "absent",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex must not contain '54\\\\%'",
+    "paper": "absent",
+    "recomputed": "absent",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex must not contain '78 healthy'",
+    "paper": "absent",
+    "recomputed": "absent",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex must not contain '78 self-trained'",
+    "paper": "absent",
+    "recomputed": "absent",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex must not contain 'magnitude collapse'",
+    "paper": "absent",
+    "recomputed": "absent",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "text",
+    "quantity": "main.tex: 80-release pooled r is +0.44, not +0.48",
+    "paper": "+0.44",
+    "recomputed": "+0.44",
+    "tol": 0,
+    "kind": "text",
+    "pass": true,
+    "note": ""
   }
 ]
