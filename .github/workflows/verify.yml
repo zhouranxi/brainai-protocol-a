@@ -1,8 +1,8 @@
 name: verify
 
-# Re-derive every number reported in the paper directly from the shipped data.
-# This is the machine-readable form of the paper's central claim: that its
-# reported values are reproducible from the released artifacts alone.
+# Re-derive every number reported in either paper directly from the shipped
+# data.  This is the machine-readable form of the papers' central claim: that
+# their reported values are reproducible from the released artifacts alone.
 
 on:
   push:
@@ -14,12 +14,10 @@ jobs:
   verify:
     name: Re-derive all reported numbers
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          lfs: true
 
       - uses: actions/setup-python@v5
         with:
@@ -30,22 +28,29 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install numpy scipy pandas scikit-learn matplotlib
 
-      - name: Verify every reported number against the raw data
-        run: python code/audit_claims.py
-
-      - name: Check the verification passed
+      - name: Verify the controlled-analysis paper
         run: |
-          python code/audit_claims.py > /tmp/audit.log 2>&1
-          cat /tmp/audit.log
-          grep -q "FAIL: 0" /tmp/audit.log || (echo "::error::audit reported failures"; exit 1)
-          echo "All reported numbers reproduce from the shipped data."
+          python code/audit_claims.py | tee /tmp/audit_r1.log
+          grep -q "FAIL: 0" /tmp/audit_r1.log || (echo "::error::R1 audit failed"; exit 1)
 
-      - name: Regenerate figures
-        run: python code/make_figures.py --outdir /tmp/figs
+      - name: Verify the measurement paper
+        run: |
+          python code/audit_paper_measurement.py | tee /tmp/audit_measurement.log
+          grep -q "FAIL: 0" /tmp/audit_measurement.log || (echo "::error::measurement audit failed"; exit 1)
+
+      - name: Check the bibliography parses and every citation resolves
+        run: python code/check_references_bib.py
+
+      - name: Regenerate the analyses
+        run: |
+          python code/analyze_marker_stability_map.py --outdir /tmp/regen
+          python code/analyze_degeneration.py --outdir /tmp/regen
+          python code/make_figures.py --outdir /tmp/regen/figs
+          python code/make_figures_measurement.py --outdir /tmp/regen/figs
 
       - name: Upload regenerated figures
         uses: actions/upload-artifact@v4
         with:
           name: figures-regenerated
-          path: /tmp/figs
+          path: /tmp/regen/figs
           retention-days: 7
