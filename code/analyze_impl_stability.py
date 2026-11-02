@@ -41,6 +41,16 @@ def find_root() -> Path:
 
 ROOT = find_root()
 
+def locate(*names):
+    """Find an input file under any of the layouts we publish."""
+    for name in names:
+        for base in ("results", "data/official", "data/self_trained", "."):
+            cand = ROOT / base / name
+            if cand.exists():
+                return cand
+    raise FileNotFoundError(" / ".join(names))
+
+
 
 def group_residual(v, groups):
     """Remove the group main effects (C2 of Protocol A)."""
@@ -100,11 +110,11 @@ def main() -> int:
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
 
-    d224 = pd.read_pickle(ROOT / "results" / "df_fig3.pkl")
-    d80 = pd.read_pickle(ROOT / "results" / "official_df_fig15-20.pkl")["gaussian_noise"]
+    d224 = pd.read_pickle(locate("df_fig3.pkl"))
+    d80 = pd.read_pickle(locate("df_fig15-20.pkl", "official_df_fig15-20.pkl"))["gaussian_noise"]
     glue_own = {r["ckpt"]: r for r in json.load(
-        open(ROOT / "results" / "glue_own48_results.json"))["rows"]}
-    ind = json.load(open(ROOT / "results" / "ind_validation_results.json"))["rows"]
+        open(locate("glue_own48_results.json")))["rows"]}
+    ind = json.load(open(locate("ind_validation_results.json")))["rows"]
     own = [r for r in ind if r["ckpt"] in glue_own]
 
     keys = [("dimension", "glue_dimension"), ("radius", "glue_radius"), ("utility", "glue_utility")]

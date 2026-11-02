@@ -31,6 +31,21 @@ def find_root() -> Path:
 ROOT = find_root()
 TEX = ROOT / "paper" / "measurement" / "main.tex"
 
+
+def locate(*names):
+    """Find an input file under any of the layouts we publish.
+
+    The released pickles live in data/official/, the self-trained measurements
+    in data/self_trained/, and the Phase 0 recipe sweep in results/; a flat
+    working directory has them all in one place.
+    """
+    for name in names:
+        for base in ("results", "data/official", "data/self_trained", "."):
+            cand = ROOT / base / name
+            if cand.exists():
+                return cand
+    raise FileNotFoundError(" / ".join(names))
+
 CHECKS = []
 
 
@@ -75,16 +90,16 @@ def own_cell(rows, glue, key, band):
 
 
 def main() -> int:
-    d224 = pd.read_pickle(ROOT / "results" / "df_fig3.pkl")
-    d80 = pd.read_pickle(ROOT / "results" / "official_df_fig15-20.pkl")["gaussian_noise"]
+    d224 = pd.read_pickle(locate("df_fig3.pkl"))
+    d80 = pd.read_pickle(locate("df_fig15-20.pkl", "official_df_fig15-20.pkl"))["gaussian_noise"]
     glue = {r["ckpt"]: r for r in json.load(
-        open(ROOT / "results" / "glue_own48_results.json"))["rows"]}
-    ind = json.load(open(ROOT / "results" / "ind_validation_results.json"))["rows"]
+        open(locate("glue_own48_results.json")))["rows"]}
+    ind = json.load(open(locate("ind_validation_results.json")))["rows"]
     own = [r for r in ind if r["ckpt"] in glue]
 
     # ---- the stability map, band = 1 pp ----
     # The table quotes r values; check them against the map file.
-    table = json.load(open(ROOT / "results" / "marker_stability_map.json"))
+    table = json.load(open(locate("marker_stability_map.json")))
     quoted = {
         "dimension": (0.925, 0.737, 0.919),
         "radius": (-0.584, 0.153, 0.602),
@@ -134,7 +149,7 @@ def main() -> int:
     check("map", "utility own band=3", -0.246, r)
 
     # ---- the recipe sweep ----
-    data = json.load(open(ROOT / "results" / "c2_results_seeds0-1-2.json"))["rows"]
+    data = json.load(open(locate("c2_results_seeds0-1-2.json")))["rows"]
     acc = np.array([r["test_acc"] for r in data])
     for mk, exp_r, exp_rho in [("effective_dim", -0.483, -0.536),
                                 ("local_smoothness", -0.452, -0.338),

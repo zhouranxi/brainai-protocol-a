@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -499,6 +500,20 @@ def main():
     w("")
     (RES / "claims_audit_report.md").write_text("\n".join(L), encoding="utf-8")
     print(f"claims: {len(CLAIMS)}  pass: {npass}  FAIL: {nfail}")
+
+    # The measurement paper quotes its own numbers. Verifying them here means a
+    # single command -- and a single CI run -- checks both manuscripts.
+    try:
+        import subprocess
+        r = subprocess.run(
+            [sys.executable, str(Path(__file__).resolve().parent /
+                                 "audit_paper_measurement.py")],
+            capture_output=True, text=True)
+        for line in r.stdout.splitlines():
+            if line.startswith("checks:"):
+                print("measurement paper --", line)
+    except Exception as e:
+        print(f"measurement audit skipped: {e}")
     for c in CLAIMS:
         if not c["pass"]:
             print(f"  MISMATCH [{c['section']}] {c['quantity']}: paper={c['paper']} recomputed={c['recomputed']}")
