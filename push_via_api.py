@@ -174,12 +174,39 @@ def main() -> int:
     print(f"blobs uploaded: {uploaded}")
 
     # ---- build the tree on the remote ----
+    # Only the entries that differ from the remote go into the tree request.
+    # Sending the whole tree does not work: the endpoint answers 404 once the
+    # entry list grows past a few hundred items.
+    #
+    # The blob sha in the local object store is not known to the remote, so the
+    # content has to travel with the entry. Sending a sha that the remote has
+    # never seen is answered with 404 as well.
     tree_entries = []
+    n_same = 0
     for e in changed:
+        if remote_paths.get(e["path"]) == e["sha"]:
+            n_same += 1
+            continue
+        if e["type"] != "blob":
+            tree_entries.append({"path": e["path"], "mode": e["mode"],
+                                 "type": e["type"], "sha": e["sha"]})
+            continue
+        raw = subprocess.run(["git", "cat-file", "-p", e["sha"]],
+                             capture_output=True).stdout
+        if raw.startswith(b"version https://git-lfs.github.com/spec"):
+            tree_entries.append({"path": e["path"], "mode": e["mode"],
+                                 "type": e["type"], "sha": e["sha"]})
+            continue
         tree_entries.append({"path": e["path"], "mode": e["mode"],
-                             "type": e["type"], "sha": e["sha"]})
+                             "type": "blob",
+                             "content": base64.b64encode(raw).decode()})
+    print(f"unchanged    : {n_same}")
+    print(f"to update    : {len(tree_entries)}")
+    if not tree_entries:
+        print("nothing to push")
+        return 0
     tree = gh._req("POST", f"/repos/{args.repo}/git/trees",
-                   {"base_tree": remote_sha, "tree": tree_entries})
+                   {"base_tree": args.branch, "tree": tree_entries})
     print(f"new tree     : {tree['sha']}")
 
     msg = args.message or git("log", "-1", "--pretty=%B").strip()
