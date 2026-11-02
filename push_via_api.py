@@ -197,9 +197,11 @@ def main() -> int:
             tree_entries.append({"path": e["path"], "mode": e["mode"],
                                  "type": e["type"], "sha": e["sha"]})
             continue
+        # The tree API takes the content as plain text and encodes it itself.
+        # Passing a base64 string here stores the base64 string, not the file.
         tree_entries.append({"path": e["path"], "mode": e["mode"],
                              "type": "blob",
-                             "content": base64.b64encode(raw).decode()})
+                             "content": raw.decode("utf-8", "surrogateescape")})
     print(f"unchanged    : {n_same}")
     print(f"to update    : {len(tree_entries)}")
     if not tree_entries:
