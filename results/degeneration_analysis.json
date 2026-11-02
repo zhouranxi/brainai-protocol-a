@@ -1,0 +1,25 @@
+{
+  "degeneration": {
+    "clean": {
+      "dim": 316,
+      "smooth": 0.934,
+      "probe": 0.531
+    },
+    "occ30": {
+      "dim": 287,
+      "smooth": 0.91,
+      "probe": 0.438
+    },
+    "occ70": {
+      "dim": 128,
+      "smooth": 0.586,
+      "probe": 0.264
+    },
+    "noise": {
+      "dim": 271,
+      "smooth": 0.899,
+      "probe": 0.309
+    }
+  },
+  "n_recipes": 42
+}
