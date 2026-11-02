@@ -1,0 +1,450 @@
+[
+  {
+    "section": "map",
+    "name": "dimension [official_224]",
+    "paper": 0.925,
+    "recomputed": 0.9249648095501077,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "dimension [official_80]",
+    "paper": 0.737,
+    "recomputed": 0.7365944920878849,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "dimension [own_48]",
+    "paper": 0.919,
+    "recomputed": 0.9193622945268809,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius [official_224]",
+    "paper": -0.584,
+    "recomputed": -0.5843150108992601,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius [official_80]",
+    "paper": 0.153,
+    "recomputed": 0.15346963698095945,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius [own_48]",
+    "paper": 0.602,
+    "recomputed": 0.6017477328345486,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "utility [official_224]",
+    "paper": 0.901,
+    "recomputed": 0.9013817200190739,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "utility [official_80]",
+    "paper": 0.808,
+    "recomputed": 0.8079103429171155,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "utility [own_48]",
+    "paper": 0.342,
+    "recomputed": 0.3416288669859795,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "center alignment [official_224]",
+    "paper": 0.483,
+    "recomputed": 0.48289962120957763,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "center alignment [official_80]",
+    "paper": 0.581,
+    "recomputed": 0.5811649584188183,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "participation ratio (per class) [official_224]",
+    "paper": 0.659,
+    "recomputed": 0.6586409294455482,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "participation ratio (per class) [official_80]",
+    "paper": 0.592,
+    "recomputed": 0.5919122643828141,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "participation ratio (per class) [own_48]",
+    "paper": 0.947,
+    "recomputed": 0.9466094129309671,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "participation ratio (global) [official_224]",
+    "paper": 0.877,
+    "recomputed": 0.8768377512889178,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "participation ratio (global) [official_80]",
+    "paper": 0.734,
+    "recomputed": 0.7342357623128501,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "participation ratio (global) [own_48]",
+    "paper": 0.895,
+    "recomputed": 0.8950370678661945,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "numerical rank (per class) [official_224]",
+    "paper": 0.436,
+    "recomputed": 0.4362558354657282,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "numerical rank (per class) [own_48]",
+    "paper": 0.972,
+    "recomputed": 0.9715591955375059,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "mean angle [official_224]",
+    "paper": 0.124,
+    "recomputed": 0.123862042988168,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "mean angle [official_80]",
+    "paper": -0.102,
+    "recomputed": -0.10192758603007186,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "NC1 [official_224]",
+    "paper": -0.145,
+    "recomputed": -0.1450093127942021,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "NC1 [own_48]",
+    "paper": -0.178,
+    "recomputed": -0.1778652050657533,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius 224 band=1",
+    "paper": -0.584,
+    "recomputed": -0.5843150108992601,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius 224 band=2",
+    "paper": -0.796,
+    "recomputed": -0.7956895041886314,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius 224 band=3",
+    "paper": -0.79,
+    "recomputed": -0.7903445125325211,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius 224 band=5",
+    "paper": -0.786,
+    "recomputed": -0.7861937208243645,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius own band=1",
+    "paper": 0.602,
+    "recomputed": 0.6017477328345486,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius own band=2",
+    "paper": 0.492,
+    "recomputed": 0.4916305936403185,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius own band=3",
+    "paper": 0.353,
+    "recomputed": 0.3525540799076657,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius own band=5",
+    "paper": 0.376,
+    "recomputed": 0.3764155709513899,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius 80 band=1",
+    "paper": 0.153,
+    "recomputed": 0.15346963698095945,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "radius 80 band=5",
+    "paper": -0.221,
+    "recomputed": -0.22054304929246632,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "dimension 224 band=1",
+    "paper": 0.925,
+    "recomputed": 0.9249648095501077,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "dimension 224 band=5",
+    "paper": 0.904,
+    "recomputed": 0.9035249308468912,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "utility 224 band=1",
+    "paper": 0.901,
+    "recomputed": 0.9013817200190739,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "utility own band=1",
+    "paper": 0.342,
+    "recomputed": 0.3416288669859795,
+    "ok": true
+  },
+  {
+    "section": "map",
+    "name": "utility own band=3",
+    "paper": -0.246,
+    "recomputed": -0.24610282995262978,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "effective_dim pooled r",
+    "paper": -0.483,
+    "recomputed": -0.48337510999509564,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "effective_dim pooled rho",
+    "paper": -0.536,
+    "recomputed": -0.5358101056099406,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "local_smoothness pooled r",
+    "paper": -0.452,
+    "recomputed": -0.45185128202195723,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "local_smoothness pooled rho",
+    "paper": -0.338,
+    "recomputed": -0.3379391410357085,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "spectral_entropy pooled r",
+    "paper": -0.41,
+    "recomputed": -0.4101470605231704,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "spectral_entropy pooled rho",
+    "paper": -0.185,
+    "recomputed": -0.18461039886794817,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "criticality_proxy pooled r",
+    "paper": -0.217,
+    "recomputed": -0.2168449103160378,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "criticality_proxy pooled rho",
+    "paper": -0.015,
+    "recomputed": -0.014749382174699987,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "silhouette_gap pooled r",
+    "paper": 0.768,
+    "recomputed": 0.7676664783255623,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "silhouette_gap pooled rho",
+    "paper": 0.732,
+    "recomputed": 0.7320393911212361,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "linear_probe_acc pooled r",
+    "paper": 0.993,
+    "recomputed": 0.9928820641009993,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "linear_probe_acc pooled rho",
+    "paper": 0.953,
+    "recomputed": 0.9533498226351591,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "effective_dim within-recipe r",
+    "paper": -0.443,
+    "recomputed": -0.44303500114644606,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "local_smoothness within-recipe r",
+    "paper": -0.079,
+    "recomputed": -0.07885385836495701,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "spectral_entropy within-recipe r",
+    "paper": -0.521,
+    "recomputed": -0.5211738124318959,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "criticality_proxy within-recipe r",
+    "paper": 0.352,
+    "recomputed": 0.3518986221311838,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "high cluster local_smoothness r",
+    "paper": -0.053,
+    "recomputed": -0.0534427968406461,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "high cluster local_smoothness p",
+    "paper": 0.891,
+    "recomputed": 0.8913860245760676,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "high cluster n",
+    "paper": 9.0,
+    "recomputed": 9.0,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "best vs aug_only acc gap",
+    "paper": 0.003,
+    "recomputed": 0.001000000000000112,
+    "ok": true
+  },
+  {
+    "section": "recipe",
+    "name": "best vs aug_only smoothness gap",
+    "paper": 0.074,
+    "recomputed": 0.07444880902767179,
+    "ok": true
+  },
+  {
+    "section": "degen",
+    "name": "clean dim",
+    "paper": 316.0,
+    "recomputed": 316.0,
+    "ok": true
+  },
+  {
+    "section": "degen",
+    "name": "occ70 dim",
+    "paper": 128.0,
+    "recomputed": 128.0,
+    "ok": true
+  },
+  {
+    "section": "degen",
+    "name": "occ70 probe",
+    "paper": 0.264,
+    "recomputed": 0.264,
+    "ok": true
+  },
+  {
+    "section": "degen",
+    "name": "dim drop pct",
+    "paper": 59.0,
+    "recomputed": 59.0,
+    "ok": true
+  },
+  {
+    "section": "degen",
+    "name": "probe drop pct",
+    "paper": 50.0,
+    "recomputed": 50.0,
+    "ok": true
+  }
+]
