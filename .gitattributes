@@ -1,6 +1,13 @@
 # Large binary artifacts
 *.pt filter=lfs diff=lfs merge=lfs -text
-*.pkl filter=lfs diff=lfs merge=lfs -text
+
+# The released per-model measurement tables are small (127 KB and 247 KB) and
+# are committed directly rather than through LFS. Two reasons: the CI job
+# checks out the repository without fetching LFS objects, so a pointer file
+# would leave the audit scripts reading a text stub instead of the data; and
+# the release API used to publish the repository cannot create LFS objects at
+# all, so LFS-tracked files there were stored as plain blobs anyway.
+*.pkl binary
 
 # PDFs are a few megabytes at most and are committed directly; routing them
 # through LFS would need the LFS batch API, which the REST API does not expose.
