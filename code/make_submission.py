@@ -74,6 +74,7 @@ IDENTITY_MARKERS = [
     r"foxmail\.com",
     r"10\.5281/zenodo\.2372888[34]",
     r"10\.5281/zenodo\.23901486",
+    r"10\.5281/zenodo\.23918659",
     r"zenodo\.org/records/23[79]",
     r"Hunan University of Chinese Medicine",
     r"湖南中医药大学",

@@ -23,10 +23,10 @@ The 80 trained checkpoints (48 ResNet-18 + 16 ShuffleNetV2-x1.0 + 16 RegNetY-400
 are **2.4 GB**, which is too large for a Git repository even with Git LFS. They are
 distributed as a **Zenodo archive**, with a versioned DOI:
 
-> **Zenodo record:** `10.5281/zenodo.23901486` (version DOI, v1.1)
+> **Zenodo record:** `10.5281/zenodo.23918659` (version DOI, v1.2)
 > **Concept DOI:** `10.5281/zenodo.23728883`
-> **Record page:** `https://zenodo.org/records/23901486`
-> **Direct download:** `https://zenodo.org/records/23901486/files/`
+> **Record page:** `https://zenodo.org/records/23918659`
+> **Direct download:** `https://zenodo.org/records/23918659/files/`
 
 > The concept DOI is stable across versions, so it is the one to cite; the version
 > DOI points at this exact release.
