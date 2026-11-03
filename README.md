@@ -7,7 +7,7 @@ released per-model measurements it operates on, the independently trained models
 number reported in the paper — together with a script that re-derives each reported number
 from the raw data.
 
-> **One-command verification.** `python code/audit_claims.py` recomputes **133 headline numbers**
+> **One-command verification.** `python code/audit_claims.py` recomputes **411 reported numbers**
 > directly from the raw data using the same protocol as the analysis scripts and checks each
 > against the value written in the paper. It is the fastest way to confirm that this repository
 > and the manuscript agree — no GPU, no downloads, about a minute.
@@ -112,7 +112,7 @@ scripts (no GPU needed) but not for training or measurement.
 
 ```bash
 python code/audit_claims.py
-# -> "claims: 133  pass: 133  FAIL: 0"
+# -> "claims: 411  pass: 411  FAIL: 0"
 ```
 
 ### 4.3 Regenerate the figures (no GPU, ~2 minutes)

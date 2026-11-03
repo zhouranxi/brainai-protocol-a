@@ -23,10 +23,10 @@ The 80 trained checkpoints (48 ResNet-18 + 16 ShuffleNetV2-x1.0 + 16 RegNetY-400
 are **2.4 GB**, which is too large for a Git repository even with Git LFS. They are
 distributed as a **Zenodo archive**, with a versioned DOI:
 
-> **Zenodo record:** `10.5281/zenodo.23728884` (version DOI)
+> **Zenodo record:** `10.5281/zenodo.23901486` (version DOI, v1.1)
 > **Concept DOI:** `10.5281/zenodo.23728883`
-> **Record page:** `https://zenodo.org/records/23728884`
-> **Direct download:** `https://zenodo.org/records/23728884/files/`
+> **Record page:** `https://zenodo.org/records/23901486`
+> **Direct download:** `https://zenodo.org/records/23901486/files/`
 
 > The concept DOI is stable across versions, so it is the one to cite; the version
 > DOI points at this exact release.
@@ -57,10 +57,10 @@ The measurements needed to reproduce every number in the paper are already in
 ```bash
 pip install -r requirements.txt
 bash run_all.sh verify
-# expected: claims: 133  pass: 133  FAIL: 0
+# expected: claims: 411  pass: 411  FAIL: 0
 ```
 
-It re-derives **133 reported numbers** directly from the shipped data using the
+It re-derives **411 reported numbers** directly from the shipped data using the
 same protocol as the analysis scripts and checks each against the value written
 in the manuscript. This is the intended entry point for a reader who wants to
 check the work rather than rerun the training.
