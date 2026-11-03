@@ -3853,7 +3853,7 @@
   },
   {
     "section": "text-table3",
-    "quantity": "tab:bootstrap robust rate, ours (36, converged)",
+    "quantity": "tab:bootstrap robust rate, ours (36, high-transfer)",
     "paper": "83%",
     "recomputed": "83%",
     "tol": 0,

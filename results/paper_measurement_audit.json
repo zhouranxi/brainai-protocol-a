@@ -393,9 +393,23 @@
   },
   {
     "section": "auc",
+    "name": "criticality_proxy permutation p",
+    "paper": 0.003,
+    "recomputed": 0.00255,
+    "ok": true
+  },
+  {
+    "section": "auc",
     "name": "effective_dim AUC",
     "paper": 0.75,
     "recomputed": 0.75,
+    "ok": true
+  },
+  {
+    "section": "auc",
+    "name": "effective_dim permutation p",
+    "paper": 0.054,
+    "recomputed": 0.0544,
     "ok": true
   },
   {
@@ -407,9 +421,23 @@
   },
   {
     "section": "auc",
+    "name": "local_smoothness permutation p",
+    "paper": 0.053,
+    "recomputed": 0.0529,
+    "ok": true
+  },
+  {
+    "section": "auc",
     "name": "spectral_entropy AUC",
     "paper": 0.606,
     "recomputed": 0.6064814814814815,
+    "ok": true
+  },
+  {
+    "section": "auc",
+    "name": "spectral_entropy permutation p",
+    "paper": 0.43,
+    "recomputed": 0.4303,
     "ok": true
   },
   {

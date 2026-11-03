@@ -25,6 +25,10 @@
 
 \maketitle
 
+% TMLR requires a first-page disclosure that LLMs were used in preparing the
+% submission.
+\let\thefootnote\relax\footnotetext{\emph{Use of LLMs:} Large language models were used as writing and coding assistants in preparing this manuscript; all scientific content, analyses, and reported numbers were determined and verified by the authors.}
+
 \begin{abstract}
 Geometric markers of the representation -- effective dimension, effective utility,
 participation ratio, numerical rank, and a dozen relatives -- are widely used as
@@ -462,14 +466,21 @@ value is essentially a property of the recipe.
 
 The same measurements separate training failure from training success with
 accuracy: the criticality proxy reaches an AUC of 0.866 at distinguishing
-collapsed networks from healthy ones, against 0.750 for the effective dimension
-and local smoothness and 0.606 for spectral entropy. This is a weaker use than
-grading quality, and it is a defensible one. Detecting that a run went wrong
+collapsed networks from healthy ones (permutation test over label shuffles,
+20{,}000 draws, $p=0.003$; 6 failures against 36 healthy runs), the effective
+dimension and local smoothness reach 0.750 ($p=0.054$ and $p=0.053$), and
+spectral entropy's 0.606 is statistically indistinguishable from chance
+($p=0.43$). Only the first would survive a conventional correction for
+testing four markers at once, and we report the other three exactly because
+of that: most geometric markers do \emph{not} separate the two regimes
+reliably, which is consistent with the reading above. This is a weaker use
+than grading quality, and it is a defensible one --- for the marker that
+clears the bar. Detecting that a run went wrong
 does not require the quantity to be a graded measure of quality; it only
-requires it to differ between the two regimes, which the cluster separation
-above shows it does. We think this is the right way to use geometric markers
-today: as a health check on a training run, and not as a measure of the
-representation.
+requires it to differ between the two regimes. We think this is the right way
+to use geometric markers today: as a health check on a training run where the
+specific marker has been validated for that purpose, and not as a measure of
+the representation.
 
 \section{What to do with the next marker}
 
@@ -581,6 +592,18 @@ We release the protocol implementation, the analysis code, and the trained model
 checkpoints to permit independent verification and reuse. We are mindful that
 the models we release are trained on datasets with known licensing terms, and we
 distribute them subject to those same terms.
+
+\subsection*{Use of AI tools}
+
+Large language models were used as writing and coding assistants during
+preparation of this manuscript: converting an internal draft to LaTeX,
+assisting with routine refactoring of the analysis scripts, and re-deriving
+every numeric claim from the released files with an independent verification
+script. All scientific content --- the measurement-study framing, the
+analyses, the interpretation, and every reported number --- was determined by
+the authors, and each number is checkable against the released data by the
+accompanying verification script. The authors take full responsibility for the
+content of the publication.
 
 % PLACEHOLDER -- DELETE THIS COMMENT AND THE COMMENTED SECTION BELOW BEFORE THE CAMERA-READY SUBMISSION.
 % \section*{Acknowledgements}

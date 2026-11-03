@@ -208,17 +208,33 @@ def main() -> int:
     COLLAPSED = {"aug_ls", "plain_short"}
     n_fail = sum(1 for r in data if r["name"] in COLLAPSED)
     check("auc", "collapsed run count", 6, n_fail, tol=0)
-    for mk, exp_auc in [("criticality_proxy", 0.866),
-                        ("effective_dim", 0.750),
-                        ("local_smoothness", 0.750),
-                        ("spectral_entropy", 0.606)]:
+    # The manuscript reports permutation p-values alongside the AUCs.  The
+    # permutation is fixed-seed (20261103, 20,000 draws) so the audit
+    # reproduces exactly the values printed in the paper; the tolerance covers
+    # residual Monte-Carlo wobble across numpy versions.
+    rng = np.random.default_rng(20261103)
+    PERMS = 20000
+    for mk, exp_auc, exp_p in [("criticality_proxy", 0.866, 0.003),
+                               ("effective_dim", 0.750, 0.054),
+                               ("local_smoothness", 0.750, 0.053),
+                               ("spectral_entropy", 0.606, 0.43)]:
         y = np.array([1 if r["name"] in COLLAPSED else 0 for r in data], int)
         x = np.array([r[mk] for r in data], dtype=float)
         # rank-based AUC that does not depend on the sign of the association
         ranks = np.argsort(np.argsort(x))
         n1 = int(y.sum()); n0 = len(y) - n1
         auc = (ranks[y == 1].sum() - n1 * (n1 - 1) / 2) / (n1 * n0)
-        check("auc", f"{mk} AUC", exp_auc, float(max(auc, 1 - auc)), tol=0.001)
+        auc = float(max(auc, 1 - auc))
+        check("auc", f"{mk} AUC", exp_auc, auc, tol=0.001)
+        # permutation p-value: shuffle labels, recompute the direction-free AUC
+        obs_stat = auc
+        perm = np.empty(PERMS)
+        for i in range(PERMS):
+            yp = rng.permutation(y)
+            a = (ranks[yp == 1].sum() - n1 * (n1 - 1) / 2) / (n1 * n0)
+            perm[i] = max(a, 1 - a)
+        pval = float((perm >= obs_stat - 1e-12).mean())
+        check("auc", f"{mk} permutation p", exp_p, pval, tol=0.006)
 
     # the high cluster
     HIGH = {"best", "aug_only", "noise20_aug"}

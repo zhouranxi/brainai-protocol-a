@@ -394,7 +394,7 @@ ind_validation_results.json / mod_arch_results.json / glue_own48_results.json）
 | text-glueown | tab:glueown row R_eff (own impl.) | +0.462 | +0.484 | pass | +0.462 | +0.484 | pass | ✓ |
 | text-glueown | tab:glueown row ID accuracy | -0.453 | -0.428 | fail | -0.453 | -0.428 | fail | ✓ |
 | text-table3 | tab:bootstrap robust rate, ours (48, all) | 25% | 25% | ✓ |
-| text-table3 | tab:bootstrap robust rate, ours (36, converged) | 83% | 83% | ✓ |
+| text-table3 | tab:bootstrap robust rate, ours (36, high-transfer) | 83% | 83% | ✓ |
 | text | main.tex contains '$-0.11$ to $+0.19$' | present | present | ✓ |
 | text | main.tex contains '2nd--7th' | present | present | ✓ |
 | text | main.tex contains '55\\%' | present | present | ✓ |

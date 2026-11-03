@@ -1097,7 +1097,7 @@ def main():
             if len(cells) >= 4 and "ID accuracy" in cells[0]:
                 found_bt.append((cells[1].strip(), _num(cells[3])))
         for dataset, expected in [("ours (48, all)", "25%"),
-                                  ("ours (36, converged)", "83%")]:
+                                  ("ours (36, high-transfer)", "83%")]:
             got = dict(found_bt).get(dataset)
             CLAIMS.append({
                 "section": "text-table3",
