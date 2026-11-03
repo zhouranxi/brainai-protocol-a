@@ -2813,6 +2813,16 @@
   },
   {
     "section": "signmech",
+    "quantity": "224-release r, wd blocked (placebo)",
+    "paper": 0.391,
+    "recomputed": 0.3908,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
     "quantity": "80-release n",
     "paper": 43,
     "recomputed": 43,
@@ -2853,6 +2863,16 @@
   },
   {
     "section": "signmech",
+    "quantity": "80-release r, wd blocked (placebo)",
+    "paper": -0.614,
+    "recomputed": -0.614,
+    "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
     "quantity": "224-release Protocol-A r before blocking",
     "paper": 0.392,
     "recomputed": 0.3922,
@@ -2867,6 +2887,66 @@
     "paper": -0.628,
     "recomputed": -0.6281,
     "tol": 0.001,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "224-release b=2 before blocking",
+    "paper": 0.57,
+    "recomputed": 0.57,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "224-release b=2 after lr blocking",
+    "paper": 0.23,
+    "recomputed": 0.2263,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "224-release b=3 before blocking",
+    "paper": 0.57,
+    "recomputed": 0.5663,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "224-release b=3 after lr blocking",
+    "paper": 0.09,
+    "recomputed": 0.0949,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "80-release b=3 before blocking",
+    "paper": -0.7,
+    "recomputed": -0.6988,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "signmech",
+    "quantity": "80-release b=3 after lr blocking",
+    "paper": -0.73,
+    "recomputed": -0.7312,
+    "tol": 0.005,
     "kind": "point",
     "pass": true,
     "note": ""
@@ -3158,6 +3238,56 @@
     "recomputed": "-1/-1/-1",
     "tol": null,
     "kind": "exact",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff lr=0.25 all-family r",
+    "paper": 0.8,
+    "recomputed": 0.7958,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff lr=0.25 matched-subset r",
+    "paper": -0.41,
+    "recomputed": -0.4074,
+    "tol": 0.005,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff lr=0.25 matched n",
+    "paper": 11,
+    "recomputed": 11,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff pooled-center (no lr resid) n",
+    "paper": 32,
+    "recomputed": 32,
+    "tol": 0,
+    "kind": "point",
+    "pass": true,
+    "note": ""
+  },
+  {
+    "section": "glueown",
+    "quantity": "D_eff pooled-center (no lr resid) r",
+    "paper": 0.91,
+    "recomputed": 0.9194,
+    "tol": 0.01,
+    "kind": "point",
     "pass": true,
     "note": ""
   },

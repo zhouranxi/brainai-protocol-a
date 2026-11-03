@@ -263,8 +263,14 @@ Marker & ref.\ impl., 224 & ref.\ impl., 80 & our impl., 48 & class \\
 \hline
 \end{tabular}
 \caption{Selected entries of the stability map, at a matching bandwidth of
-$\pm1$ pp. Pearson $r$ after ID matching and architecture residualisation. The
-``class'' column reproduces the classification assigned by the analysis script
+$\pm1$ pp. Pearson $r$ after ID matching and architecture residualisation.
+One asymmetry between the columns must be stated: the own-48 population is a
+single architecture, so its residualisation step removes no group structure
+(there is none to remove --- the group variable would be the learning-rate
+family, and that variant is used in the companion paper). The three cells are
+therefore not identical protocols, and the caption of the full map in the
+released results records the grouping variable used in each. The ``class''
+column reproduces the classification assigned by the analysis script
 and stored in \texttt{results/marker\_stability\_map.json}; the discussion
 below interprets some of those classes further. The full map, with Spearman
 coefficients, sample sizes and a bandwidth sweep, is in the released results

@@ -717,24 +717,31 @@ def main():
         then residualized on architecture as well.  The third column blocks
         the learning-rate pathway out of OOD accuracy with an OLS fit on
         [1, lr_resid] and correlates the residual with the residualized ID
-        accuracy.
+        accuracy.  The placebo column does the same with the weight decay
+        instead of the learning rate: if the collapse were an artifact of
+        blocking any recorded hyperparameter, it would appear there too.
         """
         acc = df["acc_test"].values.astype(float)
         ood = df["acc_lp_ood"].values.astype(float)
         arch = df["arch_name"].values
         lr = df["lr"].values.astype(float)
+        wd = df["weight_decay"].values.astype(float)
         keep = np.abs(acc - acc.mean()) <= band
-        a, o, l, g = acc[keep], ood[keep], lr[keep], arch[keep]
-        xr, yr, lrr = gres(a, g), gres(o, g), gres(l, g)
+        a, o, l, g, w = acc[keep], ood[keep], lr[keep], arch[keep], wd[keep]
+        xr, yr, lrr, wdr = gres(a, g), gres(o, g), gres(l, g), gres(w, g)
         A = np.column_stack([np.ones_like(lrr), lrr])
         b, *_ = np.linalg.lstsq(A, yr, rcond=None)
         blocked = yr - A @ b
+        Aw = np.column_stack([np.ones_like(wdr), wdr])
+        bw, *_ = np.linalg.lstsq(Aw, yr, rcond=None)
+        blocked_wd = yr - Aw @ bw
         return {
             "n": int(keep.sum()),
             "id_lr": float(np.corrcoef(xr, lrr)[0, 1]),
             "ood_lr": float(np.corrcoef(yr, lrr)[0, 1]),
             "r_blocked": float(np.corrcoef(xr, blocked)[0, 1]),
             "r_protocol_a": float(np.corrcoef(xr, yr)[0, 1]),
+            "r_wd_blocked": float(np.corrcoef(xr, blocked_wd)[0, 1]),
         }
 
     m224 = mech(D224, 1.0)
@@ -743,15 +750,31 @@ def main():
     claim("signmech", "224-release ID~lr", -0.451, m224["id_lr"], 0.001)
     claim("signmech", "224-release OOD~lr", -0.815, m224["ood_lr"], 0.001)
     claim("signmech", "224-release r, lr blocked", 0.043, m224["r_blocked"], 0.001)
+    claim("signmech", "224-release r, wd blocked (placebo)", 0.391,
+          m224["r_wd_blocked"], 0.001)
     claim("signmech", "80-release n", 43, m80["n"], 0)
     claim("signmech", "80-release ID~lr", 0.089, m80["id_lr"], 0.001)
     claim("signmech", "80-release OOD~lr", -0.487, m80["ood_lr"], 0.001)
     claim("signmech", "80-release r, lr blocked", -0.670, m80["r_blocked"], 0.001)
+    claim("signmech", "80-release r, wd blocked (placebo)", -0.614,
+          m80["r_wd_blocked"], 0.001)
     # the prose quotes the Protocol-A coefficient before and after blocking
     claim("signmech", "224-release Protocol-A r before blocking", 0.392,
           m224["r_protocol_a"], 0.001)
     claim("signmech", "80-release Protocol-A r before blocking", -0.628,
           m80["r_protocol_a"], 0.001)
+    # the prose also quotes the mediation at wider bands (robustness sentence)
+    for band, before_exp, after_exp in [(2.0, 0.57, 0.23), (3.0, 0.57, 0.09)]:
+        mb = mech(D224, band)
+        claim("signmech", f"224-release b={band:g} before blocking",
+              before_exp, mb["r_protocol_a"], 0.005)
+        claim("signmech", f"224-release b={band:g} after lr blocking",
+              after_exp, mb["r_blocked"], 0.005)
+    m80w = mech(D80, 3.0)
+    claim("signmech", "80-release b=3 before blocking", -0.70,
+          m80w["r_protocol_a"], 0.005)
+    claim("signmech", "80-release b=3 after lr blocking", -0.73,
+          m80w["r_blocked"], 0.005)
 
     # ---------- §4.7 own-GLUE (tab:glueown) ----------
     # ID matching is applied WITHIN each learning-rate family (each family is
@@ -814,6 +837,32 @@ def main():
           "-1/-1/-1/+1", "/".join(f"{s:+d}" for s in g_all["ID acc"]["signs"]), None)
     claim("glueown", "ID-acc per-family signs (converged)",
           "-1/-1/-1", "/".join(f"{s:+d}" for s in g_conv["ID acc"]["signs"]), None)
+
+    # the honesty note on the C4 failure: the lr=0.25 family flips from +0.80
+    # (all 12 models) to -0.41 (11 models) when ID matching removes its
+    # lowest-accuracy member -- a single leverage point drives the failure
+    sub025 = [r for r in grow if r["lr"] == 0.25]
+    acc025 = np.array([r["id_acc"] for r in sub025]) * 100
+    m025 = np.abs(acc025 - acc025.mean()) <= 2.0
+    x025 = np.array([GLUE_OWN[r["ckpt"]]["glue_dimension"] for r in sub025])
+    y025 = np.array([r["c100_probe_acc"] for r in sub025]) * 100
+    claim("glueown", "D_eff lr=0.25 all-family r", 0.80,
+          float(np.corrcoef(x025, y025)[0, 1]), 0.005)
+    claim("glueown", "D_eff lr=0.25 matched-subset r", -0.41,
+          float(np.corrcoef(x025[m025], y025[m025])[0, 1]), 0.005)
+    claim("glueown", "D_eff lr=0.25 matched n", 11, int(m025.sum()), 0)
+    # and the cross-protocol reconciliation: the pooled-center, no-lr-
+    # residualization variant of the same marker on the same 48 models gives
+    # +0.91 (quoted in §4.7b) against +0.70 under the within-family variant
+    acc_pc = np.array([r["id_acc"] for r in grow]) * 100
+    m_pc = np.abs(acc_pc - acc_pc.mean()) <= 1.0
+    sub_pc = [r for r, k in zip(grow, m_pc) if k]
+    x_pc = np.array([GLUE_OWN[r["ckpt"]]["glue_dimension"] for r in sub_pc])
+    y_pc = np.array([r["c100_probe_acc"] for r in sub_pc]) * 100
+    g_pc = [r["arch"] for r in sub_pc]   # single architecture: centre only
+    claim("glueown", "D_eff pooled-center (no lr resid) n", 32, len(sub_pc), 0)
+    claim("glueown", "D_eff pooled-center (no lr resid) r", 0.91,
+          float(np.corrcoef(gres(x_pc, g_pc), gres(y_pc, g_pc))[0, 1]), 0.01)
 
     # ---------- §4.5 table 3: bootstrap robust rates ----------
     # (the Table 3 cells themselves are audited in the 4.5 block above, which

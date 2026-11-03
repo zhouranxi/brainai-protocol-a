@@ -1,6 +1,6 @@
 # 论文数字一致性审计（paper_draft_v1.md vs 原始数据重算）
 
-生成：2026-10-27 · 共 398 条断言 · 通过 398 · 不一致 0
+生成：2026-10-27 · 共 411 条断言 · 通过 411 · 不一致 0
 
 方法：对每条论文声称的数字，直接从发布数据（df_fig3.pkl / official_df_fig15-20.pkl /
 ind_validation_results.json / mod_arch_results.json / glue_own48_results.json）用与
@@ -290,12 +290,20 @@ ind_validation_results.json / mod_arch_results.json / glue_own48_results.json）
 | signmech | 224-release ID~lr | -0.451 | -0.4506 | ✓ |
 | signmech | 224-release OOD~lr | -0.815 | -0.8147 | ✓ |
 | signmech | 224-release r, lr blocked | 0.043 | 0.0433 | ✓ |
+| signmech | 224-release r, wd blocked (placebo) | 0.391 | 0.3908 | ✓ |
 | signmech | 80-release n | 43 | 43 | ✓ |
 | signmech | 80-release ID~lr | 0.089 | 0.089 | ✓ |
 | signmech | 80-release OOD~lr | -0.487 | -0.4871 | ✓ |
 | signmech | 80-release r, lr blocked | -0.67 | -0.6696 | ✓ |
+| signmech | 80-release r, wd blocked (placebo) | -0.614 | -0.614 | ✓ |
 | signmech | 224-release Protocol-A r before blocking | 0.392 | 0.3922 | ✓ |
 | signmech | 80-release Protocol-A r before blocking | -0.628 | -0.6281 | ✓ |
+| signmech | 224-release b=2 before blocking | 0.57 | 0.57 | ✓ |
+| signmech | 224-release b=2 after lr blocking | 0.23 | 0.2263 | ✓ |
+| signmech | 224-release b=3 before blocking | 0.57 | 0.5663 | ✓ |
+| signmech | 224-release b=3 after lr blocking | 0.09 | 0.0949 | ✓ |
+| signmech | 80-release b=3 before blocking | -0.7 | -0.6988 | ✓ |
+| signmech | 80-release b=3 after lr blocking | -0.73 | -0.7312 | ✓ |
 | glueown | matched n (all 48) | 45 | 45 | ✓ |
 | glueown | matched n (converged) | 34 | 34 | ✓ |
 | glueown | D_eff resid r (all 48) | 0.698 | 0.6975 | ✓ |
@@ -325,6 +333,11 @@ ind_validation_results.json / mod_arch_results.json / glue_own48_results.json）
 | glueown | Psi_eff per-family signs (all 48) | +1/+1/+1/-1 | +1/+1/+1/-1 | ✓ |
 | glueown | ID-acc per-family signs (all 48) | -1/-1/-1/+1 | -1/-1/-1/+1 | ✓ |
 | glueown | ID-acc per-family signs (converged) | -1/-1/-1 | -1/-1/-1 | ✓ |
+| glueown | D_eff lr=0.25 all-family r | 0.8 | 0.7958 | ✓ |
+| glueown | D_eff lr=0.25 matched-subset r | -0.41 | -0.4074 | ✓ |
+| glueown | D_eff lr=0.25 matched n | 11 | 11 | ✓ |
+| glueown | D_eff pooled-center (no lr resid) n | 32 | 32 | ✓ |
+| glueown | D_eff pooled-center (no lr resid) r | 0.91 | 0.9194 | ✓ |
 | bootstrap | 224 PR bootstrap robust rate | 0.5535 | 0.5535 | ✓ |
 | bootstrap | 224 D_eff bootstrap robust rate | 1.0 | 1.0 | ✓ |
 | 4.7a | trained model count | 80 | 80 | ✓ |

@@ -292,22 +292,24 @@ The two official releases yield baseline intervals that each exclude zero --- in
 The bootstrap intervals show that the baseline's sign differs across populations but do not say why. We can localize the cause, because both releases record the learning rate of every model and the two releases differ in how learning rate relates to the two accuracies. Within the ID-matched, architecture-residualized subset of each release, we residualize the learning rate on architecture as well and then ask how strongly ID accuracy and OOD accuracy each track it.
 
 \begin{table}[t]
-\caption{Learning rate as the pathway behind the baseline's sign reversal. All quantities are within-architecture residual correlations computed on the ID-matched subset ($b=1$pp for the 224-model release, $b=2$pp for the 80-model release).}
+\caption{Learning rate as the pathway behind the baseline's sign reversal. All quantities are within-architecture residual correlations computed on the ID-matched subset ($b=1$pp for the 224-model release, $b=2$pp for the 80-model release). The last column is a placebo: blocking the other recorded hyperparameter (weight decay) instead of the learning rate.}
 \label{tab:signmech}
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
-\begin{tabular}{@{}p{2.5cm}p{1.1cm}p{2.3cm}p{2.3cm}p{2.4cm}@{}}
+\begin{tabular}{@{}p{2.4cm}p{1.0cm}p{2.1cm}p{2.1cm}p{2.1cm}p{2.1cm}@{}}
 \hline
-Release & $n$ & ID $\sim$ lr & OOD $\sim$ lr & $r$, lr blocked \\
+Release & $n$ & ID $\sim$ lr & OOD $\sim$ lr & $r$, lr blocked & $r$, wd blocked \\
 \hline
-224 models & 106 & $-0.451$ & $-0.815$ & $+0.043$ \\
-80 models & 43 & $+0.089$ & $-0.487$ & $-0.670$ \\
+224 models & 106 & $-0.451$ & $-0.815$ & $+0.043$ & $+0.391$ \\
+80 models & 43 & $+0.089$ & $-0.487$ & $-0.670$ & $-0.614$ \\
 \hline
 \end{tabular}
 \end{table}
 
 The mechanism is a mediation through the learning-rate axis, and it is present in only one of the two releases. On the 224-model release, ID accuracy and OOD accuracy both track the (architecture-adjusted) learning rate in the same direction --- negatively --- and they do so strongly. A positive association between them is therefore induced by their common dependence on learning rate, and when we regress that pathway out of OOD accuracy, the association between ID and OOD accuracy collapses from $+0.39$ to $+0.04$. On the 80-model release, by contrast, ID accuracy is essentially uncorrelated with learning rate once architecture is removed ($+0.09$); the negative association between ID and OOD accuracy survives blocking learning rate almost unchanged ($-0.63 \rightarrow -0.67$).
+
+The mediation is specific to the learning-rate axis rather than an artifact of blocking any recorded hyperparameter: blocking weight decay instead leaves the coefficient essentially unchanged on both releases ($+0.39 \rightarrow +0.39$ and $-0.63 \rightarrow -0.61$). It is also not an artifact of the matching band: widening it to $\pm2$pp and $\pm3$pp on the 224-model release gives $+0.57 \rightarrow +0.23$ and $+0.57 \rightarrow +0.09$ after blocking, and on the 80-model release $-0.70 \rightarrow -0.73$ at $\pm3$pp, so the collapse and the survival each persist across every band we report.
 
 This changes how the two results should be read. The 80-model release's negative sign is a substantive association between two measurements; the 224-model release's positive sign is largely a hyperparameter-structure artifact that survives C1 and C2 and is removed only when the learning rate itself is controlled. It also explains, rather than merely reports, the sign disagreement we set out to document: the two releases do not merely contain different correlations, they contain different confounding structures. We note that this diagnosis is specific to the variables the releases happen to record --- learning rate, weight decay, seed, architecture --- and does not exhaust the possible sources of between-release difference; in particular, as stated in \limref{lim:crossrelease}, we cannot verify that the two releases' probe pipelines were identical.
 
@@ -495,7 +497,11 @@ Three things follow. First, $D_{\mathrm{eff}}$ behaves on our models as it does 
 
 Second, the pattern across the three GLUE quantities is not uniform, and the differences are not cosmetic. Over all four learning-rate families, $D_{\mathrm{eff}}$ is strong ($r=+0.70$) but fails the cross-family sign check; $\Psi_{\mathrm{eff}}$ is weak ($r=+0.10$) and fails it as well, with its sign flipping in the $lr=1.0$ family; and $R_{\mathrm{eff}}$ is moderate ($r=+0.46$) and passes. Restricting to the three converged families changes the picture again: $D_{\mathrm{eff}}$ strengthens to $r=+0.71$, $\Psi_{\mathrm{eff}}$ strengthens sharply to $r=+0.65$ and passes C4, and $R_{\mathrm{eff}}$ reaches $r=+0.66$ and passes, while the baseline becomes uniformly negative at $r=-0.66$ and now \emph{passes} C4. Two conclusions follow. The three GLUE quantities are not interchangeable, so a claim about ``geometric markers'' that does not name which one is meant is not a claim that can be checked. And the converged-family restriction that we apply to the baseline elsewhere in this paper changes which markers look robust --- we report this rather than select the variant that favours our conclusion.
 
+The reader will notice that the cross-implementation check in \srcref{subs:crossimpl} reports $r=+0.91$ for this same marker on these same 48 models. The two numbers are not in conflict; they are two protocols. The $+0.91$ is computed under the pooled-center variant without learning-rate residualization ($n=32$); the $+0.70$ here is computed under the within-family variant with residualization ($n=45$). That the same marker on the same models moves by $0.2$ between the two variants is not an embarrassment for this section --- it is the paper's own thesis in miniature, and the reader can verify it directly from the released per-model values.
+
 Third, the baseline's behaviour under the same restriction is the sharpest version of our headline. On all 48 models the baseline's sign flips across families ($+1/-1/+1$ by family), but on the converged 36 it is negative in every family and satisfies C4. What the baseline does \emph{not} do is become strong: $r=-0.66$ with CI $[-0.80,-0.42]$. The baseline is not unstable in the sense of being uninformative; it is unstable in the sense that its sign and its rank both depend on which population is summarized. That is precisely the property that disqualifies it as a fixed reference point, and it is the reason the protocol reports the converged-family result alongside the full-sample result rather than choosing between them.
+
+One further honesty note on the C4 failure itself: $D_{\mathrm{eff}}$'s failing sign comes from the $lr=0.25$ family, where the within-family coefficient is $+0.80$ over all 12 models but $-0.41$ after ID matching removes the family's lowest-accuracy member ($n=11$) --- a single leverage point, not a stable within-family reversal. We report the protocol's verdict as it stands, and we report this diagnosis of it, because the same fragility is what C3's rank criterion and the minimum group size in C4 are there to catch; a sign-consistency check that can be flipped by one model is a check whose verdicts should be read with the per-group sample sizes in view.
 
 \subsubsection{Geometric markers and ID accuracy carry near-orthogonal information}
 \label{subs:orthogonal}
