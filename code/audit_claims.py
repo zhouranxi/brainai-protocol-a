@@ -1175,6 +1175,145 @@ def main():
             "pass": False, "note": "",
         })
 
+    # =====================================================================
+    # 2026-11-05 round: E5e -- direct test of the saturation / headroom
+    # conjectures (appendix "E5e", runs/v2_e5d_ceiling).  The E3 recipe
+    # stratification paragraph quotes these numbers; both conjectures are
+    # now measurements, not conjectures.
+    # =====================================================================
+    CEIL_FP = ROOT / "runs" / "v2_e5d_ceiling" / "intervene_e5d_ceiling.json"
+    if CEIL_FP.exists():
+        _ceil = json.load(open(CEIL_FP))["rows"]
+
+        def _ceil_at(m, g, sp, ep=40):
+            for r in _ceil:
+                if r["model"] == m and r["param"] == g and r["space"] == sp:
+                    for c in r["curve"]:
+                        if c["epoch"] == ep:
+                            return c
+            return None
+
+        NEG = "resnet18_lr1.0_wd5e-05_s0"
+        # per-model benefit / conditioning at gamma=0
+        _ben, _cond_o, _cond_d, _l40 = {}, {}, {}, {}
+        for r in _ceil:
+            if r["param"] != 0.0:
+                continue
+            c40 = _ceil_at(r["model"], 0.0, r["space"])
+            if r["space"] == "orig":
+                _cond_o[r["model"]] = r["in_rank_cond"]
+                _l40[r["model"]] = c40["train_loss"]
+            else:
+                _cond_d[r["model"]] = r["in_rank_cond"]
+            if r["space"] == "dose":
+                _ben[r["model"]] = None
+        for m in _cond_o:
+            co, cd = _ceil_at(m, 0.0, "orig"), _ceil_at(m, 0.0, "dose")
+            _ben[m] = 100 * (cd["c100_acc"] - co["c100_acc"])
+
+        claim("E5e", "negative-model cond orig (g=0)", 294,
+              round(_cond_o[NEG]))
+        claim("E5e", "negative-model cond dose (g=0)", 13.2,
+              round(_cond_d[NEG], 1), 0.05)
+        claim("E5e", "negative-model improve ratio (~22x)", 22.3,
+              round(_cond_o[NEG] / _cond_d[NEG], 1), 0.3)
+        others = sorted(_cond_o[m] / _cond_d[m]
+                        for m in _cond_o if m != NEG)
+        claim("E5e", "median improve ratio others (4.6e3)", 4593.0,
+              round(float(np.median(others)), 0), 0.002)
+        claim("E5e", "negative-model loss40 orig (4.134)", 4.134,
+              _l40[NEG], 0.0006)
+        claim("E5e", "negative-model loss40 dose (4.165)", 4.165,
+              _ceil_at(NEG, 0.0, "dose")["train_loss"], 0.0006)
+        claim("E5e", "negative-model probe benefit pp (+0.08)", 0.08,
+              round(_ben[NEG], 2), 0.006)
+        claim("E5e", "models where whitening lowers reachable loss", 5,
+              sum(1 for m in _ben
+                  if _ceil_at(m, 0.0, "dose")["train_loss"]
+                  < _ceil_at(m, 0.0, "orig")["train_loss"]), 0)
+        claim("E5e", "negative model among non-loss-dropping", True,
+              bool(_ceil_at(NEG, 0.0, "dose")["train_loss"]
+                   >= _ceil_at(NEG, 0.0, "orig")["train_loss"]), 0)
+        # C2: positive D_eff-benefit association
+        E3R = json.load(open(ROOT / "runs" / "v2_e3.json"))["rows"]
+        gd = {r["model"]: r["glue_d"] for r in E3R
+              if r.get("kind") == "train_whiten"}
+        xs = np.array([gd[m] for m in _ben])
+        ys = np.array([_ben[m] for m in _ben])
+        from scipy.stats import spearmanr as _spr, pearsonr as _pear
+        claim("E5e", "D_eff v benefit Spearman (+0.857)", 0.857,
+              round(float(_spr(xs, ys)[0]), 3), 0.0006)
+        claim("E5e", "D_eff v benefit Spearman p (0.0065)", 0.0065,
+              round(float(_spr(xs, ys)[1]), 4), 0.0006)
+        claim("E5e", "D_eff v benefit Pearson (+0.743)", 0.743,
+              round(float(_pear(xs, ys)[0]), 3), 0.0006)
+        hi = [v for m, v in _ben.items() if gd[m] >= 10]
+        claim("E5e", "high-D mean benefit pp (+3.5)", 3.51,
+              round(float(np.mean(hi)), 2), 0.006)
+        lo = [v for m, v in _ben.items() if gd[m] < 10]
+        claim("E5e", "low-D mean benefit pp (+0.9)", 0.91,
+              round(float(np.mean(lo)), 2), 0.006)
+        # the corrected D_eff of the negative model (was misprinted 0.89)
+        claim("E5e", "negative-model glue_d (0.8742)", 0.8742,
+              gd[NEG], 0.00005)
+
+        # replication vs E5c: identical conditions must match exactly
+        E5C_FP = ROOT / "runs" / "v2_e5c.json"
+        if E5C_FP.exists():
+            e5c = json.load(open(E5C_FP))["rows"]
+            e5c_spec = {(r["model"], r["param"], r["space"]): r["in_rank_cond"]
+                        for r in e5c}
+            e5c_fin = {(r["model"], r["param"], r["space"]):
+                       r["curve"][-1]["c100_acc"] for r in e5c}
+            mine_spec = {(r["model"], r["param"], r["space"]): r["in_rank_cond"]
+                         for r in _ceil}
+            mine_fin = {(r["model"], r["param"], r["space"]):
+                        r["curve"][-1]["c100_acc"] for r in _ceil}
+            common = set(e5c_spec) & set(mine_spec)
+            claim("E5e", "E5c overlap conditions (18)", 18, len(common), 0)
+            claim("E5e", "E5c cond exact match", 15,
+                  sum(1 for k in common if e5c_spec[k] == mine_spec[k]), 0)
+            claim("E5e", "E5c cond rel-tol 1e-6 match", 18,
+                  sum(1 for k in common
+                      if abs(e5c_spec[k] - mine_spec[k])
+                      <= 1e-6 * max(abs(e5c_spec[k]), 1.0)
+                      or e5c_spec[k] == mine_spec[k]), 0)
+            claim("E5e", "E5c final-acc exact match", 18,
+                  sum(1 for k in common if e5c_fin[k] == mine_fin[k]), 0)
+
+        # the stratification paragraph must carry the corrected number
+        CT = ROOT / "paper" / "causality" / "main.tex"
+        if CT.exists():
+            ct = CT.read_text(encoding="utf-8")
+            CLAIMS.append({
+                "section": "E5e", "quantity": "stratification D_eff corrected (0.87)",
+                "paper": "$\\dfx$ ($0.87$)", "recomputed": "0.8742 -> 0.87",
+                "tol": 0, "kind": "text",
+                "pass": bool("$\\dfx$ ($0.87$)" in ct
+                             and "$\\dfx$ ($0.89$)" not in ct),
+                "note": "",
+            })
+            CLAIMS.append({
+                "section": "E5e", "quantity": "appendix E5e section present",
+                "paper": "app:e5e label + E5e section",
+                "recomputed": "label check", "tol": 0, "kind": "text",
+                "pass": bool("\\section{E5e:" in ct and "app:e5e" in ct),
+                "note": "",
+            })
+            CLAIMS.append({
+                "section": "E5e", "quantity": "headroom refuted sentence",
+                "paper": "rho = +0.857, p = 0.007",
+                "recomputed": "text present", "tol": 0, "kind": "text",
+                "pass": bool("rho = +0.857" in ct and "refuted" in ct),
+                "note": "",
+            })
+    else:
+        CLAIMS.append({
+            "section": "E5e", "quantity": "v2_e5d_ceiling json present",
+            "paper": "present", "recomputed": "MISSING", "tol": 0,
+            "kind": "text", "pass": False, "note": "",
+        })
+
     # ---------------- report ----------------
     npass = sum(c["pass"] for c in CLAIMS)
     nfail = len(CLAIMS) - npass

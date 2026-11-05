@@ -1,6 +1,6 @@
 # 论文数字一致性审计（paper_draft_v1.md vs 原始数据重算）
 
-生成：2026-10-27 · 共 411 条断言 · 通过 411 · 不一致 0
+生成：2026-10-27 · 共 433 条断言 · 通过 433 · 不一致 0
 
 方法：对每条论文声称的数字，直接从发布数据（df_fig3.pkl / official_df_fig15-20.pkl /
 ind_validation_results.json / mod_arch_results.json / glue_own48_results.json）用与
@@ -421,3 +421,25 @@ ind_validation_results.json / mod_arch_results.json / glue_own48_results.json）
 | text | main.tex must not contain '78 self-trained' | absent | absent | ✓ |
 | text | main.tex must not contain 'magnitude collapse' | absent | absent | ✓ |
 | text | main.tex: 80-release pooled r is +0.44, not +0.48 | +0.44 | +0.44 | ✓ |
+| E5e | negative-model cond orig (g=0) | 294 | 294 | ✓ |
+| E5e | negative-model cond dose (g=0) | 13.2 | 13.2 | ✓ |
+| E5e | negative-model improve ratio (~22x) | 22.3 | 22.3 | ✓ |
+| E5e | median improve ratio others (4.6e3) | 4593.0 | 4593.0 | ✓ |
+| E5e | negative-model loss40 orig (4.134) | 4.134 | 4.1338 | ✓ |
+| E5e | negative-model loss40 dose (4.165) | 4.165 | 4.1651 | ✓ |
+| E5e | negative-model probe benefit pp (+0.08) | 0.08 | 0.08 | ✓ |
+| E5e | models where whitening lowers reachable loss | 5 | 5 | ✓ |
+| E5e | negative model among non-loss-dropping | True | True | ✓ |
+| E5e | D_eff v benefit Spearman (+0.857) | 0.857 | 0.857 | ✓ |
+| E5e | D_eff v benefit Spearman p (0.0065) | 0.0065 | 0.0065 | ✓ |
+| E5e | D_eff v benefit Pearson (+0.743) | 0.743 | 0.743 | ✓ |
+| E5e | high-D mean benefit pp (+3.5) | 3.51 | 3.51 | ✓ |
+| E5e | low-D mean benefit pp (+0.9) | 0.91 | 0.91 | ✓ |
+| E5e | negative-model glue_d (0.8742) | 0.8742 | 0.8742 | ✓ |
+| E5e | E5c overlap conditions (18) | 18 | 18 | ✓ |
+| E5e | E5c cond exact match | 15 | 15 | ✓ |
+| E5e | E5c cond rel-tol 1e-6 match | 18 | 18 | ✓ |
+| E5e | E5c final-acc exact match | 18 | 18 | ✓ |
+| E5e | stratification D_eff corrected (0.87) | $\dfx$ ($0.87$) | 0.8742 -> 0.87 | ✓ |
+| E5e | appendix E5e section present | app:e5e label + E5e section | label check | ✓ |
+| E5e | headroom refuted sentence | rho = +0.857, p = 0.007 | text present | ✓ |
