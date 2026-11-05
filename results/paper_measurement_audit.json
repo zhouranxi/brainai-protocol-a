@@ -595,87 +595,703 @@
     "ok": true
   },
   {
-    "section": "class-text",
-    "name": "dimension class cell as rendered",
-    "paper": "robust",
-    "recomputed": "robust",
+    "section": "smap",
+    "name": "n families",
+    "paper": 24.0,
+    "recomputed": 24.0,
     "ok": true
   },
   {
-    "section": "class-text",
-    "name": "radius class cell as rendered",
-    "paper": "SIGN FLIPS (Pearson)",
-    "recomputed": "\\textbf{sign flips}",
+    "section": "smap",
+    "name": "n shift-dependent",
+    "paper": 18.0,
+    "recomputed": 18.0,
     "ok": true
   },
   {
-    "section": "class-text",
-    "name": "utility class cell as rendered",
-    "paper": "consistent sign, variable magnitude",
-    "recomputed": "consistent sign, variable magnitude",
+    "section": "smap",
+    "name": "n flip",
+    "paper": 2.0,
+    "recomputed": 2.0,
     "ok": true
   },
   {
-    "section": "class-text",
-    "name": "center alignment class cell as rendered",
-    "paper": "robust",
-    "recomputed": "robust",
+    "section": "smap",
+    "name": "n unstable-n",
+    "paper": 2.0,
+    "recomputed": 2.0,
     "ok": true
   },
   {
-    "section": "class-text",
-    "name": "participation ratio (per class) class cell as rendered",
-    "paper": "robust",
-    "recomputed": "robust",
+    "section": "smap",
+    "name": "n stable-same",
+    "paper": 1.0,
+    "recomputed": 1.0,
     "ok": true
   },
   {
-    "section": "class-text",
-    "name": "participation ratio (global) class cell as rendered",
-    "paper": "robust",
-    "recomputed": "robust",
+    "section": "smap",
+    "name": "n weak-same",
+    "paper": 1.0,
+    "recomputed": 1.0,
     "ok": true
   },
   {
-    "section": "class-text",
-    "name": "numerical rank (per class) class cell as rendered",
-    "paper": "consistent sign, variable magnitude",
-    "recomputed": "magnitude varies",
+    "section": "smap",
+    "name": "dimension verdict",
+    "paper": 1.0,
+    "recomputed": 1.0,
     "ok": true
   },
   {
-    "section": "class-text",
-    "name": "mean angle class cell as rendered",
-    "paper": "SIGN FLIPS (Pearson)",
-    "recomputed": "\\textbf{sign flips}",
+    "section": "smap",
+    "name": "radius verdict",
+    "paper": 1.0,
+    "recomputed": 1.0,
     "ok": true
   },
   {
-    "section": "class-text",
-    "name": "NC1 class cell as rendered",
-    "paper": "SIGN FLIPS (Spearman)",
-    "recomputed": "sign flip (Spearman)",
+    "section": "smap",
+    "name": "utility verdict",
+    "paper": 1.0,
+    "recomputed": 1.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "participation_ratio verdict",
+    "paper": 1.0,
+    "recomputed": 1.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [task] ref r",
+    "paper": 0.925,
+    "recomputed": 0.9249648095501077,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [task] own r",
+    "paper": 0.919,
+    "recomputed": 0.9193622945268809,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [task] n",
+    "paper": 138.0,
+    "recomputed": 138.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:gaussian_noise] ref r",
+    "paper": 0.737,
+    "recomputed": 0.7365944920878849,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:gaussian_noise] own r",
+    "paper": 0.623,
+    "recomputed": 0.6229321420646656,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:gaussian_noise] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:brightness] ref r",
+    "paper": -0.493,
+    "recomputed": -0.49276299906960347,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:brightness] own r",
+    "paper": -0.712,
+    "recomputed": -0.7124164273314362,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:brightness] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:fog] ref r",
+    "paper": -0.562,
+    "recomputed": -0.5615652297299845,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:fog] own r",
+    "paper": -0.62,
+    "recomputed": -0.619785084734094,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:fog] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:contrast] ref r",
+    "paper": -0.584,
+    "recomputed": -0.5838180272166753,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:contrast] own r",
+    "paper": -0.114,
+    "recomputed": -0.11416189710427793,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "dimension [corruption:contrast] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [task] ref r",
+    "paper": -0.584,
+    "recomputed": -0.5843150108992601,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [task] own r",
+    "paper": 0.602,
+    "recomputed": 0.6017477328345486,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [task] n",
+    "paper": 138.0,
+    "recomputed": 138.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [corruption:jpeg_compression] ref r",
+    "paper": -0.185,
+    "recomputed": -0.18453882569071092,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [corruption:jpeg_compression] own r",
+    "paper": 0.204,
+    "recomputed": 0.20433903677221785,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [corruption:jpeg_compression] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [corruption:pixelate] ref r",
+    "paper": -0.283,
+    "recomputed": -0.2827771857163345,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [corruption:pixelate] own r",
+    "paper": 0.301,
+    "recomputed": 0.30145683255294964,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [corruption:pixelate] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [corruption:gaussian_noise] ref r",
+    "paper": 0.153,
+    "recomputed": 0.15346963698095945,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [corruption:gaussian_noise] own r",
+    "paper": 0.438,
+    "recomputed": 0.4375135536320927,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "radius [corruption:gaussian_noise] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [task] ref r",
+    "paper": 0.901,
+    "recomputed": 0.9013817200190739,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [task] own r",
+    "paper": 0.342,
+    "recomputed": 0.3416288669859795,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [task] n",
+    "paper": 138.0,
+    "recomputed": 138.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [corruption:jpeg_compression] ref r",
+    "paper": 0.542,
+    "recomputed": 0.5418922489756646,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [corruption:jpeg_compression] own r",
+    "paper": -0.133,
+    "recomputed": -0.13342735890555446,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [corruption:jpeg_compression] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [corruption:pixelate] ref r",
+    "paper": 0.411,
+    "recomputed": 0.41125556749020553,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [corruption:pixelate] own r",
+    "paper": -0.178,
+    "recomputed": -0.17809367394379044,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [corruption:pixelate] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [corruption:gaussian_noise] ref r",
+    "paper": 0.808,
+    "recomputed": 0.8079103429171155,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [corruption:gaussian_noise] own r",
+    "paper": 0.061,
+    "recomputed": 0.060914846248156476,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "utility [corruption:gaussian_noise] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "participation_ratio [task] ref r",
+    "paper": 0.659,
+    "recomputed": 0.6586409294455482,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "participation_ratio [task] own r",
+    "paper": 0.895,
+    "recomputed": 0.8950370678661945,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "participation_ratio [task] n",
+    "paper": 138.0,
+    "recomputed": 138.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "participation_ratio [corruption:brightness] ref r",
+    "paper": -0.532,
+    "recomputed": -0.5317840599940663,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "participation_ratio [corruption:brightness] own r",
+    "paper": -0.622,
+    "recomputed": -0.6221035218699482,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "participation_ratio [corruption:brightness] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "participation_ratio [corruption:gaussian_noise] ref r",
+    "paper": 0.592,
+    "recomputed": 0.5919122643828141,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "participation_ratio [corruption:gaussian_noise] own r",
+    "paper": 0.63,
+    "recomputed": 0.6301175564241922,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "participation_ratio [corruption:gaussian_noise] n",
+    "paper": 57.0,
+    "recomputed": 57.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "numerical_rank task own r",
+    "paper": 0.972,
+    "recomputed": 0.9715591955375059,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "numerical_rank brightness own r",
+    "paper": -0.703,
+    "recomputed": -0.7028454268340446,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "brightness dimension own resample agree",
+    "paper": 1.0,
+    "recomputed": 1.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "brightness dimension ref r stable claim",
+    "paper": -0.493,
+    "recomputed": -0.49276299906960347,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "task-vs-noise callable families",
+    "paper": 21.0,
+    "recomputed": 21.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "task-vs-noise same sign",
+    "paper": 20.0,
+    "recomputed": 20.0,
+    "ok": true
+  },
+  {
+    "section": "smap",
+    "name": "block-opposed families",
+    "paper": 14.0,
+    "recomputed": 14.0,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "dimension task ref (as rendered)",
+    "paper": 0.925,
+    "recomputed": 0.9249648095501077,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "dimension task own (as rendered)",
+    "paper": 0.919,
+    "recomputed": 0.9193622945268809,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "dimension gaussian noise ref (as rendered)",
+    "paper": 0.737,
+    "recomputed": 0.7365944920878849,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "dimension gaussian noise own (as rendered)",
+    "paper": 0.623,
+    "recomputed": 0.6229321420646656,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "dimension brightness ref (as rendered)",
+    "paper": -0.493,
+    "recomputed": -0.49276299906960347,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "dimension brightness own (as rendered)",
+    "paper": -0.712,
+    "recomputed": -0.7124164273314362,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "dimension fog ref (as rendered)",
+    "paper": -0.562,
+    "recomputed": -0.5615652297299845,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "dimension fog own (as rendered)",
+    "paper": -0.62,
+    "recomputed": -0.619785084734094,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "dimension contrast ref (as rendered)",
+    "paper": -0.584,
+    "recomputed": -0.5838180272166753,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "dimension contrast own (as rendered)",
+    "paper": -0.114,
+    "recomputed": -0.11416189710427793,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "radius task ref (as rendered)",
+    "paper": -0.584,
+    "recomputed": -0.5843150108992601,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "radius task own (as rendered)",
+    "paper": 0.602,
+    "recomputed": 0.6017477328345486,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "radius jpeg compression ref (as rendered)",
+    "paper": -0.185,
+    "recomputed": -0.18453882569071092,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "radius jpeg compression own (as rendered)",
+    "paper": 0.204,
+    "recomputed": 0.20433903677221785,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "radius pixelate ref (as rendered)",
+    "paper": -0.283,
+    "recomputed": -0.2827771857163345,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "radius pixelate own (as rendered)",
+    "paper": 0.301,
+    "recomputed": 0.30145683255294964,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "radius gaussian noise ref (as rendered)",
+    "paper": 0.153,
+    "recomputed": 0.15346963698095945,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "radius gaussian noise own (as rendered)",
+    "paper": 0.438,
+    "recomputed": 0.4375135536320927,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "utility task ref (as rendered)",
+    "paper": 0.901,
+    "recomputed": 0.9013817200190739,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "utility task own (as rendered)",
+    "paper": 0.342,
+    "recomputed": 0.3416288669859795,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "utility jpeg compression ref (as rendered)",
+    "paper": 0.542,
+    "recomputed": 0.5418922489756646,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "utility jpeg compression own (as rendered)",
+    "paper": -0.133,
+    "recomputed": -0.13342735890555446,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "utility pixelate ref (as rendered)",
+    "paper": 0.411,
+    "recomputed": 0.41125556749020553,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "utility pixelate own (as rendered)",
+    "paper": -0.178,
+    "recomputed": -0.17809367394379044,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "utility gaussian noise ref (as rendered)",
+    "paper": 0.808,
+    "recomputed": 0.8079103429171155,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "utility gaussian noise own (as rendered)",
+    "paper": 0.061,
+    "recomputed": 0.060914846248156476,
+    "ok": true
+  },
+  {
+    "section": "smap-table",
+    "name": "cells parsed from manuscript",
+    "paper": ">=16",
+    "recomputed": 26,
     "ok": true
   },
   {
     "section": "text",
-    "name": "main.tex: utility class label",
+    "name": "main.tex: abstract names the 18/24 count",
     "paper": "present",
     "recomputed": "present",
     "ok": true
   },
   {
     "section": "text",
-    "name": "main.tex: utility class label (old) absent from table row",
+    "name": "main.tex: abstract names the within-shift radius flip",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "text",
+    "name": "main.tex: abstract names the brightness reversal",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "text",
+    "name": "main.tex: dimension recommendation withdrawn",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "text",
+    "name": "main.tex: no-marker-survives statement",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "text",
+    "name": "main.tex: old three-cell recommendation gone",
     "paper": "absent",
     "recomputed": "absent",
     "ok": true
   },
   {
     "section": "text",
-    "name": "main.tex: utility class label (in the table row)",
+    "name": "main.tex: shift dominates implementations",
     "paper": "present",
     "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "text",
+    "name": "main.tex: utility class label (old table row) absent",
+    "paper": "absent",
+    "recomputed": "absent",
     "ok": true
   },
   {

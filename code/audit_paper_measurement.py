@@ -324,55 +324,184 @@ def main() -> int:
         CHECKS.append({"section": "class", "name": f"{marker} classification",
                        "paper": rendered, "recomputed": script_class, "ok": bool(ok)})
 
+    # ================================================================
+    # ---- the full sign-stability map (results/stability_map.json) ----
+    #
+    # The revised Table 1 quotes cells from the candidate-A experiment; the
+    # prose quotes verdict counts and headline reversals.  Everything here is
+    # re-derived from the released stability_map.json.
+    # ================================================================
+    smap = json.load(open(locate("stability_map.json")))
+    SV = smap["verdicts"]
+
+    def cellr(fam, group):
+        """(ref_impl_r, own_impl_r, ref_n, own_n) for one shift group."""
+        cells = SV[fam]["groups"][group]
+        ref = [s for k, s in cells.items() if k.startswith("official")]
+        own = [s for k, s in cells.items() if k.startswith("own48")]
+        return (ref[0]["r"] if ref else None, own[0]["r"] if own else None,
+                ref[0]["n"] if ref else None, own[0]["n"] if own else None)
+
+    # verdict summary as quoted in the prose and the figure caption
+    vc = smap["verdict_summary"]
+    check("smap", "n families", 24, sum(vc.values()), tol=0)
+    check("smap", "n shift-dependent", 18, vc["shift-dependent"], tol=0)
+    check("smap", "n flip", 2, vc["flip"], tol=0)
+    check("smap", "n unstable-n", 2, vc["unstable-n"], tol=0)
+    check("smap", "n stable-same", 1, vc["stable-same"], tol=0)
+    check("smap", "n weak-same", 1, vc["weak-same"], tol=0)
+    for fam, expect in [("dimension", "shift-dependent"), ("radius", "flip"),
+                        ("utility", "flip"),
+                        ("participation_ratio", "shift-dependent")]:
+        check("smap", f"{fam} verdict", 1,
+              int(SV[fam]["verdict"] == expect), tol=0)
+
+    # the quoted cells of the revised Table 1
+    QUOTED = [
+        ("dimension", "task", 0.925, 0.919, 106, 32),
+        ("dimension", "corruption:gaussian_noise", 0.737, 0.623, 25, 32),
+        ("dimension", "corruption:brightness", -0.493, -0.712, 25, 32),
+        ("dimension", "corruption:fog", -0.562, -0.620, 25, 32),
+        ("dimension", "corruption:contrast", -0.584, -0.114, 25, 32),
+        ("radius", "task", -0.584, 0.602, 106, 32),
+        ("radius", "corruption:jpeg_compression", -0.185, 0.204, 25, 32),
+        ("radius", "corruption:pixelate", -0.283, 0.301, 25, 32),
+        ("radius", "corruption:gaussian_noise", 0.153, 0.438, 25, 32),
+        ("utility", "task", 0.901, 0.342, 106, 32),
+        ("utility", "corruption:jpeg_compression", 0.542, -0.133, 25, 32),
+        ("utility", "corruption:pixelate", 0.411, -0.178, 25, 32),
+        ("utility", "corruption:gaussian_noise", 0.808, 0.061, 25, 32),
+        ("participation_ratio", "task", 0.659, 0.895, 106, 32),
+        ("participation_ratio", "corruption:brightness", -0.532, -0.622, 25, 32),
+        ("participation_ratio", "corruption:gaussian_noise", 0.592, 0.630, 25, 32),
+    ]
+    for fam, grp, q_ref, q_own, q_nref, q_nown in QUOTED:
+        rr, ro, nr, no = cellr(fam, grp)
+        check("smap", f"{fam} [{grp}] ref r", q_ref, rr)
+        check("smap", f"{fam} [{grp}] own r", q_own, ro)
+        check("smap", f"{fam} [{grp}] n", q_nref + q_nown,
+              (nr or 0) + (no or 0), tol=0)
+
+    # numerical rank: the non-GLUE headline (task + vs brightness -)
+    rr, ro, _, _ = cellr("numerical_rank", "task")
+    check("smap", "numerical_rank task own r", 0.972, ro)
+    rr, ro, _, _ = cellr("numerical_rank", "corruption:brightness")
+    check("smap", "numerical_rank brightness own r", -0.703, ro)
+
+    # the dimension reversal: the own-impl brightness cell is sign-stable
+    # under resampling (the official-80 corruption cells do not run the
+    # half-sampling procedure -- only the task and gaussian-noise cells do)
+    s = SV["dimension"]["groups"]["corruption:brightness"]["own48/brightness:glue_dimension"]
+    check("smap", "brightness dimension own resample agree", 1.0, s["resample_agree"])
+    check("smap", "brightness dimension ref r stable claim", -0.493,
+          SV["dimension"]["groups"]["corruption:brightness"]["official80/brightness:dimension"]["r"])
+
+    # task-vs-gaussian-noise sign agreement: 20 of 21 callable families
+    agree = dis = 0
+    for fam, v in SV.items():
+        ts, gs = [], []
+        for grp, cells in v["groups"].items():
+            for k, s in cells.items():
+                if s["r"] is None:
+                    continue
+                if grp == "task":
+                    ts.append(s["r"])
+                elif "gaussian_noise" in grp:
+                    gs.append(s["r"])
+        if not ts or not gs:
+            continue
+        mt, mg = sum(ts) / len(ts), sum(gs) / len(gs)
+        if abs(mt) < 0.05 or abs(mg) < 0.05:
+            continue
+        agree += (mt > 0) == (mg > 0)
+        dis += (mt > 0) != (mg > 0)
+    check("smap", "task-vs-noise callable families", 21, agree + dis, tol=0)
+    check("smap", "task-vs-noise same sign", 20, agree, tol=0)
+
+    # block opposition: task+noise mean vs photometric+compression mean
+    opp = 0
+    for fam, v in SV.items():
+        bt, bc = [], []
+        for grp, cells in v["groups"].items():
+            for k, s in cells.items():
+                if s["r"] is None:
+                    continue
+                if grp == "task" or "gaussian_noise" in grp:
+                    bt.append(s["r"])
+                else:
+                    bc.append(s["r"])
+        if len(bc) < 4 or not bt:
+            continue
+        mb, mc = sum(bt) / len(bt), sum(bc) / len(bc)
+        if abs(mb) >= 0.1 and abs(mc) >= 0.1 and (mb > 0) != (mc > 0):
+            opp += 1
+    check("smap", "block-opposed families", 14, opp, tol=0)
+
     # ---- Table 1 as rendered in the manuscript ----
     #
-    # The class column is parsed out of the manuscript's own table so that the
-    # label the reader actually sees is compared against the label the
-    # analysis script assigned -- not against a constant copied out of the
-    # manuscript.  A substring test would not notice an appended character,
-    # so the comparison is on the whole cell.
+    # Every numeric cell of the revised table is parsed out of the manuscript
+    # and compared with the released JSON, so a stale coefficient cannot
+    # survive an edit on either side.
     if TEX.exists():
         tex = TEX.read_text(encoding="utf-8")
-        i = tex.find("Marker & ref")
+        i = tex.find("Family & Shift")
         seg = tex[i:tex.find(r"\end{tabular}", i)] if i >= 0 else ""
-        rows = {}
+        GROUP_KEY = {
+            "task": "task", "gaussian noise": "corruption:gaussian_noise",
+            "brightness": "corruption:brightness", "fog": "corruption:fog",
+            "contrast": "corruption:contrast",
+            "jpeg compression": "corruption:jpeg_compression",
+            "pixelate": "corruption:pixelate",
+        }
+        n_cells = 0
+        last_fam = None
         for line in seg.split("\n"):
-            if "&" not in line or line.lstrip().startswith("Marker"):
+            if "&" not in line or line.lstrip().startswith("Family"):
                 continue
-            cells = [c.strip() for c in line.rsplit("\\\\", 1)[0].split("&")]
-            if len(cells) < 5:
+            cells = [c.strip() for c in line.replace("\\\\", "").split("&")]
+            if len(cells) < 4 or cells[0].startswith("&") is False and not cells[0]:
+                pass
+            fam = cells[0].strip("` ").strip()
+            shift = cells[1].strip()
+            if not fam:
+                fam = last_fam
+            last_fam = fam
+            if fam not in SV or shift not in GROUP_KEY:
                 continue
-            # the marker cell is "`name`" or "`name` (qualifier)"; the script
-            # keys the map on "name (qualifier)" or "name"
-            label = cells[0]
-            m = re.match(r"`([^`]+)`\s*(?:\(([^)]*)\))?$", label)
-            if not m:
-                continue
-            name, qualifier = m.group(1), m.group(2)
-            label = f"{name} ({qualifier})" if qualifier else name
-            rows[label] = cells[4]
-        for marker in CLASS_RENDER:
-            rendered = rows.get(marker)
-            script_class = map_by_marker.get(marker, {}).get("classification")
-            allowed = RENDER_OF.get(script_class, set())
-            ok = rendered is not None and rendered in allowed
-            CHECKS.append({"section": "class-text",
-                           "name": f"{marker} class cell as rendered",
-                           "paper": script_class, "recomputed": rendered,
-                           "ok": bool(ok)})
-        # the two strings that changed this round
-        check_text("text", "main.tex: utility class label",
-                   "consistent sign, variable magnitude", True, tex)
-        # The old table label was "magnitude collapse"; it must be gone from
-        # the table row.  (The phrase still appears in the surrounding prose,
-        # where it describes the collapse itself, so the check is anchored to
-        # the table row rather than to the bare string.)
-        check_text("text", "main.tex: utility class label (old) absent from table row",
-                   "`utility` & $+0.901$ & $+0.808$ & $+0.342$ & magnitude collapse",
-                   False, tex)
-        check_text("text", "main.tex: utility class label (in the table row)",
-                   "`utility` & $+0.901$ & $+0.808$ & $+0.342$ & "
-                   "consistent sign, variable magnitude", True, tex)
+            rr, ro, _, _ = cellr(fam, GROUP_KEY[shift])
+            def num(s):
+                s = s.replace("$", "").strip()
+                if s in ("---", ""):
+                    return None
+                return float(s)
+            v_ref, v_own = num(cells[2]), num(cells[3])
+            for label, quoted, recomputed in [("ref", v_ref, rr), ("own", v_own, ro)]:
+                if quoted is None or recomputed is None:
+                    continue
+                n_cells += 1
+                check("smap-table", f"{fam} {shift} {label} (as rendered)",
+                      quoted, recomputed)
+        CHECKS.append({"section": "smap-table", "name": "cells parsed from manuscript",
+                       "paper": ">=16", "recomputed": n_cells,
+                       "ok": bool(n_cells >= 16)})
+
+        # the sentences that carry the revised headline
+        check_text("text", "main.tex: abstract names the 18/24 count",
+                   "eighteen of twenty-four families change sign", True, tex)
+        check_text("text", "main.tex: abstract names the within-shift radius flip",
+                   "jpeg compression: $-0.19$ versus $+0.20$", True, tex)
+        check_text("text", "main.tex: abstract names the brightness reversal",
+                   "$-0.49$ and $-0.71$", True, tex)
+        check_text("text", "main.tex: dimension recommendation withdrawn",
+                   "overturn that\nrecommendation", True, tex)
+        check_text("text", "main.tex: no-marker-survives statement",
+                   "No marker in the map\nis stable across all shifts we test", True, tex)
+        check_text("text", "main.tex: old three-cell recommendation gone",
+                   "the one GLUE quantity that agrees in sign and\nmagnitude across all three cells", False, tex)
+        check_text("text", "main.tex: shift dominates implementations",
+                   "The shift axis dominates the implementation axis", True, tex)
+        check_text("text", "main.tex: utility class label (old table row) absent",
+                   "`utility` & $+0.901$ & $+0.808$ & $+0.342$", False, tex)
         check_text("text", "main.tex: best/aug_only accuracy gap",
                    "differ in test accuracy by 0.001", True, tex)
         check_text("text", "main.tex: best/aug_only accuracy gap (old) absent",
@@ -423,14 +552,15 @@ def main() -> int:
                   f"placeholder(s) -- fill in the forum id after submission")
         if unexpected > 0:
             print(f"  NOTE: {unexpected} unexpected placeholder(s) left in main.tex")
-        for must in ["+0.925", "-0.584", "+0.901", "-0.053", "-0.246"]:
+        for must in ["+0.925", "-0.584", "+0.901", "-0.053",
+                     "-0.712", "-0.493", "+0.602", "-0.133", "eighteen of twenty-four"]:
             if must not in t:
                 print(f"  NOTE: main.tex does not contain {must!r} -- check the manuscript")
         # Any number the manuscript quotes that the audit knows to be different
         # must not survive. Compare the quoted utility value at the wide band.
-        if "-0.229" in t:
-            print("  NOTE: main.tex quotes -0.229 for the wide-band utility; "
-                  "the recomputed value is -0.246")
+        if "-0.229" in t or "-0.246" in t:
+            print("  NOTE: main.tex quotes a wide-band utility value; the "
+                  "utility section no longer makes the bandwidth claim")
 
     out = ROOT / "results" / "paper_measurement_audit.json"
     out.write_text(json.dumps(CHECKS, indent=2), encoding="utf-8")

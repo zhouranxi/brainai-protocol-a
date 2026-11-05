@@ -119,6 +119,98 @@ def fig_map(outdir: Path):
     print("saved fig_map")
 
 
+GLUE_FAMILIES = {"dimension", "radius", "utility"}
+SHIFT_COLS = ["task", "gaussian_noise", "brightness", "contrast",
+              "fog", "jpeg_compression", "pixelate"]
+SHIFT_LAB = {"task": "task\nshift", "gaussian_noise": "gaussian\nnoise",
+             "brightness": "bright-\nness", "contrast": "contrast",
+             "fog": "fog", "jpeg_compression": "jpeg\ncompr.",
+             "pixelate": "pixelate"}
+VERDICT_MARK = {"flip": "F", "shift-dependent": "S", "unstable-n": "N",
+                "weak-same": "w", "stable-same": "s"}
+
+
+def fig_shiftmap(outdir: Path):
+    """The full sign-stability map: every family, every shift, both implementations.
+
+    Colour = mean Pearson r within a shift group (averaged over the
+    implementations that provide the cell); a dot marks a group where the two
+    implementations disagree in sign; grey = not measurable (n<8 or |r|<0.05).
+    Rows ordered by verdict class.  Adapted from results/stability_map.json.
+    """
+    from matplotlib.colors import TwoSlopeNorm
+    d = json.load(open(ROOT / "results" / "stability_map.json"))
+    V = d["verdicts"]
+    order = (["flip"], sorted(k for k, v in V.items()
+                               if v["verdict"] == "flip"),
+             ["shift-dependent"], sorted(k for k, v in V.items()
+                                         if v["verdict"] == "shift-dependent"),
+             ["unstable-n"], sorted(k for k, v in V.items()
+                                    if v["verdict"] == "unstable-n"),
+             ["weak-same", "stable-same"],
+             [k for k, v in V.items() if v["verdict"] in ("weak-same", "stable-same")])
+    fams = [f for klass in order[0::2] for f in
+            (order[order.index(klass) + 1] if order.index(klass) + 1 < len(order) else [])]
+    fams = []
+    i = 0
+    while i < len(order):
+        klass, keys = order[i], order[i + 1]
+        fams.extend(keys)
+        i += 2
+
+    M = np.full((len(fams), len(SHIFT_COLS)), np.nan)
+    DIS = np.zeros_like(M, dtype=bool)
+    for fi, fam in enumerate(fams):
+        for grp, cells in V[fam]["groups"].items():
+            gname = grp.replace("corruption:", "")
+            ci = SHIFT_COLS.index(gname)
+            rs = [s["r"] for s in cells.values() if s["r"] is not None
+                  and abs(s["r"]) >= 0.05]
+            if not rs:
+                continue
+            M[fi, ci] = float(np.mean(rs))
+            DIS[fi, ci] = len(rs) >= 2 and (max(rs) > 0) != (min(rs) > 0)
+
+    fig, ax = plt.subplots(figsize=(6.6, 6.4))
+    norm = TwoSlopeNorm(vmin=-1.0, vcenter=0.0, vmax=1.0)
+    im = ax.imshow(M, cmap="RdBu_r", norm=norm, aspect="auto")
+    for fi in range(len(fams)):
+        for ci in range(len(SHIFT_COLS)):
+            if np.isnan(M[fi, ci]):
+                ax.add_patch(plt.Rectangle((ci - .5, fi - .5), 1, 1,
+                                           facecolor="#ECECEC", edgecolor="white", lw=1.2))
+            elif DIS[fi, ci]:
+                ax.plot(ci, fi, "o", ms=3.2, color="#111111", zorder=4)
+    ax.set_xticks(range(len(SHIFT_COLS)))
+    ax.set_xticklabels([SHIFT_LAB[c] for c in SHIFT_COLS], fontsize=7.5)
+    labels = [("\\textbf{%s}" % f if f in GLUE_FAMILIES else f) for f in fams]
+    ax.set_yticks(range(len(fams)))
+    ax.set_yticklabels(fams, fontsize=7.5)
+    for tick, fam in zip(ax.get_yticklabels(), fams):
+        if fam in GLUE_FAMILIES:
+            tick.set_fontweight("bold")
+    # verdict letters in the right margin
+    for fi, fam in enumerate(fams):
+        v = V[fam]["verdict"]
+        ax.text(len(SHIFT_COLS) - 0.38, fi, VERDICT_MARK[v], fontsize=7.5,
+                ha="center", va="center",
+                fontweight="bold" if v in ("flip", "shift-dependent") else "normal",
+                color="#B2182B" if v == "flip" else ("#2166AC" if v == "shift-dependent" else "#666666"))
+    ax.text(len(SHIFT_COLS) - 0.38, -1.05, "verdict", fontsize=7.5, ha="center",
+            style="italic", color="#444444")
+    cb = fig.colorbar(im, ax=ax, shrink=0.55, pad=0.09)
+    cb.set_label("mean Pearson $r$ within group", fontsize=8)
+    cb.ax.tick_params(labelsize=7.5)
+    ax.set_title("Sign of the marker-accuracy association by shift group\n"
+                 "(band $\\pm$1pp, architecture-residualised; dot = implementations disagree)",
+                 loc="left", fontsize=8.5)
+    fig.tight_layout()
+    for ext in ("png", "pdf"):
+        fig.savefig(outdir / f"fig_shiftmap.{ext}", bbox_inches="tight")
+    plt.close(fig)
+    print("saved fig_shiftmap")
+
+
 def fig_degeneration(outdir: Path):
     """Two panels: the degradation sweep and the recipe sweep."""
     fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.9))
@@ -184,6 +276,7 @@ def main() -> int:
     outdir.mkdir(parents=True, exist_ok=True)
     style()
     fig_map(outdir)
+    fig_shiftmap(outdir)
     fig_degeneration(outdir)
     print(f"figures written to {outdir}")
     return 0

@@ -30,38 +30,47 @@
 \let\thefootnote\relax\footnotetext{\emph{Use of LLMs:} Large language models were used as writing and coding assistants in preparing this manuscript; all scientific content, analyses, and reported numbers were determined and verified by the authors.}
 
 \begin{abstract}
-Geometric markers of the representation -- effective dimension, effective utility,
-participation ratio, numerical rank, and a dozen relatives -- are widely used as
-cheap, training-free proxies for out-of-distribution (OOD) performance, and are
-reported to outperform in-distribution (ID) test accuracy as a model-selection
-criterion. We ask a question that the literature has largely skipped: when a
-geometric marker is said to predict OOD performance, what does it actually
-measure, and how stable is that measurement? We evaluate seventeen markers
-across three cells -- the reference implementation on the reference 224-model
-release, the reference implementation on a second 80-model release, and our own
-implementation of the GLUE solver on 48 models we trained ourselves -- under one
-protocol: ID matching around the mean of ID accuracy, then residualization of the
-architecture main effects. The markers do not behave alike. Four are stable
-across every cell; the effective radius of the manifold flips sign depending on
-which implementation produced it, from $-0.58$ on one release to $+0.60$ on ours,
-and the two stay on opposite sides of zero at every bandwidth we test; the effective utility collapses
-in magnitude under a different implementation, from $+0.90$ to $+0.34$, and
-becomes negative once the matching band widens. We then separate the two
-reasons a marker can move. Under a degradation sweep, where the amount of
-information in the input changes, the marker and the linear-probe accuracy fall
-together, which the information confound and a genuine degradation of the
-representation both predict. Under a recipe sweep over 42 networks trained on
-identical inputs, where the information is fixed, the marker tracks nothing: the
-pooled correlation is negative, and it is carried entirely by the separation
-between networks that trained successfully and networks that collapsed -- inside
-the high-performing cluster the correlation with accuracy is $-0.053$ ($p=0.891$),
-and removing the recipe effect leaves one marker at $r=-0.079$ ($p=0.62$).
-Geometric markers of this family are therefore not measurements of
-representational quality. We give a stability map that lets a practitioner see
-which markers survive a cross-implementation check, and a two-part recipe for
-testing the next one. The protocol, the analysis code, and all reported numbers
-are released, and every number in this paper is re-derived from the released
-data by a script that runs on every commit.
+Geometric markers of the representation -- effective dimension, effective radius,
+effective utility, participation ratio, numerical rank, and a dozen relatives --
+are widely used as cheap, training-free proxies for out-of-distribution (OOD)
+performance, and are reported to outperform in-distribution (ID) test accuracy
+as a model-selection criterion. We ask a question that the literature has
+largely skipped: when a geometric marker is said to predict OOD performance,
+what does it actually measure, and how stable is that measurement? We evaluate
+twenty-four marker families under one protocol -- ID matching around the mean of
+ID accuracy, then residualization of the architecture main effects -- along two
+axes at once: which implementation produced the numbers, and which distribution
+shift defines the target. The markers do not behave alike, and neither axis is
+benign. The effective radius of the manifold flips sign depending on which
+implementation produced it, from $-0.58$ on one release to $+0.60$ on ours, and
+the flip is not confined to the task-shift cell: within a single shift, the two
+implementations also disagree (jpeg compression: $-0.19$ versus $+0.20$;
+pixelate: $-0.28$ versus $+0.30$). The effective dimension, the one marker that
+agrees across implementations in sign and magnitude under task shift
+($+0.93$/$+0.92$), reverses sign under photometric shifts, where both
+implementations agree on the reversal (brightness: $-0.49$ and $-0.71$). Across
+the full map, the sign of the association is a function of the shift type more
+often than of the marker: eighteen of twenty-four families change sign between
+the task and noise cells on the one hand and the photometric and compression
+cells on the other, while the implementations agree with each other far more
+often than they disagree. A sign reported under one shift does not license a
+claim under another. We then separate the two reasons a marker can move. Under
+a degradation sweep, where the amount of information in the input changes, the
+marker and the linear-probe accuracy fall together, which the information
+confound and a genuine degradation of the representation both predict. Under a
+recipe sweep over 42 networks trained on identical inputs, where the
+information is fixed, the marker tracks nothing: the pooled correlation is
+negative, and it is carried entirely by the separation between networks that
+trained successfully and networks that collapsed -- inside the high-performing
+cluster the correlation with accuracy is $-0.053$ ($p=0.891$), and removing the
+recipe effect leaves one marker at $r=-0.079$ ($p=0.62$). Geometric markers of
+this family are therefore not measurements of representational quality. We give
+the full stability map, a two-part recipe for testing the next marker, and the
+practical rule the map implies: no marker may be recommended across shifts, and
+a single-shift correlation must report its shift as part of the result. The
+protocol, the analysis code, and all reported numbers are released, and every
+number in this paper is re-derived from the released data by a script that runs
+on every commit.
 \end{abstract}
 
 \section{Introduction}
@@ -98,10 +107,12 @@ whenever the degradation is applied to the input rather than to the training.
 
 \paragraph{Is the measurement stable?}
 A marker is a function of a representation, but in practice it is a function of
-a marker, an implementation, and a set of models. If the sign of the
-association depends on which of several implementations produced the numbers,
-then the marker is not a property of the representation and cannot be relied
-on to rank models.
+a marker, an implementation, a set of models, and the shift that defines the
+target. If the sign of the association depends on which of several
+implementations produced the numbers, or on which of several shifts was chosen
+as the target, then the marker is not a property of the representation and
+cannot be relied on to rank models. This paper varies both axes and reports
+which of them moves the sign more often.
 
 \paragraph{What should a practitioner do next?}
 A measurement study is only useful if it hands back a procedure. We give a
@@ -111,14 +122,23 @@ markers currently in use pass it.
 \subsection{Contributions}
 
 \begin{itemize}
-\item We measure seventeen geometric markers in three cells that differ in
-      both the implementation that produced them and the population of models
-      they were measured on, under a single protocol, and we show that they
-      fall into distinct stability classes (Section~\ref{sec:map}).
+\item We measure twenty-four geometric marker families in cells that vary
+      two axes at once -- the implementation that produced the numbers and
+      the distribution shift that defines the target -- under a single
+      protocol, and we show that they fall into distinct stability classes
+      (Section~\ref{sec:map}).
 \item We show that the effective radius of the manifold flips sign across
-      these cells and that the flip is not an artefact of the matching
-      bandwidth, and we show that the effective utility collapses in magnitude
-      under an independent implementation (Section~\ref{sec:map}).
+      implementations, that the flip also appears within a single shift, and
+      that it is not an artefact of the matching bandwidth. We show that the
+      effective dimension -- the one marker that agrees across implementations
+      under task shift -- reverses sign under photometric shifts, with both
+      implementations agreeing on the reversal
+      (Section~\ref{sec:map}).
+\item We show that the sign of the association is determined by the shift
+      type more often than by the marker: eighteen of twenty-four families
+      change sign between the task/noise cells and the photometric/compression
+      cells, and no marker is stable across all shifts we test
+      (Section~\ref{sec:map}).
 \item We separate the information confound from a genuine degradation of the
       representation using a degradation sweep and a recipe sweep, and we show
       that once the input information is held fixed the markers carry no
@@ -203,21 +223,19 @@ does so is described in Section~\ref{sec:repro}.
 
 \label{sec:map}
 
-\subsection{Three cells}
+\subsection{Two axes and the cells they define}
 
-We measure the same marker in three cells that differ along two independent
-axes.
+We measure the same marker in cells that vary two axes at once.
 
+\paragraph{Axis 1: the implementation.} Three sources provide marker values.
 \begin{itemize}
 \item \textbf{Reference implementation, reference population.} The per-model
       measurements released with the original study for a 224-model collection
       spanning five architectures, with the GLUE quantities computed by the
       reference solver.
 \item \textbf{Reference implementation, second population.} A second release of
-      the same study, covering 80 models under six corruption scenarios. The
-      two releases share no models. We use its gaussian-noise scenario, whose
-      OOD column is constant across the six scenarios and therefore a
-      scenario-independent class-level transfer measure.
+      the same study, covering 80 models measured under six corruption
+      scenarios. The two releases share no models.
 \item \textbf{Own implementation, own population.} Forty-eight ResNet-18 models
       we trained ourselves, on which we computed the GLUE quantities with our
       own implementation of the solver \citep{chung2018classification},
@@ -225,25 +243,66 @@ axes.
       relative comparison within our own family, never against absolute
       reference values.
 \end{itemize}
+Where the official marker name and our field name differ (for example
+\texttt{dimension} and \texttt{glue\_dimension}), the two are paired as one
+family; without this aliasing a cross-implementation pairing does not occur at
+all.
 
-The third cell is what makes the design informative: it varies the
-implementation and the population at once, so a marker that agrees across all
-three cells is unlikely to agree by accident.
+\paragraph{Axis 2: the distribution shift.} Seven shifts define the target
+variable: the cross-task shift (CIFAR-100 linear probes and Tiny-ImageNet
+linear probes), and six CIFAR-10-C corruption scenarios (gaussian noise,
+brightness, contrast, fog, jpeg compression, pixelation) measured as accuracy
+on the corrupted test set. For the official 80-model release we verified that
+the corruption scenario changes \emph{only} the corrupted-test accuracy column;
+all marker columns and the transfer column are bit-identical across the six
+scenario files. The corruption cells therefore use the corrupted-test accuracy
+as the target; using the transfer column instead would make all six cells
+identical by construction.
+
+Each cell of the resulting grid applies the same protocol: ID matching at
+$\pm1$ pp around the mean ID accuracy of that cell's models, then architecture
+residualisation (for our single-architecture population, mean-centering). A
+family's verdict aggregates its cells by priority: a sign reversal between
+implementations within a shift is a \emph{flip}; a sign reversal between
+shifts within an implementation is \emph{shift-dependent}; a sign reversal
+across matching bandwidths is \emph{unstable} in sample size; agreement in
+sign everywhere is \emph{stable} (or \emph{weak}, if measured in one source
+only). Every cell also reports a seeded half-sampling procedure (1{,}000
+draws) that re-estimates the correlation and records how often the sign is
+retained, so that a verdict is not carried by a single lucky split.
 
 \subsection{The map}
 
-Figure~\ref{fig:map} and Table~\ref{tab:map} give the result. The three
-markers of the GLUE family behave differently from one another, and the
-generic quantities behave differently again.
+Figure~\ref{fig:shiftmap} gives the full map -- every family, every shift,
+both implementations -- and Table~\ref{tab:map} quotes the cells that carry
+the argument.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figures/fig_map.png}
-\caption{Every marker, measured in three cells, under one protocol. Each row
-is one marker; each symbol is one cell. The vertical line is zero. The markers
-whose association changes sign across cells are marked. A marker that sits on
-one side of zero in one cell and the other side in another cannot be used to
-rank models.}
+\includegraphics[width=\linewidth]{figures/fig_shiftmap.png}
+\caption{The full sign-stability map. Each row is one marker family; each
+column is one distribution shift. Colour is the mean Pearson $r$ within that
+shift (averaged over the implementations that provide the cell); a dot marks a
+shift where the two implementations disagree in sign; grey means the cell is
+not measurable at this bandwidth. The right margin letter is the family's
+verdict (F~=~flip, S~=~shift-dependent, N~=~unstable in sample size, w/s~=
+weak/stable same-sign). Eighteen of twenty-four families are
+shift-dependent: the photometric and compression columns disagree in sign
+with the task and noise columns for nearly every marker.}
+\label{fig:shiftmap}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/fig_map.png}
+\caption{The implementation axis in detail: every marker measured in the
+three implementation-source cells of the earlier design (reference
+implementation on the two official releases; our implementation on our own
+models), under the task-shift target. Each row is one marker; each symbol is
+one cell; the vertical line is zero. A marker that sits on one side of zero
+in one cell and the other side in another cannot be used to rank models.
+This view underlies the per-family discussion below; the full
+seven-shift view is Figure~\ref{fig:shiftmap}.}
 \label{fig:map}
 \end{figure}
 
@@ -251,75 +310,121 @@ rank models.}
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}p{3.5cm}p{2.5cm}p{2.5cm}p{2.5cm}p{3.1cm}@{}}
+\begin{tabular}{@{}llrrrrl@{}}
 \hline
-Marker & ref.\ impl., 224 & ref.\ impl., 80 & our impl., 48 & class \\
+Family & Shift & ref.\ impl. & our impl. & $n$ (r/o) & agree & verdict \\
 \hline
-`dimension` & $+0.925$ & $+0.737$ & $+0.919$ & robust \\
-`radius` & $-0.584$ & $+0.153$ & $+0.602$ & \textbf{sign flips} \\
-`utility` & $+0.901$ & $+0.808$ & $+0.342$ & consistent sign, variable magnitude \\
-`center alignment` & $+0.483$ & $+0.581$ & --- & robust \\
-`participation ratio` (per class) & $+0.659$ & $+0.592$ & $+0.947$ & robust \\
-`participation ratio` (global) & $+0.877$ & $+0.734$ & $+0.895$ & robust \\
-`numerical rank` (per class) & $+0.436$ & --- & $+0.972$ & magnitude varies \\
-`mean angle` & $+0.124$ & $-0.102$ & --- & \textbf{sign flips} \\
-`NC1` & $-0.145$ & --- & $-0.178$ & sign flip (Spearman) \\
+`dimension` & task & $+0.925$ & $+0.919$ & 106/32 & yes & \\
+`dimension` & gaussian noise & $+0.737$ & $+0.623$ & 25/32 & yes & \\
+`dimension` & brightness & $-0.493$ & $-0.712$ & 25/32 & yes & \\
+`dimension` & fog & $-0.562$ & $-0.620$ & 25/32 & yes & \\
+`dimension` & contrast & $-0.584$ & $-0.114$ & 25/32 & yes & \\
+ & & & & & & shift-dep. \\
+\hline
+`radius` & task & $-0.584$ & $+0.602$ & 106/32 & \textbf{no} & \\
+`radius` & jpeg compression & $-0.185$ & $+0.204$ & 25/32 & \textbf{no} & \\
+`radius` & pixelate & $-0.283$ & $+0.301$ & 25/32 & \textbf{no} & \\
+`radius` & gaussian noise & $+0.153$ & $+0.438$ & 25/32 & yes & \\
+ & & & & & & flip \\
+\hline
+`utility` & task & $+0.901$ & $+0.342$ & 106/32 & yes & \\
+`utility` & jpeg compression & $+0.542$ & $-0.133$ & 25/32 & \textbf{no} & \\
+`utility` & pixelate & $+0.411$ & $-0.178$ & 25/32 & \textbf{no} & \\
+`utility` & gaussian noise & $+0.808$ & $+0.061$ & 25/32 & yes & \\
+ & & & & & & flip \\
+\hline
+`participation ratio` (global) & task & $+0.659$ & $+0.895$ & 106/32 & yes & \\
+`participation ratio` (global) & brightness & $-0.532$ & $-0.622$ & 25/32 & yes & \\
+`participation ratio` (global) & gaussian noise & $+0.592$ & $+0.630$ & 25/32 & yes & \\
+ & & & & & & shift-dep. \\
 \hline
 \end{tabular}
-\caption{Selected entries of the stability map, at a matching bandwidth of
-$\pm1$ pp. Pearson $r$ after ID matching and architecture residualisation.
-One asymmetry between the columns must be stated: the own-48 population is a
-single architecture, so its residualisation step removes no group structure
-(there is none to remove --- the group variable would be the learning-rate
-family, and that variant is used in the companion paper). The three cells are
-therefore not identical protocols, and the caption of the full map in the
-released results records the grouping variable used in each. The ``class''
-column reproduces the classification assigned by the analysis script
-and stored in \texttt{results/marker\_stability\_map.json}; the discussion
-below interprets some of those classes further. The full map, with Spearman
-coefficients, sample sizes and a bandwidth sweep, is in the released results
-directory.}
+\caption{The GLUE families and one robust generic quantity, across the shifts
+that carry the argument, at a matching bandwidth of $\pm1$ pp. Pearson $r$
+after ID matching and architecture residualisation; ``agree'' is sign
+agreement between the two implementations within the shift; $n$ counts the
+official/own models entering the cell (own-48 residualisation is
+mean-centering, since the population is a single architecture). The
+``verdict'' column reproduces the classification assigned by the analysis
+script and stored in \texttt{results/stability\_map.json}: \emph{flip} = the
+implementations disagree within a shift; \emph{shift-dependent} = one
+implementation reverses sign between shifts. The full map -- twenty-four
+families, seven shifts, Spearman coefficients, sample sizes, bandwidth sweep,
+and the seeded half-sampling sign-retention rates -- is in
+\texttt{results/stability\_map.json} and Figure~\ref{fig:shiftmap}.}
 \label{tab:map}
 \end{table}
 
-\paragraph{The effective radius flips sign.}
+\paragraph{The effective radius flips sign -- and not only between implementations.}
 On the reference 224-model population the effective radius is negatively
-associated with OOD accuracy ($r=-0.584$, $n=106$); on our own models it is
-strongly positive ($r=+0.602$, $n=32$). The middle cell is near zero
+associated with the task-shift target ($r=-0.584$, $n=106$); on our own models
+it is strongly positive ($r=+0.602$, $n=32$). The middle cell is near zero
 ($+0.153$) and drifts negative as the band widens. This is not a bandwidth
-artefact: the reference-224 correlation is negative at every bandwidth we tested
-($\pm1$ to $\pm5$ pp, from $-0.584$ to $-0.796$), while our own is positive at
-every bandwidth ($+0.602$ to $+0.376$).
+artefact: the reference-224 correlation is negative at every bandwidth we
+tested ($\pm1$ to $\pm5$ pp, from $-0.584$ to $-0.796$), while our own is
+positive at every bandwidth ($+0.602$ to $+0.376$).
 
-We note that this marker has already been reported as unstable in a weaker
-sense, in that its sign differs between the two reference releases. Our result
-is stronger: it differs between the reference implementation and ours, on
-populations that share no models. The middle cell is not a fixed point either
---- it drifts from $+0.153$ to $-0.221$ as the band widens --- so the honest
-statement is not that one cell disagrees with the others but that this marker
-has no stable sign anywhere.
+The full map sharpens the finding in a way the three-cell design could not:
+the implementations also disagree \emph{within} a single shift. Under jpeg
+compression the reference implementation gives $-0.185$ and ours $+0.204$;
+under pixelation, $-0.283$ versus $+0.301$. The flip is therefore not only a
+property of comparing two model populations across a task boundary -- it
+appears between two implementations measuring two disjoint model sets under a
+held-fixed corruption type. Where the implementations do agree on the radius
+(gaussian noise: $+0.153$ and $+0.438$), both signs are positive -- but the
+sign there disagrees with the task-shift cells, so the marker fails in both
+directions: across implementations within a shift, and across shifts within an
+implementation.
 
-\paragraph{The effective utility collapses in magnitude.}
-The utility agrees between the two reference cells ($+0.901$ and $+0.808$) but
-falls to $+0.342$ under our implementation, and becomes negative ($-0.246$)
-once the matching band reaches $\pm3$ pp. A magnitude collapse of this kind is
-more suggestive than a sign flip: it suggests the two implementations may not
-be measuring the same quantity, rather than that they measure the same quantity
-and disagree about its direction.
+\paragraph{The effective utility flips in the compression cells.}
+The utility agrees in sign between the task cells ($+0.901$ and $+0.342$) and
+collapses in magnitude under our implementation. Under the compression shifts
+it goes further and flips: jpeg compression $+0.542$ (reference) versus
+$-0.133$ (ours), pixelation $+0.411$ versus $-0.178$. In the earlier
+three-cell version of this study the utility read as ``consistent sign,
+variable magnitude''; the corruption cells show that reading was an artefact
+of looking at the task shift only.
 
-\paragraph{One marker is stable.}
-The effective dimension is the only GLUE quantity that agrees in sign and
-magnitude across all three cells ($+0.925$, $+0.737$, $+0.919$), and it is
-insensitive to the matching bandwidth on the reference population
-($+0.925$ to $+0.904$ as the band widens from $\pm1$ to $\pm5$ pp). Of the
-generic quantities, the participation ratio is stable in both its per-class and
-global forms, and the numerical rank is stable in sign but not in magnitude.
+\paragraph{The dimension reverses under photometric shifts -- with both implementations agreeing.}
+The effective dimension is the one GLUE quantity that agrees in sign and
+magnitude across implementations under the task shift ($+0.925$ on 106 models,
+$+0.919$ on our 32; also $+0.737$/$+0.623$ under gaussian noise). In the
+earlier version of this study we recommended it on that basis as the one
+usable marker of the family. The corruption cells overturn that
+recommendation. Under brightness the dimension correlates negatively with the
+corrupted-test accuracy under \emph{both} implementations ($-0.493$ reference,
+$-0.712$ ours; our value keeps its sign in 100\% of 1{,}000 seeded
+half-samples, and the reference value is stable to the bandwidth sweep);
+under fog, $-0.562$ and $-0.620$; under contrast the reference
+implementation gives $-0.584$. The sign of the dimension--performance
+association is a property of the shift type, not of the marker. What survives
+of the earlier claim is this: the dimension is the only GLUE marker whose sign
+is consistent \emph{across implementations} within every shift we measured --
+but no marker, the dimension included, keeps one sign across shifts.
+
+\paragraph{The shift axis dominates the implementation axis.}
+The pattern generalises beyond the GLUE family. Eighteen of the twenty-four
+families are classified shift-dependent: their sign reverses between the
+task/noise cells on the one hand and the photometric/compression cells on the
+other. The numerical rank is the clearest non-GLUE example ($+0.972$ on our
+models under the task shift, $-0.703$ under brightness). Counting cells where
+both block means are callable ($|r|\ge 0.1$), fourteen families show the
+block opposition. By contrast the implementations agree with each other
+far more often than not: among the twenty-one families where the task-shift
+cell and the gaussian-noise cell are both callable, twenty keep the same sign
+between those two cells. The dominant risk to a reported sign is not that
+someone re-implements the marker; it is that someone applies it to a different
+shift.
 
 \paragraph{What this licenses.}
-The practical consequence is narrow but useful. Of the three GLUE quantities
-that the literature reports as interchangeable evidence of a task-relevant
-manifold, one survives a cross-implementation check. The other two do not, and
-in the case of the radius the failure is not a matter of degree.
+The practical consequence is narrower than the one we drew from the
+three-cell map, and more useful. Of the three GLUE quantities that the
+literature reports as interchangeable evidence of a task-relevant manifold,
+none survives the combined check: the radius and the utility fail across
+implementations, and the dimension fails across shifts. No marker in the map
+is stable across all shifts we test. A correlation reported under one shift is
+a fact about that shift, and any claim of the form ``marker $X$ predicts OOD
+performance'' must name the shift in the same breath.
 
 \section{Two reasons a marker can move}
 
@@ -500,7 +605,22 @@ be asked two questions, in this order.
       with two independent implementations, or on two populations that share
       no models, and require the sign of the association to agree. This is the
       test that disqualifies the effective radius.
+\item \textbf{Does it survive a change of shift?} Recompute the correlation
+      with at least one target from a different shift family -- a corruption
+      type if the claim was made under task shift, or the reverse -- and
+      require the sign to hold. This is the test that the earlier version of
+      this study did not run, and the one that disqualifies the effective
+      dimension. It is also the cheapest of the three: the corruption-cell
+      targets are public, and re-running a correlation costs nothing.
 \end{enumerate}
+
+A marker that passes all three is worth taking seriously. None of the
+twenty-four families studied here does: the map is the record of that fact.
+The most common failure in the current literature is not a wrong sign but an
+unreported one -- a correlation measured under a single shift and read as a
+property of the marker. Reporting the shift alongside the coefficient, as one
+reports the dataset alongside an accuracy, would have caught every flip in
+this paper at the point of writing.
 
 Neither test is expensive, and both are currently skipped. We hope that
 reporting them as a standard part of any claim about a geometric predictor will
@@ -517,13 +637,29 @@ make the more confident claims in the literature easier to evaluate.
       for relative comparison within our own model family, never against
       absolute reference values. A difference between implementations could
       in principle come from our implementation rather than from the reference
-      one; the two official populations give a reference-implementation-only
-      comparison that does not depend on our implementation at all, and the
-      radius flips there as well.
+      one. Two facts bound this concern without removing it: the radius
+      sign also differs between the two official releases, which do not
+      involve our implementation at all; and under brightness and fog the two
+      implementations agree on the sign that refutes the dimension, so the
+      photometric reversal is not an artefact of our solver.
 \item The recipe sweep uses one architecture on one dataset. Its finding --
       that the markers track the recipe rather than the network -- is
       consistent across the three seeds and across the fourteen recipes, but
       we have not shown that it generalizes to other architectures.
+\item The corruption cells of the map use corrupted-test accuracy as the
+      target, not the class-level transfer probe the task cells use; the two
+      targets differ in construction (Section~\ref{sec:map}). The
+      shift-dependent verdicts therefore compare associations measured
+      against different operationalisations of ``performance under shift''.
+      We regard this as intrinsic to the question -- a shift defines its own
+      target -- but a design that held the target fixed and varied only the
+      inputs would separate the two effects.
+\item The six corruption scenarios of the official release are correlated
+      with one another (the same 80 models enter every cell), so the six
+      corruption columns are not six independent replications of the
+      photometric/compression pattern. The independent replication of that
+      pattern comes from our own 48 models, which the official release does
+      not contain.
 \item We did not have access to the reference implementation of the GLUE
       solver, so the three-cell design varies the implementation and the
       population together. We cannot separate the two effects within our own
@@ -541,9 +677,10 @@ make the more confident claims in the literature easier to evaluate.
       in the released artifacts. We keep the table because it illustrates the
       point of the section, but a reader should treat it as an illustration
       with a stated provenance rather than as a reproducible measurement.
-\item We evaluate the markers against one OOD target per cell (a class-level
-      linear probe in each). Whether the stability classes reported here depend
-      on the choice of target is an open question.
+\item We evaluate the markers against one OOD target per cell. The full map
+      multiplies the shifts but not the targets within a shift; whether the
+      stability classes reported here depend on the choice of target within a
+      shift family is an open question.
 \end{enumerate}
 
 \section{Conclusion}
@@ -551,15 +688,23 @@ make the more confident claims in the literature easier to evaluate.
 \label{sec:conclusion}
 
 Geometric markers of the representation are useful, and the way to use them
-well is to stop asking them to grade quality. Our results say three things.
+well is to stop asking them to grade quality. Our results say four things.
 First, a marker that falls with performance may be telling you that the input
 carried less information, and the only way to find out is to hold the input
 fixed and vary the training. Second, a marker's sign is not guaranteed to
-survive a change of implementation: the effective radius does not. Third, the
-one GLUE marker that does survive is the effective dimension. A practical
-conclusion follows: the markers are reliable health checks on a training run
-and unreliable measures of a representation, and the claims in the literature
-that treat them as the latter are in need of the two tests we have proposed.
+survive a change of implementation: the effective radius does not, and the
+failure repeats within single shifts, not only across model populations.
+Third, a marker's sign is not guaranteed to survive a change of shift either:
+the effective dimension -- the one marker we had previously recommended --
+reverses under photometric shifts with both implementations agreeing, and
+eighteen of twenty-four families in the full map change sign between the
+task/noise block and the photometric/compression block. Fourth, the markers
+are reliable health checks on a training run and unreliable measures of a
+representation. A practical conclusion follows: report the shift alongside
+the coefficient, as one reports the dataset alongside an accuracy; run the
+three tests of Section~\ref{sec:practice} before believing any new marker;
+and treat the claims in the literature that name no shift as claims about no
+particular thing.
 
 \section*{Reproducibility statement}
 
@@ -576,8 +721,11 @@ the version DOI of this record is 10.5281/zenodo.23918659.
 
 Every number reported in this paper is re-derived from the released artifacts by
 the accompanying script \texttt{code/audit\_paper\_measurement.py}, which
-recomputes 64 values -- every coefficient, sample size and p-value quoted
-above -- from the released data and checks each against the value written here.
+recomputes every coefficient, sample size and p-value quoted above --
+including the full sign-stability map of
+Section~\ref{sec:map}, read directly from
+\texttt{results/stability\_map.json} -- and checks each against the value
+written here.
 It requires no GPU and no downloads. The same check runs automatically on every
 push of the repository, so the reproducibility of this paper is continuously
 machine-verified rather than asserted.
