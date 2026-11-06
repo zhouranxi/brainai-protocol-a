@@ -17,9 +17,13 @@ iteration 近似，避免训练中全谱分解）。D 监控用 d_ent 口径（�
 
 Pilot 条件（附录十六）：2 配方 × {whiten, disperse, concentrate, placebo}
 × λ=0.1 × 1 种子，200 epoch 全程 forcing：
-  lr1.0_wd5e-05_s0    D=0.89  c100=0.120（网格最低点，forcing 主角）
-  lr0.125_wd0.0001_s0 D=1.79  c100=0.273（网格最高点，对照）
+  lr1.0_wd5e-05_s0    GLUE D=0.89 / d_ent=9.35  c100=0.120（网格最低点，forcing 主角）
+  lr0.125_wd0.0001_s0 GLUE D=1.79                 c100=0.273（网格最高点，对照）
 base 对照臂直接读 runs/ckpt_grid/{tag}.pt 同种子模型。
+
+⚠️ D 双口径：GLUE dimension（E1 锚点 0.89/1.79）与 pooled 谱熵 d_ent（9.35，
+  E5d 同构造）不是同一个量。P4-1 操纵检查作用在 **d_ent 口径**（BASE_READ
+  里存的也是 d_ent 口径），端点判定以 GLUE dimension 为准。
 
 Pilot GO 判据：操纵检查过（d_ent 移动 ≥0.3）且 ID acc ≥ base − 2pp。
 
@@ -55,8 +59,8 @@ PILOT_LAM = 0.1
 
 # E1 base 读数（runs/v2_e1_full.json，审计锚点）
 BASE_READ = {
-    "resnet18_lr1.0_wd5e-05_s0": {"d_ent": 0.890, "c100": 0.1198},
-    "resnet18_lr0.125_wd0.0001_s0": {"d_ent": 1.790, "c100": 0.2732},
+    "resnet18_lr1.0_wd5e-05_s0": {"d_ent": 9.354, "glue_d": 0.890, "c100": 0.1198},
+    "resnet18_lr0.125_wd0.0001_s0": {"d_ent": None, "glue_d": 1.790, "c100": 0.2732},
 }
 
 
@@ -171,10 +175,22 @@ def forcing_loss(feats, labels, kind, num_classes=10, rand_dir=None):
 
 @torch.no_grad()
 def d_ent_of(feats):
-    """谱熵指数 D（d_ent 口径），监控用。"""
+    """谱熵指数 D（d_ent 口径），监控用。
+
+    forcing 下的特征可能数值病态（disperse 把谱推平后条件数恶化，
+    cuSOLVER eigh 报 error 498）——失败时退化到 numpy float64 再试，
+    再失败返回 NaN 并打点（监控字段允许 NaN，不阻塞训练）。
+    """
     Xc = feats - feats.mean(0, keepdim=True)
     C = (Xc.T @ Xc / max(Xc.shape[0] - 1, 1)).double()
-    lam = torch.flip(torch.linalg.eigvalsh(C), dims=(0,)).clamp_min(0)
+    try:
+        lam = torch.flip(torch.linalg.eigvalsh(C), dims=(0,)).clamp_min(0)
+    except Exception:
+        try:
+            lam_np = np.linalg.eigvalsh(C.cpu().numpy().astype(np.float64))[::-1]
+            lam = torch.as_tensor(np.clip(lam_np, 0, None), device=feats.device)
+        except Exception:
+            return float("nan")
     p = lam / lam.sum().clamp_min(1e-12)
     return float(torch.exp(-(p * p.clamp_min(1e-12).log()).sum()))
 
