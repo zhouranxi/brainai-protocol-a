@@ -382,12 +382,25 @@ def train_one_forcing(tag, kind, lam, epochs, trl, tel, probe_loaders, device,
     c100 = linear_probe_acc(Xc_tr, yc_tr, Xc_te, yc_te, 100, device, seed=seed)
 
     # D 端点：d_ent（全 ID train 特征）+ GLUE dimension（端点判定口径）
+    # forcing 后特征可能数值病态（eigh 不收敛）——加抖动重试（jitter 是
+    # 标准处理：谱在 1e-6 尺度抖动下不变，监控字段允许这个近似）
     Xc_all = Xid_tr - Xid_tr.mean(0, keepdims=True)
     C = (Xc_all.T @ Xc_all / max(len(Xc_all) - 1, 1)).astype(np.float64)
-    lam_eig = np.linalg.eigvalsh(C)[::-1].clip(0)
-    p = lam_eig / lam_eig.sum()
-    pp = p[p > 0]
-    d_ent_full = float(np.exp(-(pp * np.log(pp)).sum()))
+    lam_eig = None
+    for jitter in (0.0, 1e-9, 1e-7, 1e-5):
+        try:
+            Cj = C if jitter == 0.0 else C + jitter * np.trace(C) / C.shape[0] \
+                * np.eye(C.shape[0])
+            lam_eig = np.linalg.eigvalsh(Cj)[::-1].clip(0)
+            break
+        except np.linalg.LinAlgError:
+            continue
+    if lam_eig is None:
+        d_ent_full = float("nan")
+    else:
+        p = lam_eig / max(lam_eig.sum(), 1e-12)
+        pp = p[p > 0]
+        d_ent_full = float(np.exp(-(pp * np.log(pp)).sum()))
 
     gd = glue_dimension(Xid_tr, yid_tr, n_sub=500, seed=seed)
 
@@ -434,8 +447,12 @@ def load_base_readings(ckpt_dir, models, probe_loaders, device, seed=0):
         c100 = linear_probe_acc(Xc_tr, yc_tr, Xc_te, yc_te, 100, device, seed=seed)
         Xc_all = Xid_tr - Xid_tr.mean(0, keepdims=True)
         C = (Xc_all.T @ Xc_all / max(len(Xc_all) - 1, 1)).astype(np.float64)
-        lam_eig = np.linalg.eigvalsh(C)[::-1].clip(0)
-        p = lam_eig / lam_eig.sum()
+        try:
+            lam_eig = np.linalg.eigvalsh(C)[::-1].clip(0)
+        except np.linalg.LinAlgError:
+            Cj = C + 1e-7 * np.trace(C) / C.shape[0] * np.eye(C.shape[0])
+            lam_eig = np.linalg.eigvalsh(Cj)[::-1].clip(0)
+        p = lam_eig / max(lam_eig.sum(), 1e-12)
         pp = p[p > 0]
         d_ent_full = float(np.exp(-(pp * np.log(pp)).sum()))
         gd = glue_dimension(Xid_tr, yid_tr, n_sub=500, seed=seed)
