@@ -145,26 +145,26 @@ def forcing_loss(feats, labels, kind, num_classes=10, rand_dir=None):
         tr = Sw.diagonal().mean().clamp_min(1e-8)
         return ((Sw - torch.eye(d, device=feats.device) * tr) / tr) \
             .pow(2).sum() / (d * d)
-    # disperse / concentrate 都需要 pooled 谱——用幂迭代近似 top-K 特征值
-    # （单元测试 test_forcing_direction.py 的两个修正已并入：
-    #   ① 取**最后一次**迭代的 lam——前几步未收敛，堆叠会污染谱形；
-    #   ② concentrate 的 loss 是 −Σp·log p（最小化 ⇒ 谱集中 D↓），
-    #      Σp² 最小化会推平谱（方向反）。）
+    # disperse / concentrate：pooled top-K 谱上的熵。
+    # 【v2 修复 2026-11-06】原实现把 8 步幂迭代（matmul/div/QR）整体挂进
+    # autograd：特征值简并时特征向量梯度 ~1/eigengap 爆炸，一步 NaN 永久
+    # 毒化权重（表现：20ep 内 test 恒 0.10、d_ent 全 NaN；λ=0.1 与 0.005
+    # 均复现 ⇒ 非剂量问题，是梯度结构缺陷）。修复：特征向量在
+    # no_grad + float64 + CPU eigh 下求解（数值稳健），梯度只走 Rayleigh 商
+    #   r_k = v_kᵀ C v_k，  ∂r_k/∂C = v_k v_kᵀ（v 固定 ⇒ 有界）
+    # ——特征值梯度的事实上界技巧。谱方向语义与单元测试一致，未改动。
     Xc = feats - feats.mean(0, keepdim=True)
     C = Xc.T @ Xc / max(Xc.shape[0] - 1, 1)
     C = C / C.diagonal().mean().clamp_min(1e-8)   # 尺度归一（谱形状不变量）
     K = min(32, d)
-    # 幂迭代取 top-K（带正交化；初始向量固定 ⇒ 梯度确定性）
-    gen = torch.Generator(device="cpu").manual_seed(20261106)
-    V = torch.randn(d, K, generator=gen).to(feats.device)
-    V = V / V.norm(dim=0, keepdim=True).clamp_min(1e-8)
-    lam = None
-    for _ in range(8):                     # 8 步后 top-32 形状已收敛（测试 iter2 即 1.99/1.99）
-        V = C @ V
-        lam = V.norm(dim=0)
-        V = V / lam.clamp_min(1e-10)
-        V, _ = torch.linalg.qr(V)
-    p = lam.clamp_min(0)
+    with torch.no_grad():
+        try:
+            _, evecs = torch.linalg.eigh(C.detach().double().cpu())
+            V = torch.flip(evecs, dims=(1,))[:, :K].to(feats.device).float()
+        except Exception:
+            return None   # 调用方护栏：本 batch 跳过 forcing，只走 CE
+    r = (V * (C @ V)).sum(0)               # Rayleigh 商 r_k = v_kᵀ C v_k（梯度走这里）
+    p = r.clamp_min(0)
     p = p / p.sum().clamp_min(1e-8)
     if kind == "disperse":
         return (p * (p + 1e-8).log()).sum()      # Σp·log p（尖谱≈0 最大，平谱最小 ⇒ 最小化 D↑）
@@ -336,7 +336,7 @@ def train_one_forcing(tag, kind, lam, epochs, trl, tel, probe_loaders, device,
     t0 = time.time()
     for ep in range(epochs):
         model.train()
-        corr = tot = fl_sum = n_batches = 0
+        corr = tot = fl_sum = n_batches = n_bad_fl = 0
         for xb, yb in trl:
             xb = xb.to(device, non_blocking=True)
             yb = yb.to(device, non_blocking=True)
@@ -345,12 +345,18 @@ def train_one_forcing(tag, kind, lam, epochs, trl, tel, probe_loaders, device,
             ce = crit(out, yb)
             feats = hook.get()
             fl = forcing_loss(feats, yb, kind, rand_dir=rand_dir)
-            loss = ce + lam * fl
+            # 【护栏 v2】forcing 损失数值异常（eigh 失败返回 None / NaN /Inf）
+            # 时本 batch 退化为纯 CE，绝不让毒化梯度进 opt.step()。
+            if fl is not None and torch.isfinite(fl):
+                loss = ce + lam * fl
+            else:
+                loss = ce
+                n_bad_fl += 1
             loss.backward()
             opt.step()
             corr += (out.argmax(1) == yb).sum().item()
             tot += yb.numel()
-            fl_sum += float(fl.item())
+            fl_sum += float(fl.item()) if (fl is not None and torch.isfinite(fl)) else 0.0
             n_batches += 1
         sched.step()
         test_acc = eval_acc(model, tel, device)
