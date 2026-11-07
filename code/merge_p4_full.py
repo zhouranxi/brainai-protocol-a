@@ -34,10 +34,30 @@ def load_rows():
     for pat in ["pilot/train_forcing_p4.json", "pilot_b2_*/train_forcing_p4.json",
                 "full_s*/train_forcing_p4.json"]:
         for fp in sorted(BASE_DIR.glob(pat)):
+            # ⚠️ glob 的 * 会匹配 *.poisoned_v1 目录，必须显式排除作废读数
+            if "poisoned" in str(fp):
+                continue
             for r in json.load(open(fp))["rows"]:
                 if r["arm"] != "p4_base":
+                    r["_src"] = fp.parent.name
                     rows.append(r)
     return rows
+
+
+def is_valid(r):
+    """读数是否可用于判决核算。
+
+    排除两类（附录十八/十九已定）：
+      ① d_ent 为 NaN（v1 NaN 毒化的历史读数，或 forcing 后谱近似失败）；
+      ② 功能破坏臂（id_keep < -0.05）：训练塌陷的 run 的 c100 无解释力。
+    """
+    de = r.get("d_ent_id")
+    if de is None or not math.isfinite(de):
+        return False
+    ik = r.get("id_keep")
+    if ik is not None and math.isfinite(ik) and ik < -0.05:
+        return False
+    return True
 
 
 def main():
@@ -70,10 +90,16 @@ def main():
 
     # —— 逐条件汇总 ——
     by_cond = defaultdict(list)
+    n_drop = 0
     for m in merged:
         if m["slope"] is None or not math.isfinite(m["slope"]):
+            n_drop += 1
+            continue
+        if not is_valid(m):
+            n_drop += 1
             continue
         by_cond[(m["kind"], m["lambda"])].append(m)
+    print(f"\n剔除无效读数 {n_drop} 条（NaN d_ent / 功能破坏臂 / 无斜率）")
 
     print(f"\n{'条件':22s} {'n':>3s} {'同号':>4s} {'斜率中位':>9s} "
           f"{'%s_obs':>7s} {'in_band':>8s} {'id保持':>7s}")
