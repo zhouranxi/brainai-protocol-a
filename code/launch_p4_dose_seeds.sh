@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # P4 剂量扫描种子复制批（ADR-0016 附录二十五预注册，2026-11-08 19:44）。
+# v3 修正：hi 链只跑 hi 模型（v2 的 --models 误含 lo，与 GPU0 lo 链重复白跑）。
 # v2 修正：每 (种子,配方) 专属 out 目录 dose_seed_s{1,2}_{lo,hi}_lam{λ}，
 # 保证单写者（v1 曾把 lo 模型误排进 hi 卡造成跨进程并发写同一 JSON）。
 # 设计：2 配方 × 3λ{0.03,0.3,3.0} × 2 新种子{s1,s2} = 12 run。
@@ -22,7 +23,7 @@ launch () {
 $PY code/train_forcing_p4.py --arm full --epochs 200 --skip-base \
   --out runs/v2_p4_forcing/dose_seed_s${SEED}_${TAG}_lam${LAM} \
   --seed ${SEED} --kinds whiten --lambda ${LAM} \
-  --models resnet18_lr1.0_wd5e-05_s${SEED} resnet18_lr0.125_wd0.0001_s${SEED}"
+  --models resnet18_lr0.125_wd0.0001_s${SEED}"
   done
   CUDA_VISIBLE_DEVICES=$GPU setsid nohup bash -c "$CMDS" \
     > "logs/p4_dose_${TAG}_s${SEED}.log" 2>&1 &

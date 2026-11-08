@@ -1,0 +1,221 @@
+#!/usr/bin/env python3
+"""剂量扫描种子复制批判定（ADR-0016 附录二十五预注册 R1-s/R2-s/R3-s/R4-s）。
+
+数据布局：
+  s0：dose_{lo,hi}_lam{0.03,0.3,3.0}/train_forcing_p4.json（附录二十三）
+  s1/s2：dose_seed_s{1,2}_{lo,hi}_lam{0.03,0.3,3.0}/（附录二十五新 run，
+         每 (种子,配方) 专属目录，单写者）
+  锚点 λ=0.1/1.0：full_s{0,1,2}_whiten_lam{0.1,1.0}/（全量批已有）
+  base 对照：full_base_lr{1.0,0.125}.json（含 s0/s1/s2 三种子行）
+
+判定（跑前冻结于附录二十五，2026-11-08 19:44）：
+  R1-s：hi 配方 s1/s2 幂律 b∈[0.3,0.75] 复制成功；
+        跨种子中位数与 s0 差 |Δb|<0.15 强复制。
+  R2-s：hi s1/s2 断崖形态——λ=0.03/0.3 带内(|Δc|≤0.022)且 λ=1.0/3.0 超带。
+  R3-s：lo s1/s2 全 5 点 |Δc|≤0.022（无响应复制）。
+  R4-s：全部 run id_keep ≥ −0.02；越界点剔除并单独报告。
+失败如实报告，不得改带宽。
+"""
+import json
+import math
+import sys
+from pathlib import Path
+
+import numpy as np
+
+BASE = Path("/mnt/mydisk/xinguan-brainai/runs/v2_p4_forcing")
+
+RECIPES = {
+    "lo": "resnet18_lr1.0_wd5e-05",
+    "hi": "resnet18_lr0.125_wd0.0001",
+}
+SEEDS = [0, 1, 2]
+LAMS = [0.03, 0.1, 0.3, 1.0, 3.0]
+BAND = 0.022          # placebo 判定带宽（预注册口径，不得改）
+ID_FLOOR = -0.02      # R4-s 功能保持下限
+B_RANGE = (0.3, 0.75) # R1-s 复制成功区间
+B_MEDIAN_TOL = 0.15   # R1-s 强复制容差
+
+
+def load_bases():
+    bases = {}
+    for fp in sorted(BASE.glob("full_base_lr*.json")):
+        for r in json.load(open(fp))["rows"]:
+            bases[r["model"]] = r
+    return bases
+
+
+def load_point(recipe, seed, lam, bases):
+    """返回 (Δd, Δc, id_keep) 或 None。锚点走全量批目录，其余走 dose 目录。"""
+    stem = RECIPES[recipe]
+    tag = f"{stem}_s{seed}"
+    b = bases.get(tag)
+    if b is None:
+        return None
+    cands = []
+    if lam in (0.1, 1.0):
+        cands.append(BASE / f"full_s{seed}_whiten_lam{lam}" / "train_forcing_p4.json")
+    if seed == 0:
+        cands.append(BASE / f"dose_{recipe}_lam{lam}" / "train_forcing_p4.json")
+    else:
+        cands.append(BASE / f"dose_seed_s{seed}_{recipe}_lam{lam}" / "train_forcing_p4.json")
+    for fp in cands:
+        if not fp.exists():
+            continue
+        for r in json.load(open(fp))["rows"]:
+            if (r["model"] == tag and r["kind"] == "whiten"
+                    and abs(r["lambda"] - lam) < 1e-9):
+                return (r["d_ent_id"] - b["d_ent_id"],
+                        r["c100_probe"] - b["c100_probe"],
+                        r["id_probe_acc"] - b["id_probe_acc"])
+    return None
+
+
+def find_anomaly(pts):
+    """附录二十四口径的异常点自动识别：|Δc|≤BAND（placebo 等价）
+    且相邻局部斜率有负号的点。返回 {lam: (dd, dc, ik)}。"""
+    lams = sorted(pts)
+    anom = set()
+    for i, l in enumerate(lams):
+        if abs(pts[l][1]) > BAND:
+            continue
+        slopes = []
+        if i > 0:
+            d0, c0 = pts[lams[i - 1]][0], pts[lams[i - 1]][1]
+            slopes.append((pts[l][1] - c0) / (pts[l][0] - d0))
+        if i < len(lams) - 1:
+            d1, c1 = pts[lams[i + 1]][0], pts[lams[i + 1]][1]
+            slopes.append((c1 - pts[l][1]) / (d1 - pts[l][0]))
+        if any(s < 0 for s in slopes):
+            anom.add(l)
+    return {l: p for l, p in pts.items() if l not in anom}
+
+
+def fit_power(ds, cs):
+    """幂律 Δc = a·Δd^b，拟合 Δc>0 且 Δd>0 的点（log-log 线性回归）。"""
+    pts = [(d, c) for d, c in zip(ds, cs) if c > 0 and d > 0]
+    if len(pts) < 3:
+        return None, len(pts)
+    lx = np.log([p[0] for p in pts])
+    ly = np.log([p[1] for p in pts])
+    b, loga = np.polyfit(lx, ly, 1)
+    return (math.exp(loga), float(b)), len(pts)
+
+
+def main():
+    bases = load_bases()
+    curves = {}   # (recipe, seed) -> {lam: (dd, dc, ik)}
+    func_viol = []
+
+    for recipe in RECIPES:
+        for seed in SEEDS:
+            pts = {}
+            for lam in LAMS:
+                p = load_point(recipe, seed, lam, bases)
+                if p is None:
+                    continue
+                pts[lam] = p
+                if p[2] < ID_FLOOR:
+                    func_viol.append((recipe, seed, lam, p[2]))
+            curves[(recipe, seed)] = pts
+
+    # ---- 数据总表 ----
+    for recipe in RECIPES:
+        print(f"\n=== {recipe}（{RECIPES[recipe]}）===")
+        header = f"{'seed':>4s} " + " ".join(f"{'λ='+format(l,'g'):>16s}" for l in LAMS)
+        print(header)
+        for seed in SEEDS:
+            pts = curves[(recipe, seed)]
+            cells = []
+            for lam in LAMS:
+                if lam in pts:
+                    dd, dc, ik = pts[lam]
+                    cells.append(f"{dd:+7.1f}/{dc:+7.4f}")
+                else:
+                    cells.append(" " * 16)
+            print(f"s{seed:<3d} " + " ".join(f"{c:>16s}" for c in cells))
+
+    # ---- R4-s 功能保持 ----
+    print(f"\n[R4-s] 功能保持（id_keep ≥ {ID_FLOOR:+.2f}）：")
+    if func_viol:
+        for recipe, seed, lam, ik in func_viol:
+            print(f"  VIOLATION {recipe} s{seed} λ={lam} id_keep={ik:+.4f}")
+        print("  → 越界点从形态拟合剔除（上方总表仍显示）")
+    else:
+        print("  全部通过 ✓")
+
+    # ---- R3-s：lo 无响应复制 ----
+    print(f"\n[R3-s] lo 无响应复制（全部点 |Δc|≤{BAND}）：")
+    for seed in SEEDS:
+        pts = curves[("lo", seed)]
+        if len(pts) < 5:
+            print(f"  s{seed}: 点数不足（{len(pts)}/5），无法判定")
+            continue
+        out_band = [(l, p[1]) for l, p in pts.items() if abs(p[1]) > BAND]
+        if out_band:
+            detail = ", ".join(f"λ={l}: {c:+.4f}" for l, c in sorted(out_band))
+            print(f"  s{seed}: FAIL — 超带点 {detail}")
+        else:
+            print(f"  s{seed}: PASS（5/5 带内）")
+
+    # ---- R2-s：hi 断崖形态 ----
+    print(f"\n[R2-s] hi 断崖形态（λ=0.03/0.3 带内 且 λ=1.0/3.0 超带）：")
+    for seed in SEEDS:
+        pts = curves[("hi", seed)]
+        need = (0.03, 0.3, 1.0, 3.0)
+        if any(l not in pts for l in need):
+            print(f"  s{seed}: 点数不足，无法判定")
+            continue
+        low_in = all(abs(pts[l][1]) <= BAND for l in (0.03, 0.3))
+        high_out = all(abs(pts[l][1]) > BAND for l in (1.0, 3.0))
+        verdict = "PASS" if (low_in and high_out) else "FAIL"
+        detail = ", ".join(f"λ={l}: {pts[l][1]:+.4f}" for l in need)
+        print(f"  s{seed}: {verdict} — {detail}")
+
+    # ---- R1-s：幂律 b 复制 ----
+    print(f"\n[R1-s] hi 幂律指数 b（附录二十四口径：自动剔除带内+负斜率异常点；"
+          f"R4-s 越界点亦剔除）：")
+    viol_keys = {(r, s, l) for r, s, l, _ in func_viol}
+    bs = {}
+    for seed in SEEDS:
+        pts = curves[("hi", seed)]
+        pts_f = {l: p for l, p in pts.items()
+                 if ("hi", seed, l) not in viol_keys}
+        clean = find_anomaly(pts_f)
+        dropped = sorted(set(pts_f) - set(clean))
+        if dropped:
+            print(f"  s{seed}: 剔除异常点 λ={', '.join(format(d, 'g') for d in dropped)}"
+                  f"（带内+负局部斜率）")
+        if len(clean) < 3:
+            print(f"  s{seed}: 有效点不足（{len(clean)}/5），跳过拟合")
+            continue
+        lams_sorted = sorted(clean)
+        ds = [clean[l][0] for l in lams_sorted]
+        cs = [clean[l][1] for l in lams_sorted]
+        fit, npos = fit_power(ds, cs)
+        if fit:
+            bs[seed] = fit[1]
+            in_range = B_RANGE[0] <= fit[1] <= B_RANGE[1]
+            print(f"  s{seed}: b={fit[1]:.3f}（a={fit[0]:.4f}，"
+                  f"n={npos}）{'∈' if in_range else '∉'}[{B_RANGE[0]},{B_RANGE[1]}]")
+        else:
+            print(f"  s{seed}: 可拟合点不足（{npos} 个 Δc>0）")
+
+    if 0 in bs and 1 in bs and 2 in bs:
+        med = float(np.median(list(bs.values())))
+        delta = abs(med - bs[0])
+        copy = all(B_RANGE[0] <= b <= B_RANGE[1] for b in bs.values())
+        strong = delta < B_MEDIAN_TOL
+        print(f"  跨种子: b_s0={bs[0]:.3f} 中位={med:.3f} |Δb|={delta:.3f}"
+              f"（阈值 {B_MEDIAN_TOL}）")
+        print(f"  判定: 复制{'成功 ✓' if copy else '失败 ✗'}，"
+              f"强复制{'✓' if strong else '✗'}")
+    else:
+        print("  三种子 b 不齐，复制判定无法完成（如实报告）")
+
+    print("\n（判定标准冻结于附录二十五；本脚本仅忠实实现，未看过数据后调整。）")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
