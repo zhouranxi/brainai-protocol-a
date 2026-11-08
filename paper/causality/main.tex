@@ -30,6 +30,7 @@ Causally Separating Representational Dimensionality from OOD Generalization}
 \newcommand{\aniso}{\textsc{aniso}}
 \newcommand{\isot}{\textsc{iso}}
 \newcommand{\rot}{\textsc{rotate}}
+\newcommand{\Efive}{E5}
 
 % Auto-generated number macros + E3 paired table
 \input{tables_auto}
@@ -53,7 +54,7 @@ to better transfer. We ask whether the observed correlation licenses such
 interventions, and answer negatively for the spectral marker family tested
 here. Across 8 ResNet-18 training recipes
 spanning a $2.4\times$ effective-dimension range, the observational correlation is
-large and stable ($r = +0.97$), yet three causal tests uniformly fail to
+large and stable ($r = +0.97$), yet four causal tests uniformly fail to
 support an interpretable causal reading. (i) \emph{Operator-separation}:
 injecting spectral-shape-matched noise collapses CIFAR-100 transfer
 monotonically with dose in 8/8 models (median $-5.4$, $-7.1$, $-10.8$\,pp at
@@ -70,6 +71,12 @@ fully reproduced by transforming the probe's own training space, absent when
 the transformed representation is scored in the original space --- while
 applying the identical operator \emph{at inference} to an unchanged head
 consistently \emph{degrades} accuracy (7/8 models, $p=0.016$). (iii)
+\emph{Formation-phase forcing}: adding the whitening objective to training
+itself (96 preregistered runs) moves the commanded geometry freely---to
+$9.2\times$ baseline---yet the paired, placebo-calibrated slope of transfer
+on $\dfx$ is $14.7\%$ of observational ($t=6.89$: a real channel, an order
+of magnitude short), following a square-root dose--response that cliffs to
+$1.9\%$ of observational at high dose. (iv)
 \emph{Architecture transfer}: the same dissociation replicates in every tested
 family---ResNet-34/50, ShuffleNet-V2, and RegNetY-400M (16 further recipes)---with
 the observational anchor at $r \ge 0.87$ everywhere, spectral-shape-matched
@@ -83,8 +90,9 @@ collapses. Together these results are consistent with $\dfx$ acting as a
 \emph{confounded label} of the training recipe rather than a manipulable
 cause of generalization for the spectral marker family tested here: the
 geometric causal path carries at most a small fraction of the observational
-association (point estimate $7.7\%$; bootstrap 95\% CI $[0.9\%, 46\%]$;
-cross-architecture shares are sign-unstable, $-8.3\%$ to $+6.0\%$), and a
+association (point estimates $7.7\%$ at inference; $14.7\%$ with
+training-time forcing, the strongest version of the intervention; both an
+order of magnitude short), and a
 direct noise channel
 that geometry does not measure carries the observable harm. We discuss why
 ``intervene on the geometry'' methods therefore require re-derivation, and
@@ -111,16 +119,18 @@ strongest candidate marker. We take the effective dimension $\dfx$ from the
 GLUE family of geometry markers, which has the largest and most stable
 observational association with OOD accuracy in our controlled setting
 ($r = +0.97$ across a purpose-built recipe grid), and subject it to a
-three-part causal battery that any geometry-to-generalization story should
+four-part causal battery that any geometry-to-generalization story should
 pass: \emph{operator separation} (move $\dfx$ with different operator
 families that hold everything else fixed), \emph{timing separation} (apply
-the same operator during representation formation vs.\ at inference), and
+the same operator during representation formation vs.\ at inference),
+\emph{formation-phase forcing} (constrain the geometry throughout
+training itself, at scale), and
 \emph{architecture transfer} (replicate in families beyond the one the
 observation was discovered in). All experiments were preregistered before
 unblinding (Appendix~\ref{app:prereg}).
 
 \paragraph{What we find.}
-The three tests uniformly fail the causal reading.
+The four tests uniformly fail the causal reading.
 \begin{enumerate}
 \item \emph{Operator separation (\S\ref{sec:e1}).} A family of
 spectral-shape-matched noise operators collapses transfer monotonically
@@ -159,6 +169,16 @@ The pattern holds in all four families: ResNet-50 ($r=+0.98$, noise
 $-11.9$\,pp in 4/4, recolor share $1.9\%$), ShuffleNet-V2 ($r=+0.89$, noise
 $-13.1$\,pp in 4/4, share $-8.3\%$), and RegNetY-400M ($r=+0.87$, noise
 $-16.0$\,pp in 4/4, share $+6.0\%$).
+\item \emph{Formation-phase forcing at scale (\S\ref{sec:e5}).} Adding a
+preregistered geometry-forcing loss \emph{during training} (96 runs: 8
+recipes $\times$ 3 seeds $\times$ 4 conditions) moves the commanded
+descriptor freely---$\dfx$ to $9.2\times$ baseline---while the paired,
+placebo-calibrated slope of transfer on $\dfx$ is $14.7\%$ of
+observational ($t = 6.89$, $d = 1.44$: a real but order-of-magnitude-short
+channel), with a square-root response surface that cliffs to $1.9\%$ of
+observational at high dose. The strongest possible version of the
+intervention---constraining geometry throughout formation---still does
+not transmit.
 \item \emph{Marker generality (\S\ref{sec:e6}).} The same battery applied
 to participation ratio and effective rank shows the same anatomy: both
 anchor observationally ($r = +0.77$ / $+0.86$), both are \emph{raised}
@@ -191,8 +211,8 @@ on any claim that it does.
 
 \paragraph{Contributions.}
 \begin{enumerate}
-\item A three-part, preregistered causal battery---operator separation,
-timing separation, architecture transfer---for auditing geometry-marker
+\item A four-part, preregistered causal battery---operator separation,
+timing separation, formation-phase forcing, and architecture transfer---for auditing geometry-marker
 interventions (\S\ref{sec:method}).
 \item A zero-noise spectral \emph{recoloring} operator family that
 separates ``move the geometry'' from ``add the noise'', plus
@@ -207,6 +227,10 @@ inference --- and the formation benefit traced to probe conditioning
 (\S\ref{sec:e3}).
 \item Cross-architecture replication and an openly reusable
 analysis pipeline (\S\ref{sec:e2}, \S\ref{sec:repro}).
+\item Formation-phase forcing at scale (96 preregistered runs plus a
+$100\times$ dose scan): the geometry is fully commandable during
+training, and the causal transmission is $14.7\%$ of observational with
+a square-root, cliff-shaped response surface (\S\ref{sec:e5}).
 \item Marker-generality check: participation ratio and effective rank show
 the same confounded-label anatomy (\S\ref{sec:e6}).
 \item A checklist for when a correlational marker licenses intervention
@@ -610,8 +634,120 @@ head at inference. Auto-generated; do not edit.}
 \eThreePairedTable
 \end{table}
 
+\section{E5: formation-phase forcing at scale}
+\label{sec:e5}
+
+E3's formation-phase arm acts on \emph{penultimate features after
+training} (trunk frozen, head refitted)---a post-hoc procedure, not an
+intervention on training dynamics. A proponent of the causal reading can
+therefore argue that geometry was never truly ``at stake'' during
+formation. \Efive{} closes this gap: the whitening operator is applied
+\emph{during training itself}, as an auxiliary loss
+$\mathcal{L} = \mathrm{CE} + \lambda\,\mathcal{L}_{\mathrm{forcing}}$
+on penultimate features at every step, so the network must form its
+representation \emph{under} the geometric constraint. If $\dfx$ is a knob,
+this is where turning it should pay off.
+
+\subsection{Design}
+
+\paragraph{Operators.} Four zero-noise loss terms on penultimate
+features: \emph{whiten} (per-class covariance pulled toward a scaled
+identity; raises $\dfx$), \emph{concentrate} (spectral mass pushed to the
+top eigenvalue; lowers $\dfx$; negative control), and \emph{placebo} (a
+random fixed-direction quadratic regularizer with no spectral intent;
+noise control). Each run trains a fresh ResNet-18 for 200 epochs from the
+same recipe grid checkpoints' recipes with seed-matched base arms for
+pairing.
+
+\paragraph{Scale.} The battery was run in two preregistered stages: a
+pilot (2 anchor recipes $\times$ 4 operators, seed 0) whose manipulation
+and function-preservation gates had to pass before scale-up, then a full
+batch of 8 recipes (the E1 anchor list) $\times$ 3 seeds $\times$ 4
+conditions = 96 runs, with 36 seed-matched base measurements, on three
+GPUs in parallel (${\sim}24$\,h). A post-hoc dose--response extension
+scanned $\lambda \in \{0.03, 0.1, 0.3, 1, 3\}$ on the two anchor recipes
+(6 further runs), spanning a $100\times$ dose range.
+
+\paragraph{Preregistered criteria.} P4-1 manipulation check ($\dfx$
+must move by $\ge 0.3$ d-ent units in the commanded direction);
+P4-2 knob test (forcing slope $\ge 0.5\times$ observational $\Rightarrow$
+knob; $\le 0.2\times \Rightarrow$ label); P4-3 negative control
+(concentrate moves $\dfx$ down without moving transfer); P4-4 placebo
+band (placebo shifts transfer by more than $\pm 0.022 \Rightarrow$ all
+conclusions downgrade).
+
+\subsection{Results}
+
+\paragraph{Manipulation succeeds completely (P4-1).} Forcing moves the
+spectrum freely and reversibly: across the full batch, whiten@1.0
+raises d-ent by a median of $+48.4$ (up to $9.2\times$ baseline at
+$\lambda{=}3$); concentrate@0.005 lowers it by $-11.8$. The commanded
+direction is realized in every arm; the GLUE-dimension endpoint agrees
+in direction wherever it converges. Geometry is fully commandable at
+formation time.
+
+\paragraph{Transfer does not follow (P4-2).} All 39 dose-band-excluded
+D-raising arms move transfer \emph{positively} (39/39 same sign) with a
+median slope of $0.0022$, i.e.\ \textbf{9--18\% of the observational
+slope} (per-condition medians: $0.0030$ at $\lambda{=}0.1$, $0.0015$ at
+$\lambda{=}1$), and 34/39 arms fall below the preregistered label
+threshold ($0.2\times$); a single arm reaches the knob threshold. In a
+paired within-model comparison against placebo ($n{=}23$), the forcing
+gain is real but small ($+0.030 \pm 0.021$, $t = 6.89$, Cohen's $d = 1.44$),
+and the placebo-calibrated net slope is \textbf{14.7\% of
+observational}. The causal channel exists---it is simply an order of
+magnitude too small to carry the observational association.
+
+\paragraph{The response surface is a square-root law with a cliff.}
+The dose scan maps the $(\Delta\dfx, \Delta c_{100})$ surface across
+$100\times$ in $\lambda$: transfer gain follows a power law
+$\Delta c_{100} \propto \Delta\dfx^{\,b}$ with $b = 0.50$
+($\Delta\mathrm{AICc} = 15.8$ over linear), and the \emph{local} slope
+decays 14\% $\to$ 5.7\% $\to$ 1.9\% of observational as
+$\lambda$ goes $0.03 \to 1 \to 3$. At the largest dose the geometry is
+driven to $9.2\times$ its baseline ($\dfx = 174$) while transfer gains
+only $+8.6$\,pp---and never crosses the observational prediction
+($+2.5$\,pp would be the linear extrapolation at this $\Delta\dfx$;
+the surface is flattening precisely where an interventional method
+would want to operate).
+
+\paragraph{Negative and placebo controls (P4-3, P4-4).} Concentrate
+lowers d-ent by a median $-11.8$ while transfer moves by
+$-0.012$ median---inside the placebo band, and the ``same $\dfx$,
+different transfer'' dissociation appears again at high concentrate
+doses (identical endpoint $\dfx {\approx} 1.1$--$2.0$ with transfer
+differing by $7$\,pp across recipes), directly refuting $\dfx$ as the
+controlling variable. The placebo arm triggers the preregistered
+downgrade clause---an unsupervised random-direction regularizer moves
+transfer by as much as some forcing arms---but after placebo-band
+filtering the label verdict is unchanged, and the placebo covariance is
+itself evidence for the recipe-confound account: a non-geometric
+regularizer moves both $\dfx$ and transfer in correlated ways, exactly
+what the confounded-label reading predicts.
+
+\paragraph{Function preservation.} 95/96 runs keep ID test accuracy
+within the preregistered band (median $|{\Delta}\mathrm{ID}| = 0.5$\,pp,
+90th percentile $1.0$\,pp, max $3.4$\,pp); the single failure
+(weakest weight-decay recipe at $\lambda{=}0.1$, $-50$\,pp)
+collapses early and is
+excluded by the preregistered function-preservation rule. Forcing does
+not ``break the model to move the number.''
+
+\subsection{What E5 adds}
+
+E3 showed that formation-phase whitening of \emph{frozen features}
+helps only the probe; E5 shows that even when the constraint acts on
+\emph{training itself}---the strongest possible version of the
+intervention---the geometric channel transmits at ${\sim}15\%$ of
+observational, with a square-root response surface and a hard cliff.
+The three timing regimes now form a closed series: inference-time
+recoloring ($7.7\%$), post-hoc whitening (probe conditioning only),
+and full formation forcing ($14.7\%$ net). The geometry is writable at
+every stage; the writing never pays.
+
 \section{E2: architecture transfer}
 \label{sec:e2}
+
 We repeat the observational anchor and the two decisive separation cells
 (\recolor{} slope; \aniso{} at matched power) in four further families, each
 with 4 recipes (lr $\in \{0.125, 0.5\}$, wd $\in \{2\mathrm{e}{-4},
@@ -727,7 +863,9 @@ correlated with geometry change but acting through non-geometric means.
 Our battery bounds the geometry-only term at a small fraction of the
 observational slope
 (point estimate $+0.0105$, $7.7\%$ of $\beta_{\text{obs}}$; permutation floor
-$[-0.009, +0.009]$, with the point estimate at the floor's upper edge)
+$[-0.009, +0.009]$, with the point estimate at the floor's upper edge;
+the formation-forcing estimate of \S\ref{sec:e5} lands at $14.7\%$,
+placebo-calibrated and paired)
 and shows that the largest separable non-geometric channel
 (noise at matched power) moves transfer \emph{against} the direction its
 $\dfx$ change would suggest: $\beta_{\text{noise}} < 0$ while
@@ -748,8 +886,11 @@ $\dfx$ yet costs $11$\,pp---any noise-robustness story that monitors only
 geometry will miss it.
 \emph{(ii) Formation-time spectral regularization.} Whitening during
 formation is mildly transfer-positive ($+1.7$\,pp), concentrated in sharper
-recipes. This is a representation-shaping regularizer whose value happens
-to co-occur with larger $\dfx$; studying it as a geometry intervention
+recipes, and the full formation-forcing battery (\S\ref{sec:e5})
+confirms a real but small channel ($14.7\%$ of observational, paired
+$t=6.89$) whose dose--response is a square-root law with a cliff. This
+is a representation-shaping regularizer whose value happens to
+co-occur with larger $\dfx$; studying it as a geometry intervention
 mistakes the fingerprint for the hand.
 \emph{(iii) Observational screening.} The correlation itself replicates
 across architectures ($r \ge 0.87$), so $\dfx$ retains value as a cheap
@@ -757,16 +898,20 @@ across architectures ($r \ge 0.87$), so $\dfx$ retains value as a cheap
 that fails, not the measurement.
 
 \paragraph{A checklist before reading a marker causally.}
-The battery reduces to four questions any future ``geometry intervention''
+The battery reduces to five questions any future ``geometry intervention''
 result should answer: (1) \emph{Manipulation check}: does the intervention
 realize the intended descriptor change ($r \ge 0.99$ here)? (2)
 \emph{Operator separation}: do two operators that move the descriptor
 equally but differ in an orthogonal dimension (noise, timing, spectrum)
-move the outcome equally? (3) \emph{Negative control}: does a
+move the outcome equally? (3)
+\emph{Negative control}: does a
 descriptor-preserving operator (here \rot) leave the outcome unchanged?
 (4) \emph{Phase separation}: does the effect survive moving the operator
-from formation to inference? A marker whose interventional story survives
-all four has earned a causal reading; $\dfx$ passes none.
+from formation to inference? (5) \emph{Forcing saturation}: when the
+intervention is applied during training at increasing dose, does the
+outcome scale proportionally, or does it saturate (here: a square-root
+law that cliffs to $2\%$ of observational)? A marker whose interventional
+story survives all five has earned a causal reading; $\dfx$ passes none.
 
 \paragraph{Relation to the companion papers.}
 Paper~1 fixed when the observational link holds (ID-matched,
@@ -800,13 +945,17 @@ rank, all three are functions of the same covariance spectrum; discrete or
 non-spectral descriptors (e.g.\ uniformity, alignment) are untested.
 (v) \emph{Feature-space E3}---formation-phase
 whitening acts on penultimate features with a refitted head, not on
-weight-space training dynamics; a full-training-run whitening schedule is
-the natural extension, and our arm-(b) null makes the burden of proof
-explicit for any claim it would help representationally.
+weight-space training dynamics. The E5 forcing battery
+(\S\ref{sec:e5}) closes exactly this gap at scale (96 runs, constraint
+active at every training step), and the transmission remains at
+$14.7\%$ of observational with a saturating response surface; the
+burden of proof now falls on any claim that some other form of
+weight-space geometric intervention would behave differently.
 
 \section{Conclusion}
 \label{sec:conclusion}
-Across three preregistered causal tests, the effective dimension $\dfx$
+Across three preregistered causal tests---plus a 96-run
+formation-phase forcing battery---the effective dimension $\dfx$
 behaves consistently with a readable fingerprint of the training recipe
 rather than a
 manipulable cause of OOD generalization: spectral-shape-matched noise
@@ -815,7 +964,10 @@ $\dfx$ by up to $8\times$ with
 zero-noise whitening never moves transfer below baseline ($-0.03$ to
 $+5.6$\,pp); the whitening
 benefit in formation phase decomposes into probe conditioning, while the
-same operator at inference harms; the
+same operator at inference harms; forcing the geometry \emph{during
+training} moves $\dfx$ to $9.2\times$ baseline at a paired, calibrated
+slope of $14.7\%$ of observational, with a square-root response that
+cliffs at high dose; the
 entire dissociation replicates across four further architecture families
 (24 recipes in total); and two further spectrum markers show the same
 anatomy. The observational
@@ -952,6 +1104,27 @@ features --- shows monotone in-dose benefits $\ge 0.5$\,pp in all models
 replicating across architectures. \emph{Outcome}: arm (b) is flat-null in
 every model at every dose; arm (a) reproduces the entire benefit ---
 H-cond confirmed, H-reg and H-geom rejected. The conclusion stands.
+
+\paragraph{Amendment 2 (E5 formation-forcing battery).}
+Preregistered in ADR-0016 App.~16 before any forcing run: criteria
+P4-1--P4-4 as stated in \S\ref{sec:e5}, with a two-stage
+design (pilot gates $\rightarrow$ 96-run batch). \emph{Deviations,
+reported in full}: (1) the forcing loss for the spectral operators was
+re-implemented mid-pilot after a NaN-poisoning defect (power-iteration
+autograd blowup); the fix moves the eigenvector solve out of the
+autograd graph (Rayleigh-quotient gradient, bounded), pilot-batch
+dispersed/concentrate readings were voided, and the re-run was used
+throughout---the defect, fix, and voided readings are archived
+(ADR-0016 App.~18). (2) P4-4's placebo arm triggered its downgrade
+clause (a placebo moves transfer comparably to low-dose forcing arms);
+the verdict after placebo-band filtering is unchanged, and the placebo
+covariance is reported as positive evidence for the confound account.
+(3) The dose scan (six runs at $\lambda \in \{0.03, 0.3, 3\}$) was
+added post-batch with its own preregistration (App.~23 of the log):
+form judged by AICc among linear/power/log, saturation by local-slope
+decay. (4) One of 96 runs violates the function-preservation rule and
+is excluded per that rule; all exclusions are listed in the data
+release.
 
 \section{E1 endpoint summary table}
 \label{app:e1table}
