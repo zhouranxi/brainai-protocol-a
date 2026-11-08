@@ -1,0 +1,237 @@
+% References for: Geometry Is a Label, Not a Knob (P3, causality battery)
+% Verification: all entries checked against primary sources on 2026-11-04
+% (cite-hallucination-check pipeline; entries carried over from
+% brainai-smoke/paper/tmlr/references.bib were verified 2026-10-27,
+% see brainai-smoke/results/references_check_report.md).
+
+% ---------- Companion papers (trilogy) ----------
+% P1: observational boundary conditions.
+@article{zhou2026protocol,
+  title   = {When Do Geometric Markers Predict Generalization? A Controlled Analysis of Task-Relevance and Shift Type},
+  author  = {Zhou, Ranxi},
+  journal = {Transactions on Machine Learning Research},
+  year    = {2026},
+  note    = {Under review}
+}
+
+% P2: measurement study of what the markers track.
+@article{zhou2026measuring,
+  title   = {What Does a Geometric Marker Actually Measure? A Measurement Study of Out-of-Distribution Predictors},
+  author  = {Zhou, Ranxi},
+  journal = {Transactions on Machine Learning Research},
+  year    = {2026},
+  note    = {Under review}
+}
+
+% ---------- Original study and GLUE framework ----------
+@inproceedings{chou2026diagnosing,
+  author    = {Chou, Chi-Ning and Kirsanov, Artem and Yang, Yao-Yuan and Chung, SueYeon},
+  title     = {Diagnosing Generalization Failures from Representational Geometry Markers},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2026},
+  note      = {arXiv:2603.01879}
+}
+
+@inproceedings{chou2025feature,
+  author    = {Chou, Chi-Ning and Le, Hang and Wang, Yichen and Chung, SueYeon},
+  title     = {Feature Learning Beyond the Lazy-Rich Dichotomy: Insights from Representational Geometry},
+  booktitle = {International Conference on Machine Learning (ICML)},
+  year      = {2025},
+  note      = {arXiv:2503.18114}
+}
+
+% Manifold capacity theory (anchor-point QP solver).
+@article{chung2018classification,
+  author  = {Chung, SueYeon and Lee, Daniel D. and Sompolinsky, Haim},
+  title   = {Classification and Geometry of General Perceptual Manifolds},
+  journal = {Physical Review X},
+  volume  = {8},
+  number  = {3},
+  pages   = {031003},
+  year    = {2018}
+}
+
+% ---------- Geometry--generalization correlations ----------
+% Intrinsic dimension of representations predicts test accuracy.
+@inproceedings{ansuini2019intrinsic,
+  author    = {Ansuini, Alessio and Laio, Alessandro and Macke, Jakob H. and Zoccolan, Davide},
+  title     = {Intrinsic Dimension of Data Representations in Deep Neural Networks},
+  booktitle = {Advances in Neural Information Processing Systems 32 (NeurIPS)},
+  year      = {2019},
+  note      = {arXiv:1905.12784}
+}
+
+% Neural collapse geometry marker.
+@article{papyan2020prevalence,
+  author  = {Papyan, Vardan and Han, X. Y. and Donoho, David L.},
+  title   = {Prevalence of Neural Collapse during the Terminal Phase of Deep Learning Training},
+  journal = {Proceedings of the National Academy of Sciences},
+  volume  = {117},
+  number  = {40},
+  pages   = {24652--24663},
+  year    = {2020},
+  doi     = {10.1073/pnas.2015509117}
+}
+
+% Umbrella survey of 40+ generalization measures incl. rank/effective-rank.
+@inproceedings{jiang2020fantastic,
+  author    = {Jiang, Yiding and Neyshabur, Behnam and Mobahi, Hossein and Krishnan, Dilip and Bengio, Samy},
+  title     = {Fantastic Generalization Measures and Where to Find Them},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2020},
+  note      = {arXiv:1912.02178}
+}
+
+% Few-shot concept learning via representational geometry.
+@article{sorscher2022neural,
+  author  = {Sorscher, Ben and Ganguli, Surya and Sompolinsky, Haim},
+  title   = {Neural Representational Geometry Underlies Few-Shot Concept Learning},
+  journal = {Proceedings of the National Academy of Sciences},
+  volume  = {119},
+  number  = {43},
+  pages   = {e2200800119},
+  year    = {2022}
+}
+
+% Double descent: non-monotone capacity--generalization story.
+@inproceedings{nakkiran2020deep,
+  author    = {Nakkiran, Preetum and Kaplun, Gal and Bansal, Yamini and Yang, Tristan and Barak, Boaz and Sutskever, Ilya},
+  title     = {Deep Double Descent: Where Bigger Models and More Data Hurt},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2020},
+  note      = {arXiv:1912.02292}
+}
+
+% ---------- Geometry-directed interventions ----------
+% Whitening inside networks: decorrelated batch norm (ZCA whitening layers).
+@inproceedings{huang2018decorrelated,
+  author    = {Huang, Lei and Yang, Dawei and Lang, Bo and Deng, Jia},
+  title     = {Decorrelated Batch Normalization},
+  booktitle = {Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages     = {791--800},
+  year      = {2018}
+}
+
+% Whitening/group normalization analysis.
+@inproceedings{huang2021group,
+  author    = {Huang, Lei and Zhou, Yi and Liu, Li and Zhu, Fan and Shao, Ling},
+  title     = {Group Whitening: Balancing Learning Efficiency and Representational Capacity},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages     = {9512--9521},
+  year      = {2021}
+}
+
+% Spectral normalization (spectral-scale control as a training objective).
+@inproceedings{miyato2018spectral,
+  author    = {Miyato, Takeru and Kataoka, Toshiki and Koyama, Masanori and Yoshida, Yuichi},
+  title     = {Spectral Normalization for Generative Adversarial Networks},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2018},
+  note      = {arXiv:1802.05957}
+}
+
+% Feature decorrelation regularizer (DeCov: cross-covariance penalty).
+% Note: published ICLR 2016 main track per arXiv comments ("Accepted to
+% ICLR 2016"); authors span VT / UdeM / FAIR / MSR.
+@inproceedings{cogswell2016reducing,
+  author    = {Cogswell, Michael and Ahmed, Faruk and Girshick, Ross and Zitnick, Larry and Batra, Dhruv},
+  title     = {Reducing Overfitting in Deep Networks by Decorrelating Representations},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2016},
+  note      = {arXiv:1511.06068}
+}
+
+% ---------- Causal audits of DL heuristics ----------
+% Sanity checks / randomization tests for saliency methods.
+@inproceedings{adebayo2018sanity,
+  author    = {Adebayo, Julius and Gilmer, Justin and Muelly, Michael and Goodfellow, Ian J. and Hardt, Moritz and Kim, Been},
+  title     = {Sanity Checks for Saliency Maps},
+  booktitle = {Advances in Neural Information Processing Systems 31 (NeurIPS)},
+  year      = {2018}
+}
+
+% ROAR: remove-and-retrain benchmark for feature importance.
+@inproceedings{hooker2019benchmark,
+  author    = {Hooker, Sara and Erhan, Dumitru and Kindermans, Pieter-Jan and Kim, Been},
+  title     = {A Benchmark for Interpretability Methods in Deep Neural Networks},
+  booktitle = {Advances in Neural Information Processing Systems 32 (NeurIPS)},
+  pages     = {9737--9748},
+  year      = {2019}
+}
+
+% Fragility of interpretations under adversarial perturbation.
+@inproceedings{ghorbani2019interpretation,
+  author    = {Ghorbani, Amirata and Abid, Abubakar and Zou, James},
+  title     = {Interpretation of Neural Networks Is Fragile},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume    = {33},
+  pages     = {3681--3688},
+  year      = {2019},
+  doi       = {10.1609/aaai.v33i01.33013681}
+}
+
+% Calibration claims and their post-hoc repair.
+@inproceedings{guo2017calibration,
+  author    = {Guo, Chuan and Pleiss, Geoff and Sun, Yu and Weinberger, Kilian Q.},
+  title     = {On Calibration of Modern Neural Networks},
+  booktitle = {Proceedings of the 34th International Conference on Machine Learning (ICML)},
+  pages     = {1321--1330},
+  year      = {2017}
+}
+
+% Umbrella audit discipline for generalization measures (controlled
+% experiments against spurious hyperparameter correlations).
+% (same venue as jiang2020fantastic; cited for the audit framing)
+
+% ---------- Statistical methodology ----------
+@book{pearl2009causality,
+  author    = {Pearl, Judea},
+  title     = {Causality: Models, Reasoning, and Inference},
+  edition   = {2},
+  publisher = {Cambridge University Press},
+  year      = {2009}
+}
+
+@book{efron1993bootstrap,
+  author    = {Efron, Bradley and Tibshirani, Robert J.},
+  title     = {An Introduction to the Bootstrap},
+  publisher = {Chapman \& Hall/CRC},
+  year      = {1993}
+}
+
+% ---------- Datasets and architectures ----------
+@inproceedings{hendrycks2019benchmarking,
+  author    = {Hendrycks, Dan and Dietterich, Thomas},
+  title     = {Benchmarking Neural Network Robustness to Common Corruptions and Perturbations},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2019}
+}
+
+@inproceedings{ma2018shufflenet,
+  author    = {Ma, Ningning and Zhang, Xiangyu and Zheng, Hai-Tao and Sun, Jian},
+  title     = {ShuffleNet V2: Practical Guidelines for Efficient CNN Architecture Design},
+  booktitle = {European Conference on Computer Vision (ECCV)},
+  year      = {2018}
+}
+
+@inproceedings{radosavovic2020designing,
+  author    = {Radosavovic, Ilija and Kosaraju, Raj Prateek and Girshick, Ross and He, Kaiming and Doll{\'a}r, Piotr},
+  title     = {Designing Network Design Spaces},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year      = {2020}
+}
+
+@inproceedings{howard2019searching,
+  author    = {Howard, Andrew and Sandler, Mark and Chu, Grace and Chen, Liang-Chieh and Chen, Bo and Tan, Mingxing and Wang, Weijun and Zhu, Yukun and Pang, Ruoming and Vasudevan, Vijay and Le, Quoc V. and Adam, Hartwig},
+  title     = {Searching for MobileNetV3},
+  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+  year      = {2019},
+  note      = {arXiv:1905.02244}
+}
+
+@techreport{le2015tiny,
+  author      = {Le, Ya and Yang, Xuan},
+  title       = {Tiny ImageNet Visual Recognition Challenge},
+  institution = {CS231n technical report},
+  year        = {2015}
+}

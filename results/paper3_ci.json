@@ -1,0 +1,171 @@
+{
+ "e1": {
+  "aniso2": {
+   "median": -0.1077,
+   "boot95": [
+    -0.1213,
+    -0.0986
+   ]
+  },
+  "iso2": {
+   "median": -0.0646,
+   "boot95": [
+    -0.1307,
+    -0.0586
+   ]
+  },
+  "recolor0": {
+   "median": 0.017,
+   "boot95": [
+    0.00595,
+    0.0306
+   ]
+  },
+  "gauss_iso": {
+   "median": -0.0081,
+   "boot95": [
+    -0.0221,
+    -0.00686
+   ]
+  },
+  "gauss_aniso": {
+   "median": 0.13748,
+   "boot95": [
+    -0.75783,
+    0.42049
+   ]
+  },
+  "recolor": {
+   "median": 0.01052,
+   "boot95": [
+    0.00128,
+    0.06229
+   ]
+  },
+  "tot_recolor": {
+   "median": 0.0109,
+   "boot95": [
+    0.00101,
+    0.04865
+   ]
+  },
+  "geometric_share": {
+   "share_pct": 7.7,
+   "boot95": [
+    0.93731,
+    45.55366
+   ],
+   "noise_floor95": [
+    -6.9,
+    6.8
+   ],
+   "pooled_share_pct": 10.0,
+   "pooled_boot95": [
+    1.86293,
+    33.79194
+   ]
+  }
+ },
+ "e2": {
+  "resnet34": {
+   "n": 4,
+   "obs_slope": 0.1332,
+   "base_r": 0.9771,
+   "recolor_slope_median": 0.00439,
+   "share_pct": 3.3,
+   "noise_floor95": [
+    -6.9,
+    5.0
+   ]
+  },
+  "resnet50": {
+   "n": 4,
+   "obs_slope": 0.0869,
+   "base_r": 0.9848,
+   "recolor_slope_median": 0.00166,
+   "share_pct": 1.9,
+   "noise_floor95": [
+    -2.5,
+    43.0
+   ]
+  },
+  "shufflenet_v2_x1_0": {
+   "n": 4,
+   "obs_slope": 0.0701,
+   "base_r": 0.8949,
+   "recolor_slope_median": -0.00585,
+   "share_pct": -8.3,
+   "noise_floor95": [
+    -20.2,
+    21.7
+   ]
+  },
+  "regnet_y_400mf": {
+   "n": 4,
+   "obs_slope": 0.1139,
+   "base_r": 0.8672,
+   "recolor_slope_median": 0.00681,
+   "share_pct": 6.0,
+   "noise_floor95": [
+    -2.8,
+    4.6
+   ]
+  }
+ },
+ "e3": {
+  "gains_median": 0.017,
+  "gains_boot95": [
+   0.0019,
+   0.0306
+  ],
+  "inference_median": -0.0013,
+  "inference_boot95": [
+   -0.003,
+   -0.0009
+  ],
+  "head_cross_median": -0.0035,
+  "head_cross_boot95": [
+   -0.0048,
+   -0.0018
+  ],
+  "lr_strat_note": "post-hoc exploratory (not preregistered)",
+  "lr0.125_median": 0.0272,
+  "lr0.5_median": 0.0201,
+  "lr1.0_median": 0.0068
+ },
+ "primary_tests": {
+  "raw": {
+   "P1b_aniso2_endpoint_neg": 0.0039,
+   "P3a_formation_gain_pos": 0.0078,
+   "P3b_inference_harm_neg": 0.0078
+  },
+  "holm_adjusted": {
+   "P1b_aniso2_endpoint_neg": 0.0117,
+   "P3a_formation_gain_pos": 0.0156,
+   "P3b_inference_harm_neg": 0.0156
+  },
+  "family": "3 one-sided Wilcoxons (P1b/P3a/P3b); P1/P2 are threshold criteria evaluated as written",
+  "all_survive_0.05": true,
+  "P1_as_written": {
+   "iso_median": -0.0081,
+   "iso_neg": 0,
+   "aniso_median": 0.13748,
+   "aniso_neg": 3,
+   "verdict": "FAIL-as-written (iso median > -0.05); aniso slope unstable by design (D pinned). The paper's noise claim rests on P1b endpoint, not P1 slope."
+  },
+  "P2_as_written": {
+   "anchor_positive_families": 5,
+   "of": 5,
+   "pass": true,
+   "note": "deterministic criterion; no p-value preregistered"
+  },
+  "P3_as_written": {
+   "formation_gain_median": 0.017,
+   "formation_window_p3_pass": false,
+   "inference_collapse_pass": false,
+   "inference_median": -0.0013,
+   "verdict": "FAIL as written on both sub-criteria: formation arm VIOLATES the +-.01 window (+1.7pp benefit, the resurrection channel -> E5b adjudication, ADR App.8 amendment 1); inference arm harm directionally real (7/8, Holm p=.016) but ~80x smaller than the preregistered collapse threshold"
+  }
+ },
+ "exploratory_note": "all other comparisons (iso/rotate/scale/placebo cells, recolor dose slopes, tot_recolor, stratifications) are exploratory; none is claimed as confirmatory"
+}

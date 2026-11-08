@@ -110,9 +110,17 @@ ANON_RULES = [
     (re.compile(r"\\citep\{zhou2026protocol\}"),
      "(a concurrent submission, anonymized here)",
      "companion self-citation in text"),
+    # The second companion paper (the measurement study) is likewise cited
+    # by name in the causality paper; anonymize it the same way.
+    (re.compile(r"\\citep\{zhou2026measuring\}"),
+     "(a concurrent submission, anonymized here)",
+     "companion-2 self-citation in text"),
     (re.compile(r"@article\{zhou2026protocol,.*?\n\}\n", re.S),
      "",  # the entry is no longer cited; drop it from the bib
      "companion bib entry"),
+    (re.compile(r"@article\{zhou2026measuring,.*?\n\}\n", re.S),
+     "",
+     "companion-2 bib entry"),
     # LICENSE copyright line.
     (re.compile(r"Copyright \(c\) 2026 Ranxi Zhou, Hunan University of "
                 r"Chinese Medicine"),
