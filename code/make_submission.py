@@ -225,7 +225,10 @@ def compile_paper(d: Path, log_name: str) -> list:
 
 def is_excluded(rel: str) -> bool:
     for e in ZIP_EXCLUDES:
-        if rel == e or rel.startswith(e + "/") or rel.rsplit("/", 1)[-1] == e:
+        # e matches the full relative path, a top-level prefix, any path
+        # component (e.g. __pycache__ at any depth), or the basename.
+        if rel == e or rel.startswith(e + "/") or rel.rsplit("/", 1)[-1] == e \
+                or f"/{e}/" in f"/{rel}":
             return True
     return False
 
