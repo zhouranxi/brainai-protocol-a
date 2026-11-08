@@ -23,8 +23,14 @@ S_OBS_D_ENT = 0.0161      # 观察斜率（d_ent 口径，E1 锚点）
 LABEL_THR = 0.2 * S_OBS_D_ENT
 KNOB_THR = 0.5 * S_OBS_D_ENT
 
-# placebo 带宽（附录十九）：|Δc100| ≤ 0.033 视为 placebo 可解释
+# placebo 带宽：|Δc100| ≤ PLACEBO_BAND 视为 placebo 可解释。
+# ⚠️ 论文判定口径（ADR 附录二十/二十二，P4-2 的 39 臂）用的是 ±0.022
+# ——全量批 placebo 26 读数的 SD（+0.0008 ± 0.0220，附录二十 P4-4）。
+# 0.033 是附录十九 pilot 时代的带宽（2 条 pilot placebo 读数的最大值），
+# 保留为历史对照口径：BAND=0.033 会给出 34 臂（33 whiten + 1 disperse），
+# 与论文数字 39/39、34/39 不一致——勿用本值复算论文判定。
 PLACEBO_BAND = 0.033
+PLACEBO_BAND_PAPER = 0.022  # 论文判定口径（附录二十）
 
 
 def load_rows():
@@ -114,12 +120,16 @@ def main():
               f"{inb:4d}/{len(ms):<4d} {idmin:+7.3f}")
 
     # P4-2 全量判决核算（D↑ 臂，排除 placebo 带内）
-    up = [m for (k, l), ms in by_cond.items() if k in ("whiten", "disperse")
-          for m in ms if abs(m["c_delta"]) > PLACEBO_BAND]
-    if up:
+    # 双口径并行输出：PAPER 口径 ±0.022（附录二十，39 臂）与 pilot 旧口径 0.033（34 臂）
+    for band, tag in ((PLACEBO_BAND_PAPER, "论文口径 ±0.022"),
+                      (PLACEBO_BAND, "pilot 旧口径 ±0.033")):
+        up = [m for (k, l), ms in by_cond.items() if k in ("whiten", "disperse")
+              for m in ms if abs(m["c_delta"]) > band]
+        if not up:
+            continue
         sl = [m["slope"] for m in up]
         sgn = sum(1 for s in sl if s > 0)
-        print(f"\nP4-2 核算（D↑ 臂 n={len(up)}，band 外）：同号 {sgn}/{len(up)}，"
+        print(f"\nP4-2 核算（D↑ 臂 n={len(up)}，{tag}）：同号 {sgn}/{len(up)}，"
               f"斜率范围 [{min(sl):+.5f}, {max(sl):+.5f}]，"
               f"label 阈 {LABEL_THR:.5f}，knob 阈 {KNOB_THR:.5f}")
         n_label = sum(1 for s in sl if s <= LABEL_THR)
