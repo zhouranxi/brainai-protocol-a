@@ -24,3 +24,4 @@ build-*.log
 # Local state
 *.state.json
 submission/
+.workbuddy_session_note
