@@ -30,7 +30,7 @@ Causally Separating Representational Dimensionality from OOD Generalization}
 \newcommand{\aniso}{\textsc{aniso}}
 \newcommand{\isot}{\textsc{iso}}
 \newcommand{\rot}{\textsc{rotate}}
-\newcommand{\Efive}{E5}
+\newcommand{\Efive}{E4}
 
 % Auto-generated number macros + E3 paired table
 \input{tables_auto}
@@ -169,7 +169,7 @@ The pattern holds in all four families: ResNet-50 ($r=+0.98$, noise
 $-11.9$\,pp in 4/4, recolor share $1.9\%$), ShuffleNet-V2 ($r=+0.89$, noise
 $-13.1$\,pp in 4/4, share $-8.3\%$), and RegNetY-400M ($r=+0.87$, noise
 $-16.0$\,pp in 4/4, share $+6.0\%$).
-\item \emph{Formation-phase forcing at scale (\S\ref{sec:e5}).} Adding a
+\item \emph{Formation-phase forcing at scale (\S\ref{sec:e4}).} Adding a
 preregistered geometry-forcing loss \emph{during training} (96 runs: 8
 recipes $\times$ 3 seeds $\times$ 4 conditions) moves the commanded
 descriptor freely---$\dfx$ to $9.2\times$ baseline---while the paired,
@@ -230,7 +230,7 @@ analysis pipeline (\S\ref{sec:e2}, \S\ref{sec:repro}).
 \item Formation-phase forcing at scale (96 preregistered runs plus a
 $100\times$ dose scan): the geometry is fully commandable during
 training, and the causal transmission is $14.7\%$ of observational with
-a square-root, cliff-shaped response surface (\S\ref{sec:e5}).
+a square-root, cliff-shaped response surface (\S\ref{sec:e4}).
 \item Marker-generality check: participation ratio and effective rank show
 the same confounded-label anatomy (\S\ref{sec:e6}).
 \item A checklist for when a correlational marker licenses intervention
@@ -634,8 +634,8 @@ head at inference. Auto-generated; do not edit.}
 \eThreePairedTable
 \end{table}
 
-\section{E5: formation-phase forcing at scale}
-\label{sec:e5}
+\section{E4: formation-phase forcing at scale}
+\label{sec:e4}
 
 E3's formation-phase arm acts on \emph{penultimate features after
 training} (trunk frozen, head refitted)---a post-hoc procedure, not an
@@ -733,10 +733,10 @@ collapses early and is
 excluded by the preregistered function-preservation rule. Forcing does
 not ``break the model to move the number.''
 
-\subsection{What E5 adds}
+\subsection{What E4 adds}
 
 E3 showed that formation-phase whitening of \emph{frozen features}
-helps only the probe; E5 shows that even when the constraint acts on
+helps only the probe; E4 shows that even when the constraint acts on
 \emph{training itself}---the strongest possible version of the
 intervention---the geometric channel transmits at ${\sim}15\%$ of
 observational, with a square-root response surface and a hard cliff.
@@ -864,7 +864,7 @@ Our battery bounds the geometry-only term at a small fraction of the
 observational slope
 (point estimate $+0.0105$, $7.7\%$ of $\beta_{\text{obs}}$; permutation floor
 $[-0.009, +0.009]$, with the point estimate at the floor's upper edge;
-the formation-forcing estimate of \S\ref{sec:e5} lands at $14.7\%$,
+the formation-forcing estimate of \S\ref{sec:e4} lands at $14.7\%$,
 placebo-calibrated and paired)
 and shows that the largest separable non-geometric channel
 (noise at matched power) moves transfer \emph{against} the direction its
@@ -886,7 +886,7 @@ $\dfx$ yet costs $11$\,pp---any noise-robustness story that monitors only
 geometry will miss it.
 \emph{(ii) Formation-time spectral regularization.} Whitening during
 formation is mildly transfer-positive ($+1.7$\,pp), concentrated in sharper
-recipes, and the full formation-forcing battery (\S\ref{sec:e5})
+recipes, and the full formation-forcing battery (\S\ref{sec:e4})
 confirms a real but small channel ($14.7\%$ of observational, paired
 $t=6.89$) whose dose--response is a square-root law with a cliff. This
 is a representation-shaping regularizer whose value happens to
@@ -945,8 +945,8 @@ rank, all three are functions of the same covariance spectrum; discrete or
 non-spectral descriptors (e.g.\ uniformity, alignment) are untested.
 (v) \emph{Feature-space E3}---formation-phase
 whitening acts on penultimate features with a refitted head, not on
-weight-space training dynamics. The E5 forcing battery
-(\S\ref{sec:e5}) closes exactly this gap at scale (96 runs, constraint
+weight-space training dynamics. The E4 forcing battery
+(\S\ref{sec:e4}) closes exactly this gap at scale (96 runs, constraint
 active at every training step), and the transmission remains at
 $14.7\%$ of observational with a saturating response surface; the
 burden of proof now falls on any claim that some other form of
@@ -989,10 +989,11 @@ usefully be asked to change.
 All experiments run on public CIFAR data with fixed seeds; preregistration in
 \texttt{paper/adr\_0016.md} (Appendices 4--5) written before unblinding;
 the dose--response falsification criteria (App.~8 + amendment 1) were
-committed before any E5 datum existed; the E5b adjudication verdict in
+committed before any E5b datum existed; the E5b adjudication verdict in
 \S\ref{sec:e3} follows those preregistered branches verbatim.
 Scripts: \texttt{code/intervene\_v2\_paper.py} (E1--E3),
-\texttt{code/intervene\_e5\_dose.py} (E5 dose--response + MLP control),
+\texttt{code/train\_forcing\_p4.py} + \texttt{code/merge\_p4\_full.py} + \texttt{code/dose\_shape\_fit.py} (E4, 96 runs + dose scan),
+\texttt{code/intervene\_e5\_dose.py} (E5b dose--response + MLP control),
 \texttt{code/intervene\_e5c\_cond.py} (E5c conditioning measurements),
 \texttt{code/intervene\_e5d\_ceiling.py} and
 \texttt{code/analyze\_e5d\_ceiling.py} (E5e saturation/headroom test),
@@ -1090,7 +1091,7 @@ pre-registration time, not as phase separation being absent; the
 mechanism adjudication below replaces it.
 
 \paragraph{Amendment 1 (dose--response falsification criteria).}
-Written and timestamped \emph{before any E5 datum existed}, after the E3
+Written and timestamped \emph{before any E5b datum existed}, after the E3
 endpoint but before the dose--response data. Three mechanism hypotheses
 for the formation benefit: \emph{H-reg} (generic regularization; predicts
 dose-flat gains), \emph{H-geom} (representational transmission; predicts
@@ -1105,9 +1106,9 @@ replicating across architectures. \emph{Outcome}: arm (b) is flat-null in
 every model at every dose; arm (a) reproduces the entire benefit ---
 H-cond confirmed, H-reg and H-geom rejected. The conclusion stands.
 
-\paragraph{Amendment 2 (E5 formation-forcing battery).}
+\paragraph{Amendment 2 (E4 formation-forcing battery).}
 Preregistered in ADR-0016 App.~16 before any forcing run: criteria
-P4-1--P4-4 as stated in \S\ref{sec:e5}, with a two-stage
+P4-1--P4-4 as stated in \S\ref{sec:e4}, with a two-stage
 design (pilot gates $\rightarrow$ 96-run batch). \emph{Deviations,
 reported in full}: (1) the forcing loss for the spectral operators was
 re-implemented mid-pilot after a NaN-poisoning defect (power-iteration
