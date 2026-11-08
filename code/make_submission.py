@@ -54,6 +54,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "submission"
+PREPRINT_OUT = ROOT / "preprint"
 
 PDFTEX = Path("C:/Users/Lance/TinyTeX/bin/windows/pdftex.exe")
 BIBTEX = Path("C:/Users/Lance/TinyTeX/bin/windows/bibtex.exe")
@@ -273,16 +274,85 @@ def build_zip(dst: Path, report: list) -> list:
     return failures
 
 
+# ---------------------------------------------------------------------------
+# Preprint variants (identity version).  The sources keep the anonymous
+# \usepackage{tmlr} as the default; the preprint build flips it in the
+# staging copy at build time, exactly like the anonymization rules:
+# never hand-edit the sources.
+# ---------------------------------------------------------------------------
+PREPRINT_TEX_RULES = [
+    # (description, line-pattern, replacement).  Replacements are applied
+    # via a lambda so backslashes in them are never parsed as escapes.
+    ("tmlr preprint mode",
+     re.compile(r"^\\usepackage\{tmlr\}", re.M),
+     "\\usepackage[preprint]{tmlr}"),
+    ("real author block",
+     re.compile(r"^\\author\{\\name Anonymous Authors \\AND \\addr Anonymous Affiliation\}", re.M),
+     "\\author{\\name Ranxi Zhou \\AND \\addr Department of Computer Science "
+     "and Technology, Hunan University of Chinese Medicine, Changsha, China "
+     "\\AND \\email see the ORCID profile}"),
+]
+
+
+def build_preprint(paper_name: str, report: list, failures: list) -> None:
+    """Build the identity-version preprint for one paper into preprint/."""
+    src = PAPERS[paper_name]
+    dst = PREPRINT_OUT / paper_name
+    if dst.exists():
+        shutil.rmtree(dst)
+    dst.mkdir(parents=True)
+    for item in src.iterdir():
+        if item.suffix in {".tex", ".sty", ".bst", ".bib"} \
+                or item.name in ("figures", "figs"):
+            if item.is_dir():
+                shutil.copytree(item, dst / item.name)
+            else:
+                shutil.copy2(item, dst)
+    tex = (src / "main.tex").read_text(encoding="utf-8")
+    applied = []
+    for desc, pat, rep in PREPRINT_TEX_RULES:
+        tex, n = pat.subn(lambda m, r=rep: r, tex)
+        if n:
+            applied.append(f"{desc} x{n}")
+    if len(applied) != len(PREPRINT_TEX_RULES):
+        failures.append(f"preprint/{paper_name}: expected "
+                        f"{len(PREPRINT_TEX_RULES)} rule applications, got "
+                        f"{len(applied)} -- check PREPRINT_TEX_RULES against "
+                        f"the source")
+    (dst / "main.tex").write_text(tex, encoding="utf-8", newline="\n")
+    report.append(f"preprint/{paper_name}/main.tex: "
+                  + ", ".join(applied) if applied else "no rules applied")
+    failures += compile_paper(dst, f"preprint/{paper_name}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--paper", choices=["r1", "measurement"])
+    ap.add_argument("--preprint", action="store_true",
+                    help="build the identity-version preprint(s) instead")
     ap.add_argument("--scan-only", action="store_true")
     args = ap.parse_args()
 
     targets = [args.paper] if args.paper else list(PAPERS)
     failures: list = []
     report: list = []
+
+    if args.preprint:
+        if PREPRINT_OUT.exists():
+            shutil.rmtree(PREPRINT_OUT)
+        PREPRINT_OUT.mkdir(parents=True)
+        for name in targets:
+            build_preprint(name, report, failures)
+        print("\n".join(report))
+        if failures:
+            print()
+            print("\n".join("FAIL " + f for f in failures))
+            return 1
+        print("\npreprints built:")
+        for name in targets:
+            print(f"  preprint/{name}/main.pdf")
+        return 0
 
     if not args.scan_only:
         if OUT.exists():

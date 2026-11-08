@@ -25,3 +25,4 @@ build-*.log
 *.state.json
 submission/
 .workbuddy_session_note
+preprint/
