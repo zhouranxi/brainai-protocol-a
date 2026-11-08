@@ -1335,5 +1335,96 @@
     "paper": 1.0,
     "recomputed": 1.0,
     "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "n in protocol band",
+    "paper": 32.0,
+    "recomputed": 32.0,
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "glue_dimension official-host r (protocol band)",
+    "paper": 0.924,
+    "recomputed": 0.9243289772215671,
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "glue_radius official-host r (protocol band)",
+    "paper": 0.675,
+    "recomputed": 0.6751210772975318,
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "glue_utility official-host r (protocol band)",
+    "paper": 0.507,
+    "recomputed": 0.5069187759159207,
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "glue_dimension cross-host ranking rho",
+    "paper": 0.963,
+    "recomputed": 0.9629830655666521,
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "glue_radius cross-host ranking rho",
+    "paper": 0.8765,
+    "recomputed": 0.8764654798089448,
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "glue_utility cross-host ranking rho",
+    "paper": 0.8043,
+    "recomputed": 0.8042770299609205,
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "official_pr r",
+    "paper": 0.894,
+    "recomputed": 0.8936078158236705,
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "official_nc1 r",
+    "paper": -0.244,
+    "recomputed": -0.2443515707530925,
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "main.tex: radius sign survives quote",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "main.tex: dimension ranking rho quote",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "main.tex: weak-marker ranking rhos quote",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
+  },
+  {
+    "section": "cell4",
+    "name": "main.tex: offset calibration quote",
+    "paper": "present",
+    "recomputed": "present",
+    "ok": true
   }
 ]

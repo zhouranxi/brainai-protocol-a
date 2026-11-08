@@ -520,6 +520,63 @@ def main() -> int:
     check("recipe", "smoothness gap exceeds accuracy gap by >10x", 1,
           int(abs(bs - as_) > 10 * abs(best_acc - aug_acc)), tol=0)
 
+    # ================================================================
+    # ---- the fourth cell (Section "Closing the confound") ----
+    #
+    # The manuscript's fourth-cell numbers are re-derived from the released
+    # glue_cell4_own48.json (official host protocol on our 48 models) against
+    # glue_own48_results.json (own host protocol), under the paper protocol:
+    # ID matching at +/-1 pp around the mean, then mean-centering (the
+    # population is a single architecture).
+    # ================================================================
+    c3 = {r["ckpt"]: r for r in json.load(
+        open(locate("glue_own48_results.json")))["rows"]}
+    c4 = {r["ckpt"]: r for r in json.load(
+        open(locate("glue_cell4_own48.json")))["rows"]}
+    common = sorted(set(c3) & set(c4))
+    acc_all = np.array([c3[k]["id_acc"] for k in common]) * 100
+    band_m = np.abs(acc_all - acc_all.mean()) <= 1.0
+    kept = [k for k, m in zip(common, band_m) if m]
+    check("cell4", "n in protocol band", 32, len(kept), tol=0)
+
+    t4 = np.array([c3[k]["c100_probe_acc"] for k in kept], float) * 100
+
+    def c4_r(key):
+        x = np.array([c4[k][key] for k in kept], float)
+        xc = x - x.mean()
+        return float(pearsonr(xc, t4)[0]), float(spearmanr(x, t4)[0])
+
+    for key, exp_r in [("glue_dimension", 0.924), ("glue_radius", 0.675),
+                       ("glue_utility", 0.507)]:
+        r, _ = c4_r(key)
+        check("cell4", f"{key} official-host r (protocol band)", exp_r, r)
+
+    # the registered ranking-preservation criteria (rho >= 0.95)
+    for key, exp_rho in [("glue_dimension", 0.9630), ("glue_radius", 0.8765),
+                         ("glue_utility", 0.8043)]:
+        a = np.array([c3[k][key] for k in common], float)
+        b = np.array([c4[k][key] for k in common], float)
+        check("cell4", f"{key} cross-host ranking rho", exp_rho,
+              float(spearmanr(a, b)[0]), tol=0.0006)
+
+    # reference-formula columns measured in the fourth cell
+    r_pr, _ = c4_r("official_pr")
+    r_nc1, _ = c4_r("official_nc1")
+    check("cell4", "official_pr r", 0.894, r_pr)
+    check("cell4", "official_nc1 r", -0.244, r_nc1)
+
+    if TEX.exists():
+        tex = TEX.read_text(encoding="utf-8")
+        check_text("cell4", "main.tex: radius sign survives quote",
+                   "$+0.602$ own-host, $+0.675$ official-host", True, tex)
+        check_text("cell4", "main.tex: dimension ranking rho quote",
+                   r"dimension, $\rho = 0.963$", True, tex)
+        check_text("cell4", "main.tex: weak-marker ranking rhos quote",
+                   r"$\rho = 0.877$ and", True, tex)
+        check_text("cell4", "main.tex: offset calibration quote",
+                   "dimension\n$+32\\%$, radius $-8\\%$, utility $-18\\%$", True, tex)
+
+    # ================================================================
     # ---- report ----
     failed = [c for c in CHECKS if not c["ok"]]
     by_sec = {}

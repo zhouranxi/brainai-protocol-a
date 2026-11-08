@@ -54,7 +54,18 @@ often than of the marker: eighteen of twenty-four families change sign between
 the task and noise cells on the one hand and the photometric and compression
 cells on the other, while the implementations agree with each other far more
 often than they disagree. A sign reported under one shift does not license a
-claim under another. We then separate the two reasons a marker can move. Under
+claim under another. A registered fourth cell then asks which part of the
+implementation axis carries the radius flip: our forty-eight models
+re-measured under the reference release's host protocol (its feature
+extraction, sampling seed, downsampling, and participation-ratio formula)
+with our solver. Every sign survives the swap -- the radius stays positive
+($+0.602$ own-host, $+0.675$ official-host), so the flip traces to the joint
+implementation-and-population change rather than to the host protocol -- but
+the host protocol is not a neutral wrapper: it preserves a strong marker's
+ranking almost exactly (dimension, $\rho = 0.963$) while dragging the two
+weak markers below the registered consistency threshold ($\rho = 0.877$ and
+$0.804$), a perturbation of the same order as their own signal. We then
+separate the two reasons a marker can move. Under
 a degradation sweep, where the amount of information in the input changes, the
 marker and the linear-probe accuracy fall together, which the information
 confound and a genuine degradation of the representation both predict. Under a
@@ -65,7 +76,7 @@ trained successfully and networks that collapsed -- inside the high-performing
 cluster the correlation with accuracy is $-0.053$ ($p=0.891$), and removing the
 recipe effect leaves one marker at $r=-0.079$ ($p=0.62$). Geometric markers of
 this family are therefore not measurements of representational quality. We give
-the full stability map, a two-part recipe for testing the next marker, and the
+the full stability map, a four-part recipe for testing the next marker, and the
 practical rule the map implies: no marker may be recommended across shifts, and
 a single-shift correlation must report its shift as part of the result. The
 protocol, the analysis code, and all reported numbers are released, and every
@@ -116,7 +127,8 @@ which of them moves the sign more often.
 
 \paragraph{What should a practitioner do next?}
 A measurement study is only useful if it hands back a procedure. We give a
-two-part test that a candidate marker has to pass, and we identify which of the
+four-part test that a candidate marker has to pass -- recipe, implementation,
+shift, and host protocol -- and we identify which of the
 markers currently in use pass it.
 
 \subsection{Contributions}
@@ -143,6 +155,13 @@ markers currently in use pass it.
       representation using a degradation sweep and a recipe sweep, and we show
       that once the input information is held fixed the markers carry no
       information about performance (Section~\ref{sec:degen}).
+\item We close the implementation--population confound from the protocol
+      side with a registered fourth cell: our models re-measured under the
+      reference release's host protocol. Every sign survives -- the radius
+      flip is a joint implementation-and-population effect, not a host
+      protocol effect -- while the host protocol emerges as a further
+      degree of freedom that perturbs weak-marker rankings at the order of
+      their own signal (Section~\ref{sec:cell4}).
 \item We release the protocol, the analysis code, and a script that re-derives
       every number in this paper from the released data (Section~\ref{sec:repro}).
 \end{itemize}
@@ -242,6 +261,14 @@ We measure the same marker in cells that vary two axes at once.
       following the published algorithm. Our implementation is used only for
       relative comparison within our own family, never against absolute
       reference values.
+\item \textbf{Official host protocol, own solver, own population.} A fourth
+      cell added to close the implementation--population confound
+      (Section~\ref{sec:cell4}): the same forty-eight models, measured by our
+      solver but embedded in the reference release's host protocol -- the
+      reference feature extraction, the reference preprocessing, the reference
+      sampling and downsampling, and the reference participation-ratio and
+      NC1 formulas. The only difference from the third cell is the host
+      protocol around the solver.
 \end{itemize}
 Where the official marker name and our field name differ (for example
 \texttt{dimension} and \texttt{glue\_dimension}), the two are paired as one
@@ -416,6 +443,54 @@ between those two cells. The dominant risk to a reported sign is not that
 someone re-implements the marker; it is that someone applies it to a different
 shift.
 
+\subsection{Closing the confound: the official host protocol on our models}
+\label{sec:cell4}
+
+Every implementation-vs-population comparison so far changed two things at
+once: the solver and the model set. We added a fourth cell that changes one.
+We ran our solver on our forty-eight models, but embedded it in the host
+protocol of the reference release: the reference feature-extraction hook
+(penultimate average-pooled features), the reference per-class sampling
+(fixed seed, 500 points per class), the reference downsampling, and the
+reference participation-ratio and NC1 formulas. Nothing about the models
+changes; nothing about the solver's numerical core changes. The cell was
+registered with three criteria before it was run: ranking preservation per
+marker across the two host protocols (Spearman $\rho \ge 0.95$), sign
+preservation for the radius, and a reference-anchor check on the released
+example model.
+
+The signs all survive. Under the paper's protocol (ID matching at
+$\pm1$\,pp, mean-centering, task-shift target, $n=32$), the dimension reads
+$+0.919$ in the own-host cell and $+0.924$ in the official-host cell; the
+radius $+0.602$ versus $+0.675$; the utility $+0.342$ versus $+0.507$. The
+radius keeps its positive sign under the official host protocol, so the host
+protocol alone does not produce the radius flip -- consistent with the flip
+arising from the joint change of implementation and population, not from
+either alone.
+
+The rankings do not all survive, and the pattern of failure is informative.
+The dimension's ranking is essentially invariant ($\rho = 0.963$, above the
+registered $0.95$ threshold), but the radius ($\rho = 0.877$) and the
+utility ($\rho = 0.804$) fall below it. The host protocol -- sampling seed,
+downsampling, probe configuration -- barely disturbs a strong ranking signal
+but adds substantial rank noise to weak ones (the radius and utility
+correlations are $\pm 0.2$--$0.4$ to begin with). A host protocol is not a
+neutral wrapper: it is one more degree of freedom in what a marker measures,
+and for weak markers its perturbation is the same order as the signal.
+
+Two further readings. First, our solver carries a constant systematic offset
+against the reference values on the released example model (dimension
+$+32\%$, radius $-8\%$, utility $-18\%$; across ten downsampling seeds the
+spread is $\pm 4\%$, far below the offset, so it is protocol, not Monte
+Carlo noise). Because the offset is constant, relative comparisons within a
+cell are unaffected -- which is why the sign agreement above is meaningful
+despite the offset. Second, the reference participation ratio computed in
+this cell correlates with the task-shift target at $r = +0.894$ on our
+models -- the same strength class as the dimension -- while the reference
+NC1 does not ($r = -0.244$, Spearman $-0.062$). The strong markers are
+strong under both host protocols; the weak ones are not stable under
+either.
+
 \paragraph{What this licenses.}
 The practical consequence is narrower than the one we drew from the
 three-cell map, and more useful. Of the three GLUE quantities that the
@@ -424,7 +499,12 @@ none survives the combined check: the radius and the utility fail across
 implementations, and the dimension fails across shifts. No marker in the map
 is stable across all shifts we test. A correlation reported under one shift is
 a fact about that shift, and any claim of the form ``marker $X$ predicts OOD
-performance'' must name the shift in the same breath.
+performance'' must name the shift in the same breath. The fourth cell
+sharpens the attribution: the radius flip traces to the joint
+implementation-and-population change rather than to a host protocol alone,
+while the host protocol itself emerges as a further degree of freedom -- one
+that leaves strong rankings untouched and perturbs weak markers at the order
+of their own signal.
 
 \section{Two reasons a marker can move}
 
@@ -612,9 +692,18 @@ be asked two questions, in this order.
       this study did not run, and the one that disqualifies the effective
       dimension. It is also the cheapest of the three: the corruption-cell
       targets are public, and re-running a correlation costs nothing.
+\item \textbf{Does it survive a change of host protocol?} Re-measure the
+      same models with the same solver embedded in a different host
+      protocol -- different sampling seed, downsampling rule, or probe
+      configuration -- and require the ranking to hold
+      (Section~\ref{sec:cell4}). This is the newest of the four tests and
+      the cheapest to run, since it needs no new models and no new shifts:
+      on our data it left a strong marker's ranking intact
+      ($\rho = 0.963$) while dragging two weak markers below the threshold
+      we had registered ($\rho = 0.877$, $0.804$).
 \end{enumerate}
 
-A marker that passes all three is worth taking seriously. None of the
+A marker that passes all four is worth taking seriously. None of the
 twenty-four families studied here does: the map is the record of that fact.
 The most common failure in the current literature is not a wrong sign but an
 unreported one -- a correlation measured under a single shift and read as a
@@ -665,7 +754,15 @@ make the more confident claims in the literature easier to evaluate.
       population together. We cannot separate the two effects within our own
       models; a design that holds the population fixed and varies only the
       implementation would sharpen the claim, and we regard it as the most
-      valuable follow-up.
+      valuable follow-up. A fourth cell
+      (Section~\ref{sec:cell4}) narrows this gap from the protocol side: it
+      holds the population and the solver fixed and varies only the host
+      protocol around the solver, showing that the host protocol alone does
+      not reproduce the radius flip but does perturb weak-marker rankings.
+      Full separation -- holding everything fixed and swapping only the
+      solver's numerical core -- still requires the reference solver's
+      private internals, which remain unavailable; if access is granted the
+      swap becomes a direct check.
 \item The degradation sweep is a single network with three seeds, reported as
       the mean. It is a diagnostic rather than an experiment: it establishes
       that the degradation sweep cannot discriminate the two readings, not
@@ -688,7 +785,7 @@ make the more confident claims in the literature easier to evaluate.
 \label{sec:conclusion}
 
 Geometric markers of the representation are useful, and the way to use them
-well is to stop asking them to grade quality. Our results say four things.
+well is to stop asking them to grade quality. Our results say five things.
 First, a marker that falls with performance may be telling you that the input
 carried less information, and the only way to find out is to hold the input
 fixed and vary the training. Second, a marker's sign is not guaranteed to
@@ -698,11 +795,17 @@ Third, a marker's sign is not guaranteed to survive a change of shift either:
 the effective dimension -- the one marker we had previously recommended --
 reverses under photometric shifts with both implementations agreeing, and
 eighteen of twenty-four families in the full map change sign between the
-task/noise block and the photometric/compression block. Fourth, the markers
+task/noise block and the photometric/compression block. Fourth, the
+implementation--population confound does not reduce to a host-protocol
+effect: re-measuring our models under the reference host protocol preserves
+every sign, including the radius's positive sign on our population, while
+leaving weak-marker rankings perturbed at the order of their own signal
+-- so the flip traces to the joint change, and the host protocol joins the
+list of degrees of freedom a marker consumer must report. Fifth, the markers
 are reliable health checks on a training run and unreliable measures of a
 representation. A practical conclusion follows: report the shift alongside
 the coefficient, as one reports the dataset alongside an accuracy; run the
-three tests of Section~\ref{sec:practice} before believing any new marker;
+four tests of Section~\ref{sec:practice} before believing any new marker;
 and treat the claims in the literature that name no shift as claims about no
 particular thing.
 
@@ -725,7 +828,12 @@ recomputes every coefficient, sample size and p-value quoted above --
 including the full sign-stability map of
 Section~\ref{sec:map}, read directly from
 \texttt{results/stability\_map.json} -- and checks each against the value
-written here.
+written here. The fourth-cell numbers of Section~\ref{sec:cell4} are read
+from \texttt{results/glue\_cell4\_own48.json} (48 rows) and
+\texttt{results/glue\_own48\_results.json} against the registered criteria
+of \texttt{code/cell4\_verdict.py}; the systematic-offset calibration of our
+solver is documented by the variant-scan scripts under
+\texttt{code/glue\_*}.
 It requires no GPU and no downloads. The same check runs automatically on every
 push of the repository, so the reproducibility of this paper is continuously
 machine-verified rather than asserted.
