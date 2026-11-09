@@ -16,6 +16,7 @@
   R4-s：全部 run id_keep ≥ −0.02；越界点剔除并单独报告。
 失败如实报告，不得改带宽。
 """
+import argparse
 import json
 import math
 import sys
@@ -102,11 +103,29 @@ def fit_power(ds, cs):
     return (math.exp(loga), float(b)), len(pts)
 
 
-def main():
-    bases = load_bases()
-    curves = {}   # (recipe, seed) -> {lam: (dd, dc, ik)}
-    func_viol = []
+def load_curves_from_archive(path):
+    """从 build_dose_scan_seeds.py 产出的自包含 JSON 载入曲线（发布包复现用）。"""
+    doc = json.loads(Path(path).read_text(encoding="utf-8"))
+    curves = {(r, s): {} for r in RECIPES for s in SEEDS}
+    viol = []
+    for p in doc["points"]:
+        key = (p["recipe"], p["seed"])
+        if key not in curves:
+            continue
+        curves[key][p["lambda"]] = (p["d_delta"], p["c_delta"], p["id_keep"])
+        if p["id_keep"] < ID_FLOOR:
+            viol.append((p["recipe"], p["seed"], p["lambda"], p["id_keep"]))
+    if doc["meta"]["missing"]:
+        print(f"WARNING: archive reports missing points: {doc['meta']['missing']}",
+              file=sys.stderr)
+    return curves, viol
 
+
+def load_curves_from_dirs():
+    """实验机原始目录布局（默认模式）。"""
+    bases = load_bases()
+    curves = {}
+    viol = []
     for recipe in RECIPES:
         for seed in SEEDS:
             pts = {}
@@ -116,8 +135,23 @@ def main():
                     continue
                 pts[lam] = p
                 if p[2] < ID_FLOOR:
-                    func_viol.append((recipe, seed, lam, p[2]))
+                    viol.append((recipe, seed, lam, p[2]))
             curves[(recipe, seed)] = pts
+    return curves, viol
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--data", default=None,
+                    help="自包含归档 dose_scan_seeds.json；给定时不依赖实验机目录")
+    args = ap.parse_args()
+
+    if args.data:
+        curves, func_viol = load_curves_from_archive(args.data)
+        print(f"[data] archive: {args.data}")
+    else:
+        curves, func_viol = load_curves_from_dirs()
+        print(f"[data] experiment dirs: {BASE}")
 
     # ---- 数据总表 ----
     for recipe in RECIPES:
