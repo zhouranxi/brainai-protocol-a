@@ -60,7 +60,11 @@ PDFTEX = Path("C:/Users/Lance/TinyTeX/bin/windows/pdftex.exe")
 BIBTEX = Path("C:/Users/Lance/TinyTeX/bin/windows/bibtex.exe")
 
 PAPERS = {
-    "r1": ROOT / "paper",
+    # "r1" is the main TMLR submission ("Geometry Is a Label, Not a
+    # Knob"). The paper/ root also holds an earlier standalone study
+    # (main.tex, "When Do Geometric Markers Predict Generalization?");
+    # it is shipped as source material but is not a submission PDF.
+    "r1": ROOT / "paper" / "causality",
     "measurement": ROOT / "paper" / "measurement",
 }
 
@@ -80,6 +84,13 @@ IDENTITY_MARKERS = [
     r"Hunan University of Chinese Medicine",
     r"湖南中医药大学",
     r"周燃犀",
+    r"\bLance\b",                      # decision-maker name in the lab log
+    r"\bHNUCM\b",                     # affiliation acronym in the lab log
+    r"\bxinguan\b",                   # compute-node account name in scripts
+    r"/mnt/mydisk",                   # compute-node absolute paths
+    r"[A-Za-z]:[\\/]Users[\\/]",      # local Windows user paths in logs
+    r"10\.5281/zenodo\.[0-9]+",       # any identity-bearing archival DOI
+    r"github\.com/zhouranxi",         # identity-bearing repository owner
 ]
 
 # ---------------------------------------------------------------------------
@@ -140,6 +151,23 @@ ANON_RULES = [
     (re.compile(r"github\.com/zhouranxi/brainai-protocol-a"),
      "github.com/[anonymized-for-review]",
      "bare github url"),
+    # ---- lab-log / compute-node neutralization -------------------------
+    # Applied to every shipped text file. Order matters: longest, most
+    # specific patterns first, then the bare remnants.
+    (re.compile(r"/mnt/mydisk/xinguan-brainai"),
+     "/experiment-root", "compute-node path"),
+    (re.compile(r"xinguan@10\.10\.52\.210"),
+     "user@compute-node", "compute-node ssh target"),
+    (re.compile(r"github\.com/zhouranxi/[A-Za-z0-9_.-]+"),
+     "github.com/[anonymized-for-review]", "identity-bearing repo URL"),
+    (re.compile(r"10\.5281/zenodo\.[0-9]+"),
+     "[archival DOI withheld for double-blind review]", "archival DOI"),
+    (re.compile(r"Zhou,?\s+Ranxi|Ranxi\s+Zhou|HNUCM"),
+     "the authors (affiliation withheld)", "author in lab log"),
+    (re.compile(r"\bLance\b"), "the authors", "decision-maker in lab log"),
+    (re.compile(r"\bxinguan\b"), "user", "compute-node account"),
+    (re.compile(r"/mnt/mydisk\b"), "/experiment-root",
+     "bare compute-node mount point"),
 ]
 
 # Files/dirs excluded from the supplementary zip entirely.
@@ -157,7 +185,11 @@ ZIP_EXCLUDES = [
     # internal records that name the author
     "paper/protocol_verification_email.md",
     "paper/paper_draft_v1.md", "paper/paper_outline.md",
-    "paper/SUBMISSION_TIMELINE.md", "paper/adr_0016.md",
+    "paper/SUBMISSION_TIMELINE.md",
+    # NOTE: paper/adr_0016.md is shipped -- the paper cites ADR-0016
+    # appendices as preregistration evidence, so reviewers must be able to
+    # read them. It goes through the same anonymization rules as every
+    # other text member; the scanner fails the build on any identity hit.
     "results/pre_submission_audit_2026-11-02.md",
     "results/references_check_report.md",
     # the citation metadata file is nothing but author identity
@@ -165,6 +197,10 @@ ZIP_EXCLUDES = [
     # drafts / working notes in the root
     "repair_remote.py",
 ]
+BUILD_BYPRODUCT_SUFFIXES = {
+    ".aux", ".bbl", ".blg", ".log", ".out", ".fls", ".fdb_latexmk",
+    ".synctex", ".synctex.gz", ".toc", ".lof", ".lot",
+}
 TEXT_SUFFIXES = {".py", ".sh", ".md", ".tex", ".bib", ".json", ".yml",
                  ".cff", ".txt", ".sty", ".bst", ".toml", ".gitattributes",
                  ".gitignore", ".md5", ""}
@@ -248,6 +284,11 @@ def build_zip(dst: Path, report: list) -> list:
         if p.is_dir() or is_excluded(rel):
             continue
         if rel.startswith(".git") or rel.startswith(".workbuddy"):
+            continue
+        # LaTeX build by-products are not supplementary material, and
+        # .log files embed absolute local paths (user names) that are not
+        # covered by the text anonymizer. Drop them at the source.
+        if Path(rel).suffix.lower() in BUILD_BYPRODUCT_SUFFIXES:
             continue
         data = p.read_bytes()
         if Path(rel).suffix.lower() in TEXT_SUFFIXES and p.stat().st_size < 1_000_000:
@@ -368,7 +409,7 @@ def main() -> int:
             dst.mkdir()
             for item in src.iterdir():
                 if item.suffix in {".tex", ".sty", ".bst", ".bib"} \
-                        or item.name == "figures":
+                        or item.name in ("figures", "figs"):
                     if item.is_dir():
                         shutil.copytree(item, dst / item.name)
                     else:

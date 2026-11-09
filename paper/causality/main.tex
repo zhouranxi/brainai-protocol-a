@@ -712,13 +712,13 @@ observational}. The causal channel exists---it is simply an order of
 magnitude too small to carry the observational association.
 
 \paragraph{The response surface is sub-linear and saturating.}
-The dose scan maps the $(\Delta\dfx, \Delta c_{100})$ surface across
+Figure~\ref{fig:dose}a maps the $(\Delta\dfx, \Delta c_{100})$ surface across
 $100\times$ in $\lambda$: transfer gain follows a power law
 $\Delta c_{100} \propto \Delta\dfx^{\,b}$ with $b = 0.50$
 ($\Delta\mathrm{AICc} = 15.8$ over linear) on the anchor seed; a
-preregistered two-seed replication (\S\ref{sec:e4}, and App.~C of the
-supplementary archive) confirms the sub-linear shape across seeds
-($b = 0.33$ and $0.26$, all fits concave and monotone) while showing
+preregistered two-seed replication (ADR-0016 App.~25, shipped as
+supplementary material) confirms the sub-linear shape across seeds
+($b = 0.325$ and $0.264$, all fits concave and monotone) while showing
 that the exponent drifts seed-to-seed --- the honest summary is
 ``sub-linear and saturating,'' not a universal square root. The
 \emph{local} slope
@@ -755,9 +755,9 @@ $\times$ three doses, 12 runs, criteria frozen in advance). The
 \emph{qualitative} shape replicates --- every seed's curve is monotone
 and concave, and the low-geometry recipe stays transfer-inert on the
 new seeds (all ten of their points inside the placebo band,
-strengthening the dynamic-range dissociation) --- but the
+Fig.~\ref{fig:dose}b; strengthening the dynamic-range dissociation) --- but the
 \emph{quantitative} shape does not: the power-law exponent drifts
-across seeds ($b = 0.50$, $0.33$, $0.26$; our preregistered
+across seeds ($b = 0.502$, $0.325$, $0.264$; our preregistered
 strong-replication threshold was not met), and the threshold-like
 cliff visible on the anchor seed is absent there --- the replication
 seeds respond already at the lowest dose, from a higher plateau. We
@@ -766,6 +766,27 @@ rather than as a universal square-root law, and report the failed
 quantitative criteria as a limitation. The headline paired statistics
 ($14.7\%$ net slope, $t = 6.89$) are unaffected: they are computed
 over all 96 runs, not per seed.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figs/fig5_dose.pdf}
+\caption{Three-seed dose--response of transfer gain $\Delta c_{100}$
+against commanded geometry change $\Delta\dfx$. \emph{(a)} High-$\dfx$
+recipe on log--log axes; marker area grows with
+$\lambda\in\{0.03,0.1,0.3,1,3\}$. Dashed curves are per-seed
+power-law fits with the App.~23 anomaly rule ($b=0.502$, $0.325$,
+$0.264$ for s0/s1/s2): all are sub-linear and far below the
+observational slope (dash--dotted); the shaded region is the
+$\pm0.022$ placebo band. The anchor seed's threshold-like cliff is
+absent in both replication seeds, which respond already at the
+lowest dose. \emph{(b)} Low-$\dfx$ recipe on a linear $y$ axis to
+show signed responses: all ten replication-seed points lie inside
+the band, versus two out-of-band points on the anchor seed
+(App.~24 erratum). Curves and fits are recomputable from the archived
+per-run records (\texttt{results/p4\_dose/dose\_scan\_seeds.json})
+with \texttt{code/make\_fig5\_dose.py}.}
+\label{fig:dose}
+\end{figure}
 
 \paragraph{Function preservation.} 95/96 runs keep ID test accuracy
 within the preregistered band (median $|{\Delta}\mathrm{ID}| = 0.4$\,pp,
@@ -1175,6 +1196,25 @@ form judged by AICc among linear/power/log, saturation by local-slope
 decay. (4) One of 96 runs violates the function-preservation rule and
 is excluded per that rule; all exclusions are listed in the data
 release.
+
+\paragraph{Amendment 3 (dose-scan seed replication).}
+The App.~23 dose scan characterized response shape on a single seed,
+so we preregistered a replication before launching any new run
+(ADR-0016 App.~25): two further seeds $\times$ two recipes $\times$
+three doses (12 runs), with four criteria frozen in advance ---
+R1-s (power-law exponent $b\in[0.3,0.75]$ and
+$|\mathrm{median}(b)-b_{\mathrm{s0}}|<0.15$), R2-s (threshold-like
+cliff shape), R3-s (low-$\dfx$ recipe inside the placebo band), and
+R4-s (function preservation). \emph{Outcome, reported in full}:
+R3-s passed on both new seeds (all ten points inside the band),
+R4-s held on 29/30 dose points (the single violation is excluded
+per rule and listed in the data release), but \emph{R1-s and R2-s
+failed} --- the exponent drifts ($b=0.502/0.325/0.264$) and the
+cliff is absent on the new seeds. The paper therefore states only
+the cross-seed shape claim (``sub-linear and saturating'';
+Fig.~\ref{fig:dose}) and reports the failed quantitative criteria
+as a limitation. Headline paired statistics are unaffected: they
+are computed over the 96-run batch, not per seed.
 
 \section{E1 endpoint summary table}
 \label{app:e1table}
