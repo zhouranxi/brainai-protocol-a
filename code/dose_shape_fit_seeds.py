@@ -30,7 +30,8 @@ RECIPES = {
     "lo": "resnet18_lr1.0_wd5e-05",
     "hi": "resnet18_lr0.125_wd0.0001",
 }
-SEEDS = [0, 1, 2]
+DEFAULT_SEEDS = [0, 1, 2]   # 附录二十五批
+ALL_SEEDS = [0, 1, 2, 3, 4] # 附录二十六批加入 s3/s4
 LAMS = [0.03, 0.1, 0.3, 1.0, 3.0]
 BAND = 0.022          # placebo 判定带宽（预注册口径，不得改）
 ID_FLOOR = -0.02      # R4-s 功能保持下限
@@ -106,7 +107,7 @@ def fit_power(ds, cs):
 def load_curves_from_archive(path):
     """从 build_dose_scan_seeds.py 产出的自包含 JSON 载入曲线（发布包复现用）。"""
     doc = json.loads(Path(path).read_text(encoding="utf-8"))
-    curves = {(r, s): {} for r in RECIPES for s in SEEDS}
+    curves = {(r, s): {} for r in RECIPES for s in ALL_SEEDS}
     viol = []
     for p in doc["points"]:
         key = (p["recipe"], p["seed"])
@@ -144,14 +145,27 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--data", default=None,
                     help="自包含归档 dose_scan_seeds.json；给定时不依赖实验机目录")
+    ap.add_argument("--seeds", type=int, nargs="+", default=None,
+                    help="判定所用种子集（默认随数据自适应：3 种子批 [0,1,2]；"
+                         "含 s3/s4 的 v2 归档用 [0,1,2,3,4]）")
     args = ap.parse_args()
 
+    global SEEDS
     if args.data:
         curves, func_viol = load_curves_from_archive(args.data)
         print(f"[data] archive: {args.data}")
     else:
         curves, func_viol = load_curves_from_dirs()
         print(f"[data] experiment dirs: {BASE}")
+    if args.seeds:
+        SEEDS = sorted(args.seeds)
+    else:
+        have = {s for (_r, s) in curves.keys() if curves[(_r, s)]}
+        SEEDS = sorted(have) if (3 in have or 4 in have) else sorted(
+            s for s in DEFAULT_SEEDS if s in have)
+    for r in RECIPES:                       # guarantee keys exist
+        for s in SEEDS:
+            curves.setdefault((r, s), {})
 
     # ---- 数据总表 ----
     for recipe in RECIPES:
@@ -247,7 +261,85 @@ def main():
     else:
         print("  三种子 b 不齐，复制判定无法完成（如实报告）")
 
-    print("\n（判定标准冻结于附录二十五；本脚本仅忠实实现，未看过数据后调整。）")
+    # ---- 附录二十六批：R5-s/R6-s/R7-s/R8-s（s3/s4 在场时才判定）----
+    S_OBS = 0.0161
+    LABEL_PCT = 20.0    # % of s_obs，与 96 批预注册标签阈值同口径
+    CAP_PCT = 60.0      # R6-s 上限（96 批最大臂斜率 54.5% + 容差）
+    if any(s in SEEDS for s in (3, 4)):
+        print(f"\n[R5-s] hi 低剂量平台复制（lowplateau(s)=λ=0.03 割线，"
+              f"≥{LABEL_PCT:.0f}% s_obs 的种子数）：" )
+        lp = {}
+        for seed in SEEDS:
+            pts = curves.get(("hi", seed), {})
+            if 0.03 in pts:
+                dd, dc, _ = pts[0.03]
+                if dd > 0:
+                    lp[seed] = dc / dd / S_OBS * 100
+                    print(f"  s{seed}: {lp[seed]:.1f}% s_obs")
+                else:
+                    print(f"  s{seed}: Δd≤0，无割线")
+            else:
+                print(f"  s{seed}: 缺 λ=0.03")
+        n_ge = sum(1 for v in lp.values() if v >= LABEL_PCT)
+        n_lo = sum(1 for v in lp.values() if v < LABEL_PCT)
+        if n_ge >= 3:
+            print(f"  判定: {n_ge} 种子 ≥20% → 低剂量高平台为跨种子事实 ✓")
+        elif n_lo >= 3:
+            print(f"  判定: {n_lo} 种子 <20% → s1/s2 高平台为种子特异 ✗")
+        else:
+            print(f"  判定: 混合（{n_ge}≥20% / {n_lo}<20%）→ 不稳定，如实报告")
+
+        print(f"\n[R6-s] 响应幅度上限（全部种子剂量点割线 < {CAP_PCT:.0f}% s_obs；"
+              f"100% 为硬红线）：")
+        worst = None
+        for seed in SEEDS:
+            for recipe in RECIPES:
+                for lam, (dd, dc, _ik) in sorted(
+                        curves.get((recipe, seed), {}).items()):
+                    if dd > 0:
+                        pct = dc / dd / S_OBS * 100
+                        if worst is None or pct > worst[0]:
+                            worst = (pct, recipe, seed, lam)
+        if worst:
+            pct, recipe, seed, lam = worst
+            hard = pct >= 100.0
+            ok = pct < CAP_PCT
+            print(f"  全库最大割线: {pct:.1f}% s_obs"
+                  f"（{recipe} s{seed} λ={lam:g}）")
+            print(f"  判定: {'≥60%，追加披露并重估 far-below 表述 ✗' if not ok else '<60%，干预斜率上界在种子间成立 ✓'}"
+                  f"{'；⚠️ 硬红线 ≥100% 触发，须升级处理' if hard else ''}")
+
+        print(f"\n[R7-s] lo 无响应（s3/s4 六点 |Δc|≤{BAND}）：")
+        for seed in (3, 4):
+            if seed not in SEEDS:
+                continue
+            pts = curves.get(("lo", seed), {})
+            if len(pts) < 3:
+                print(f"  s{seed}: 点数不足（{len(pts)}/3）")
+                continue
+            out_band = [(l, p[1]) for l, p in pts.items() if abs(p[1]) > BAND]
+            if out_band:
+                detail = ", ".join(f"λ={l}: {c:+.4f}" for l, c in sorted(out_band))
+                print(f"  s{seed}: FAIL — 超带点 {detail}")
+            else:
+                print(f"  s{seed}: PASS（{len(pts)}/{len(pts)} 带内）")
+
+        print(f"\n[R8-s] 功能保持（s3/s4 十二点 id_keep ≥ {ID_FLOOR:+.2f}）：")
+        nviol = 0
+        for seed in (3, 4):
+            if seed not in SEEDS:
+                continue
+            for recipe in RECIPES:
+                for lam, (dd, dc, ik) in sorted(
+                        curves.get((recipe, seed), {}).items()):
+                    if ik < ID_FLOOR:
+                        nviol += 1
+                        print(f"  VIOLATION {recipe} s{seed} λ={lam} "
+                              f"id_keep={ik:+.4f}")
+        print(f"  判定: {'全部保持 ✓' if nviol == 0 else f'{nviol} 点越界（剔除并单列）'}")
+
+    print("\n（判定标准冻结于附录二十五/二十六；本脚本仅忠实实现，"
+          "未看过数据后调整。）")
     return 0
 
 
