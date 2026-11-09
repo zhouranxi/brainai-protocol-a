@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
-"""把散落目录里的三种子剂量扫描收敛成一份自包含 JSON（发布/复现用）。
+"""把散落目录里的剂量扫描收敛成一份自包含 JSON（发布/复现用）。
 
 输入（实验机 /mnt/mydisk/xinguan-brainai/runs/v2_p4_forcing/）：
-  full_base_lr{1.0,0.125}.json                  base 读数（3 种子 × 2 配方）
-  full_s{0,1,2}_whiten_lam{0.1,1.0}/           锚点 λ=0.1/1.0（全量批）
+  full_base_lr{1.0,0.125}.json                  base 读数（5 种子 × 2 配方）
+  full_s{0,1,2}_whiten_lam{0.1,1.0}/           锚点 λ=0.1/1.0（全量批，仅 s0/s1/s2）
   dose_{lo,hi}_lam{0.03,0.3,3.0}/              s0 剂量点
-  dose_seed_s{1,2}_{lo,hi}_lam{0.03,0.3,3.0}/  s1/s2 新 run（附录二十五）
+  dose_seed_s{1,2,3,4}_{lo,hi}_lam{0.03,0.3,3.0}/  复制批剂量点
+
+s3/s4 属 ADR-0016 附录二十六预注册复制批，该批只跑 λ=0.03/0.3/3.0
+（λ=0.1/1.0 锚点明确不在本批），故按种子区分 λ 集合；本文件只负责
+收集已存在的点，判定口径与阈值全部在 dose_shape_fit_seeds.py 中冻结。
 
 输出：BASE/dose_scan_seeds.json
   meta   生成信息、冻结常量、来源清单
   bases  每个 model tag 的 base 读数
-  points 3 种子 × 2 配方 × 5 λ 的 Δd/Δc/id_keep 与原始读数、来源目录
+  points 42 点（3 种子 × 2 配方 × 5 λ + 2 种子 × 2 配方 × 3 λ）
+          的 Δd/Δc/id_keep 与原始读数、来源目录
 
 设计原则：发布包只依赖这一份文件即可复跑判定与画图，不需要 GPU、
 不需要实验机目录结构。数据本身逐字来自 train_forcing_p4.json，不做加工。
@@ -25,8 +30,17 @@ RECIPES = {
     "lo": "resnet18_lr1.0_wd5e-05",
     "hi": "resnet18_lr0.125_wd0.0001",
 }
-SEEDS = [0, 1, 2]
-LAMS = [0.03, 0.1, 0.3, 1.0, 3.0]
+SEEDS = [0, 1, 2, 3, 4]
+LAMS = [0.03, 0.1, 0.3, 1.0, 3.0]      # s0/s1/s2：含全量批 λ=0.1/1.0 锚点
+REPLICATION_SEEDS = [3, 4]              # 附录二十六复制批
+REPLICATION_LAMS = [0.03, 0.3, 3.0]    # 本批只跑这三个 λ（预注册时已冻结）
+
+
+def lams_for_seed(seed):
+    """按预注册设计返回该种子应有的 λ 集合。仅用于收集，不参与判定。"""
+    return REPLICATION_LAMS if seed in REPLICATION_SEEDS else LAMS
+
+
 FROZEN = {
     "placebo_band": 0.022,
     "id_floor": -0.02,
@@ -77,7 +91,7 @@ def main():
                 "src": fp.name,
             }
 
-    # ---- 30 个剂量点 ----
+    # ---- 剂量点：s0/s1/s2 五点、s3/s4 三点（按预注册设计）----
     points = []
     missing = []
     dirs_used = set()
@@ -88,7 +102,7 @@ def main():
             if b is None:
                 missing.append(f"base {tag}")
                 continue
-            for lam in LAMS:
+            for lam in lams_for_seed(seed):
                 found = None
                 for d in candidate_dirs(base, recipe, seed, lam):
                     for r in read_rows(d / "train_forcing_p4.json"):
@@ -131,7 +145,9 @@ def main():
             "experiment_commit": commit,
             "frozen_constants": FROZEN,
             "n_bases": len(bases), "n_points": len(points),
-            "expected_points": len(RECIPES) * len(SEEDS) * len(LAMS),
+            "expected_points": len(RECIPES) * sum(
+                len(lams_for_seed(s)) for s in SEEDS),
+            "lams_by_seed": {str(s): lams_for_seed(s) for s in SEEDS},
             "missing": missing,
             "source_dirs": sorted(dirs_used) + sorted(set(base_src)),
             "note": ("Point values are verbatim differences of raw readings; "
