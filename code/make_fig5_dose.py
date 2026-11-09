@@ -7,7 +7,9 @@ plus the observational slope (0.0161) and the placebo band (0.022).
 Panel (b) linear-y for the low-D recipe: signed responses (including the
 negative ones that a log axis cannot show) inside/near the placebo band.
 
-Input : results/p4_dose/dose_scan_seeds.json (self-contained archive)
+Input : results/p4_dose/dose_scan_seeds.json, or
+        runs/p4_dose/dose_scan_seeds.json in the released archive layout
+        (the two layouts ship byte-identical locked JSON)
 Output: paper/causality/figs/fig5_dose.{pdf,png}
 """
 from __future__ import annotations
@@ -29,7 +31,11 @@ from dose_shape_fit_seeds import (  # noqa: E402  -- shared, frozen criteria
     BAND, ID_FLOOR, LAMS, SEEDS, find_anomaly, fit_power,
 )
 
-DATA = ROOT / "results" / "p4_dose" / "dose_scan_seeds.json"
+DATA_CANDIDATES = (
+    ROOT / "results" / "p4_dose" / "dose_scan_seeds.json",
+    ROOT / "runs" / "p4_dose" / "dose_scan_seeds.json",
+)
+DATA = next((p for p in DATA_CANDIDATES if p.is_file()), DATA_CANDIDATES[0])
 OUT = ROOT / "paper" / "causality" / "figs"
 S_OBS = 0.0161          # observational slope, d_ent scale (verify.py E4)
 COLORS = {0: "#0072B2", 1: "#D55E00", 2: "#009E73"}  # Okabe-Ito
