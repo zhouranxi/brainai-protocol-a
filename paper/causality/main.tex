@@ -75,7 +75,8 @@ consistently \emph{degrades} accuracy (7/8 models, $p=0.016$). (iii)
 itself (96 preregistered runs) moves the commanded geometry freely---to
 $9.2\times$ baseline---yet the paired, placebo-calibrated slope of transfer
 on $\dfx$ is $14.7\%$ of observational ($t=6.89$: a real channel, an order
-of magnitude short), following a square-root dose--response that cliffs to
+of magnitude short), following a sub-linear, saturating dose--response
+that flattens to
 $1.9\%$ of observational at high dose. (iv)
 \emph{Architecture transfer}: the same dissociation replicates in every tested
 family---ResNet-34/50, ShuffleNet-V2, and RegNetY-400M (16 further recipes)---with
@@ -175,7 +176,7 @@ recipes $\times$ 3 seeds $\times$ 4 conditions) moves the commanded
 descriptor freely---$\dfx$ to $9.2\times$ baseline---while the paired,
 placebo-calibrated slope of transfer on $\dfx$ is $14.7\%$ of
 observational ($t = 6.89$, $d = 1.44$: a real but order-of-magnitude-short
-channel), with a square-root response surface that cliffs to $1.9\%$ of
+channel), with a sub-linear response surface that flattens to $1.9\%$ of
 observational at high dose. The strongest possible version of the
 intervention---constraining geometry throughout formation---still does
 not transmit.
@@ -228,9 +229,10 @@ inference --- and the formation benefit traced to probe conditioning
 \item Cross-architecture replication and an openly reusable
 analysis pipeline (\S\ref{sec:e2}, \S\ref{sec:repro}).
 \item Formation-phase forcing at scale (96 preregistered runs plus a
-$100\times$ dose scan): the geometry is fully commandable during
+$100\times$ dose scan replicated over three seeds): the geometry is
+fully commandable during
 training, and the causal transmission is $14.7\%$ of observational with
-a square-root, cliff-shaped response surface (\S\ref{sec:e4}).
+a sub-linear, saturating response surface (\S\ref{sec:e4}).
 \item Marker-generality check: participation ratio and effective rank show
 the same confounded-label anatomy (\S\ref{sec:e6}).
 \item A checklist for when a correlational marker licenses intervention
@@ -709,13 +711,23 @@ placebo --- is \textbf{14.7\% of
 observational}. The causal channel exists---it is simply an order of
 magnitude too small to carry the observational association.
 
-\paragraph{The response surface is a square-root law with a cliff.}
+\paragraph{The response surface is sub-linear and saturating.}
 The dose scan maps the $(\Delta\dfx, \Delta c_{100})$ surface across
 $100\times$ in $\lambda$: transfer gain follows a power law
 $\Delta c_{100} \propto \Delta\dfx^{\,b}$ with $b = 0.50$
-($\Delta\mathrm{AICc} = 15.8$ over linear), and the \emph{local} slope
+($\Delta\mathrm{AICc} = 15.8$ over linear) on the anchor seed; a
+preregistered two-seed replication (\S\ref{sec:e4}, and App.~C of the
+supplementary archive) confirms the sub-linear shape across seeds
+($b = 0.33$ and $0.26$, all fits concave and monotone) while showing
+that the exponent drifts seed-to-seed --- the honest summary is
+``sub-linear and saturating,'' not a universal square root. The
+\emph{local} slope
 decays 14\% $\to$ 5.7\% $\to$ 1.9\% of observational as
-$\lambda$ goes $0.03 \to 1 \to 3$. At the largest dose the geometry is
+$\lambda$ goes $0.03 \to 1 \to 3$ on the anchor seed; the replication
+seeds show the same flattening from a higher plateau (their local
+slopes at $\lambda{=}0.03$ are already past the placebo band, so their
+saturation is smooth rather than threshold-like). At the largest dose
+the geometry is
 driven to $9.2\times$ its baseline ($\dfx = 174$) while transfer gains
 only $+8.6$\,pp---and never crosses the observational prediction
 ($+2.5$\,pp would be the linear extrapolation at this $\Delta\dfx$;
@@ -736,6 +748,25 @@ itself evidence for the recipe-confound account: a non-geometric
 regularizer moves both $\dfx$ and transfer in correlated ways, exactly
 what the confounded-label reading predicts.
 
+\paragraph{Seed replication of the dose scan.} Because the shape
+characterization above rested on one seed, we preregistered a
+replication before running it (two further seeds $\times$ two recipes
+$\times$ three doses, 12 runs, criteria frozen in advance). The
+\emph{qualitative} shape replicates --- every seed's curve is monotone
+and concave, and the low-geometry recipe stays transfer-inert on the
+new seeds (all ten of their points inside the placebo band,
+strengthening the dynamic-range dissociation) --- but the
+\emph{quantitative} shape does not: the power-law exponent drifts
+across seeds ($b = 0.50$, $0.33$, $0.26$; our preregistered
+strong-replication threshold was not met), and the threshold-like
+cliff visible on the anchor seed is absent there --- the replication
+seeds respond already at the lowest dose, from a higher plateau. We
+therefore state the shape claim as ``sub-linear and saturating''
+rather than as a universal square-root law, and report the failed
+quantitative criteria as a limitation. The headline paired statistics
+($14.7\%$ net slope, $t = 6.89$) are unaffected: they are computed
+over all 96 runs, not per seed.
+
 \paragraph{Function preservation.} 95/96 runs keep ID test accuracy
 within the preregistered band (median $|{\Delta}\mathrm{ID}| = 0.4$\,pp,
 90th percentile $1.0$\,pp, max $3.4$\,pp); the single failure
@@ -750,7 +781,8 @@ E3 showed that formation-phase whitening of \emph{frozen features}
 helps only the probe; E4 shows that even when the constraint acts on
 \emph{training itself}---the strongest possible version of the
 intervention---the geometric channel transmits at ${\sim}15\%$ of
-observational, with a square-root response surface and a hard cliff.
+observational, with a sub-linear response surface that saturates at
+high dose.
 The three timing regimes now form a closed series: inference-time
 recoloring ($7.7\%$), post-hoc whitening (probe conditioning only),
 and full formation forcing ($14.7\%$ net). The geometry is writable at
@@ -900,7 +932,7 @@ geometry will miss it.
 formation is mildly transfer-positive ($+1.7$\,pp), concentrated in sharper
 recipes, and the full formation-forcing battery (\S\ref{sec:e4})
 confirms a real but small channel ($14.7\%$ of observational, paired
-$t=6.89$) whose dose--response is a square-root law with a cliff. This
+$t=6.89$) whose dose--response is sub-linear and saturating. This
 is a representation-shaping regularizer whose value happens to
 co-occur with larger $\dfx$; studying it as a geometry intervention
 mistakes the fingerprint for the hand.
@@ -921,8 +953,8 @@ descriptor-preserving operator (here \rot) leave the outcome unchanged?
 (4) \emph{Phase separation}: does the effect survive moving the operator
 from formation to inference? (5) \emph{Forcing saturation}: when the
 intervention is applied during training at increasing dose, does the
-outcome scale proportionally, or does it saturate (here: a square-root
-law that cliffs to $2\%$ of observational)? A marker whose interventional
+outcome scale proportionally, or does it saturate (here: a sub-linear
+dose--response that flattens to $2\%$ of observational)? A marker whose interventional
 story survives all five has earned a causal reading; $\dfx$ passes none.
 
 \paragraph{Relation to the companion papers.}
@@ -979,8 +1011,8 @@ $+5.6$\,pp); the whitening
 benefit in formation phase decomposes into probe conditioning, while the
 same operator at inference harms; forcing the geometry \emph{during
 training} moves $\dfx$ to $9.2\times$ baseline at a paired, calibrated
-slope of $14.7\%$ of observational, with a square-root response that
-cliffs at high dose; the
+slope of $14.7\%$ of observational, with a sub-linear response that
+saturates at high dose; the
 entire dissociation replicates across four further architecture families
 (24 recipes in total); and two further spectrum markers show the same
 anatomy. The observational

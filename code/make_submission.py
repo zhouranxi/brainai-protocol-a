@@ -145,6 +145,9 @@ ANON_RULES = [
 # Files/dirs excluded from the supplementary zip entirely.
 ZIP_EXCLUDES = [
     "zenodo-upload", "submission", "checkpoints", ".github", "__pycache__",
+    # identity-version preprint builds (preprint/) -- anonymous zip must
+    # never ship the author-named variants produced by --preprint
+    "preprint",
     # publishing infrastructure for the public artifacts
     "fill_doi.py", "publish_zenodo.py", "push_via_api.py",
     "repair_remote.py", "finalize_zenodo.sh", "upload_zenodo_chunked.sh",
