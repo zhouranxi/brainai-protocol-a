@@ -90,6 +90,7 @@ IDENTITY_MARKERS = [
     r"/mnt/mydisk",                   # compute-node absolute paths
     r"[A-Za-z]:[\\/]Users[\\/]",      # local Windows user paths in logs
     r"10\.5281/zenodo\.[0-9]+",       # any identity-bearing archival DOI
+    r"\b2[34][0-9]{6}\b",             # bare zenodo record id (even without the doi.org prefix)
     r"github\.com/zhouranxi",         # identity-bearing repository owner
 ]
 
@@ -162,6 +163,14 @@ ANON_RULES = [
      "github.com/[anonymized-for-review]", "identity-bearing repo URL"),
     (re.compile(r"10\.5281/zenodo\.[0-9]+"),
      "[archival DOI withheld for double-blind review]", "archival DOI"),
+    # Bare record ids (no doi.org prefix) survive the rule above: ADR prose
+    # cites them as "...23967259", "新草稿 23993000", "v1.0.0=23967260".
+    # Any 8-digit number in the 23xx/24xx range is one of our records
+    # (verified 2026-11-10: the only such numbers in shipped sources are
+    # Zenodo ids; third-party records use other prefixes, e.g. CIFAR-10-C
+    # lives at zenodo.org/records/2535967 and must stay untouched).
+    (re.compile(r"\b2[34][0-9]{6}\b"),
+     "[zenodo record id withheld]", "bare zenodo record id"),
     (re.compile(r"Zhou,?\s+Ranxi|Ranxi\s+Zhou|HNUCM"),
      "the authors (affiliation withheld)", "author in lab log"),
     (re.compile(r"\bLance\b"), "the authors", "decision-maker in lab log"),

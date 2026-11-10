@@ -1,0 +1,1468 @@
+{
+  "meta": {
+    "generated_at": "2026-11-10T02:42:01+08:00",
+    "generator": "code/build_dose_scan_seeds.py",
+    "experiment_commit": null,
+    "frozen_constants": {
+      "placebo_band": 0.022,
+      "id_floor": -0.02,
+      "b_replication_range": [
+        0.3,
+        0.75
+      ],
+      "b_median_tol": 0.15,
+      "prereg": "ADR-0016 Appendix 25 (2026-11-08 19:44, frozen before launch)"
+    },
+    "n_bases": 40,
+    "n_points": 42,
+    "expected_points": 42,
+    "lams_by_seed": {
+      "0": [
+        0.03,
+        0.1,
+        0.3,
+        1.0,
+        3.0
+      ],
+      "1": [
+        0.03,
+        0.1,
+        0.3,
+        1.0,
+        3.0
+      ],
+      "2": [
+        0.03,
+        0.1,
+        0.3,
+        1.0,
+        3.0
+      ],
+      "3": [
+        0.03,
+        0.3,
+        3.0
+      ],
+      "4": [
+        0.03,
+        0.3,
+        3.0
+      ]
+    },
+    "missing": [],
+    "source_dirs": [
+      "dose_hi_lam0.03/",
+      "dose_hi_lam0.3/",
+      "dose_hi_lam3.0/",
+      "dose_lo_lam0.03/",
+      "dose_lo_lam0.3/",
+      "dose_lo_lam3.0/",
+      "dose_seed_s1_hi_lam0.03/",
+      "dose_seed_s1_hi_lam0.3/",
+      "dose_seed_s1_hi_lam3.0/",
+      "dose_seed_s1_lo_lam0.03/",
+      "dose_seed_s1_lo_lam0.3/",
+      "dose_seed_s1_lo_lam3.0/",
+      "dose_seed_s2_hi_lam0.03/",
+      "dose_seed_s2_hi_lam0.3/",
+      "dose_seed_s2_hi_lam3.0/",
+      "dose_seed_s2_lo_lam0.03/",
+      "dose_seed_s2_lo_lam0.3/",
+      "dose_seed_s2_lo_lam3.0/",
+      "dose_seed_s3_hi_lam0.03/",
+      "dose_seed_s3_hi_lam0.3/",
+      "dose_seed_s3_hi_lam3.0/",
+      "dose_seed_s3_lo_lam0.03/",
+      "dose_seed_s3_lo_lam0.3/",
+      "dose_seed_s3_lo_lam3.0/",
+      "dose_seed_s4_hi_lam0.03/",
+      "dose_seed_s4_hi_lam0.3/",
+      "dose_seed_s4_hi_lam3.0/",
+      "dose_seed_s4_lo_lam0.03/",
+      "dose_seed_s4_lo_lam0.3/",
+      "dose_seed_s4_lo_lam3.0/",
+      "full_s0_whiten_lam0.1/",
+      "full_s0_whiten_lam1.0/",
+      "full_s1_whiten_lam0.1/",
+      "full_s1_whiten_lam1.0/",
+      "full_s2_whiten_lam0.1/",
+      "full_s2_whiten_lam1.0/",
+      "full_base_lr0.125.json/",
+      "full_base_lr0.5.json/",
+      "full_base_lr1.0.json/"
+    ],
+    "note": "Point values are verbatim differences of raw readings; no filtering, no band changes. Verdict is implemented in code/dose_shape_fit_seeds.py (criteria frozen before launch)."
+  },
+  "bases": {
+    "resnet18_lr0.125_wd0.0001_s0": {
+      "model": "resnet18_lr0.125_wd0.0001_s0",
+      "d_ent_id": 18.877,
+      "c100_probe": 0.2732,
+      "id_probe_acc": 0.8712,
+      "test_acc": 0.8722,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd0.0001_s1": {
+      "model": "resnet18_lr0.125_wd0.0001_s1",
+      "d_ent_id": 15.212,
+      "c100_probe": 0.2368,
+      "id_probe_acc": 0.8806,
+      "test_acc": 0.8813,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd0.0001_s2": {
+      "model": "resnet18_lr0.125_wd0.0001_s2",
+      "d_ent_id": 16.138,
+      "c100_probe": 0.2492,
+      "id_probe_acc": 0.8749,
+      "test_acc": 0.8749,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd0.0002_s0": {
+      "model": "resnet18_lr0.125_wd0.0002_s0",
+      "d_ent_id": 14.671,
+      "c100_probe": 0.2231,
+      "id_probe_acc": 0.8841,
+      "test_acc": 0.8842,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd0.0002_s1": {
+      "model": "resnet18_lr0.125_wd0.0002_s1",
+      "d_ent_id": 16.646,
+      "c100_probe": 0.2645,
+      "id_probe_acc": 0.8781,
+      "test_acc": 0.8799,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd0.0002_s2": {
+      "model": "resnet18_lr0.125_wd0.0002_s2",
+      "d_ent_id": 14.535,
+      "c100_probe": 0.2296,
+      "id_probe_acc": 0.8804,
+      "test_acc": 0.8838,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd2.5e-05_s0": {
+      "model": "resnet18_lr0.125_wd2.5e-05_s0",
+      "d_ent_id": 35.882,
+      "c100_probe": 0.3017,
+      "id_probe_acc": 0.8635,
+      "test_acc": 0.8654,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd2.5e-05_s1": {
+      "model": "resnet18_lr0.125_wd2.5e-05_s1",
+      "d_ent_id": 28.771,
+      "c100_probe": 0.282,
+      "id_probe_acc": 0.8495,
+      "test_acc": 0.8508,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd2.5e-05_s2": {
+      "model": "resnet18_lr0.125_wd2.5e-05_s2",
+      "d_ent_id": 33.493,
+      "c100_probe": 0.3022,
+      "id_probe_acc": 0.8608,
+      "test_acc": 0.8643,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd5e-05_s0": {
+      "model": "resnet18_lr0.125_wd5e-05_s0",
+      "d_ent_id": 26.414,
+      "c100_probe": 0.2984,
+      "id_probe_acc": 0.8678,
+      "test_acc": 0.8671,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd5e-05_s1": {
+      "model": "resnet18_lr0.125_wd5e-05_s1",
+      "d_ent_id": 32.285,
+      "c100_probe": 0.324,
+      "id_probe_acc": 0.8594,
+      "test_acc": 0.8603,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd5e-05_s2": {
+      "model": "resnet18_lr0.125_wd5e-05_s2",
+      "d_ent_id": 25.445,
+      "c100_probe": 0.3061,
+      "id_probe_acc": 0.867,
+      "test_acc": 0.8674,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd0.0001_s3": {
+      "model": "resnet18_lr0.125_wd0.0001_s3",
+      "d_ent_id": 19.981,
+      "c100_probe": 0.2774,
+      "id_probe_acc": 0.8747,
+      "test_acc": 0.8776,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.125_wd0.0001_s4": {
+      "model": "resnet18_lr0.125_wd0.0001_s4",
+      "d_ent_id": 17.375,
+      "c100_probe": 0.2339,
+      "id_probe_acc": 0.85,
+      "test_acc": 0.8349,
+      "secs": 0.0,
+      "src": "full_base_lr0.125.json"
+    },
+    "resnet18_lr0.5_wd0.0001_s0": {
+      "model": "resnet18_lr0.5_wd0.0001_s0",
+      "d_ent_id": 13.068,
+      "c100_probe": 0.1373,
+      "id_probe_acc": 0.8757,
+      "test_acc": 0.8769,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd0.0001_s1": {
+      "model": "resnet18_lr0.5_wd0.0001_s1",
+      "d_ent_id": 13.537,
+      "c100_probe": 0.1596,
+      "id_probe_acc": 0.8807,
+      "test_acc": 0.8811,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd0.0001_s2": {
+      "model": "resnet18_lr0.5_wd0.0001_s2",
+      "d_ent_id": 13.399,
+      "c100_probe": 0.1523,
+      "id_probe_acc": 0.8798,
+      "test_acc": 0.8792,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd0.0002_s0": {
+      "model": "resnet18_lr0.5_wd0.0002_s0",
+      "d_ent_id": 12.709,
+      "c100_probe": 0.1511,
+      "id_probe_acc": 0.8609,
+      "test_acc": 0.8633,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd0.0002_s1": {
+      "model": "resnet18_lr0.5_wd0.0002_s1",
+      "d_ent_id": 12.905,
+      "c100_probe": 0.151,
+      "id_probe_acc": 0.8732,
+      "test_acc": 0.8734,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd0.0002_s2": {
+      "model": "resnet18_lr0.5_wd0.0002_s2",
+      "d_ent_id": 12.295,
+      "c100_probe": 0.1554,
+      "id_probe_acc": 0.8781,
+      "test_acc": 0.8779,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd2.5e-05_s0": {
+      "model": "resnet18_lr0.5_wd2.5e-05_s0",
+      "d_ent_id": 13.03,
+      "c100_probe": 0.182,
+      "id_probe_acc": 0.8595,
+      "test_acc": 0.864,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd2.5e-05_s1": {
+      "model": "resnet18_lr0.5_wd2.5e-05_s1",
+      "d_ent_id": 15.583,
+      "c100_probe": 0.193,
+      "id_probe_acc": 0.8557,
+      "test_acc": 0.8567,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd2.5e-05_s2": {
+      "model": "resnet18_lr0.5_wd2.5e-05_s2",
+      "d_ent_id": 14.382,
+      "c100_probe": 0.1785,
+      "id_probe_acc": 0.8698,
+      "test_acc": 0.8725,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd5e-05_s0": {
+      "model": "resnet18_lr0.5_wd5e-05_s0",
+      "d_ent_id": 14.693,
+      "c100_probe": 0.2119,
+      "id_probe_acc": 0.8735,
+      "test_acc": 0.8739,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd5e-05_s1": {
+      "model": "resnet18_lr0.5_wd5e-05_s1",
+      "d_ent_id": 14.287,
+      "c100_probe": 0.1931,
+      "id_probe_acc": 0.8752,
+      "test_acc": 0.8772,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr0.5_wd5e-05_s2": {
+      "model": "resnet18_lr0.5_wd5e-05_s2",
+      "d_ent_id": 13.711,
+      "c100_probe": 0.1484,
+      "id_probe_acc": 0.8724,
+      "test_acc": 0.8743,
+      "secs": 0.0,
+      "src": "full_base_lr0.5.json"
+    },
+    "resnet18_lr1.0_wd0.0001_s0": {
+      "model": "resnet18_lr1.0_wd0.0001_s0",
+      "d_ent_id": 8.049,
+      "c100_probe": 0.1197,
+      "id_probe_acc": 0.8646,
+      "test_acc": 0.8666,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd0.0001_s1": {
+      "model": "resnet18_lr1.0_wd0.0001_s1",
+      "d_ent_id": 7.761,
+      "c100_probe": 0.1178,
+      "id_probe_acc": 0.8634,
+      "test_acc": 0.8647,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd0.0001_s2": {
+      "model": "resnet18_lr1.0_wd0.0001_s2",
+      "d_ent_id": 8.232,
+      "c100_probe": 0.1168,
+      "id_probe_acc": 0.8672,
+      "test_acc": 0.8695,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd0.0002_s0": {
+      "model": "resnet18_lr1.0_wd0.0002_s0",
+      "d_ent_id": 6.266,
+      "c100_probe": 0.1029,
+      "id_probe_acc": 0.8547,
+      "test_acc": 0.8571,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd0.0002_s1": {
+      "model": "resnet18_lr1.0_wd0.0002_s1",
+      "d_ent_id": 6.188,
+      "c100_probe": 0.1041,
+      "id_probe_acc": 0.8503,
+      "test_acc": 0.8508,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd0.0002_s2": {
+      "model": "resnet18_lr1.0_wd0.0002_s2",
+      "d_ent_id": 5.534,
+      "c100_probe": 0.0711,
+      "id_probe_acc": 0.8413,
+      "test_acc": 0.8403,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd2.5e-05_s0": {
+      "model": "resnet18_lr1.0_wd2.5e-05_s0",
+      "d_ent_id": 12.701,
+      "c100_probe": 0.1441,
+      "id_probe_acc": 0.8612,
+      "test_acc": 0.863,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd2.5e-05_s1": {
+      "model": "resnet18_lr1.0_wd2.5e-05_s1",
+      "d_ent_id": 10.756,
+      "c100_probe": 0.1225,
+      "id_probe_acc": 0.8714,
+      "test_acc": 0.8735,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd2.5e-05_s2": {
+      "model": "resnet18_lr1.0_wd2.5e-05_s2",
+      "d_ent_id": 12.008,
+      "c100_probe": 0.1476,
+      "id_probe_acc": 0.8734,
+      "test_acc": 0.876,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd5e-05_s0": {
+      "model": "resnet18_lr1.0_wd5e-05_s0",
+      "d_ent_id": 9.354,
+      "c100_probe": 0.1198,
+      "id_probe_acc": 0.8647,
+      "test_acc": 0.8667,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd5e-05_s1": {
+      "model": "resnet18_lr1.0_wd5e-05_s1",
+      "d_ent_id": 10.697,
+      "c100_probe": 0.1313,
+      "id_probe_acc": 0.8708,
+      "test_acc": 0.8735,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd5e-05_s2": {
+      "model": "resnet18_lr1.0_wd5e-05_s2",
+      "d_ent_id": 10.604,
+      "c100_probe": 0.136,
+      "id_probe_acc": 0.8741,
+      "test_acc": 0.8746,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd5e-05_s3": {
+      "model": "resnet18_lr1.0_wd5e-05_s3",
+      "d_ent_id": 11.18,
+      "c100_probe": 0.1346,
+      "id_probe_acc": 0.8663,
+      "test_acc": 0.8661,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    },
+    "resnet18_lr1.0_wd5e-05_s4": {
+      "model": "resnet18_lr1.0_wd5e-05_s4",
+      "d_ent_id": 11.457,
+      "c100_probe": 0.1357,
+      "id_probe_acc": 0.874,
+      "test_acc": 0.8751,
+      "secs": 0.0,
+      "src": "full_base_lr1.0.json"
+    }
+  },
+  "points": [
+    {
+      "recipe": "lo",
+      "seed": 0,
+      "lambda": 0.03,
+      "model": "resnet18_lr1.0_wd5e-05_s0",
+      "d_delta": 2.071,
+      "c_delta": 0.0071,
+      "id_keep": 0.0042,
+      "raw": {
+        "d_ent_id": 11.425,
+        "c100_probe": 0.1269,
+        "id_probe_acc": 0.8689,
+        "test_acc": 0.8673,
+        "secs": 2677.5
+      },
+      "base": {
+        "d_ent_id": 9.354,
+        "c100_probe": 0.1198,
+        "id_probe_acc": 0.8647,
+        "test_acc": 0.8667,
+        "secs": 0.0
+      },
+      "src": "dose_lo_lam0.03/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 0,
+      "lambda": 0.1,
+      "model": "resnet18_lr1.0_wd5e-05_s0",
+      "d_delta": 2.802,
+      "c_delta": 0.0144,
+      "id_keep": 0.0088,
+      "raw": {
+        "d_ent_id": 12.156,
+        "c100_probe": 0.1342,
+        "id_probe_acc": 0.8735,
+        "test_acc": 0.8742,
+        "secs": 2785.9
+      },
+      "base": {
+        "d_ent_id": 9.354,
+        "c100_probe": 0.1198,
+        "id_probe_acc": 0.8647,
+        "test_acc": 0.8667,
+        "secs": 0.0
+      },
+      "src": "full_s0_whiten_lam0.1/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 0,
+      "lambda": 0.3,
+      "model": "resnet18_lr1.0_wd5e-05_s0",
+      "d_delta": 11.972,
+      "c_delta": 0.0303,
+      "id_keep": 0.0113,
+      "raw": {
+        "d_ent_id": 21.326,
+        "c100_probe": 0.1501,
+        "id_probe_acc": 0.876,
+        "test_acc": 0.8772,
+        "secs": 3733.8
+      },
+      "base": {
+        "d_ent_id": 9.354,
+        "c100_probe": 0.1198,
+        "id_probe_acc": 0.8647,
+        "test_acc": 0.8667,
+        "secs": 0.0
+      },
+      "src": "dose_lo_lam0.3/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 0,
+      "lambda": 1.0,
+      "model": "resnet18_lr1.0_wd5e-05_s0",
+      "d_delta": 11.416,
+      "c_delta": 0.0154,
+      "id_keep": 0.0096,
+      "raw": {
+        "d_ent_id": 20.77,
+        "c100_probe": 0.1352,
+        "id_probe_acc": 0.8743,
+        "test_acc": 0.8765,
+        "secs": 2787.1
+      },
+      "base": {
+        "d_ent_id": 9.354,
+        "c100_probe": 0.1198,
+        "id_probe_acc": 0.8647,
+        "test_acc": 0.8667,
+        "secs": 0.0
+      },
+      "src": "full_s0_whiten_lam1.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 0,
+      "lambda": 3.0,
+      "model": "resnet18_lr1.0_wd5e-05_s0",
+      "d_delta": 20.414,
+      "c_delta": 0.0271,
+      "id_keep": 0.0069,
+      "raw": {
+        "d_ent_id": 29.768,
+        "c100_probe": 0.1469,
+        "id_probe_acc": 0.8716,
+        "test_acc": 0.8714,
+        "secs": 2877.5
+      },
+      "base": {
+        "d_ent_id": 9.354,
+        "c100_probe": 0.1198,
+        "id_probe_acc": 0.8647,
+        "test_acc": 0.8667,
+        "secs": 0.0
+      },
+      "src": "dose_lo_lam3.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 1,
+      "lambda": 0.03,
+      "model": "resnet18_lr1.0_wd5e-05_s1",
+      "d_delta": 2.245,
+      "c_delta": 0.0036,
+      "id_keep": -0.0003,
+      "raw": {
+        "d_ent_id": 12.942,
+        "c100_probe": 0.1349,
+        "id_probe_acc": 0.8705,
+        "test_acc": 0.8716,
+        "secs": 13842.1
+      },
+      "base": {
+        "d_ent_id": 10.697,
+        "c100_probe": 0.1313,
+        "id_probe_acc": 0.8708,
+        "test_acc": 0.8735,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s1_lo_lam0.03/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 1,
+      "lambda": 0.1,
+      "model": "resnet18_lr1.0_wd5e-05_s1",
+      "d_delta": 2.832,
+      "c_delta": 0.0017,
+      "id_keep": 0.0064,
+      "raw": {
+        "d_ent_id": 13.529,
+        "c100_probe": 0.133,
+        "id_probe_acc": 0.8772,
+        "test_acc": 0.8787,
+        "secs": 2750.1
+      },
+      "base": {
+        "d_ent_id": 10.697,
+        "c100_probe": 0.1313,
+        "id_probe_acc": 0.8708,
+        "test_acc": 0.8735,
+        "secs": 0.0
+      },
+      "src": "full_s1_whiten_lam0.1/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 1,
+      "lambda": 0.3,
+      "model": "resnet18_lr1.0_wd5e-05_s1",
+      "d_delta": 7.118,
+      "c_delta": 0.0001,
+      "id_keep": 0.0055,
+      "raw": {
+        "d_ent_id": 17.815,
+        "c100_probe": 0.1314,
+        "id_probe_acc": 0.8763,
+        "test_acc": 0.8765,
+        "secs": 12970.2
+      },
+      "base": {
+        "d_ent_id": 10.697,
+        "c100_probe": 0.1313,
+        "id_probe_acc": 0.8708,
+        "test_acc": 0.8735,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s1_lo_lam0.3/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 1,
+      "lambda": 1.0,
+      "model": "resnet18_lr1.0_wd5e-05_s1",
+      "d_delta": 12.114,
+      "c_delta": 0.014,
+      "id_keep": -0.0025,
+      "raw": {
+        "d_ent_id": 22.811,
+        "c100_probe": 0.1453,
+        "id_probe_acc": 0.8683,
+        "test_acc": 0.8708,
+        "secs": 2785.3
+      },
+      "base": {
+        "d_ent_id": 10.697,
+        "c100_probe": 0.1313,
+        "id_probe_acc": 0.8708,
+        "test_acc": 0.8735,
+        "secs": 0.0
+      },
+      "src": "full_s1_whiten_lam1.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 1,
+      "lambda": 3.0,
+      "model": "resnet18_lr1.0_wd5e-05_s1",
+      "d_delta": 11.901,
+      "c_delta": 0.0048,
+      "id_keep": 0.0029,
+      "raw": {
+        "d_ent_id": 22.598,
+        "c100_probe": 0.1361,
+        "id_probe_acc": 0.8737,
+        "test_acc": 0.8753,
+        "secs": 12591.3
+      },
+      "base": {
+        "d_ent_id": 10.697,
+        "c100_probe": 0.1313,
+        "id_probe_acc": 0.8708,
+        "test_acc": 0.8735,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s1_lo_lam3.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 2,
+      "lambda": 0.03,
+      "model": "resnet18_lr1.0_wd5e-05_s2",
+      "d_delta": 2.32,
+      "c_delta": -0.002,
+      "id_keep": -0.0015,
+      "raw": {
+        "d_ent_id": 12.924,
+        "c100_probe": 0.134,
+        "id_probe_acc": 0.8726,
+        "test_acc": 0.8718,
+        "secs": 7280.3
+      },
+      "base": {
+        "d_ent_id": 10.604,
+        "c100_probe": 0.136,
+        "id_probe_acc": 0.8741,
+        "test_acc": 0.8746,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s2_lo_lam0.03/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 2,
+      "lambda": 0.1,
+      "model": "resnet18_lr1.0_wd5e-05_s2",
+      "d_delta": 2.502,
+      "c_delta": 0.0002,
+      "id_keep": -0.0338,
+      "raw": {
+        "d_ent_id": 13.106,
+        "c100_probe": 0.1362,
+        "id_probe_acc": 0.8403,
+        "test_acc": 0.8402,
+        "secs": 2793.2
+      },
+      "base": {
+        "d_ent_id": 10.604,
+        "c100_probe": 0.136,
+        "id_probe_acc": 0.8741,
+        "test_acc": 0.8746,
+        "secs": 0.0
+      },
+      "src": "full_s2_whiten_lam0.1/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 2,
+      "lambda": 0.3,
+      "model": "resnet18_lr1.0_wd5e-05_s2",
+      "d_delta": 8.251,
+      "c_delta": -0.0015,
+      "id_keep": 0.0002,
+      "raw": {
+        "d_ent_id": 18.855,
+        "c100_probe": 0.1345,
+        "id_probe_acc": 0.8743,
+        "test_acc": 0.8742,
+        "secs": 5145.5
+      },
+      "base": {
+        "d_ent_id": 10.604,
+        "c100_probe": 0.136,
+        "id_probe_acc": 0.8741,
+        "test_acc": 0.8746,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s2_lo_lam0.3/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 2,
+      "lambda": 1.0,
+      "model": "resnet18_lr1.0_wd5e-05_s2",
+      "d_delta": 13.171,
+      "c_delta": 0.0094,
+      "id_keep": -0.0021,
+      "raw": {
+        "d_ent_id": 23.775,
+        "c100_probe": 0.1454,
+        "id_probe_acc": 0.872,
+        "test_acc": 0.8737,
+        "secs": 2807.3
+      },
+      "base": {
+        "d_ent_id": 10.604,
+        "c100_probe": 0.136,
+        "id_probe_acc": 0.8741,
+        "test_acc": 0.8746,
+        "secs": 0.0
+      },
+      "src": "full_s2_whiten_lam1.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 2,
+      "lambda": 3.0,
+      "model": "resnet18_lr1.0_wd5e-05_s2",
+      "d_delta": 18.06,
+      "c_delta": 0.0111,
+      "id_keep": 0.0002,
+      "raw": {
+        "d_ent_id": 28.664,
+        "c100_probe": 0.1471,
+        "id_probe_acc": 0.8743,
+        "test_acc": 0.8754,
+        "secs": 2627.0
+      },
+      "base": {
+        "d_ent_id": 10.604,
+        "c100_probe": 0.136,
+        "id_probe_acc": 0.8741,
+        "test_acc": 0.8746,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s2_lo_lam3.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 3,
+      "lambda": 0.03,
+      "model": "resnet18_lr1.0_wd5e-05_s3",
+      "d_delta": 1.893,
+      "c_delta": 0.0064,
+      "id_keep": 0.0014,
+      "raw": {
+        "d_ent_id": 13.073,
+        "c100_probe": 0.141,
+        "id_probe_acc": 0.8677,
+        "test_acc": 0.8701,
+        "secs": 2757.8
+      },
+      "base": {
+        "d_ent_id": 11.18,
+        "c100_probe": 0.1346,
+        "id_probe_acc": 0.8663,
+        "test_acc": 0.8661,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s3_lo_lam0.03/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 3,
+      "lambda": 0.3,
+      "model": "resnet18_lr1.0_wd5e-05_s3",
+      "d_delta": 7.188,
+      "c_delta": 0.0083,
+      "id_keep": 0.0077,
+      "raw": {
+        "d_ent_id": 18.368,
+        "c100_probe": 0.1429,
+        "id_probe_acc": 0.874,
+        "test_acc": 0.8747,
+        "secs": 2798.3
+      },
+      "base": {
+        "d_ent_id": 11.18,
+        "c100_probe": 0.1346,
+        "id_probe_acc": 0.8663,
+        "test_acc": 0.8661,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s3_lo_lam0.3/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 3,
+      "lambda": 3.0,
+      "model": "resnet18_lr1.0_wd5e-05_s3",
+      "d_delta": 16.486,
+      "c_delta": 0.0092,
+      "id_keep": -0.0031,
+      "raw": {
+        "d_ent_id": 27.666,
+        "c100_probe": 0.1438,
+        "id_probe_acc": 0.8632,
+        "test_acc": 0.8624,
+        "secs": 2727.3
+      },
+      "base": {
+        "d_ent_id": 11.18,
+        "c100_probe": 0.1346,
+        "id_probe_acc": 0.8663,
+        "test_acc": 0.8661,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s3_lo_lam3.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 4,
+      "lambda": 0.03,
+      "model": "resnet18_lr1.0_wd5e-05_s4",
+      "d_delta": 1.379,
+      "c_delta": 0.004,
+      "id_keep": 0.0043,
+      "raw": {
+        "d_ent_id": 12.836,
+        "c100_probe": 0.1397,
+        "id_probe_acc": 0.8783,
+        "test_acc": 0.8795,
+        "secs": 2595.4
+      },
+      "base": {
+        "d_ent_id": 11.457,
+        "c100_probe": 0.1357,
+        "id_probe_acc": 0.874,
+        "test_acc": 0.8751,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s4_lo_lam0.03/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 4,
+      "lambda": 0.3,
+      "model": "resnet18_lr1.0_wd5e-05_s4",
+      "d_delta": 12.1,
+      "c_delta": 0.0162,
+      "id_keep": 0.0005,
+      "raw": {
+        "d_ent_id": 23.557,
+        "c100_probe": 0.1519,
+        "id_probe_acc": 0.8745,
+        "test_acc": 0.8765,
+        "secs": 3393.5
+      },
+      "base": {
+        "d_ent_id": 11.457,
+        "c100_probe": 0.1357,
+        "id_probe_acc": 0.874,
+        "test_acc": 0.8751,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s4_lo_lam0.3/train_forcing_p4.json"
+    },
+    {
+      "recipe": "lo",
+      "seed": 4,
+      "lambda": 3.0,
+      "model": "resnet18_lr1.0_wd5e-05_s4",
+      "d_delta": 17.791,
+      "c_delta": 0.0197,
+      "id_keep": -0.0132,
+      "raw": {
+        "d_ent_id": 29.248,
+        "c100_probe": 0.1554,
+        "id_probe_acc": 0.8608,
+        "test_acc": 0.8638,
+        "secs": 2899.1
+      },
+      "base": {
+        "d_ent_id": 11.457,
+        "c100_probe": 0.1357,
+        "id_probe_acc": 0.874,
+        "test_acc": 0.8751,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s4_lo_lam3.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 0,
+      "lambda": 0.03,
+      "model": "resnet18_lr0.125_wd0.0001_s0",
+      "d_delta": 4.949,
+      "c_delta": 0.0138,
+      "id_keep": -0.0043,
+      "raw": {
+        "d_ent_id": 23.826,
+        "c100_probe": 0.287,
+        "id_probe_acc": 0.8669,
+        "test_acc": 0.8699,
+        "secs": 2024.1
+      },
+      "base": {
+        "d_ent_id": 18.877,
+        "c100_probe": 0.2732,
+        "id_probe_acc": 0.8712,
+        "test_acc": 0.8722,
+        "secs": 0.0
+      },
+      "src": "dose_hi_lam0.03/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 0,
+      "lambda": 0.1,
+      "model": "resnet18_lr0.125_wd0.0001_s0",
+      "d_delta": 22.893,
+      "c_delta": 0.0555,
+      "id_keep": 0.0039,
+      "raw": {
+        "d_ent_id": 41.77,
+        "c100_probe": 0.3287,
+        "id_probe_acc": 0.8751,
+        "test_acc": 0.872,
+        "secs": 2186.9
+      },
+      "base": {
+        "d_ent_id": 18.877,
+        "c100_probe": 0.2732,
+        "id_probe_acc": 0.8712,
+        "test_acc": 0.8722,
+        "secs": 0.0
+      },
+      "src": "full_s0_whiten_lam0.1/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 0,
+      "lambda": 0.3,
+      "model": "resnet18_lr0.125_wd0.0001_s0",
+      "d_delta": 29.039,
+      "c_delta": 0.0194,
+      "id_keep": 0.0065,
+      "raw": {
+        "d_ent_id": 47.916,
+        "c100_probe": 0.2926,
+        "id_probe_acc": 0.8777,
+        "test_acc": 0.8767,
+        "secs": 3168.3
+      },
+      "base": {
+        "d_ent_id": 18.877,
+        "c100_probe": 0.2732,
+        "id_probe_acc": 0.8712,
+        "test_acc": 0.8722,
+        "secs": 0.0
+      },
+      "src": "dose_hi_lam0.3/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 0,
+      "lambda": 1.0,
+      "model": "resnet18_lr0.125_wd0.0001_s0",
+      "d_delta": 74.529,
+      "c_delta": 0.0608,
+      "id_keep": 0.0039,
+      "raw": {
+        "d_ent_id": 93.406,
+        "c100_probe": 0.334,
+        "id_probe_acc": 0.8751,
+        "test_acc": 0.8762,
+        "secs": 2196.9
+      },
+      "base": {
+        "d_ent_id": 18.877,
+        "c100_probe": 0.2732,
+        "id_probe_acc": 0.8712,
+        "test_acc": 0.8722,
+        "secs": 0.0
+      },
+      "src": "full_s0_whiten_lam1.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 0,
+      "lambda": 3.0,
+      "model": "resnet18_lr0.125_wd0.0001_s0",
+      "d_delta": 155.082,
+      "c_delta": 0.0856,
+      "id_keep": -0.0083,
+      "raw": {
+        "d_ent_id": 173.959,
+        "c100_probe": 0.3588,
+        "id_probe_acc": 0.8629,
+        "test_acc": 0.8655,
+        "secs": 2594.1
+      },
+      "base": {
+        "d_ent_id": 18.877,
+        "c100_probe": 0.2732,
+        "id_probe_acc": 0.8712,
+        "test_acc": 0.8722,
+        "secs": 0.0
+      },
+      "src": "dose_hi_lam3.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 1,
+      "lambda": 0.03,
+      "model": "resnet18_lr0.125_wd0.0001_s1",
+      "d_delta": 12.643,
+      "c_delta": 0.0679,
+      "id_keep": -0.0027,
+      "raw": {
+        "d_ent_id": 27.855,
+        "c100_probe": 0.3047,
+        "id_probe_acc": 0.8779,
+        "test_acc": 0.8775,
+        "secs": 13983.6
+      },
+      "base": {
+        "d_ent_id": 15.212,
+        "c100_probe": 0.2368,
+        "id_probe_acc": 0.8806,
+        "test_acc": 0.8813,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s1_hi_lam0.03/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 1,
+      "lambda": 0.1,
+      "model": "resnet18_lr0.125_wd0.0001_s1",
+      "d_delta": 20.776,
+      "c_delta": 0.0656,
+      "id_keep": -0.0024,
+      "raw": {
+        "d_ent_id": 35.988,
+        "c100_probe": 0.3024,
+        "id_probe_acc": 0.8782,
+        "test_acc": 0.8782,
+        "secs": 2191.5
+      },
+      "base": {
+        "d_ent_id": 15.212,
+        "c100_probe": 0.2368,
+        "id_probe_acc": 0.8806,
+        "test_acc": 0.8813,
+        "secs": 0.0
+      },
+      "src": "full_s1_whiten_lam0.1/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 1,
+      "lambda": 0.3,
+      "model": "resnet18_lr0.125_wd0.0001_s1",
+      "d_delta": 43.414,
+      "c_delta": 0.0948,
+      "id_keep": -0.001,
+      "raw": {
+        "d_ent_id": 58.626,
+        "c100_probe": 0.3316,
+        "id_probe_acc": 0.8796,
+        "test_acc": 0.8795,
+        "secs": 13296.0
+      },
+      "base": {
+        "d_ent_id": 15.212,
+        "c100_probe": 0.2368,
+        "id_probe_acc": 0.8806,
+        "test_acc": 0.8813,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s1_hi_lam0.3/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 1,
+      "lambda": 1.0,
+      "model": "resnet18_lr0.125_wd0.0001_s1",
+      "d_delta": 97.99,
+      "c_delta": 0.1277,
+      "id_keep": -0.0036,
+      "raw": {
+        "d_ent_id": 113.202,
+        "c100_probe": 0.3645,
+        "id_probe_acc": 0.877,
+        "test_acc": 0.877,
+        "secs": 2186.7
+      },
+      "base": {
+        "d_ent_id": 15.212,
+        "c100_probe": 0.2368,
+        "id_probe_acc": 0.8806,
+        "test_acc": 0.8813,
+        "secs": 0.0
+      },
+      "src": "full_s1_whiten_lam1.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 1,
+      "lambda": 3.0,
+      "model": "resnet18_lr0.125_wd0.0001_s1",
+      "d_delta": 157.167,
+      "c_delta": 0.1395,
+      "id_keep": -0.0076,
+      "raw": {
+        "d_ent_id": 172.379,
+        "c100_probe": 0.3763,
+        "id_probe_acc": 0.873,
+        "test_acc": 0.8726,
+        "secs": 12426.5
+      },
+      "base": {
+        "d_ent_id": 15.212,
+        "c100_probe": 0.2368,
+        "id_probe_acc": 0.8806,
+        "test_acc": 0.8813,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s1_hi_lam3.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 2,
+      "lambda": 0.03,
+      "model": "resnet18_lr0.125_wd0.0001_s2",
+      "d_delta": 12.942,
+      "c_delta": 0.0623,
+      "id_keep": 0.0001,
+      "raw": {
+        "d_ent_id": 29.08,
+        "c100_probe": 0.3115,
+        "id_probe_acc": 0.875,
+        "test_acc": 0.8768,
+        "secs": 13679.6
+      },
+      "base": {
+        "d_ent_id": 16.138,
+        "c100_probe": 0.2492,
+        "id_probe_acc": 0.8749,
+        "test_acc": 0.8749,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s2_hi_lam0.03/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 2,
+      "lambda": 0.1,
+      "model": "resnet18_lr0.125_wd0.0001_s2",
+      "d_delta": 23.719,
+      "c_delta": 0.0707,
+      "id_keep": -0.0052,
+      "raw": {
+        "d_ent_id": 39.857,
+        "c100_probe": 0.3199,
+        "id_probe_acc": 0.8697,
+        "test_acc": 0.8706,
+        "secs": 2158.4
+      },
+      "base": {
+        "d_ent_id": 16.138,
+        "c100_probe": 0.2492,
+        "id_probe_acc": 0.8749,
+        "test_acc": 0.8749,
+        "secs": 0.0
+      },
+      "src": "full_s2_whiten_lam0.1/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 2,
+      "lambda": 0.3,
+      "model": "resnet18_lr0.125_wd0.0001_s2",
+      "d_delta": 47.914,
+      "c_delta": 0.0932,
+      "id_keep": -0.0012,
+      "raw": {
+        "d_ent_id": 64.052,
+        "c100_probe": 0.3424,
+        "id_probe_acc": 0.8737,
+        "test_acc": 0.8743,
+        "secs": 13268.7
+      },
+      "base": {
+        "d_ent_id": 16.138,
+        "c100_probe": 0.2492,
+        "id_probe_acc": 0.8749,
+        "test_acc": 0.8749,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s2_hi_lam0.3/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 2,
+      "lambda": 1.0,
+      "model": "resnet18_lr0.125_wd0.0001_s2",
+      "d_delta": 90.712,
+      "c_delta": 0.1073,
+      "id_keep": 0.0028,
+      "raw": {
+        "d_ent_id": 106.85,
+        "c100_probe": 0.3565,
+        "id_probe_acc": 0.8777,
+        "test_acc": 0.8779,
+        "secs": 2192.7
+      },
+      "base": {
+        "d_ent_id": 16.138,
+        "c100_probe": 0.2492,
+        "id_probe_acc": 0.8749,
+        "test_acc": 0.8749,
+        "secs": 0.0
+      },
+      "src": "full_s2_whiten_lam1.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 2,
+      "lambda": 3.0,
+      "model": "resnet18_lr0.125_wd0.0001_s2",
+      "d_delta": 142.641,
+      "c_delta": 0.113,
+      "id_keep": 0.0042,
+      "raw": {
+        "d_ent_id": 158.779,
+        "c100_probe": 0.3622,
+        "id_probe_acc": 0.8791,
+        "test_acc": 0.8792,
+        "secs": 12000.9
+      },
+      "base": {
+        "d_ent_id": 16.138,
+        "c100_probe": 0.2492,
+        "id_probe_acc": 0.8749,
+        "test_acc": 0.8749,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s2_hi_lam3.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 3,
+      "lambda": 0.03,
+      "model": "resnet18_lr0.125_wd0.0001_s3",
+      "d_delta": 7.517,
+      "c_delta": 0.0372,
+      "id_keep": 0.0013,
+      "raw": {
+        "d_ent_id": 27.498,
+        "c100_probe": 0.3146,
+        "id_probe_acc": 0.876,
+        "test_acc": 0.8773,
+        "secs": 2152.4
+      },
+      "base": {
+        "d_ent_id": 19.981,
+        "c100_probe": 0.2774,
+        "id_probe_acc": 0.8747,
+        "test_acc": 0.8776,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s3_hi_lam0.03/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 3,
+      "lambda": 0.3,
+      "model": "resnet18_lr0.125_wd0.0001_s3",
+      "d_delta": 44.345,
+      "c_delta": 0.069,
+      "id_keep": 0.0009,
+      "raw": {
+        "d_ent_id": 64.326,
+        "c100_probe": 0.3464,
+        "id_probe_acc": 0.8756,
+        "test_acc": 0.8758,
+        "secs": 2229.8
+      },
+      "base": {
+        "d_ent_id": 19.981,
+        "c100_probe": 0.2774,
+        "id_probe_acc": 0.8747,
+        "test_acc": 0.8776,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s3_hi_lam0.3/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 3,
+      "lambda": 3.0,
+      "model": "resnet18_lr0.125_wd0.0001_s3",
+      "d_delta": 141.001,
+      "c_delta": 0.0866,
+      "id_keep": 0.0034,
+      "raw": {
+        "d_ent_id": 160.982,
+        "c100_probe": 0.364,
+        "id_probe_acc": 0.8781,
+        "test_acc": 0.8777,
+        "secs": 2180.7
+      },
+      "base": {
+        "d_ent_id": 19.981,
+        "c100_probe": 0.2774,
+        "id_probe_acc": 0.8747,
+        "test_acc": 0.8776,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s3_hi_lam3.0/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 4,
+      "lambda": 0.03,
+      "model": "resnet18_lr0.125_wd0.0001_s4",
+      "d_delta": 12.062,
+      "c_delta": 0.0729,
+      "id_keep": 0.0239,
+      "raw": {
+        "d_ent_id": 29.437,
+        "c100_probe": 0.3068,
+        "id_probe_acc": 0.8739,
+        "test_acc": 0.8753,
+        "secs": 2213.2
+      },
+      "base": {
+        "d_ent_id": 17.375,
+        "c100_probe": 0.2339,
+        "id_probe_acc": 0.85,
+        "test_acc": 0.8349,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s4_hi_lam0.03/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 4,
+      "lambda": 0.3,
+      "model": "resnet18_lr0.125_wd0.0001_s4",
+      "d_delta": 47.617,
+      "c_delta": 0.11,
+      "id_keep": 0.025,
+      "raw": {
+        "d_ent_id": 64.992,
+        "c100_probe": 0.3439,
+        "id_probe_acc": 0.875,
+        "test_acc": 0.8759,
+        "secs": 2215.1
+      },
+      "base": {
+        "d_ent_id": 17.375,
+        "c100_probe": 0.2339,
+        "id_probe_acc": 0.85,
+        "test_acc": 0.8349,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s4_hi_lam0.3/train_forcing_p4.json"
+    },
+    {
+      "recipe": "hi",
+      "seed": 4,
+      "lambda": 3.0,
+      "model": "resnet18_lr0.125_wd0.0001_s4",
+      "d_delta": 141.419,
+      "c_delta": 0.1259,
+      "id_keep": 0.0312,
+      "raw": {
+        "d_ent_id": 158.794,
+        "c100_probe": 0.3598,
+        "id_probe_acc": 0.8812,
+        "test_acc": 0.8839,
+        "secs": 2173.8
+      },
+      "base": {
+        "d_ent_id": 17.375,
+        "c100_probe": 0.2339,
+        "id_probe_acc": 0.85,
+        "test_acc": 0.8349,
+        "secs": 0.0
+      },
+      "src": "dose_seed_s4_hi_lam3.0/train_forcing_p4.json"
+    }
+  ]
+}
