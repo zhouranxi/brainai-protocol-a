@@ -93,7 +93,8 @@ cause of generalization for the spectral marker family tested here: the
 geometric causal path carries at most a small fraction of the observational
 association (point estimates $7.7\%$ at inference; $14.7\%$ with
 training-time forcing, the strongest version of the intervention; both an
-order of magnitude short), and a
+order of magnitude short; per-condition medians
+$9$--$18\%$, strongest single arms up to ${\sim}55\%$), and a
 direct noise channel
 that geometry does not measure carries the observable harm. We discuss why
 ``intervene on the geometry'' methods therefore require re-derivation, and
@@ -751,7 +752,8 @@ what the confounded-label reading predicts.
 \paragraph{Seed replication of the dose scan.} Because the shape
 characterization above rested on one seed, we preregistered a
 replication before running it (two further seeds $\times$ two recipes
-$\times$ three doses, 12 runs, criteria frozen in advance). The
+$\times$ three doses, 12 runs, criteria frozen in advance; ADR-0016
+App.~25). The
 \emph{qualitative} shape replicates --- every seed's curve is monotone
 and concave, and the low-geometry recipe stays transfer-inert on the
 new seeds (all ten of their points inside the placebo band,
@@ -767,6 +769,25 @@ quantitative criteria as a limitation. The headline paired statistics
 ($14.7\%$ net slope, $t = 6.89$) are unaffected: they are computed
 over all 96 runs, not per seed.
 
+\paragraph{Second-stage replication (seeds 3--4).} A second,
+preregistered two-seed batch (ADR-0016 App.~26: two further seeds
+$\times$ two recipes $\times$ the three lowest doses, 12 runs,
+$\lambda{=}0.1/1$ anchor points deliberately omitted) pushes the
+replication to five seeds total and settles which feature of the
+first replication generalizes. \emph{The higher low-dose plateau
+does}: the $\lambda{=}0.03$ secant exceeds the preregistered
+$20\%$-of-observational threshold on four of five seeds ($33.4\%$,
+$29.9\%$, $30.7\%$, $37.5\%$ for s1--s4; the anchor seed at
+$17.3\%$ is the sole exception), and the maximum secant across the
+whole five-seed archive is $37.5\%$ of observational --- still far
+below the preregistered $60\%$ upper-bound threshold and the $100\%$
+hard line, so the headline dissociation stands. The low-geometry
+recipe stays transfer-inert on the new seeds (6/6 points inside the
+band) with function preserved on all 12 new runs. The exponent drift
+persists (full-archive refit $b = 0.225$--$0.502$), reinforcing that
+only the qualitative ``sub-linear and saturating'' claim is carried
+across seeds.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figs/fig5_dose.pdf}
@@ -779,10 +800,13 @@ $0.264$ for s0/s1/s2): all are sub-linear and far below the
 observational slope (dash--dotted); the shaded region is the
 $\pm0.022$ placebo band. The anchor seed's threshold-like cliff is
 absent in both replication seeds, which respond already at the
-lowest dose. \emph{(b)} Low-$\dfx$ recipe on a linear $y$ axis to
+lowest dose; a further two-seed batch (seeds 3--4) confirms the
+higher plateau as a cross-seed fact (ADR-0016 App.~26/28).
+\emph{(b)} Low-$\dfx$ recipe on a linear $y$ axis to
 show signed responses: all ten replication-seed points lie inside
 the band, versus two out-of-band points on the anchor seed
-(App.~24 erratum). Curves and fits are recomputable from the archived
+(App.~24 erratum); the seeds-3/4 low-recipe points (6/6) also lie
+inside the band. Curves and fits are recomputable from the archived
 per-run records (\texttt{results/p4\_dose/dose\_scan\_seeds.json})
 with \texttt{code/make\_fig5\_dose.py}.}
 \label{fig:dose}
@@ -1022,11 +1046,12 @@ $14.7\%$ (and the $9$--$18\%$ range) are placebo-calibrated
 intervention: arm slopes span $0.4$--$55\%$ of observational (five of
 the 39 arms exceed the preregistered $20\%$ label threshold, one
 reaches the $50\%$ knob threshold, all at small $\Delta\dfx$ where the
-secant denominator is smallest), and recomputing per-point secants on
-the three-seed dose archive (a post-hoc look, not a preregistered
-criterion) puts two replication-seed low-dose points at $30$--$33\%$
-of observational---the same higher-plateau behavior already disclosed
-by the failed R2-s cliff criterion. No dose point or arm reaches the
+secant denominator is smallest), and a preregistered second
+two-seed replication batch (ADR-0016 App.~26) confirms the
+higher-plateau behavior as a cross-seed fact: four of five seeds'
+$\lambda{=}0.03$ secants sit at $30$--$38\%$ of observational
+(maximum $37.5\%$, anchor seed $17.3\%$), still far below the
+$60\%$ upper-bound threshold. No dose point or arm reaches the
 observational slope itself, so the ``far below observational''
 conclusion is unaffected; but a practitioner reading $14.7\%$ as a
 per-intervention guarantee would understate what repeated
@@ -1230,6 +1255,29 @@ the cross-seed shape claim (``sub-linear and saturating'';
 Fig.~\ref{fig:dose}) and reports the failed quantitative criteria
 as a limitation. Headline paired statistics are unaffected: they
 are computed over the 96-run batch, not per seed.
+
+\paragraph{Amendment 4 (second-stage replication, seeds 3--4).}
+Because the first replication (Amendment~3) revealed a higher
+low-dose plateau on both new seeds, we preregistered a second
+two-seed batch before launching any run (ADR-0016 App.~26, frozen
+2026-11-09): two further seeds $\times$ two recipes $\times$ the
+three lowest doses ($\lambda{=}0.03/0.3/3$; 12 runs), with the
+$\lambda{=}0.1/1$ anchor points deliberately omitted and four
+criteria frozen in advance --- R5-s (low-dose plateau: the
+$\lambda{=}0.03$ secant $\ge 20\%$ of observational on
+$\ge 3/4$ seeds $\Rightarrow$ cross-seed fact; $\ge 3$ seeds below
+$\Rightarrow$ seed-specific), R6-s (response-magnitude upper bound:
+all secants $< 60\%$ of observational, $100\%$ hard line), R7-s
+(low-recipe transfer inertness, 6 points), R8-s (function
+preservation, 12 points). \emph{Outcome, reported in full}
+(ADR-0016 App.~28): R5-s $\Rightarrow$ cross-seed fact (four of
+five seeds at $33.4/29.9/30.7/37.5\%$; anchor $17.3\%$ the sole
+exception), R6-s passed (maximum secant $37.5\%$), R7-s passed
+(6/6 inside the band), R8-s passed (12/12 preserved). The paper
+upgrades the higher plateau from ``disclosed on two replication
+seeds'' to a cross-seed regularity (\S\ref{sec:e4},
+Limitations), while the headline dissociation --- no dose point or
+arm near the observational slope --- is unchanged.
 
 \section{E1 endpoint summary table}
 \label{app:e1table}
