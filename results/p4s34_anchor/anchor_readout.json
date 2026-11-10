@@ -1,0 +1,91 @@
+{
+  "rows": [
+    {
+      "recipe": "hi",
+      "seed": 3,
+      "lambda": 0.1,
+      "d_delta": 19.608,
+      "c_delta": 0.0373,
+      "in_band": false,
+      "secant_pct": 11.8,
+      "id_keep": -0.0006
+    },
+    {
+      "recipe": "hi",
+      "seed": 3,
+      "lambda": 1.0,
+      "d_delta": 90.333,
+      "c_delta": 0.0885,
+      "in_band": false,
+      "secant_pct": 6.1,
+      "id_keep": -0.0021
+    },
+    {
+      "recipe": "hi",
+      "seed": 4,
+      "lambda": 0.1,
+      "d_delta": 18.365,
+      "c_delta": 0.0695,
+      "in_band": false,
+      "secant_pct": 23.5,
+      "id_keep": 0.0284
+    },
+    {
+      "recipe": "hi",
+      "seed": 4,
+      "lambda": 1.0,
+      "d_delta": 94.83,
+      "c_delta": 0.1369,
+      "in_band": false,
+      "secant_pct": 9.0,
+      "id_keep": 0.0225
+    },
+    {
+      "recipe": "lo",
+      "seed": 3,
+      "lambda": 0.1,
+      "d_delta": 5.116,
+      "c_delta": 0.0037,
+      "in_band": true,
+      "secant_pct": 4.5,
+      "id_keep": 0.0067
+    },
+    {
+      "recipe": "lo",
+      "seed": 3,
+      "lambda": 1.0,
+      "d_delta": 12.512,
+      "c_delta": 0.0141,
+      "in_band": true,
+      "secant_pct": 7.0,
+      "id_keep": -0.0041
+    },
+    {
+      "recipe": "lo",
+      "seed": 4,
+      "lambda": 0.1,
+      "d_delta": 2.459,
+      "c_delta": -0.0052,
+      "in_band": true,
+      "secant_pct": -13.1,
+      "id_keep": -0.0015
+    },
+    {
+      "recipe": "lo",
+      "seed": 4,
+      "lambda": 1.0,
+      "d_delta": 16.82,
+      "c_delta": 0.0188,
+      "in_band": true,
+      "secant_pct": 6.9,
+      "id_keep": 0.0071
+    }
+  ],
+  "A2": {
+    "lo_in_band": "4/4",
+    "hi_out_of_band": "4/4"
+  },
+  "A3": {
+    "violations": []
+  }
+}

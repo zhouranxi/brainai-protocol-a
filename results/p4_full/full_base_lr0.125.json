@@ -167,6 +167,34 @@
    "glue_d": 2.0688,
    "glue_timeout": false,
    "secs": 0.0
+  },
+  {
+   "arm": "p4_base",
+   "model": "resnet18_lr0.125_wd0.0001_s3",
+   "kind": "base",
+   "lambda": 0.0,
+   "seed": 0,
+   "test_acc": 0.8776,
+   "id_probe_acc": 0.8747,
+   "c100_probe": 0.2774,
+   "d_ent_id": 19.981,
+   "glue_d": 1.934,
+   "glue_timeout": false,
+   "secs": 0.0
+  },
+  {
+   "arm": "p4_base",
+   "model": "resnet18_lr0.125_wd0.0001_s4",
+   "kind": "base",
+   "lambda": 0.0,
+   "seed": 0,
+   "test_acc": 0.8349,
+   "id_probe_acc": 0.85,
+   "c100_probe": 0.2339,
+   "d_ent_id": 17.375,
+   "glue_d": 1.1047,
+   "glue_timeout": false,
+   "secs": 0.0
   }
  ]
 }

@@ -167,6 +167,34 @@
    "glue_d": null,
    "glue_timeout": true,
    "secs": 0.0
+  },
+  {
+   "arm": "p4_base",
+   "model": "resnet18_lr1.0_wd5e-05_s3",
+   "kind": "base",
+   "lambda": 0.0,
+   "seed": 0,
+   "test_acc": 0.8661,
+   "id_probe_acc": 0.8663,
+   "c100_probe": 0.1346,
+   "d_ent_id": 11.18,
+   "glue_d": null,
+   "glue_timeout": true,
+   "secs": 0.0
+  },
+  {
+   "arm": "p4_base",
+   "model": "resnet18_lr1.0_wd5e-05_s4",
+   "kind": "base",
+   "lambda": 0.0,
+   "seed": 0,
+   "test_acc": 0.8751,
+   "id_probe_acc": 0.874,
+   "c100_probe": 0.1357,
+   "d_ent_id": 11.457,
+   "glue_d": null,
+   "glue_timeout": true,
+   "secs": 0.0
   }
  ]
 }
