@@ -219,6 +219,20 @@ def main() -> int:
     gh._req("PATCH", f"/repos/{args.repo}/git/refs/heads/{args.branch}",
             {"sha": commit["sha"], "force": False})
     print(f"PUSHED to {args.repo}@{args.branch}")
+
+    # ---- record the remote ref locally -------------------------------------
+    # The commit object was created on the server; the local object store
+    # will never contain it, so refs/remotes/origin/<branch> cannot be
+    # updated through git (a ref must point at a local object). Leave a
+    # note instead: when the git endpoint recovers, a plain
+    # `git reset --soft <note-sha> && git fetch` (or just `git fetch` after
+    # the remote ref is force-matched) realigns the phantom "ahead N".
+    gitdir = git("rev-parse", "--git-dir").strip()
+    note = os.path.join(gitdir, "API_PUSH_REMOTE_HEAD.txt")
+    with open(note, "w") as fp:
+        fp.write(f"{commit['sha']}  (API push of local {base}, "
+                 f"branch {args.branch})\n")
+    print(f"remote head note: {note}")
     return 0
 
 
