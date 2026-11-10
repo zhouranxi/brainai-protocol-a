@@ -184,14 +184,9 @@
 % (same venue as jiang2020fantastic; cited for the audit framing)
 
 % ---------- Statistical methodology ----------
-@book{pearl2009causality,
-  author    = {Pearl, Judea},
-  title     = {Causality: Models, Reasoning, and Inference},
-  edition   = {2},
-  publisher = {Cambridge University Press},
-  year      = {2009}
-}
-
+% (Pearl 2009 Causality was removed 2026-11-10: the paper uses
+% "interventional" only as ordinary language, never cites the
+% do-calculus formalism; re-add if a formal causal-graph claim appears.)
 @book{efron1993bootstrap,
   author    = {Efron, Bradley and Tibshirani, Robert J.},
   title     = {An Introduction to the Bootstrap},
@@ -200,13 +195,10 @@
 }
 
 % ---------- Datasets and architectures ----------
-@inproceedings{hendrycks2019benchmarking,
-  author    = {Hendrycks, Dan and Dietterich, Thomas},
-  title     = {Benchmarking Neural Network Robustness to Common Corruptions and Perturbations},
-  booktitle = {International Conference on Learning Representations (ICLR)},
-  year      = {2019}
-}
-
+% (Hendrycks & Dietterich 2019 CIFAR-10-C removed 2026-11-10: E1 uses
+% custom spectral operators on features, not the corruption benchmark.
+% Le & Yang 2015 Tiny-ImageNet removed 2026-11-10: the paper only says
+% "ImageNet-scale" in scope; Tiny-ImageNet is not used.)
 @inproceedings{ma2018shufflenet,
   author    = {Ma, Ningning and Zhang, Xiangyu and Zheng, Hai-Tao and Sun, Jian},
   title     = {ShuffleNet V2: Practical Guidelines for Efficient CNN Architecture Design},
@@ -227,11 +219,4 @@
   booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
   year      = {2019},
   note      = {arXiv:1905.02244}
-}
-
-@techreport{le2015tiny,
-  author      = {Le, Ya and Yang, Xuan},
-  title       = {Tiny ImageNet Visual Recognition Challenge},
-  institution = {CS231n technical report},
-  year        = {2015}
 }

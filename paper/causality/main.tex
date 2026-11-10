@@ -79,7 +79,8 @@ of magnitude short), following a sub-linear, saturating dose--response
 that flattens to
 $1.9\%$ of observational at high dose. (iv)
 \emph{Architecture transfer}: the same dissociation replicates in every tested
-family---ResNet-34/50, ShuffleNet-V2, and RegNetY-400M (16 further recipes)---with
+family---ResNet-34/50, ShuffleNet-V2 \citep{ma2018shufflenet}, and
+RegNetY-400M (16 further recipes)---with
 the observational anchor at $r \ge 0.87$ everywhere, spectral-shape-matched
 noise dropping transfer $9.6$--$16.0$\,pp in 16/16 models, and inference-time
 geometric slopes between $-8\%$ and $6\%$ of the observational slope ---
@@ -143,7 +144,8 @@ and moves nothing; and zero-noise whitening multiplies $\dfx$ by up to
 $8\times$ while moving transfer by at most $+5.6$\,pp (median $+1.7$, never
 negative).
 The causal slope of transfer on $\dfx$ under geometry-only operators is
-$+0.0105$ per unit---$7.7\%$ of the observational slope (bootstrap CI
+$+0.0105$ per unit---$7.7\%$ of the observational slope (bootstrap
+\citep{efron1993bootstrap} CI
 $[0.9\%, 46\%]$; within-model permutation noise floor
 $[-7\%, +7\%]$, with the point estimate at the floor's upper edge)---so even
 the CI upper bound leaves over half of the observational association without
