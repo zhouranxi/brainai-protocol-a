@@ -1,0 +1,404 @@
+{
+  "meta": {
+    "generated_at": "2026-11-10T14:46:37.276250+08:00",
+    "script": "code/dose_mechanism_reanalysis.py",
+    "input": "results/p4_dose/dose_scan_seeds_v2.json (42 pts)",
+    "frozen_rules": "ADR-0016 Appendix 29 (2026-11-10 14:45, frozen before any computation)",
+    "constants": {
+      "s_obs": 0.0161,
+      "placebo_band": 0.022,
+      "label_threshold_pct": 20
+    }
+  },
+  "M1_low_dose_magnitude": {
+    "question": "Is the hi lambda=0.03 secant plateau a real response or a small-denominator artifact?",
+    "rows": [
+      {
+        "seed": 0,
+        "d_delta": 4.949,
+        "c_delta": 0.0138,
+        "in_band": true,
+        "secant_pct": 17.3
+      },
+      {
+        "seed": 1,
+        "d_delta": 12.643,
+        "c_delta": 0.0679,
+        "in_band": false,
+        "secant_pct": 33.4
+      },
+      {
+        "seed": 2,
+        "d_delta": 12.942,
+        "c_delta": 0.0623,
+        "in_band": false,
+        "secant_pct": 29.9
+      },
+      {
+        "seed": 3,
+        "d_delta": 7.517,
+        "c_delta": 0.0372,
+        "in_band": false,
+        "secant_pct": 30.7
+      },
+      {
+        "seed": 4,
+        "d_delta": 12.062,
+        "c_delta": 0.0729,
+        "in_band": false,
+        "secant_pct": 37.5
+      }
+    ],
+    "n_in_band": 1,
+    "n_seeds": 5,
+    "n_secant_ge20": 4,
+    "verdict": "REAL RESPONSE: >=3/5 seeds exceed the placebo band in absolute c_delta; low-dose response is functional."
+  },
+  "M2_secant_vs_denominator": {
+    "max_denominator_of_below_threshold_points": 7.118,
+    "min_denominator_of_above_threshold_points": 1.379,
+    "n_above_threshold_with_large_d_delta": 32,
+    "verdict": "NO SEPARATION: 32 point(s) with large d_delta still read >=20% secant -- real high-slope responses exist; artifact does not explain everything.",
+    "large_d_over_points": [
+      {
+        "recipe": "lo",
+        "seed": 0,
+        "lambda": 0.3,
+        "d_delta": 11.972,
+        "c_delta": 0.0303,
+        "secant_pct": 15.7
+      },
+      {
+        "recipe": "lo",
+        "seed": 0,
+        "lambda": 1.0,
+        "d_delta": 11.416,
+        "c_delta": 0.0154,
+        "secant_pct": 8.4
+      },
+      {
+        "recipe": "lo",
+        "seed": 0,
+        "lambda": 3.0,
+        "d_delta": 20.414,
+        "c_delta": 0.0271,
+        "secant_pct": 8.2
+      },
+      {
+        "recipe": "lo",
+        "seed": 1,
+        "lambda": 1.0,
+        "d_delta": 12.114,
+        "c_delta": 0.014,
+        "secant_pct": 7.2
+      },
+      {
+        "recipe": "lo",
+        "seed": 1,
+        "lambda": 3.0,
+        "d_delta": 11.901,
+        "c_delta": 0.0048,
+        "secant_pct": 2.5
+      },
+      {
+        "recipe": "lo",
+        "seed": 2,
+        "lambda": 0.3,
+        "d_delta": 8.251,
+        "c_delta": -0.0015,
+        "secant_pct": -1.1
+      },
+      {
+        "recipe": "lo",
+        "seed": 2,
+        "lambda": 1.0,
+        "d_delta": 13.171,
+        "c_delta": 0.0094,
+        "secant_pct": 4.4
+      },
+      {
+        "recipe": "lo",
+        "seed": 2,
+        "lambda": 3.0,
+        "d_delta": 18.06,
+        "c_delta": 0.0111,
+        "secant_pct": 3.8
+      },
+      {
+        "recipe": "lo",
+        "seed": 3,
+        "lambda": 0.3,
+        "d_delta": 7.188,
+        "c_delta": 0.0083,
+        "secant_pct": 7.2
+      },
+      {
+        "recipe": "lo",
+        "seed": 3,
+        "lambda": 3.0,
+        "d_delta": 16.486,
+        "c_delta": 0.0092,
+        "secant_pct": 3.5
+      },
+      {
+        "recipe": "lo",
+        "seed": 4,
+        "lambda": 0.3,
+        "d_delta": 12.1,
+        "c_delta": 0.0162,
+        "secant_pct": 8.3
+      },
+      {
+        "recipe": "lo",
+        "seed": 4,
+        "lambda": 3.0,
+        "d_delta": 17.791,
+        "c_delta": 0.0197,
+        "secant_pct": 6.9
+      },
+      {
+        "recipe": "hi",
+        "seed": 0,
+        "lambda": 0.1,
+        "d_delta": 22.893,
+        "c_delta": 0.0555,
+        "secant_pct": 15.1
+      },
+      {
+        "recipe": "hi",
+        "seed": 0,
+        "lambda": 0.3,
+        "d_delta": 29.039,
+        "c_delta": 0.0194,
+        "secant_pct": 4.1
+      },
+      {
+        "recipe": "hi",
+        "seed": 0,
+        "lambda": 1.0,
+        "d_delta": 74.529,
+        "c_delta": 0.0608,
+        "secant_pct": 5.1
+      },
+      {
+        "recipe": "hi",
+        "seed": 0,
+        "lambda": 3.0,
+        "d_delta": 155.082,
+        "c_delta": 0.0856,
+        "secant_pct": 3.4
+      },
+      {
+        "recipe": "hi",
+        "seed": 1,
+        "lambda": 0.03,
+        "d_delta": 12.643,
+        "c_delta": 0.0679,
+        "secant_pct": 33.4
+      },
+      {
+        "recipe": "hi",
+        "seed": 1,
+        "lambda": 0.1,
+        "d_delta": 20.776,
+        "c_delta": 0.0656,
+        "secant_pct": 19.6
+      },
+      {
+        "recipe": "hi",
+        "seed": 1,
+        "lambda": 0.3,
+        "d_delta": 43.414,
+        "c_delta": 0.0948,
+        "secant_pct": 13.6
+      },
+      {
+        "recipe": "hi",
+        "seed": 1,
+        "lambda": 1.0,
+        "d_delta": 97.99,
+        "c_delta": 0.1277,
+        "secant_pct": 8.1
+      },
+      {
+        "recipe": "hi",
+        "seed": 1,
+        "lambda": 3.0,
+        "d_delta": 157.167,
+        "c_delta": 0.1395,
+        "secant_pct": 5.5
+      },
+      {
+        "recipe": "hi",
+        "seed": 2,
+        "lambda": 0.03,
+        "d_delta": 12.942,
+        "c_delta": 0.0623,
+        "secant_pct": 29.9
+      },
+      {
+        "recipe": "hi",
+        "seed": 2,
+        "lambda": 0.1,
+        "d_delta": 23.719,
+        "c_delta": 0.0707,
+        "secant_pct": 18.5
+      },
+      {
+        "recipe": "hi",
+        "seed": 2,
+        "lambda": 0.3,
+        "d_delta": 47.914,
+        "c_delta": 0.0932,
+        "secant_pct": 12.1
+      },
+      {
+        "recipe": "hi",
+        "seed": 2,
+        "lambda": 1.0,
+        "d_delta": 90.712,
+        "c_delta": 0.1073,
+        "secant_pct": 7.3
+      },
+      {
+        "recipe": "hi",
+        "seed": 2,
+        "lambda": 3.0,
+        "d_delta": 142.641,
+        "c_delta": 0.113,
+        "secant_pct": 4.9
+      },
+      {
+        "recipe": "hi",
+        "seed": 3,
+        "lambda": 0.03,
+        "d_delta": 7.517,
+        "c_delta": 0.0372,
+        "secant_pct": 30.7
+      },
+      {
+        "recipe": "hi",
+        "seed": 3,
+        "lambda": 0.3,
+        "d_delta": 44.345,
+        "c_delta": 0.069,
+        "secant_pct": 9.7
+      },
+      {
+        "recipe": "hi",
+        "seed": 3,
+        "lambda": 3.0,
+        "d_delta": 141.001,
+        "c_delta": 0.0866,
+        "secant_pct": 3.8
+      },
+      {
+        "recipe": "hi",
+        "seed": 4,
+        "lambda": 0.03,
+        "d_delta": 12.062,
+        "c_delta": 0.0729,
+        "secant_pct": 37.5
+      },
+      {
+        "recipe": "hi",
+        "seed": 4,
+        "lambda": 0.3,
+        "d_delta": 47.617,
+        "c_delta": 0.11,
+        "secant_pct": 14.3
+      },
+      {
+        "recipe": "hi",
+        "seed": 4,
+        "lambda": 3.0,
+        "d_delta": 141.419,
+        "c_delta": 0.1259,
+        "secant_pct": 5.5
+      }
+    ]
+  },
+  "M3_exponent_convergence": {
+    "fits": {
+      "s0": {
+        "full_5pt": {
+          "b": 0.515,
+          "r2": 0.723
+        },
+        "drop_smallest_d": {
+          "b": 0.482,
+          "dropped_lambda": 0.03,
+          "n": 4
+        },
+        "weighted_by_d": {
+          "b": 0.534
+        }
+      },
+      "s1": {
+        "full_5pt": {
+          "b": 0.325,
+          "r2": 0.954
+        },
+        "drop_smallest_d": {
+          "b": 0.377,
+          "dropped_lambda": 0.03,
+          "n": 4
+        },
+        "weighted_by_d": {
+          "b": 0.324
+        }
+      },
+      "s2": {
+        "full_5pt": {
+          "b": 0.264,
+          "r2": 0.975
+        },
+        "drop_smallest_d": {
+          "b": 0.262,
+          "dropped_lambda": 0.03,
+          "n": 4
+        },
+        "weighted_by_d": {
+          "b": 0.241
+        }
+      }
+    },
+    "spans": {
+      "full_5pt": {
+        "b_values": [
+          0.515,
+          0.325,
+          0.264
+        ],
+        "range": 0.251
+      },
+      "drop_smallest_d": {
+        "b_values": [
+          0.482,
+          0.377,
+          0.262
+        ],
+        "range": 0.22
+      },
+      "weighted_by_d": {
+        "b_values": [
+          0.534,
+          0.324,
+          0.241
+        ],
+        "range": 0.293
+      }
+    },
+    "narrowing": {
+      "drop_smallest_d": {
+        "span": 0.22,
+        "narrowing_pct": 12.4
+      },
+      "weighted_by_d": {
+        "span": 0.293,
+        "narrowing_pct": -16.7
+      }
+    },
+    "verdict": "DOES NOT CONVERGE: the b drift survives low-leverage correction -- treat as genuine across-seed variation (upgrade to a finding)."
+  }
+}
