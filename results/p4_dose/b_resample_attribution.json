@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "generated_at": "2026-11-11T17:15:32.438609+08:00",
+    "script": "code/b_resample_attribution.py",
+    "inputs": [
+      "results/p4_dose/dose_scan_seeds_v2.json",
+      "results/p5_collapse/collapse_c1_seed{1..8}.json"
+    ],
+    "frozen_rules": "ADR-0016 Appendix 34 (2026-11-11 17:12, frozen before any computation)",
+    "constants": {
+      "b_orig": 0.515,
+      "band": [
+        0.264,
+        0.347
+      ],
+      "band_median": 0.325,
+      "sens_limit": 0.4
+    }
+  },
+  "A1_replacement_fits": {
+    "rows": [
+      {
+        "run_seed": 1,
+        "lam03_d_delta": 45.98,
+        "lam03_c_delta": 0.0685,
+        "b_replaced": 0.512,
+        "r2": 0.859,
+        "in_band": false
+      },
+      {
+        "run_seed": 2,
+        "lam03_d_delta": 42.205,
+        "lam03_c_delta": 0.0564,
+        "b_replaced": 0.505,
+        "r2": 0.876,
+        "in_band": false
+      },
+      {
+        "run_seed": 3,
+        "lam03_d_delta": 48.792,
+        "lam03_c_delta": 0.0738,
+        "b_replaced": 0.515,
+        "r2": 0.853,
+        "in_band": false
+      },
+      {
+        "run_seed": 4,
+        "lam03_d_delta": 43.841,
+        "lam03_c_delta": 0.0624,
+        "b_replaced": 0.508,
+        "r2": 0.868,
+        "in_band": false
+      },
+      {
+        "run_seed": 5,
+        "lam03_d_delta": 51.231,
+        "lam03_c_delta": 0.0762,
+        "b_replaced": 0.517,
+        "r2": 0.853,
+        "in_band": false
+      },
+      {
+        "run_seed": 6,
+        "lam03_d_delta": 34.937,
+        "lam03_c_delta": 0.0387,
+        "b_replaced": 0.501,
+        "r2": 0.87,
+        "in_band": false
+      },
+      {
+        "run_seed": 7,
+        "lam03_d_delta": 38.479,
+        "lam03_c_delta": 0.0539,
+        "b_replaced": 0.504,
+        "r2": 0.875,
+        "in_band": false
+      },
+      {
+        "run_seed": 8,
+        "lam03_d_delta": 45.717,
+        "lam03_c_delta": 0.0654,
+        "b_replaced": 0.51,
+        "r2": 0.865,
+        "in_band": false
+      }
+    ],
+    "n_in_band": 0,
+    "n_runs": 8,
+    "b_values": [
+      0.512,
+      0.505,
+      0.515,
+      0.508,
+      0.517,
+      0.501,
+      0.504,
+      0.51
+    ],
+    "b_mean": 0.509,
+    "verdict": "BASE-LEVEL DIFFERENCE: <=2/8 replacement b inside [0.264, 0.347] -- s0 shape specificity survives beyond one bad point; keep 's0 outlier seed' wording."
+  },
+  "A2_nine_point_sensitivity": {
+    "b_9pt": 0.573,
+    "n": 13,
+    "below_sens_limit": false,
+    "sens_limit": 0.4,
+    "note": "b<0.40 directionally supports an artifact verdict"
+  },
+  "conflict_flag": false
+}
