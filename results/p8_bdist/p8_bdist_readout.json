@@ -1,0 +1,253 @@
+{
+  "meta": {
+    "generated_at": "2026-11-12T07:54:45.391891+08:00",
+    "script": "code/p8_b_distribution_readout.py",
+    "frozen_rules": "ADR-0017 Section 2 (2026-11-12 01:48, frozen before launch)",
+    "constants": {
+      "s_obs": 0.0161,
+      "id_floor": -0.02,
+      "b_prior": {
+        "0": [
+          0.515,
+          0.394
+        ],
+        "1": [
+          0.325,
+          0.323
+        ],
+        "2": [
+          0.264,
+          0.377
+        ]
+      }
+    }
+  },
+  "curves": {
+    "s0": {
+      "rows": [
+        {
+          "lambda": 0.03,
+          "src": "p8_seed2_lam0.03",
+          "d_delta": 8.271,
+          "c_delta": 0.031,
+          "id_keep": 0.009,
+          "pass_gate": true,
+          "secant_pct": 23.3
+        },
+        {
+          "lambda": 0.1,
+          "src": "p8_seed2_lam0.1",
+          "d_delta": 24.175,
+          "c_delta": 0.0489,
+          "id_keep": -0.001,
+          "pass_gate": true,
+          "secant_pct": 12.6
+        },
+        {
+          "lambda": 0.3,
+          "src": "p5_c1_seed2 (frozen pick)",
+          "d_delta": 42.205,
+          "c_delta": 0.0564,
+          "id_keep": 0.0085,
+          "pass_gate": true,
+          "secant_pct": 8.3
+        },
+        {
+          "lambda": 1.0,
+          "src": "p8_seed2_lam1.0",
+          "d_delta": 87.328,
+          "c_delta": 0.088,
+          "id_keep": 0.0068,
+          "pass_gate": true,
+          "secant_pct": 6.3
+        },
+        {
+          "lambda": 3.0,
+          "src": "p8_seed2_lam3.0",
+          "d_delta": 140.411,
+          "c_delta": 0.0866,
+          "id_keep": 0.0084,
+          "pass_gate": true,
+          "secant_pct": 3.8
+        }
+      ],
+      "b_seed2": 0.386,
+      "r2": 0.969,
+      "n_fitted": 5
+    },
+    "s1": {
+      "rows": [
+        {
+          "lambda": 0.03,
+          "src": "p8_seed2_lam0.03",
+          "d_delta": 11.62,
+          "c_delta": 0.0635,
+          "id_keep": -0.0078,
+          "pass_gate": true,
+          "secant_pct": 33.9
+        },
+        {
+          "lambda": 0.1,
+          "src": "p8_seed2_lam0.1",
+          "d_delta": 26.17,
+          "c_delta": 0.0802,
+          "id_keep": -0.0064,
+          "pass_gate": true,
+          "secant_pct": 19.0
+        },
+        {
+          "lambda": 0.3,
+          "src": "p8_seed2_lam0.3",
+          "d_delta": 49.685,
+          "c_delta": 0.1074,
+          "id_keep": -0.0061,
+          "pass_gate": true,
+          "secant_pct": 13.4
+        },
+        {
+          "lambda": 1.0,
+          "src": "p8_seed2_lam1.0",
+          "d_delta": 95.042,
+          "c_delta": 0.1203,
+          "id_keep": -0.0099,
+          "pass_gate": true,
+          "secant_pct": 7.9
+        },
+        {
+          "lambda": 3.0,
+          "src": "p8_seed2_lam3.0",
+          "d_delta": 145.53,
+          "c_delta": 0.1324,
+          "id_keep": -0.0016,
+          "pass_gate": true,
+          "secant_pct": 5.7
+        }
+      ],
+      "b_seed2": 0.298,
+      "r2": 0.979,
+      "n_fitted": 5
+    },
+    "s2": {
+      "rows": [
+        {
+          "lambda": 0.03,
+          "src": "p8_seed2_lam0.03",
+          "d_delta": 13.373,
+          "c_delta": 0.0662,
+          "id_keep": -0.002,
+          "pass_gate": true,
+          "secant_pct": 30.7
+        },
+        {
+          "lambda": 0.1,
+          "src": "p8_seed2_lam0.1",
+          "d_delta": 22.739,
+          "c_delta": 0.0711,
+          "id_keep": 0.0044,
+          "pass_gate": true,
+          "secant_pct": 19.4
+        },
+        {
+          "lambda": 0.3,
+          "src": "p8_seed2_lam0.3",
+          "d_delta": 58.077,
+          "c_delta": 0.1017,
+          "id_keep": -0.0055,
+          "pass_gate": true,
+          "secant_pct": 10.9
+        },
+        {
+          "lambda": 1.0,
+          "src": "p8_seed2_lam1.0",
+          "d_delta": 91.93,
+          "c_delta": 0.1093,
+          "id_keep": 0.0002,
+          "pass_gate": true,
+          "secant_pct": 7.4
+        },
+        {
+          "lambda": 3.0,
+          "src": "p8_seed2_lam3.0",
+          "d_delta": 146.683,
+          "c_delta": 0.1151,
+          "id_keep": -0.0006,
+          "pass_gate": true,
+          "secant_pct": 4.9
+        }
+      ],
+      "b_seed2": 0.255,
+      "r2": 0.962,
+      "n_fitted": 5
+    }
+  },
+  "F1_distribution": {
+    "per_seed": {
+      "s0": {
+        "b_draws": [
+          0.515,
+          0.394,
+          0.386
+        ],
+        "mean": 0.432,
+        "sd": 0.072,
+        "W_s": 0.129
+      },
+      "s1": {
+        "b_draws": [
+          0.325,
+          0.323,
+          0.298
+        ],
+        "mean": 0.315,
+        "sd": 0.015,
+        "W_s": 0.027
+      },
+      "s2": {
+        "b_draws": [
+          0.264,
+          0.377,
+          0.255
+        ],
+        "mean": 0.299,
+        "sd": 0.068,
+        "W_s": 0.122
+      }
+    },
+    "verdict": "NON-TRIVIAL VARIANCE CONFIRMED: >=1 seed with W_s>=0.10 -- single-sample b is not a reliable cross-seed statistic; Appendix 35 wording stands and strengthens."
+  },
+  "F2_resolvability": {
+    "s0-s1": {
+      "mean_a": 0.432,
+      "mean_b": 0.315,
+      "sd_a": 0.072,
+      "sd_b": 0.015,
+      "cohens_d": 2.23,
+      "resolvable_at_3": true,
+      "resolvable": true
+    },
+    "s0-s2": {
+      "mean_a": 0.432,
+      "mean_b": 0.299,
+      "sd_a": 0.072,
+      "sd_b": 0.068,
+      "cohens_d": 1.9,
+      "resolvable_at_3": false,
+      "resolvable": false
+    },
+    "s1-s2": {
+      "mean_a": 0.315,
+      "mean_b": 0.299,
+      "sd_a": 0.015,
+      "sd_b": 0.068,
+      "cohens_d": 0.34,
+      "resolvable_at_3": false,
+      "resolvable": false
+    }
+  },
+  "F3_gate": {
+    "id_keep_min": -0.0099,
+    "floor": -0.02,
+    "all_pass": true,
+    "dropped": []
+  }
+}
