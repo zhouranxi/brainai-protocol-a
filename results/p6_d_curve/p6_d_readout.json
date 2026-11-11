@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "generated_at": "2026-11-11T19:46:42.904644+08:00",
+    "script": "code/p6_d_readout.py",
+    "frozen_rules": "ADR-0016 Appendix 34 D1 (frozen before launch)",
+    "constants": {
+      "band": [
+        0.264,
+        0.347
+      ],
+      "s_obs": 0.0161,
+      "id_floor": -0.02
+    }
+  },
+  "curve_rows": [
+    {
+      "lambda": 0.03,
+      "src": "p6_d_lam0.03",
+      "d_delta": 7.81,
+      "c_delta": 0.0302,
+      "id_keep": 0.0043,
+      "pass_gate": true,
+      "secant_pct": 24.0
+    },
+    {
+      "lambda": 0.1,
+      "src": "p6_d_lam0.1",
+      "d_delta": 16.793,
+      "c_delta": 0.0407,
+      "id_keep": 0.0107,
+      "pass_gate": true,
+      "secant_pct": 15.1
+    },
+    {
+      "lambda": 0.3,
+      "src": "p5_collapse_c1_seed1",
+      "d_delta": 45.98,
+      "c_delta": 0.0685,
+      "id_keep": 0.0068,
+      "pass_gate": true,
+      "secant_pct": 9.3
+    },
+    {
+      "lambda": 1.0,
+      "src": "p6_d_lam1.0",
+      "d_delta": 84.229,
+      "c_delta": 0.0826,
+      "id_keep": 0.0057,
+      "pass_gate": true,
+      "secant_pct": 6.1
+    },
+    {
+      "lambda": 3.0,
+      "src": "p6_d_lam3.0",
+      "d_delta": 144.952,
+      "c_delta": 0.0897,
+      "id_keep": 0.0053,
+      "pass_gate": true,
+      "secant_pct": 3.8
+    }
+  ],
+  "D1": {
+    "b_runseed1_5pt": 0.394,
+    "r2": 0.977,
+    "n_fitted": 5,
+    "gate_all_pass": true,
+    "verdict": "EDGE: D-b=0.394 in (0.35,0.40) -- report as-is."
+  },
+  "lambda03_response": {
+    "d_delta": 7.81,
+    "c_delta": 0.0302,
+    "id_keep": 0.0043,
+    "secant_pct": 24.0
+  }
+}
