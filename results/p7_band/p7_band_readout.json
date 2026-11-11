@@ -1,0 +1,145 @@
+{
+  "meta": {
+    "generated_at": "2026-11-12T01:44:19.888731+08:00",
+    "script": "code/p7_band_readout.py",
+    "frozen_rules": "ADR-0016 Appendix 35 (2026-11-11 20:02, frozen before launch)",
+    "constants": {
+      "band": [
+        0.264,
+        0.347
+      ],
+      "s_obs": 0.0161,
+      "placebo": 0.022,
+      "id_floor": -0.02
+    }
+  },
+  "curves": {
+    "s1": {
+      "rows": [
+        {
+          "lambda": 0.03,
+          "d_delta": 9.802,
+          "c_delta": 0.0554,
+          "id_keep": -0.0032,
+          "pass_gate": true,
+          "secant_pct": 35.1
+        },
+        {
+          "lambda": 0.1,
+          "d_delta": 22.764,
+          "c_delta": 0.073,
+          "id_keep": -0.0023,
+          "pass_gate": true,
+          "secant_pct": 19.9
+        },
+        {
+          "lambda": 0.3,
+          "d_delta": 41.423,
+          "c_delta": 0.0794,
+          "id_keep": -0.0056,
+          "pass_gate": true,
+          "secant_pct": 11.9
+        },
+        {
+          "lambda": 1.0,
+          "d_delta": 88.921,
+          "c_delta": 0.1198,
+          "id_keep": -0.0043,
+          "pass_gate": true,
+          "secant_pct": 8.4
+        },
+        {
+          "lambda": 3.0,
+          "d_delta": 145.574,
+          "c_delta": 0.1281,
+          "id_keep": -0.0039,
+          "pass_gate": true,
+          "secant_pct": 5.5
+        }
+      ],
+      "b_seed1": 0.323,
+      "r2": 0.971,
+      "n_fitted": 5,
+      "dropped": [],
+      "in_band": true,
+      "b_orig": 0.325,
+      "drift": -0.002
+    },
+    "s2": {
+      "rows": [
+        {
+          "lambda": 0.03,
+          "d_delta": 7.616,
+          "c_delta": 0.0382,
+          "id_keep": 0.0061,
+          "pass_gate": true,
+          "secant_pct": 31.2
+        },
+        {
+          "lambda": 0.1,
+          "d_delta": 20.972,
+          "c_delta": 0.0638,
+          "id_keep": 0.0062,
+          "pass_gate": true,
+          "secant_pct": 18.9
+        },
+        {
+          "lambda": 0.3,
+          "d_delta": 44.032,
+          "c_delta": 0.0875,
+          "id_keep": 0.0007,
+          "pass_gate": true,
+          "secant_pct": 12.3
+        },
+        {
+          "lambda": 1.0,
+          "d_delta": 91.754,
+          "c_delta": 0.1141,
+          "id_keep": 0.0021,
+          "pass_gate": true,
+          "secant_pct": 7.7
+        },
+        {
+          "lambda": 3.0,
+          "d_delta": 144.097,
+          "c_delta": 0.1098,
+          "id_keep": 0.0,
+          "pass_gate": true,
+          "secant_pct": 4.7
+        }
+      ],
+      "b_seed1": 0.377,
+      "r2": 0.951,
+      "n_fitted": 5,
+      "dropped": [],
+      "in_band": false,
+      "b_orig": 0.264,
+      "drift": 0.113
+    }
+  },
+  "E1_band_stability": {
+    "n_in_band": 1,
+    "verdict": "MIXED: one rerun b in band, one out -- wording downgrades to 's0 samples higher (both draws outside) but variance scales partially overlap'."
+  },
+  "E2_lambda03": [
+    {
+      "seed": 1,
+      "dc_new": 0.0554,
+      "dc_orig": 0.0679,
+      "in_placebo": false,
+      "secant_pct": 35.1
+    },
+    {
+      "seed": 2,
+      "dc_new": 0.0382,
+      "dc_orig": 0.0623,
+      "in_placebo": false,
+      "secant_pct": 31.2
+    }
+  ],
+  "E3_gate": {
+    "id_keep_min": -0.0056,
+    "floor": -0.02,
+    "all_pass": true
+  }
+}
