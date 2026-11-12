@@ -96,7 +96,7 @@ def main() -> int:
     pool = []      # dicts: seed, tag, rows
     gate_min = 1.0
     for s in (0, 1, 2, 3, 4):
-        for rs in (0, 1, 2, 3):
+        for rs in (0, 1, 2, 3, 4, 5):
             if s in (3, 4) and rs not in (0, 3, 4, 5):
                 continue
             if s in (0, 1, 2) and rs not in (0, 1, 2, 3):
