@@ -78,9 +78,20 @@ def main() -> int:
                 round(row["id_probe_acc"] - b["id_probe_acc"], 4))
 
     def v2_pt(seed, lam):
-        p = next(q for q in v2 if q["recipe"] == "hi"
-                 and q["seed"] == seed and q["lambda"] == lam)
-        return (p["d_delta"], p["c_delta"], p["id_keep"])
+        # s3/s4 seed-0 curves: lam 0.03/0.3/3.0 live in the v2 archive,
+        # lam 0.1/1.0 in the anchor batch (ADR-0016 App. 30)
+        try:
+            p = next(q for q in v2 if q["recipe"] == "hi"
+                     and q["seed"] == seed and q["lambda"] == lam)
+            return (p["d_delta"], p["c_delta"], p["id_keep"])
+        except StopIteration:
+            row = json.loads((ROOT / "results" / "p4s34_anchor" /
+                              f"dose_seed_s{seed}_hi_lam{lam}.json")
+                             .read_text(encoding="utf-8"))["rows"][0]
+            b = bases[f"resnet18_lr0.125_wd0.0001_s{seed}"]
+            return (round(row["d_ent_id"] - b["d_ent_id"], 3),
+                    round(row["c100_probe"] - b["c100_probe"], 4),
+                    round(row["id_probe_acc"] - b["id_probe_acc"], 4))
 
     pool = []      # dicts: seed, tag, rows
     gate_min = 1.0
@@ -112,8 +123,13 @@ def main() -> int:
                             if False else None)
                     fname = {1: f"p6_d_s0_seed1_lam{lam}.json",
                              }.get(rs) if s == 0 else None
-                    # explicit path per (s, rs)
-                    if (s, rs) == (0, 1):
+                    # explicit path per (s, rs); reused lam-0.3 points
+                    # (s0 seed1/seed2/seed3 -> P5 c1 reads) resolved first
+                    if (s, rs) == (0, 1) and lam == 0.3:
+                        p = P5_DIR / "collapse_c1_seed1.json"
+                    elif (s, rs) == (0, 2) and lam == 0.3:
+                        p = P5_DIR / "collapse_c1_seed2.json"
+                    elif (s, rs) == (0, 1):
                         p = P6_DIR / f"p6_d_s0_seed1_lam{lam}.json"
                     elif (s, rs) == (1, 1) or (s, rs) == (2, 1):
                         p = P7_DIR / f"p7_e_s{s}_seed1_lam{lam}.json"
