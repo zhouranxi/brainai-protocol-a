@@ -701,6 +701,18 @@ be asked two questions, in this order.
       on our data it left a strong marker's ranking intact
       ($\rho = 0.963$) while dragging two weak markers below the threshold
       we had registered ($\rho = 0.877$, $0.804$).
+\item \textbf{If it is a fitted statistic, does it survive re-sampling the
+      run?} When the candidate quantity is not a point measurement but a
+      parameter fitted to a response curve (an exponent, a threshold, a
+      half-life), estimate it under independent training randomness of the
+      same configuration and require the spread across draws to be small
+      relative to the effect being claimed. In the companion study cited
+      in the Limitations, single-draw exponents differed from their
+      per-seed cores by up to $0.13$ --- larger than any across-seed
+      difference measured in that batch --- and no two- or three-point
+      proxy reproduced the full-curve ranking, so the full curve had to
+      be re-run per draw. A shape statistic quoted from a single run is
+      one draw from a distribution the claim has not yet characterized.
 \end{enumerate}
 
 A marker that passes all four is worth taking seriously. None of the
@@ -778,6 +790,24 @@ make the more confident claims in the literature easier to evaluate.
       multiplies the shifts but not the targets within a shift; whether the
       stability classes reported here depend on the choice of target within a
       shift family is an open question.
+\item The single-sample fragility documented here for correlations has an
+      exact counterpart for \emph{fitted shape statistics}. In a companion
+      study (same models, same measurement chain; preregistered log
+      ADR-0016 Apps.~23--35 and ADR-0017), the power-law exponent $b$
+      fitted to a five-point dose--response curve of one network was
+      re-estimated under independent training randomness (same base
+      checkpoint, new run seed) for three seeds, three draws each: every
+      seed showed a tight core, but two of the nine draws were
+      \emph{excursions} of $|\Delta b| \ge 0.11$ --- as large as the entire
+      across-seed spread of the single-draw estimates. Retrospective
+      analysis of all nine curves further showed that no fixed subset of
+      two or three dose points reproduces the five-point exponent ranking
+      (the excursions concentrate in different dose segments per seed),
+      so the effect cannot be cheaply screened. Any shape parameter
+      quoted from one curve of one run should therefore be read as one
+      draw from a heavy-tailed sampling distribution, not as a property
+      of the architecture; cross-condition comparisons of such
+      statistics need at least three draws per condition.
 \end{enumerate}
 
 \section{Conclusion}
