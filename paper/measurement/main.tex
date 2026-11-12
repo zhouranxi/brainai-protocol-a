@@ -672,7 +672,7 @@ the representation.
 \label{sec:practice}
 
 The two comparisons above give a procedure. A candidate geometric marker should
-be asked two questions, in this order.
+be asked five questions, in this order.
 
 \begin{enumerate}
 \item \textbf{Does it survive the recipe sweep?} Train several networks on
@@ -696,7 +696,7 @@ be asked two questions, in this order.
       same models with the same solver embedded in a different host
       protocol -- different sampling seed, downsampling rule, or probe
       configuration -- and require the ranking to hold
-      (Section~\ref{sec:cell4}). This is the newest of the four tests and
+      (Section~\ref{sec:cell4}). This is the fourth of the five tests and
       the cheapest to run, since it needs no new models and no new shifts:
       on our data it left a strong marker's ranking intact
       ($\rho = 0.963$) while dragging two weak markers below the threshold
@@ -707,15 +707,16 @@ be asked two questions, in this order.
       half-life), estimate it under independent training randomness of the
       same configuration and require the spread across draws to be small
       relative to the effect being claimed. In the companion study cited
-      in the Limitations, single-draw exponents differed from their
-      per-seed cores by up to $0.13$ --- larger than any across-seed
-      difference measured in that batch --- and no two- or three-point
-      proxy reproduced the full-curve ranking, so the full curve had to
-      be re-run per draw. A shape statistic quoted from a single run is
-      one draw from a distribution the claim has not yet characterized.
+      in the Limitations, $15\%$ of single-curve draws were excursions
+      that deviated from their per-seed cores by up to $0.47$ ---
+      several times any across-seed difference measured in that batch
+      --- and no two- or three-point proxy reproduced the full-curve
+      ranking, so the full curve had to be re-run per draw. A shape
+      statistic quoted from a single run is one draw from a
+      distribution the claim has not yet characterized.
 \end{enumerate}
 
-A marker that passes all four is worth taking seriously. None of the
+A marker that passes all five is worth taking seriously. None of the
 twenty-four families studied here does: the map is the record of that fact.
 The most common failure in the current literature is not a wrong sign but an
 unreported one -- a correlation measured under a single shift and read as a
@@ -723,9 +724,10 @@ property of the marker. Reporting the shift alongside the coefficient, as one
 reports the dataset alongside an accuracy, would have caught every flip in
 this paper at the point of writing.
 
-Neither test is expensive, and both are currently skipped. We hope that
-reporting them as a standard part of any claim about a geometric predictor will
-make the more confident claims in the literature easier to evaluate.
+None of the five tests is expensive, and all are currently skipped. We hope
+that reporting them as a standard part of any claim about a geometric
+predictor will make the more confident claims in the literature easier to
+evaluate.
 
 \section{Limitations}
 
@@ -796,18 +798,23 @@ make the more confident claims in the literature easier to evaluate.
       ADR-0016 Apps.~23--35 and ADR-0017), the power-law exponent $b$
       fitted to a five-point dose--response curve of one network was
       re-estimated under independent training randomness (same base
-      checkpoint, new run seed) for three seeds, three draws each: every
-      seed showed a tight core, but two of the nine draws were
-      \emph{excursions} of $|\Delta b| \ge 0.11$ --- as large as the entire
-      across-seed spread of the single-draw estimates. Retrospective
-      analysis of all nine curves further showed that no fixed subset of
-      two or three dose points reproduces the five-point exponent ranking
-      (the excursions concentrate in different dose segments per seed),
-      so the effect cannot be cheaply screened. Any shape parameter
-      quoted from one curve of one run should therefore be read as one
-      draw from a heavy-tailed sampling distribution, not as a property
-      of the architecture; cross-condition comparisons of such
-      statistics need at least three draws per condition.
+      checkpoint, new run seed) in a symmetric five-seed $\times$
+      four-draw design (20 curves): every seed has a tight core
+      (per-seed medians $0.27$--$0.45$), but $15\%$ of draws are
+      \emph{excursions} up to $b=0.90$, whose anatomy is localized
+      --- the lowest-dose point collapses into the placebo band
+      while its denominator stays normal, levering the fitted slope
+      --- and whose rerun under the same seed does not reproduce,
+      so they are genuine run-level random events. Retrospective
+      analysis of the curves further showed that no fixed subset of
+      two or three dose points reproduces the five-point exponent
+      ranking (the collapses concentrate in different dose segments
+      per seed), so the effect cannot be cheaply screened. Any shape
+      parameter quoted from one curve of one run should therefore be
+      read as one draw from a heavy-tailed sampling distribution,
+      not as a property of the architecture; cross-condition
+      comparisons of such statistics need the per-condition median
+      over at least four draws.
 \end{enumerate}
 
 \section{Conclusion}
@@ -835,7 +842,7 @@ list of degrees of freedom a marker consumer must report. Fifth, the markers
 are reliable health checks on a training run and unreliable measures of a
 representation. A practical conclusion follows: report the shift alongside
 the coefficient, as one reports the dataset alongside an accuracy; run the
-four tests of Section~\ref{sec:practice} before believing any new marker;
+five tests of Section~\ref{sec:practice} before believing any new marker;
 and treat the claims in the literature that name no shift as claims about no
 particular thing.
 
