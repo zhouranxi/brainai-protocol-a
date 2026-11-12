@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-11-12T19:32:12.943613+08:00",
+    "generated_at": "2026-11-12T23:34:06.523805+08:00",
     "script": "code/p10_screen_readout.py",
     "frozen_rules": "ADR-0017 Section 6 (2026-11-12 08:05)",
     "constants": {
@@ -110,7 +110,7 @@
       "seed": 3,
       "tag": "s3_seed0",
       "b": 0.3471947586212606,
-      "dev": -0.035,
+      "dev": -0.067,
       "excursion": false,
       "n_fitted": 5
     },
@@ -118,15 +118,31 @@
       "seed": 3,
       "tag": "s3_seed3",
       "b": 0.4163863071132612,
-      "dev": 0.035,
+      "dev": 0.002,
       "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 3,
+      "tag": "s3_seed4",
+      "b": 0.4124009050116956,
+      "dev": -0.002,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 3,
+      "tag": "s3_seed5",
+      "b": 0.8951264186126293,
+      "dev": 0.481,
+      "excursion": true,
       "n_fitted": 5
     },
     {
       "seed": 4,
       "tag": "s4_seed0",
       "b": 0.2830566549526893,
-      "dev": -0.003,
+      "dev": 0.009,
       "excursion": false,
       "n_fitted": 5
     },
@@ -134,7 +150,23 @@
       "seed": 4,
       "tag": "s4_seed3",
       "b": 0.2893782018122367,
-      "dev": 0.003,
+      "dev": 0.015,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 4,
+      "tag": "s4_seed4",
+      "b": 0.2493291444491636,
+      "dev": -0.025,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 4,
+      "tag": "s4_seed5",
+      "b": 0.26544156936001717,
+      "dev": -0.009,
       "excursion": false,
       "n_fitted": 5
     }
@@ -170,37 +202,42 @@
     "s3": {
       "b_draws": [
         0.347,
-        0.416
+        0.416,
+        0.412,
+        0.895
       ],
-      "core_median": 0.382
+      "core_median": 0.414
     },
     "s4": {
       "b_draws": [
         0.283,
-        0.289
+        0.289,
+        0.249,
+        0.265
       ],
-      "core_median": 0.286
+      "core_median": 0.274
     }
   },
   "G2_rate": {
-    "n_excursion": 2,
-    "n_pool": 16,
+    "n_excursion": 3,
+    "n_pool": 20,
     "wilson_ci": [
-      0.035,
+      0.052,
       0.36
     ],
     "new_excursions": [
-      "s0_seed3"
+      "s0_seed3",
+      "s3_seed5"
     ],
     "known_excursions": [
       "s2_seed1"
     ],
-    "verdict": "INTERMEDIATE: rate 2/16 (CI [0.03, 0.36]) -- report as-is."
+    "verdict": "ROUTINE PROPERTY: rate 3/20 >= 15% -- cross-seed b designs must model excursions (report per-seed medians)."
   },
   "G3_stratification": {
     "s012": "2/12",
-    "s34": "0/4",
-    "note": "stratification: s0/s1/s2 2/12 vs s3/s4 0/4 -- no excursions in s3/s4; stratification hypothesis strengthens (concentrated in specific seeds)"
+    "s34": "1/8",
+    "note": "stratification: s0/s1/s2 2/12 vs s3/s4 1/8 -- excursions are seed-generic"
   },
   "G4_gate": {
     "id_keep_min": -0.0102,
