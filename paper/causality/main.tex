@@ -1287,6 +1287,35 @@ seeds'' to a cross-seed regularity (\S\ref{sec:e4},
 Limitations), while the headline dissociation --- no dose point or
 arm near the observational slope --- is unchanged.
 
+\paragraph{Amendment 5 (run-level resampling of the exponent).}
+After adjudication, the power-law exponent $b$ itself came under
+resampling scrutiny, preregistered before any new run (ADR-0016
+Apps.~29--35, then ADR-0017). Three facts emerged. (1) The
+anchor-seed excursion $b_{\mathrm{s0}}{=}0.502$ is partially a
+sampling artifact: an independent re-run of the same base
+checkpoint at a new run seed gives $b=0.394$ with $R^2=0.977$
+(vs.\ $0.723$), and the collapsed $\lambda{=}0.3$ point that
+inflated it was itself shown by an 8-run rerun batch to be a
+${\sim}1/9$ run-level noise event, not a seed property
+(App.~33). (2) The single-draw ``tight band'' of the four other
+seeds is not run-stable: one in-seed re-sampling moved $b$ by
+$+0.113$, the same magnitude as the anchor seed's excursion
+(App.~35). (3) A third draw per seed (App. via ADR-0017, 14 runs)
+fixes the structure: every seed has a tight core plus occasional
+excursions ($\ge 0.11$) at rate ${\sim}20\%$; the anchor seed's
+\emph{mean} remains elevated (Cohen's $d=2.23$ vs.\ one control
+seed at three draws), so its high exponent is a real signal
+wrapped in heavy-tailed noise. Consequences for this paper: the
+\emph{shape} claim stays exactly as written (``sub-linear and
+saturating'' --- every draw across all nine curves has
+$b \le 0.515$), while the failed exponent-replication criterion
+R1-s of Amendment~3 gains a mechanistic reading: the reference
+exponent $b_{\mathrm{s0}}=0.502$ was itself a high draw, which
+partly explains $|\mathrm{median}(b) - b_{\mathrm{s0}}|$ exceeding
+tolerance. Single-curve exponents are one draw from a
+heavy-tailed distribution; cross-seed exponent comparisons need
+$\ge 3$ draws per seed ($\ge 5$ for $0.05$-scale differences).
+
 \section{E1 endpoint summary table}
 \label{app:e1table}
 Rather than a 152-row dump, we release the full per-cell records as
