@@ -99,11 +99,20 @@ def loaders(bs=128, workers=6):
 
 
 class PenultimateHook:
-    """抓 resnet18 avgpool 输出（512 维，E1/E2 同款）。"""
+    """抓 avgpool 输出（resnet/regnet：avgpool；shufflenet：conv5 后池化等价点）。"""
 
     def __init__(self, model):
         self.feats = None
-        model.avgpool.register_forward_hook(self._hook)
+        anchor = getattr(model, "avgpool", None)
+        if anchor is None:
+            anchor = model.conv5  # torchvision >=0.29 shufflenet_v2 无 avgpool 属性
+        anchor.register_forward_hook(self._hook)
+
+    def _hook(self, _m, _inp, out):
+        # conv5 输出 (B,C,H,W)：做与旧 avgpool 等价的全局均值池化
+        if out.dim() == 4:
+            out = out.mean(dim=(2, 3), keepdim=True).expand(out.shape[0], out.shape[1], 1, 1)
+        self.feats = out.flatten(1)
 
     def _hook(self, _m, _inp, out):
         self.feats = out.flatten(1)
