@@ -1,0 +1,210 @@
+{
+  "meta": {
+    "generated_at": "2026-11-12T19:32:12.943613+08:00",
+    "script": "code/p10_screen_readout.py",
+    "frozen_rules": "ADR-0017 Section 6 (2026-11-12 08:05)",
+    "constants": {
+      "excursion_thresh": 0.08,
+      "rate_thresh": 0.15,
+      "id_floor": -0.02
+    }
+  },
+  "pool": [
+    {
+      "seed": 0,
+      "tag": "s0_seed0",
+      "b": 0.5153801843275643,
+      "dev": 0.061,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 0,
+      "tag": "s0_seed1",
+      "b": 0.39385371976076894,
+      "dev": -0.061,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 0,
+      "tag": "s0_seed2",
+      "b": 0.38576965185647494,
+      "dev": -0.069,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 0,
+      "tag": "s0_seed3",
+      "b": 0.8858542625408617,
+      "dev": 0.431,
+      "excursion": true,
+      "n_fitted": 5
+    },
+    {
+      "seed": 1,
+      "tag": "s1_seed0",
+      "b": 0.32492348747326594,
+      "dev": 0.014,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 1,
+      "tag": "s1_seed1",
+      "b": 0.3231604641791797,
+      "dev": 0.013,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 1,
+      "tag": "s1_seed2",
+      "b": 0.2979061792947296,
+      "dev": -0.013,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 1,
+      "tag": "s1_seed3",
+      "b": 0.2620275088297573,
+      "dev": -0.049,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 2,
+      "tag": "s2_seed0",
+      "b": 0.2644415761758872,
+      "dev": -0.006,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 2,
+      "tag": "s2_seed1",
+      "b": 0.37721774408274966,
+      "dev": 0.107,
+      "excursion": true,
+      "n_fitted": 5
+    },
+    {
+      "seed": 2,
+      "tag": "s2_seed2",
+      "b": 0.2548720444463434,
+      "dev": -0.016,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 2,
+      "tag": "s2_seed3",
+      "b": 0.27694940344925933,
+      "dev": 0.006,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 3,
+      "tag": "s3_seed0",
+      "b": 0.3471947586212606,
+      "dev": -0.035,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 3,
+      "tag": "s3_seed3",
+      "b": 0.4163863071132612,
+      "dev": 0.035,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 4,
+      "tag": "s4_seed0",
+      "b": 0.2830566549526893,
+      "dev": -0.003,
+      "excursion": false,
+      "n_fitted": 5
+    },
+    {
+      "seed": 4,
+      "tag": "s4_seed3",
+      "b": 0.2893782018122367,
+      "dev": 0.003,
+      "excursion": false,
+      "n_fitted": 5
+    }
+  ],
+  "G1_per_seed": {
+    "s0": {
+      "b_draws": [
+        0.515,
+        0.394,
+        0.386,
+        0.886
+      ],
+      "core_median": 0.455
+    },
+    "s1": {
+      "b_draws": [
+        0.325,
+        0.323,
+        0.298,
+        0.262
+      ],
+      "core_median": 0.311
+    },
+    "s2": {
+      "b_draws": [
+        0.264,
+        0.377,
+        0.255,
+        0.277
+      ],
+      "core_median": 0.271
+    },
+    "s3": {
+      "b_draws": [
+        0.347,
+        0.416
+      ],
+      "core_median": 0.382
+    },
+    "s4": {
+      "b_draws": [
+        0.283,
+        0.289
+      ],
+      "core_median": 0.286
+    }
+  },
+  "G2_rate": {
+    "n_excursion": 2,
+    "n_pool": 16,
+    "wilson_ci": [
+      0.035,
+      0.36
+    ],
+    "new_excursions": [
+      "s0_seed3"
+    ],
+    "known_excursions": [
+      "s2_seed1"
+    ],
+    "verdict": "INTERMEDIATE: rate 2/16 (CI [0.03, 0.36]) -- report as-is."
+  },
+  "G3_stratification": {
+    "s012": "2/12",
+    "s34": "0/4",
+    "note": "stratification: s0/s1/s2 2/12 vs s3/s4 0/4 -- no excursions in s3/s4; stratification hypothesis strengthens (concentrated in specific seeds)"
+  },
+  "G4_gate": {
+    "id_keep_min": -0.0102,
+    "floor": -0.02,
+    "all_pass": true
+  }
+}

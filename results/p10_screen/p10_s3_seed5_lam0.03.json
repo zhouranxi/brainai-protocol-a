@@ -1,0 +1,66 @@
+{
+ "rows": [
+  {
+   "arm": "p4_pilot",
+   "model": "resnet18_lr0.125_wd0.0001_s3",
+   "arch": "resnet18",
+   "kind": "whiten",
+   "lambda": 0.03,
+   "seed": 5,
+   "lr": 0.125,
+   "wd": 0.0001,
+   "test_acc": 0.8782,
+   "id_probe_acc": 0.8765,
+   "c100_probe": 0.2807,
+   "d_ent_id": 23.247,
+   "glue_d": 1.9857,
+   "glue_r": 0.6957,
+   "glue_u": 0.2319,
+   "glue_timeout": false,
+   "d_curve": [
+    {
+     "epoch": 20,
+     "d_ent_batch": 12.065
+    },
+    {
+     "epoch": 40,
+     "d_ent_batch": 13.734
+    },
+    {
+     "epoch": 60,
+     "d_ent_batch": 12.499
+    },
+    {
+     "epoch": 80,
+     "d_ent_batch": 13.701
+    },
+    {
+     "epoch": 100,
+     "d_ent_batch": 13.863
+    },
+    {
+     "epoch": 120,
+     "d_ent_batch": 16.533
+    },
+    {
+     "epoch": 140,
+     "d_ent_batch": 16.739
+    },
+    {
+     "epoch": 160,
+     "d_ent_batch": 17.412
+    },
+    {
+     "epoch": 180,
+     "d_ent_batch": 18.186
+    },
+    {
+     "epoch": 200,
+     "d_ent_batch": 18.54
+    }
+   ],
+   "base": {},
+   "secs": 2084.1
+  }
+ ]
+}
