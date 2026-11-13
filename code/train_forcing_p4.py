@@ -319,7 +319,7 @@ def glue_dimension(X, labels, device=None, n_sub=500, seed=0, watchdog=900):
 
 
 def train_one_forcing(tag, kind, lam, epochs, trl, tel, probe_loaders, device,
-                      outdir, ckpt_every=20, seed=0):
+                      outdir, ckpt_every=20, seed=0, resume_snap=None):
     """全程 forcing 训练一个模型。返回结果行。"""
     set_seed(seed)
     arch = tag.split("_lr")[0]
@@ -331,6 +331,9 @@ def train_one_forcing(tag, kind, lam, epochs, trl, tel, probe_loaders, device,
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
     crit = nn.CrossEntropyLoss()
     hook = PenultimateHook(model)
+    if resume_snap:  # ADR-0018 P12: 快照分叉（optimizer/scheduler 重置）
+        sd = torch.load(resume_snap, map_location="cpu", weights_only=False)
+        model.load_state_dict(sd["model"])
 
     rng = np.random.default_rng(seed + 42)
     rand_dir = torch.as_tensor(
@@ -372,6 +375,11 @@ def train_one_forcing(tag, kind, lam, epochs, trl, tel, probe_loaders, device,
         hist.append({"epoch": ep + 1, "train_acc": round(corr / tot, 4),
                      "test_acc": round(test_acc, 4),
                      "forcing_loss": round(fl_sum / max(n_batches, 1), 5)})
+
+        if (ep + 1) == 40:  # ADR-0018 P12: ep40 快照（不覆盖滚动 ckpt）
+            snap = Path(outdir) / f"{tag}__{kind}_lam{lam}_ep40snap.pt"
+            torch.save({"model": model.state_dict(), "ep": 40, "tag": tag,
+                        "kind": kind, "lam": lam}, snap)
 
         if (ep + 1) % ckpt_every == 0 or ep == epochs - 1:
             model.eval()
@@ -436,6 +444,7 @@ def train_one_forcing(tag, kind, lam, epochs, trl, tel, probe_loaders, device,
         "glue_u": (round(gd[2], 4) if gd else None),
         "glue_timeout": gd is None,
         "d_curve": d_curve,
+        "history": hist,  # ADR-0018 P12: per-epoch train/test/forcing_loss
         "base": BASE_READ.get(tag, {}),
         "secs": round(time.time() - t0, 1),
     }
@@ -500,6 +509,8 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--kinds", nargs="+", default=PILOT_KINDS)
     ap.add_argument("--models", nargs="+", default=PILOT_MODELS)
+    ap.add_argument("--resume-snap", default=None,
+                    help="ADR-0018 P12: load ep40 snapshot weights, then train per protocol")
     ap.add_argument("--skip-base", action="store_true",
                     help="base 对照臂读数已有（断点续跑）")
     args = ap.parse_args()
@@ -560,7 +571,8 @@ def main():
                 continue
             print(f"  === {tag} | {kind} @ λ={args.lam} ===", flush=True)
             row, _ = train_one_forcing(tag, kind, args.lam, args.epochs, trl, tel,
-                                       probe_loaders, device, outdir, seed=args.seed)
+                                       probe_loaders, device, outdir, seed=args.seed,
+                                       resume_snap=args.resume_snap)
             rows.append(row)
             json.dump({"rows": rows}, open(fp_json, "w"), indent=1)
             b = row["base"] or {}
