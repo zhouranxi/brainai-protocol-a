@@ -1,0 +1,60 @@
+{
+ "rows": [
+  {
+   "arm": "p4_base",
+   "model": "resnet34_lr0.125_wd5e-05_s0",
+   "kind": "base",
+   "lambda": 0.0,
+   "seed": 0,
+   "test_acc": 0.8521,
+   "id_probe_acc": 0.8507,
+   "c100_probe": 0.2269,
+   "d_ent_id": 17.736,
+   "glue_d": 1.641,
+   "glue_timeout": false,
+   "secs": 0.0
+  },
+  {
+   "arm": "p4_base",
+   "model": "resnet50_lr0.125_wd5e-05_s0",
+   "kind": "base",
+   "lambda": 0.0,
+   "seed": 0,
+   "test_acc": 0.8319,
+   "id_probe_acc": 0.828,
+   "c100_probe": 0.3502,
+   "d_ent_id": 61.167,
+   "glue_d": null,
+   "glue_timeout": true,
+   "secs": 0.0
+  },
+  {
+   "arm": "p4_base",
+   "model": "regnet_y_400mf_lr0.125_wd5e-05_s0",
+   "kind": "base",
+   "lambda": 0.0,
+   "seed": 0,
+   "test_acc": 0.8428,
+   "id_probe_acc": 0.8429,
+   "c100_probe": 0.3234,
+   "d_ent_id": 39.768,
+   "glue_d": 2.3215,
+   "glue_timeout": false,
+   "secs": 0.0
+  },
+  {
+   "arm": "p4_base",
+   "model": "shufflenet_v2_x1_0_lr0.125_wd5e-05_s0",
+   "kind": "base",
+   "lambda": 0.0,
+   "seed": 0,
+   "test_acc": 0.7772,
+   "id_probe_acc": 0.7761,
+   "c100_probe": 0.3224,
+   "d_ent_id": 74.038,
+   "glue_d": null,
+   "glue_timeout": true,
+   "secs": 0.0
+  }
+ ]
+}

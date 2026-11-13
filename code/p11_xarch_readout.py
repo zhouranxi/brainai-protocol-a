@@ -61,23 +61,24 @@ def r2_of(points, b):
 
 
 def main() -> int:
+    base_tbl = {r["model"]: r for r in
+                json.loads((E_DIR / "p11_base_readings.json")
+                           .read_text(encoding="utf-8"))["rows"]}
     arch_rows, gate_min = {}, 1.0
     for tag, model in ARCHS.items():
+        base = base_tbl[model]
         curves = []
         for rs in (1, 2):
             rows = []
             for lam in LAMS:
                 p = E_DIR / f"p11_{model}_seed{rs}_lam{lam}.json"
                 run = json.loads(p.read_text(encoding="utf-8"))["rows"][0]
-                base = run["base"]
-                dd = round(run["d_ent_id"] - base["d_ent_id"], 3) \
-                    if base.get("d_ent_id") is not None else None
-                dc = round(run["c100_probe"] - base["c100"], 4)
-                ik = round(run["id_probe_acc"] - base["id_probe"], 4) \
-                    if base.get("id_probe") is not None else None
-                gate_min = min(gate_min, ik if ik is not None else 1.0)
+                dd = round(run["d_ent_id"] - base["d_ent_id"], 3)
+                dc = round(run["c100_probe"] - base["c100_probe"], 4)
+                ik = round(run["id_probe_acc"] - base["id_probe_acc"], 4)
+                gate_min = min(gate_min, ik)
                 rows.append({"lambda": lam, "d_delta": dd, "c_delta": dc,
-                             "id_keep": ik, "pass_gate": (ik or 1.0) >= ID_FLOOR,
+                             "id_keep": ik, "pass_gate": ik >= ID_FLOOR,
                              "secant_pct": round(100 * (dc / dd) / S_OBS, 1)
                              if dd else None})
             fit_rows = [r for r in rows if r["pass_gate"] and r["d_delta"]]

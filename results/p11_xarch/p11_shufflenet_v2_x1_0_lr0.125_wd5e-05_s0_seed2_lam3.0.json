@@ -1,0 +1,66 @@
+{
+ "rows": [
+  {
+   "arm": "p4_pilot",
+   "model": "shufflenet_v2_x1_0_lr0.125_wd5e-05_s0",
+   "arch": "shufflenet_v2_x1_0",
+   "kind": "whiten",
+   "lambda": 3.0,
+   "seed": 2,
+   "lr": 0.125,
+   "wd": 5e-05,
+   "test_acc": 0.7962,
+   "id_probe_acc": 0.8011,
+   "c100_probe": 0.3647,
+   "d_ent_id": 381.933,
+   "glue_d": null,
+   "glue_r": null,
+   "glue_u": null,
+   "glue_timeout": true,
+   "d_curve": [
+    {
+     "epoch": 20,
+     "d_ent_batch": 64.603
+    },
+    {
+     "epoch": 40,
+     "d_ent_batch": 69.126
+    },
+    {
+     "epoch": 60,
+     "d_ent_batch": 76.673
+    },
+    {
+     "epoch": 80,
+     "d_ent_batch": 86.181
+    },
+    {
+     "epoch": 100,
+     "d_ent_batch": 90.949
+    },
+    {
+     "epoch": 120,
+     "d_ent_batch": 102.821
+    },
+    {
+     "epoch": 140,
+     "d_ent_batch": 113.295
+    },
+    {
+     "epoch": 160,
+     "d_ent_batch": 121.941
+    },
+    {
+     "epoch": 180,
+     "d_ent_batch": 123.619
+    },
+    {
+     "epoch": 200,
+     "d_ent_batch": 123.501
+    }
+   ],
+   "base": {},
+   "secs": 4062.9
+  }
+ ]
+}

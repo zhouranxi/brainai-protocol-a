@@ -1,0 +1,489 @@
+{
+  "meta": {
+    "generated_at": "2026-11-14T00:18:49.535345+08:00",
+    "script": "code/p11_xarch_readout.py",
+    "frozen_rules": "ADR-0017 Section 8 (2026-11-13 01:15)",
+    "constants": {
+      "exc_thresh": 0.08,
+      "red_line": 0.7,
+      "sub_lin_expect": 0.5,
+      "id_floor": -0.02
+    }
+  },
+  "archs": {
+    "resnet34": {
+      "model": "resnet34_lr0.125_wd5e-05_s0",
+      "curves": [
+        {
+          "run_seed": 1,
+          "b": 0.225,
+          "r2": 0.03,
+          "n": 5,
+          "saturating": true,
+          "marginals": [
+            -0.0429,
+            -0.0516
+          ],
+          "rows": [
+            {
+              "lambda": 0.03,
+              "d_delta": 4.745,
+              "c_delta": 0.0072,
+              "id_keep": 0.0047,
+              "pass_gate": true,
+              "secant_pct": 9.4
+            },
+            {
+              "lambda": 0.1,
+              "d_delta": 16.32,
+              "c_delta": 0.0431,
+              "id_keep": 0.0055,
+              "pass_gate": true,
+              "secant_pct": 16.4
+            },
+            {
+              "lambda": 0.3,
+              "d_delta": 31.444,
+              "c_delta": 0.0409,
+              "id_keep": 0.0145,
+              "pass_gate": true,
+              "secant_pct": 8.1
+            },
+            {
+              "lambda": 1.0,
+              "d_delta": 50.465,
+              "c_delta": -0.002,
+              "id_keep": 0.0101,
+              "pass_gate": true,
+              "secant_pct": -0.2
+            },
+            {
+              "lambda": 3.0,
+              "d_delta": 83.22,
+              "c_delta": -0.0536,
+              "id_keep": 0.0204,
+              "pass_gate": true,
+              "secant_pct": -4.0
+            }
+          ]
+        },
+        {
+          "run_seed": 2,
+          "b": -0.086,
+          "r2": 0.057,
+          "n": 5,
+          "saturating": true,
+          "marginals": [
+            0.053,
+            -0.0412
+          ],
+          "rows": [
+            {
+              "lambda": 0.03,
+              "d_delta": 1.525,
+              "c_delta": -0.0212,
+              "id_keep": 0.0127,
+              "pass_gate": true,
+              "secant_pct": -86.3
+            },
+            {
+              "lambda": 0.1,
+              "d_delta": 17.755,
+              "c_delta": 0.0389,
+              "id_keep": 0.0038,
+              "pass_gate": true,
+              "secant_pct": 13.6
+            },
+            {
+              "lambda": 0.3,
+              "d_delta": 22.797,
+              "c_delta": -0.0209,
+              "id_keep": 0.0081,
+              "pass_gate": true,
+              "secant_pct": -5.7
+            },
+            {
+              "lambda": 1.0,
+              "d_delta": 54.694,
+              "c_delta": 0.0321,
+              "id_keep": 0.0118,
+              "pass_gate": true,
+              "secant_pct": 3.6
+            },
+            {
+              "lambda": 3.0,
+              "d_delta": 80.654,
+              "c_delta": -0.0091,
+              "id_keep": 0.0088,
+              "pass_gate": true,
+              "secant_pct": -0.7
+            }
+          ]
+        }
+      ],
+      "b_gap": 0.311,
+      "excursion": true,
+      "b_max": 0.225
+    },
+    "resnet50": {
+      "model": "resnet50_lr0.125_wd5e-05_s0",
+      "curves": [
+        {
+          "run_seed": 1,
+          "b": 1.063,
+          "r2": 1.0,
+          "n": 5,
+          "saturating": false,
+          "marginals": [
+            -0.0273,
+            0.0304
+          ],
+          "rows": [
+            {
+              "lambda": 0.03,
+              "d_delta": -42.347,
+              "c_delta": -0.0901,
+              "id_keep": 0.002,
+              "pass_gate": true,
+              "secant_pct": 13.2
+            },
+            {
+              "lambda": 0.1,
+              "d_delta": 16.507,
+              "c_delta": 0.0045,
+              "id_keep": 0.0009,
+              "pass_gate": true,
+              "secant_pct": 1.7
+            },
+            {
+              "lambda": 0.3,
+              "d_delta": 76.236,
+              "c_delta": 0.0229,
+              "id_keep": 0.0098,
+              "pass_gate": true,
+              "secant_pct": 1.9
+            },
+            {
+              "lambda": 1.0,
+              "d_delta": -44.093,
+              "c_delta": -0.0044,
+              "id_keep": 0.0308,
+              "pass_gate": true,
+              "secant_pct": 0.6
+            },
+            {
+              "lambda": 3.0,
+              "d_delta": -17.675,
+              "c_delta": 0.026,
+              "id_keep": 0.0249,
+              "pass_gate": true,
+              "secant_pct": -9.1
+            }
+          ]
+        },
+        {
+          "run_seed": 2,
+          "b": 0.612,
+          "r2": 1.0,
+          "n": 5,
+          "saturating": true,
+          "marginals": [
+            0.1046,
+            -0.0274
+          ],
+          "rows": [
+            {
+              "lambda": 0.03,
+              "d_delta": -55.437,
+              "c_delta": -0.0383,
+              "id_keep": 0.0329,
+              "pass_gate": true,
+              "secant_pct": 4.3
+            },
+            {
+              "lambda": 0.1,
+              "d_delta": 210.32,
+              "c_delta": 0.0409,
+              "id_keep": -0.0147,
+              "pass_gate": true,
+              "secant_pct": 1.2
+            },
+            {
+              "lambda": 0.3,
+              "d_delta": -34.7,
+              "c_delta": -0.0908,
+              "id_keep": 0.023,
+              "pass_gate": true,
+              "secant_pct": 16.3
+            },
+            {
+              "lambda": 1.0,
+              "d_delta": 35.629,
+              "c_delta": 0.0138,
+              "id_keep": -0.0114,
+              "pass_gate": true,
+              "secant_pct": 2.4
+            },
+            {
+              "lambda": 3.0,
+              "d_delta": -40.982,
+              "c_delta": -0.0136,
+              "id_keep": 0.0147,
+              "pass_gate": true,
+              "secant_pct": 2.1
+            }
+          ]
+        }
+      ],
+      "b_gap": 0.451,
+      "excursion": true,
+      "b_max": 1.063
+    },
+    "regnet": {
+      "model": "regnet_y_400mf_lr0.125_wd5e-05_s0",
+      "curves": [
+        {
+          "run_seed": 1,
+          "b": 0.375,
+          "r2": 1.0,
+          "n": 4,
+          "saturating": true,
+          "marginals": [
+            0.0079,
+            0.0041
+          ],
+          "rows": [
+            {
+              "lambda": 0.03,
+              "d_delta": 2.156,
+              "c_delta": 0.0104,
+              "id_keep": -0.0028,
+              "pass_gate": true,
+              "secant_pct": 30.0
+            },
+            {
+              "lambda": 0.1,
+              "d_delta": 48.269,
+              "c_delta": 0.0107,
+              "id_keep": -0.0327,
+              "pass_gate": false,
+              "secant_pct": 1.4
+            },
+            {
+              "lambda": 0.3,
+              "d_delta": 90.856,
+              "c_delta": 0.042,
+              "id_keep": -0.0061,
+              "pass_gate": true,
+              "secant_pct": 2.9
+            },
+            {
+              "lambda": 1.0,
+              "d_delta": 142.142,
+              "c_delta": 0.0499,
+              "id_keep": -0.0104,
+              "pass_gate": true,
+              "secant_pct": 2.2
+            },
+            {
+              "lambda": 3.0,
+              "d_delta": 172.638,
+              "c_delta": 0.054,
+              "id_keep": -0.0193,
+              "pass_gate": true,
+              "secant_pct": 1.9
+            }
+          ]
+        },
+        {
+          "run_seed": 2,
+          "b": 0.319,
+          "r2": 0.782,
+          "n": 4,
+          "saturating": true,
+          "marginals": [
+            0.0008,
+            -0.0124
+          ],
+          "rows": [
+            {
+              "lambda": 0.03,
+              "d_delta": 30.049,
+              "c_delta": 0.0217,
+              "id_keep": 0.0029,
+              "pass_gate": true,
+              "secant_pct": 4.5
+            },
+            {
+              "lambda": 0.1,
+              "d_delta": -28.969,
+              "c_delta": -0.0403,
+              "id_keep": -0.0059,
+              "pass_gate": true,
+              "secant_pct": 8.6
+            },
+            {
+              "lambda": 0.3,
+              "d_delta": 88.01,
+              "c_delta": 0.0263,
+              "id_keep": -0.0254,
+              "pass_gate": false,
+              "secant_pct": 1.9
+            },
+            {
+              "lambda": 1.0,
+              "d_delta": 109.531,
+              "c_delta": 0.0271,
+              "id_keep": -0.0079,
+              "pass_gate": true,
+              "secant_pct": 1.5
+            },
+            {
+              "lambda": 3.0,
+              "d_delta": 21.573,
+              "c_delta": 0.0147,
+              "id_keep": -0.0025,
+              "pass_gate": true,
+              "secant_pct": 4.2
+            }
+          ]
+        }
+      ],
+      "b_gap": 0.056,
+      "excursion": false,
+      "b_max": 0.375
+    },
+    "shufflenet": {
+      "model": "shufflenet_v2_x1_0_lr0.125_wd5e-05_s0",
+      "curves": [
+        {
+          "run_seed": 1,
+          "b": 0.449,
+          "r2": 0.798,
+          "n": 5,
+          "saturating": true,
+          "marginals": [
+            0.0018,
+            -0.0002
+          ],
+          "rows": [
+            {
+              "lambda": 0.03,
+              "d_delta": 46.466,
+              "c_delta": 0.0194,
+              "id_keep": 0.0083,
+              "pass_gate": true,
+              "secant_pct": 2.6
+            },
+            {
+              "lambda": 0.1,
+              "d_delta": 154.173,
+              "c_delta": 0.0452,
+              "id_keep": -0.0052,
+              "pass_gate": true,
+              "secant_pct": 1.8
+            },
+            {
+              "lambda": 0.3,
+              "d_delta": 136.23,
+              "c_delta": 0.0439,
+              "id_keep": 0.0176,
+              "pass_gate": true,
+              "secant_pct": 2.0
+            },
+            {
+              "lambda": 1.0,
+              "d_delta": 243.201,
+              "c_delta": 0.0457,
+              "id_keep": 0.0091,
+              "pass_gate": true,
+              "secant_pct": 1.2
+            },
+            {
+              "lambda": 3.0,
+              "d_delta": 332.852,
+              "c_delta": 0.0455,
+              "id_keep": 0.0134,
+              "pass_gate": true,
+              "secant_pct": 0.8
+            }
+          ]
+        },
+        {
+          "run_seed": 2,
+          "b": -0.007,
+          "r2": 0.006,
+          "n": 5,
+          "saturating": true,
+          "marginals": [
+            0.003,
+            -0.005
+          ],
+          "rows": [
+            {
+              "lambda": 0.03,
+              "d_delta": 157.173,
+              "c_delta": 0.0446,
+              "id_keep": -0.0177,
+              "pass_gate": true,
+              "secant_pct": 1.8
+            },
+            {
+              "lambda": 0.1,
+              "d_delta": 84.13,
+              "c_delta": 0.0436,
+              "id_keep": 0.0196,
+              "pass_gate": true,
+              "secant_pct": 3.2
+            },
+            {
+              "lambda": 0.3,
+              "d_delta": 182.062,
+              "c_delta": 0.0443,
+              "id_keep": 0.0103,
+              "pass_gate": true,
+              "secant_pct": 1.5
+            },
+            {
+              "lambda": 1.0,
+              "d_delta": 200.674,
+              "c_delta": 0.0473,
+              "id_keep": 0.0209,
+              "pass_gate": true,
+              "secant_pct": 1.5
+            },
+            {
+              "lambda": 3.0,
+              "d_delta": 307.895,
+              "c_delta": 0.0423,
+              "id_keep": 0.025,
+              "pass_gate": true,
+              "secant_pct": 0.9
+            }
+          ]
+        }
+      ],
+      "b_gap": 0.456,
+      "excursion": true,
+      "b_max": 0.449
+    }
+  },
+  "I1_excursion_presence": {
+    "any_excursion": true,
+    "verdict": "FIRST CROSS-ARCH EXCURSION: >=1 arch with |b1-b2|>=0.08 -- the heavy tail generalizes beyond resnet18."
+  },
+  "I2_shape_red_lines": {
+    "red_archs": [
+      "resnet50"
+    ],
+    "nonsat_archs": [
+      "resnet50"
+    ],
+    "verdict": "RED LINE TRIPPED: b>0.7 in ['resnet50']; non-saturating in ['resnet50'] -- paper wording check required."
+  },
+  "I3_gate": {
+    "id_keep_min": -0.0327,
+    "floor": -0.02,
+    "all_pass": false
+  }
+}

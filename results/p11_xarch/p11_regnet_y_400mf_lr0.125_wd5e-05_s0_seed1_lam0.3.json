@@ -1,0 +1,66 @@
+{
+ "rows": [
+  {
+   "arm": "p4_pilot",
+   "model": "regnet_y_400mf_lr0.125_wd5e-05_s0",
+   "arch": "regnet_y_400mf",
+   "kind": "whiten",
+   "lambda": 0.3,
+   "seed": 1,
+   "lr": 0.125,
+   "wd": 5e-05,
+   "test_acc": 0.836,
+   "id_probe_acc": 0.8368,
+   "c100_probe": 0.3654,
+   "d_ent_id": 130.624,
+   "glue_d": 6.3335,
+   "glue_r": 0.8077,
+   "glue_u": 0.2581,
+   "glue_timeout": false,
+   "d_curve": [
+    {
+     "epoch": 20,
+     "d_ent_batch": 1.498
+    },
+    {
+     "epoch": 40,
+     "d_ent_batch": 23.887
+    },
+    {
+     "epoch": 60,
+     "d_ent_batch": 29.221
+    },
+    {
+     "epoch": 80,
+     "d_ent_batch": 43.471
+    },
+    {
+     "epoch": 100,
+     "d_ent_batch": 47.653
+    },
+    {
+     "epoch": 120,
+     "d_ent_batch": 57.183
+    },
+    {
+     "epoch": 140,
+     "d_ent_batch": 62.226
+    },
+    {
+     "epoch": 160,
+     "d_ent_batch": 66.077
+    },
+    {
+     "epoch": 180,
+     "d_ent_batch": 67.724
+    },
+    {
+     "epoch": 200,
+     "d_ent_batch": 67.025
+    }
+   ],
+   "base": {},
+   "secs": 4660.0
+  }
+ ]
+}
