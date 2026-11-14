@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "generated_at": "2026-11-15T00:51:02.765048+08:00",
+    "script": "code/p13_unlock_readout.py",
+    "frozen_rules": "ADR-0018 Section 7 (2026-11-14 20:18)",
+    "constants": {
+      "unlock_dc": 0.05,
+      "recover_dd": 20,
+      "id_floor": -0.02
+    }
+  },
+  "rows": [
+    {
+      "src": "seed7",
+      "lambda": 0.3,
+      "fork_seed": 201,
+      "d_delta": 33.126,
+      "c_delta": 0.0397,
+      "id_keep": 0.0103,
+      "unlocked": false,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed7",
+      "lambda": 0.3,
+      "fork_seed": 202,
+      "d_delta": 33.624,
+      "c_delta": 0.0358,
+      "id_keep": 0.0074,
+      "unlocked": false,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed7",
+      "lambda": 1.0,
+      "fork_seed": 201,
+      "d_delta": 66.932,
+      "c_delta": 0.0556,
+      "id_keep": 0.0082,
+      "unlocked": true,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed7",
+      "lambda": 1.0,
+      "fork_seed": 202,
+      "d_delta": 65.649,
+      "c_delta": 0.0535,
+      "id_keep": 0.0089,
+      "unlocked": true,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed7",
+      "lambda": 3.0,
+      "fork_seed": 201,
+      "d_delta": 111.046,
+      "c_delta": 0.0594,
+      "id_keep": 0.0092,
+      "unlocked": true,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed7",
+      "lambda": 3.0,
+      "fork_seed": 202,
+      "d_delta": 99.288,
+      "c_delta": 0.054,
+      "id_keep": 0.0128,
+      "unlocked": true,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed13",
+      "lambda": 0.3,
+      "fork_seed": 201,
+      "d_delta": 34.275,
+      "c_delta": 0.0305,
+      "id_keep": 0.0077,
+      "unlocked": false,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed13",
+      "lambda": 0.3,
+      "fork_seed": 202,
+      "d_delta": 33.843,
+      "c_delta": 0.0313,
+      "id_keep": 0.0107,
+      "unlocked": false,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed13",
+      "lambda": 1.0,
+      "fork_seed": 201,
+      "d_delta": 64.31,
+      "c_delta": 0.0473,
+      "id_keep": 0.0095,
+      "unlocked": false,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed13",
+      "lambda": 1.0,
+      "fork_seed": 202,
+      "d_delta": 66.851,
+      "c_delta": 0.049,
+      "id_keep": 0.0101,
+      "unlocked": false,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed13",
+      "lambda": 3.0,
+      "fork_seed": 201,
+      "d_delta": 103.572,
+      "c_delta": 0.0615,
+      "id_keep": 0.0122,
+      "unlocked": true,
+      "dd_recovered": true
+    },
+    {
+      "src": "seed13",
+      "lambda": 3.0,
+      "fork_seed": 202,
+      "d_delta": 97.418,
+      "c_delta": 0.0581,
+      "id_keep": 0.0103,
+      "unlocked": true,
+      "dd_recovered": true
+    }
+  ],
+  "L1": {
+    "n_unlock": 6,
+    "n_runs": 12,
+    "per_dose": {
+      "0.3": 0,
+      "1.0": 2,
+      "3.0": 4
+    },
+    "verdict": "DOSE-SPECIFIC LOCK: >=1 dose with >=3/4 unlocks -- the low-d basin can be escaped by sufficient forcing dose."
+  },
+  "L2": {
+    "decoupled_anomalies": []
+  },
+  "L3": {
+    "id_keep_min": 0.0074,
+    "all_pass": true
+  }
+}
