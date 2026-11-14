@@ -805,7 +805,14 @@ evaluate.
       --- the lowest-dose point collapses into the placebo band
       while its denominator stays normal, levering the fitted slope
       --- and whose rerun under the same seed does not reproduce,
-      so they are genuine run-level random events. Retrospective
+      so they are genuine run-level random events. A follow-up
+      mechanism batch further showed the collapse to be a bistable
+      geometric bifurcation locked within the first $40$ epochs:
+      forking from a failed run's weights reproduces the failure
+      in $4/4$ draws, forking from a healthy one reproduces health
+      in $4/4$, and the scalar training loss shows no warning
+      signal at any point --- only the geometry trajectory itself
+      separates the two regimes early. Retrospective
       analysis of the curves further showed that no fixed subset of
       two or three dose points reproduces the five-point exponent
       ranking (the collapses concentrate in different dose segments
