@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "generated_at": "2026-11-14T08:24:12.828749+08:00",
+    "script": "code/p12_m1_readout.py",
+    "frozen_rules": "ADR-0018 Section 3 (2026-11-14 00:38)",
+    "constants": {
+      "placebo": 0.022,
+      "id_floor": -0.02
+    }
+  },
+  "rows": [
+    {
+      "seed_tag": "s0",
+      "run_seed": 7,
+      "d_delta": 3.724,
+      "c_delta": 0.0009,
+      "id_keep": 0.0066,
+      "fail": true,
+      "fl_mean_1_40": 0.07148,
+      "fl_mean_1_10": 0.12054,
+      "d_at_ep100": 14.465
+    },
+    {
+      "seed_tag": "s0",
+      "run_seed": 8,
+      "d_delta": 20.057,
+      "c_delta": 0.0658,
+      "id_keep": -0.0057,
+      "fail": false,
+      "fl_mean_1_40": 0.05785,
+      "fl_mean_1_10": 0.10754,
+      "d_at_ep100": 25.145
+    },
+    {
+      "seed_tag": "s0",
+      "run_seed": 9,
+      "d_delta": 13.059,
+      "c_delta": 0.0426,
+      "id_keep": 0.0029,
+      "fail": false,
+      "fl_mean_1_40": 0.06937,
+      "fl_mean_1_10": 0.13245,
+      "d_at_ep100": 19.777
+    },
+    {
+      "seed_tag": "s0",
+      "run_seed": 10,
+      "d_delta": 2.821,
+      "c_delta": -0.0017,
+      "id_keep": 0.0061,
+      "fail": true,
+      "fl_mean_1_40": 0.08299,
+      "fl_mean_1_10": 0.15759,
+      "d_at_ep100": 13.907
+    },
+    {
+      "seed_tag": "s0",
+      "run_seed": 11,
+      "d_delta": 6.482,
+      "c_delta": 0.0249,
+      "id_keep": 0.0037,
+      "fail": false,
+      "fl_mean_1_40": 0.06939,
+      "fl_mean_1_10": 0.12888,
+      "d_at_ep100": 12.221
+    },
+    {
+      "seed_tag": "s0",
+      "run_seed": 12,
+      "d_delta": 5.743,
+      "c_delta": 0.0083,
+      "id_keep": 0.0026,
+      "fail": true,
+      "fl_mean_1_40": 0.0755,
+      "fl_mean_1_10": 0.14558,
+      "d_at_ep100": 16.533
+    },
+    {
+      "seed_tag": "s0",
+      "run_seed": 13,
+      "d_delta": 4.026,
+      "c_delta": 0.0041,
+      "id_keep": 0.0056,
+      "fail": true,
+      "fl_mean_1_40": 0.06694,
+      "fl_mean_1_10": 0.10693,
+      "d_at_ep100": 12.895
+    },
+    {
+      "seed_tag": "s0",
+      "run_seed": 14,
+      "d_delta": 8.668,
+      "c_delta": 0.0392,
+      "id_keep": 0.0021,
+      "fail": false,
+      "fl_mean_1_40": 0.0683,
+      "fl_mean_1_10": 0.13227,
+      "d_at_ep100": 17.79
+    },
+    {
+      "seed_tag": "s3",
+      "run_seed": 7,
+      "d_delta": 0.201,
+      "c_delta": -0.0354,
+      "id_keep": 0.003,
+      "fail": false,
+      "fl_mean_1_40": 0.082,
+      "fl_mean_1_10": 0.14895,
+      "d_at_ep100": 12.663
+    },
+    {
+      "seed_tag": "s3",
+      "run_seed": 8,
+      "d_delta": 8.443,
+      "c_delta": 0.0318,
+      "id_keep": -0.0064,
+      "fail": false,
+      "fl_mean_1_40": 0.06444,
+      "fl_mean_1_10": 0.11632,
+      "d_at_ep100": 18.193
+    },
+    {
+      "seed_tag": "s3",
+      "run_seed": 9,
+      "d_delta": 5.098,
+      "c_delta": 0.0105,
+      "id_keep": 0.006,
+      "fail": true,
+      "fl_mean_1_40": 0.06736,
+      "fl_mean_1_10": 0.12055,
+      "d_at_ep100": 16.691
+    },
+    {
+      "seed_tag": "s3",
+      "run_seed": 10,
+      "d_delta": 8.61,
+      "c_delta": 0.0322,
+      "id_keep": 0.0019,
+      "fail": false,
+      "fl_mean_1_40": 0.06754,
+      "fl_mean_1_10": 0.12679,
+      "d_at_ep100": 17.675
+    },
+    {
+      "seed_tag": "s3",
+      "run_seed": 11,
+      "d_delta": 4.017,
+      "c_delta": 0.0141,
+      "id_keep": 0.0036,
+      "fail": true,
+      "fl_mean_1_40": 0.07106,
+      "fl_mean_1_10": 0.13404,
+      "d_at_ep100": 12.873
+    },
+    {
+      "seed_tag": "s3",
+      "run_seed": 12,
+      "d_delta": 9.16,
+      "c_delta": 0.0283,
+      "id_keep": -0.0051,
+      "fail": false,
+      "fl_mean_1_40": 0.06298,
+      "fl_mean_1_10": 0.11543,
+      "d_at_ep100": 18.635
+    },
+    {
+      "seed_tag": "s3",
+      "run_seed": 13,
+      "d_delta": 5.055,
+      "c_delta": 0.0221,
+      "id_keep": 0.0024,
+      "fail": false,
+      "fl_mean_1_40": 0.06905,
+      "fl_mean_1_10": 0.12385,
+      "d_at_ep100": 14.684
+    },
+    {
+      "seed_tag": "s3",
+      "run_seed": 14,
+      "d_delta": 5.408,
+      "c_delta": 0.0176,
+      "id_keep": 0.0046,
+      "fail": true,
+      "fl_mean_1_40": 0.06777,
+      "fl_mean_1_10": 0.12847,
+      "d_at_ep100": 17.235
+    }
+  ],
+  "K1": {
+    "n_fail": 7,
+    "n_runs": 16,
+    "fail_rate": 0.438,
+    "fail_runs": [
+      "s0_seed7",
+      "s0_seed10",
+      "s0_seed12",
+      "s0_seed13",
+      "s3_seed9",
+      "s3_seed11",
+      "s3_seed14"
+    ],
+    "fl_fail_range": [
+      0.06694,
+      0.08299
+    ],
+    "fl_healthy_min": 0.05785,
+    "verdict": "OVERLAP: failing runs' early forcing loss is inside the healthy range -- failure differentiates after ep40; defer to M1b fork adjudication (J1)."
+  },
+  "K2": {
+    "id_keep_min": -0.0064,
+    "floor": -0.02,
+    "all_pass": true
+  }
+}
