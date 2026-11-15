@@ -104,15 +104,13 @@ def extract_features(model, loader, device, max_n=10000):
                 z1 = z1 + torch.sigmoid(model.lat1(z1)) * z1
                 z2 = z2 + torch.sigmoid(model.lat2(z2)) * z2
                 z3 = z3 + torch.sigmoid(model.lat3(z3)) * z3
-                z1 = model.s1[1](z1); z2 = model.s2[1](z2); z3 = model.s3[1](z3)
             elif model.mode == "hfb":
                 f2 = torch.nn.functional.interpolate(
                     model.td2(z3), size=z2.shape[-2:], mode="nearest")
-                z2 = model.s2[1](z2 + torch.tanh(f2))
+                z2 = z2 + torch.tanh(f2)
                 f1 = torch.nn.functional.interpolate(
                     model.td1(z2), size=z1.shape[-2:], mode="nearest")
-                z1 = model.s1[1](z1 + torch.tanh(f1))
-                z3 = model.s3[1](z3)
+                z1 = z1 + torch.tanh(f1)
         pooled = torch.nn.functional.adaptive_avg_pool2d(z3, 1).flatten(1)
         feats.append(pooled.cpu().numpy())
         ys.append(yb.numpy())
