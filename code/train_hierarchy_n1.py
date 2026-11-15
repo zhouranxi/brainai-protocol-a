@@ -120,10 +120,14 @@ def extract_features(model, loader, device, max_n=10000):
     return np.concatenate(feats), np.concatenate(ys)
 
 
-def run_one(cfg, seed, device, epochs=150, fb_scale=1.0):
+def run_one(cfg, seed, device, epochs=150, fb_scale=1.0, feat_dropout=0.0):
     set_seed(seed)
-    # N2a 目录规则：显式 n2a 标记时用 n2a 前缀；否则 n1p（N1″/N2b 复用）
-    tag = f"n2a_{cfg}_a{fb_scale}_s{seed}" if os.environ.get("N2A_TAG") else f"n1p_{cfg}_s{seed}"
+    # 目录规则：N4A_TAG -> n4 前缀；N2A_TAG -> n2a；否则 n1p
+    tag = f"n1p_{cfg}_s{seed}"
+    if os.environ.get("N2A_TAG"):
+        tag = f"n2a_{cfg}_a{fb_scale}_s{seed}"
+    if os.environ.get("N4A_TAG"):
+        tag = f"n4_{cfg}_fd{feat_dropout}_s{seed}"
     outdir = Path(f"/mnt/mydisk/xinguan-brainai/runs/v2_hierarchy/{tag}")
     outdir.mkdir(parents=True, exist_ok=True)
     fp = outdir / "n1_result.json"
@@ -132,6 +136,8 @@ def run_one(cfg, seed, device, epochs=150, fb_scale=1.0):
         return json.loads(fp.read_text())
 
     model = HierarchyNet(mode=cfg, fb_scale=fb_scale).to(device)
+    fdrop = (nn.Dropout(p=feat_dropout) if feat_dropout > 0 else None)
+    fdrop = fdrop.to(device) if fdrop else None
     shared, extra = model.param_count_module()
     opt = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9,
                           weight_decay=2e-3, nesterov=True)
@@ -149,10 +155,18 @@ def run_one(cfg, seed, device, epochs=150, fb_scale=1.0):
             xb = xb.to(device, non_blocking=True)
             yb = yb.to(device, non_blocking=True)
             opt.zero_grad(set_to_none=True)
-            loss = crit(model(xb), yb)
+            logits = model(xb)
+            if fdrop is not None:
+                # N4a D 臂：head 输入侧特征 dropout（训练时）——对 penultimate 的正则等价
+                x0 = model.stem(xb); z1 = model.s1(x0)
+                z2 = model.s2(z1); z3 = model.s3(z2)
+                pooled = torch.nn.functional.adaptive_avg_pool2d(z3, 1).flatten(1)
+                logits = model.head(fdrop(pooled))
+            loss = crit(logits, yb)
             loss.backward()
             opt.step()
-            corr += (model(xb).argmax(1) == yb).sum().item()
+            with torch.no_grad():
+                corr += (model(xb).argmax(1) == yb).sum().item()
             tot += yb.numel()
         sched.step()
         if (ep + 1) % 10 == 0 or ep == epochs - 1:
@@ -169,6 +183,8 @@ def run_one(cfg, seed, device, epochs=150, fb_scale=1.0):
                       f"({time.time()-t0:.0f}s)", flush=True)
     # 恢复最佳 checkpoint（协议修复：早停保护）
     model.load_state_dict(best_state)
+    # N4：存终态（最佳点）权重，供 P 臂扰动评估与 N4b 腐蚀评估
+    torch.save(best_state, Path(outdir) / f"{cfg}_last.pt")
 
     # ---- 交换读数 + 表征测量 ----
     id_test = eval_acc(model, tel, device)                    # 原配推理
@@ -188,6 +204,7 @@ def run_one(cfg, seed, device, epochs=150, fb_scale=1.0):
     fb_final = (round(float(model.s1_scale.item()), 3),
                 round(float(model.s2_scale.item()), 3)) if cfg == "hfb" else None
     row = {"cfg": cfg, "seed": seed, "fb_scale": fb_scale,
+           "feat_dropout": feat_dropout,
            "fb_scale_final": fb_final,
            "id_test": round(id_test, 4),
            "off_test": round(off_test, 4) if off_test is not None else None,
@@ -212,9 +229,10 @@ if __name__ == "__main__":
     ap.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2])
     ap.add_argument("--epochs", type=int, default=150)
     ap.add_argument("--fb-scale", type=float, default=1.0)
+    ap.add_argument("--feat-dropout", type=float, default=0.0)
     args = ap.parse_args()
     dev = torch.device("cuda:0")
     for cfg in args.cfgs:
         for seed in args.seeds:
             run_one(cfg, seed, dev, epochs=args.epochs,
-                    fb_scale=args.fb_scale)
+                    fb_scale=args.fb_scale, feat_dropout=args.feat_dropout)
