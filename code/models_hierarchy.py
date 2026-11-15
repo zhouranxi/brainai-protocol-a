@@ -35,7 +35,8 @@ class Block(nn.Module):
 class HierarchyNet(nn.Module):
     """mode in {'ff','rec','hfb'}; steps = iterative depth at inference."""
 
-    def __init__(self, mode="hfb", widths=(64, 128, 256), num_classes=10):
+    def __init__(self, mode="hfb", widths=(64, 128, 256), num_classes=10,
+                 fb_scale=1.0):
         super().__init__()
         assert mode in ("ff", "rec", "hfb")
         self.mode = mode
@@ -60,6 +61,9 @@ class HierarchyNet(nn.Module):
             # top-down 投影（深层->浅层，跨层级信息）：1x1 conv + 上采样对齐
             self.td2 = nn.Conv2d(widths[2], widths[1], 1, bias=False)  # s3 -> s2
             self.td1 = nn.Conv2d(widths[1], widths[0], 1, bias=False)  # s2 -> s1
+            # N2a：可学习反馈缩放（初始化 α，给梯度「调大」通道）
+            self.s2_scale = nn.Parameter(torch.tensor(float(fb_scale)))
+            self.s1_scale = nn.Parameter(torch.tensor(float(fb_scale)))
 
     def forward(self, x, steps=None):
         T = self.steps if steps is None else steps
@@ -76,9 +80,9 @@ class HierarchyNet(nn.Module):
             elif self.mode == "hfb":
                 # top-down 调制：深层投影回浅层，仅残差调制（无二次卷积）
                 f2 = F.interpolate(self.td2(z3), size=z2.shape[-2:], mode="nearest")
-                z2 = z2 + torch.tanh(f2)
+                z2 = z2 + self.s2_scale * torch.tanh(f2)
                 f1 = F.interpolate(self.td1(z2), size=z1.shape[-2:], mode="nearest")
-                z1 = z1 + torch.tanh(f1)
+                z1 = z1 + self.s1_scale * torch.tanh(f1)
         pooled = F.adaptive_avg_pool2d(z3, 1).flatten(1)
         return self.head(pooled)
 
@@ -87,5 +91,5 @@ class HierarchyNet(nn.Module):
         shared = (sum(p.numel() for n, p in self.named_parameters()
                       if not n.startswith(("lat", "td"))))
         extra = sum(p.numel() for n, p in self.named_parameters()
-                    if n.startswith(("lat", "td")))
+                    if n.startswith(("lat", "td", "s1_scale", "s2_scale")))
         return shared, extra

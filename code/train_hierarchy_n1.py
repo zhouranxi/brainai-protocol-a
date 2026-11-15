@@ -120,16 +120,18 @@ def extract_features(model, loader, device, max_n=10000):
     return np.concatenate(feats), np.concatenate(ys)
 
 
-def run_one(cfg, seed, device, epochs=150):
+def run_one(cfg, seed, device, epochs=150, fb_scale=1.0):
     set_seed(seed)
-    outdir = Path(f"/mnt/mydisk/xinguan-brainai/runs/v2_hierarchy/n1p_{cfg}_s{seed}")
+    tag = f"n2a_{cfg}_a{fb_scale}_s{seed}" if fb_scale != 1.0 or cfg == "hfb" and False else f"n1p_{cfg}_s{seed}"
+    # N2a 目录规则：fb_scale 非 1.0 时用 n2a 前缀（N1″ 复跑不受影响）
+    outdir = Path(f"/mnt/mydisk/xinguan-brainai/runs/v2_hierarchy/{tag}")
     outdir.mkdir(parents=True, exist_ok=True)
     fp = outdir / "n1_result.json"
     if fp.exists():
         print(f"[skip] {cfg}_s{seed}", flush=True)
         return json.loads(fp.read_text())
 
-    model = HierarchyNet(mode=cfg).to(device)
+    model = HierarchyNet(mode=cfg, fb_scale=fb_scale).to(device)
     shared, extra = model.param_count_module()
     opt = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9,
                           weight_decay=2e-3, nesterov=True)
@@ -183,7 +185,11 @@ def run_one(cfg, seed, device, epochs=150):
     d_ent = d_ent_of(torch.as_tensor(Xid_tr))
     gd = glue_dimension(Xid_tr, yid_tr, n_sub=500, seed=seed)
 
-    row = {"cfg": cfg, "seed": seed, "id_test": round(id_test, 4),
+    fb_final = (round(float(model.s1_scale.item()), 3),
+                round(float(model.s2_scale.item()), 3)) if cfg == "hfb" else None
+    row = {"cfg": cfg, "seed": seed, "fb_scale": fb_scale,
+           "fb_scale_final": fb_final,
+           "id_test": round(id_test, 4),
            "off_test": round(off_test, 4) if off_test is not None else None,
            "id_probe": round(id_probe, 4), "c100_probe": round(c100, 4),
            "d_ent": round(float(d_ent), 3),
@@ -205,8 +211,10 @@ if __name__ == "__main__":
     ap.add_argument("--cfgs", nargs="+", default=["ff", "rec", "hfb"])
     ap.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2])
     ap.add_argument("--epochs", type=int, default=150)
+    ap.add_argument("--fb-scale", type=float, default=1.0)
     args = ap.parse_args()
     dev = torch.device("cuda:0")
     for cfg in args.cfgs:
         for seed in args.seeds:
-            run_one(cfg, seed, dev, epochs=args.epochs)
+            run_one(cfg, seed, dev, epochs=args.epochs,
+                    fb_scale=args.fb_scale)
