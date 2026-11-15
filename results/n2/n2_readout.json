@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "generated_at": "2026-11-15T22:40:36.166808+08:00",
+    "script": "code/n2_readout.py",
+    "frozen_rules": "ADR-0019 Section 8 (2026-11-15 19:09)",
+    "constants": {
+      "gain_min": 0.005,
+      "ood_min": 0.03
+    }
+  },
+  "N2a_scale_sweep": {
+    "per_alpha": {
+      "0.1": {
+        "gains_vs_ff": [
+          0.0003,
+          -0.0002,
+          0.0009
+        ],
+        "mean_gain": 0.0003,
+        "consistent": false,
+        "fb_scale_final": [
+          [
+            0.1,
+            0.1
+          ],
+          [
+            0.1,
+            0.1
+          ],
+          [
+            0.1,
+            0.1
+          ]
+        ],
+        "off_minus_native": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "0.3": {
+        "gains_vs_ff": [
+          -0.0007,
+          0.0012,
+          0.0006
+        ],
+        "mean_gain": 0.0004,
+        "consistent": false,
+        "fb_scale_final": [
+          [
+            0.3,
+            0.3
+          ],
+          [
+            0.3,
+            0.3
+          ],
+          [
+            0.3,
+            0.3
+          ]
+        ],
+        "off_minus_native": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "1.0": {
+        "gains_vs_ff": [
+          -0.0022,
+          -0.0014,
+          0.0004
+        ],
+        "mean_gain": -0.0011,
+        "consistent": false,
+        "fb_scale_final": [
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "off_minus_native": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "verdict": "WINDOW REJECTED: no alpha reaches +0.5pp -- the hierarchical-feedback family shows no ID gain; ADR-0019 main question closes as a negative result.",
+    "modulation_alive": {
+      "0.1": [
+        true,
+        true
+      ],
+      "0.3": [
+        true,
+        true
+      ],
+      "1.0": [
+        true,
+        true
+      ]
+    }
+  },
+  "N2b_rec_ood": {
+    "per_seed_c100_diff": [
+      0.0389,
+      0.0403,
+      0.0416,
+      0.0383,
+      0.0416,
+      0.0408
+    ],
+    "mean_diff": 0.0403,
+    "n_positive": 6,
+    "verdict": "REC-OOD STABLE: mean c100 diff +0.0403 >= +3pp, 6/6 seeds positive -- real effect, proceed to B2.",
+    "B2_dent_c100_spearman_rec6": -0.086
+  }
+}
