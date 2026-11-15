@@ -69,21 +69,16 @@ class HierarchyNet(nn.Module):
         z3 = self.s3(z2)
         for t in range(T - 1):
             if self.mode == "rec":
-                # 同层横向自连接（不跨层）：门控残差 + 复用同宽度第二块
+                # 同层横向自连接（不跨层）：仅门控残差调制，无二次卷积（N1p 教训）
                 z1 = z1 + torch.sigmoid(self.lat1(z1)) * z1
                 z2 = z2 + torch.sigmoid(self.lat2(z2)) * z2
                 z3 = z3 + torch.sigmoid(self.lat3(z3)) * z3
-                z1 = self.s1[1](z1)   # 第二块（非降维），可安全重复
-                z2 = self.s2[1](z2)
-                z3 = self.s3[1](z3)
             elif self.mode == "hfb":
-                # top-down 调制：深层特征投影回浅层（上采样到浅层分辨率）
+                # top-down 调制：深层投影回浅层，仅残差调制（无二次卷积）
                 f2 = F.interpolate(self.td2(z3), size=z2.shape[-2:], mode="nearest")
-                z2 = self.s2[1](z2 + torch.tanh(f2))
+                z2 = z2 + torch.tanh(f2)
                 f1 = F.interpolate(self.td1(z2), size=z1.shape[-2:], mode="nearest")
-                z1 = self.s1[1](z1 + torch.tanh(f1))
-                # 自下而上再精炼一遍（第二块，通道安全）
-                z3 = self.s3[1](z3)
+                z1 = z1 + torch.tanh(f1)
         pooled = F.adaptive_avg_pool2d(z3, 1).flatten(1)
         return self.head(pooled)
 
