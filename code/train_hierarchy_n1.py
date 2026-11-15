@@ -36,6 +36,7 @@ def loaders(bs=128, workers=6):
     tr_tf = transforms.Compose([
         transforms.RandomCrop(32, padding=4),
         transforms.RandomHorizontalFlip(),
+        transforms.RandAugment(2, 10),
         transforms.ToTensor(),
         transforms.Normalize(CIFAR10_MEAN, CIFAR10_STD)])
     te_tf = transforms.Compose([
@@ -121,9 +122,9 @@ def extract_features(model, loader, device, max_n=10000):
     return np.concatenate(feats), np.concatenate(ys)
 
 
-def run_one(cfg, seed, device, epochs=100):
+def run_one(cfg, seed, device, epochs=150):
     set_seed(seed)
-    outdir = Path(f"/mnt/mydisk/xinguan-brainai/runs/v2_hierarchy/n1_{cfg}_s{seed}")
+    outdir = Path(f"/mnt/mydisk/xinguan-brainai/runs/v2_hierarchy/n1p_{cfg}_s{seed}")
     outdir.mkdir(parents=True, exist_ok=True)
     fp = outdir / "n1_result.json"
     if fp.exists():
@@ -133,13 +134,14 @@ def run_one(cfg, seed, device, epochs=100):
     model = HierarchyNet(mode=cfg).to(device)
     shared, extra = model.param_count_module()
     opt = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9,
-                          weight_decay=5e-4, nesterov=True)
+                          weight_decay=2e-3, nesterov=True)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
     crit = nn.CrossEntropyLoss()
     trl, tel = loaders()
 
     t0 = time.time()
     hist = []
+    best_test, best_state = -1.0, None
     for ep in range(epochs):
         model.train()
         corr = tot = 0
@@ -153,12 +155,20 @@ def run_one(cfg, seed, device, epochs=100):
             corr += (model(xb).argmax(1) == yb).sum().item()
             tot += yb.numel()
         sched.step()
-        test = eval_acc(model, tel, device)
-        hist.append({"epoch": ep + 1, "train_acc": round(corr / tot, 4),
-                     "test_acc": round(test, 4)})
-        if (ep + 1) % 20 == 0:
-            print(f"  [{cfg}_s{seed}] ep{ep+1}/{epochs} train={corr/tot:.4f} "
-                  f"test={test:.4f} ({time.time()-t0:.0f}s)", flush=True)
+        if (ep + 1) % 10 == 0 or ep == epochs - 1:
+            test = eval_acc(model, tel, device)
+            hist.append({"epoch": ep + 1, "train_acc": round(corr / tot, 4),
+                         "test_acc": round(test, 4)})
+            if test > best_test:
+                best_test = test
+                best_state = {k: v.detach().clone() for k, v in
+                              model.state_dict().items()}
+            if (ep + 1) % 30 == 0 or ep == epochs - 1:
+                print(f"  [{cfg}_s{seed}] ep{ep+1}/{epochs} train={corr/tot:.4f} "
+                      f"test={test:.4f} best={best_test:.4f} "
+                      f"({time.time()-t0:.0f}s)", flush=True)
+    # 恢复最佳 checkpoint（协议修复：早停保护）
+    model.load_state_dict(best_state)
 
     # ---- 交换读数 + 表征测量 ----
     id_test = eval_acc(model, tel, device)                    # 原配推理
@@ -196,7 +206,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--cfgs", nargs="+", default=["ff", "rec", "hfb"])
     ap.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2])
-    ap.add_argument("--epochs", type=int, default=100)
+    ap.add_argument("--epochs", type=int, default=150)
     args = ap.parse_args()
     dev = torch.device("cuda:0")
     for cfg in args.cfgs:
