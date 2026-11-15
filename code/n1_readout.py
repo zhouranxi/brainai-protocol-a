@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-E_DIR = ROOT / "results" / "n1_hierarchy"
+E_DIR = ROOT / "results" / "n1p_hierarchy"
 OUT = E_DIR / "n1_readout.json"
 Q_HI, Q_LO = 2 / 3, 1 / 3
 HEALTH = 0.90
@@ -37,7 +37,7 @@ def main() -> int:
     rows = {}
     for cfg in CFGS:
         for s in SEEDS:
-            p = E_DIR / f"n1_{cfg}_s{s}.json"
+            p = E_DIR / f"n1p_{cfg}_s{s}.json"
             rows[(cfg, s)] = json.loads(p.read_text(encoding="utf-8"))["rows"][0]
 
     def m(cfg, key):
