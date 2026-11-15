@@ -122,8 +122,8 @@ def extract_features(model, loader, device, max_n=10000):
 
 def run_one(cfg, seed, device, epochs=150, fb_scale=1.0):
     set_seed(seed)
-    tag = f"n2a_{cfg}_a{fb_scale}_s{seed}" if fb_scale != 1.0 or cfg == "hfb" and False else f"n1p_{cfg}_s{seed}"
-    # N2a 目录规则：fb_scale 非 1.0 时用 n2a 前缀（N1″ 复跑不受影响）
+    # N2a 目录规则：显式 n2a 标记时用 n2a 前缀；否则 n1p（N1″/N2b 复用）
+    tag = f"n2a_{cfg}_a{fb_scale}_s{seed}" if os.environ.get("N2A_TAG") else f"n1p_{cfg}_s{seed}"
     outdir = Path(f"/mnt/mydisk/xinguan-brainai/runs/v2_hierarchy/{tag}")
     outdir.mkdir(parents=True, exist_ok=True)
     fp = outdir / "n1_result.json"
