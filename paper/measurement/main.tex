@@ -822,6 +822,18 @@ evaluate.
       not as a property of the architecture; cross-condition
       comparisons of such statistics need the per-condition median
       over at least four draws.
+\item A companion causality study audited the \emph{caliber} of a
+      transfer readout that several of its intervention analyses
+      relied on: a CIFAR-100 linear probe. Re-measuring the same
+      checkpoints against input corruptions (CIFAR-10-C, 19 types)
+      showed that the probe gains (up to $+8.8$\,pp) transmit at
+      $0.05$--$-0.29$ of their size --- the response is a
+      probe-readability effect, not behavioral robustness. The
+      lesson generalizes beyond that study: \emph{which} readout
+      a transfer claim is measured against is itself a
+      preregistration-grade choice, and probe-caliber gains
+      should not be reported as robustness without a corruption
+      control.
 \end{enumerate}
 
 \section{Conclusion}
