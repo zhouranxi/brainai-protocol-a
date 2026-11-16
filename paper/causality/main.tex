@@ -77,7 +77,11 @@ $9.2\times$ baseline---yet the paired, placebo-calibrated slope of transfer
 on $\dfx$ is $14.7\%$ of observational ($t=6.89$: a real channel, an order
 of magnitude short), following a sub-linear, saturating dose--response
 that flattens to
-$1.9\%$ of observational at high dose. (iv)
+$1.9\%$ of observational at high dose; a post-adjudication audit
+(ADR-0021) further shows this dose--response is specific to the
+CIFAR-100 \emph{linear-probe} readout and does not transmit to
+input-corruption robustness (CIFAR-10-C), so the channel is real as a
+probe-readability response, not as behavioral robustness. (iv)
 \emph{Architecture transfer}: the same dissociation replicates in every tested
 family---ResNet-34/50, ShuffleNet-V2 \citep{ma2018shufflenet}, and
 RegNetY-400M (16 further recipes)---with
@@ -1042,6 +1046,18 @@ active at every training step), and the transmission remains at
 $14.7\%$ of observational with a saturating response surface; the
 burden of proof now falls on any claim that some other form of
 weight-space geometric intervention would behave differently.
+(vi$'$) \emph{Readout caliber of the forcing response}---the
+E4 dose--response and all its downstream analyses use the
+CIFAR-100 linear-probe readout. A preregistered audit of the
+dose axis against input corruptions (ADR-0021: CIFAR-10-C,
+19 types $\times$ 5 severities on the same checkpoints) finds
+the probe gain transmits at $0.05$--$-0.29$ of its size: the
+response is a probe-readability effect, not behavioral
+robustness under input shift. None of the headline dissociation
+claims depend on this readout (the E1/E2/E5 corruption results
+were measured as corruptions from the start), but any
+quantitative use of the $14.7\%$ or the dose--response shape
+should be understood as probe-caliber.
 (vi) \emph{Batch-level vs.\ per-intervention transmission}---the
 $14.7\%$ (and the $9$--$18\%$ range) are placebo-calibrated
 \emph{batch-level} statistics, not a ceiling on any single
@@ -1064,6 +1080,12 @@ the low-dose numerator $\Delta c_{100}$ itself exceeds the placebo
 band ($+0.037$ to $+0.073$) at mid-range denominators
 ($\Delta\dfx = 7.5$--$12.9$), so the plateau is a real functional
 response under both the secant and the absolute-magnitude reading.
+A later readout-caliber audit (ADR-0021, P14) bounds the scope of
+``functional'' here: the same dose--response measured against
+input corruptions (CIFAR-10-C, 19 types) transmits none of the
+probe-space gain (transmission ratios $0.05$--$-0.29$ across
+doses), so the response is real as a probe-readability effect and
+does not constitute behavioral robustness under input shift.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -1335,6 +1357,24 @@ $|\mathrm{median}(b) - b_{\mathrm{s0}}|$ exceeding tolerance.
 Single-curve exponents are one draw from a heavy-tailed
 distribution; cross-seed exponent comparisons need the per-seed
 median over $\ge 4$ draws.
+
+\paragraph{Amendment 6 (readout-caliber audit of the forcing response).}
+A preregistered audit (ADR-0021, run after adjudication) re-measured
+the s0 dose axis (P8 seed-2 checkpoints, $\lambda \in
+\{0.03, 0.1, 1, 3\}$ plus base) against CIFAR-10-C (19 corruptions
+$\times$ 5 severities). \emph{Outcome, reported in full}: every
+dose point whose probe gain exceeds $+3$\,pp ($\Delta c_{100} =
++3.1/+4.9/+8.8/+8.7$\,pp) transmits $\le 1$\,pp to the
+corruption readout ($\Delta c_{\mathrm{10C}} = +0.2/-1.4/-0.6/
+-0.5$\,pp; transmission ratios $0.05$, $-0.29$, $-0.07$,
+$-0.06$). The dose--response is therefore real and reproducible
+\emph{as a probe-readability response} and does not constitute
+behavioral robustness under input shift --- the same signature an
+independent architecture-level program found for lateral-recurrence
+and recolor effects (ADR-0020: probe-specific; corruption-null).
+The dissociation claims of \S\ref{sec:e4} are unchanged; the
+caliber note has been added to the abstract, the limitation list,
+and the App.~29 discussion.
 
 \section{E1 endpoint summary table}
 \label{app:e1table}
