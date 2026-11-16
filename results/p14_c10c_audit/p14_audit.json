@@ -1,0 +1,129 @@
+{
+ "rows": [
+  {
+   "point": "base",
+   "c10c_mean": 0.755,
+   "per_corruption": {
+    "brightness": 0.8509,
+    "contrast": 0.5744,
+    "defocus_blur": 0.7697,
+    "elastic_transform": 0.7962,
+    "fog": 0.7273,
+    "frost": 0.785,
+    "gaussian_blur": 0.7221,
+    "gaussian_noise": 0.7443,
+    "glass_blur": 0.7144,
+    "impulse_noise": 0.6264,
+    "jpeg_compression": 0.8338,
+    "motion_blur": 0.7094,
+    "pixelate": 0.8422,
+    "saturate": 0.8044,
+    "shot_noise": 0.7773,
+    "snow": 0.7855,
+    "spatter": 0.7632,
+    "speckle_noise": 0.775,
+    "zoom_blur": 0.7436
+   }
+  },
+  {
+   "point": "lam0.03",
+   "c10c_mean": 0.7566,
+   "per_corruption": {
+    "brightness": 0.8538,
+    "contrast": 0.5924,
+    "defocus_blur": 0.773,
+    "elastic_transform": 0.798,
+    "fog": 0.7378,
+    "frost": 0.7849,
+    "gaussian_blur": 0.7224,
+    "gaussian_noise": 0.7458,
+    "glass_blur": 0.6972,
+    "impulse_noise": 0.6218,
+    "jpeg_compression": 0.8345,
+    "motion_blur": 0.716,
+    "pixelate": 0.8337,
+    "saturate": 0.8107,
+    "shot_noise": 0.7816,
+    "snow": 0.7808,
+    "spatter": 0.7694,
+    "speckle_noise": 0.7775,
+    "zoom_blur": 0.745
+   }
+  },
+  {
+   "point": "lam0.1",
+   "c10c_mean": 0.7406,
+   "per_corruption": {
+    "brightness": 0.842,
+    "contrast": 0.56,
+    "defocus_blur": 0.7448,
+    "elastic_transform": 0.7812,
+    "fog": 0.7137,
+    "frost": 0.7745,
+    "gaussian_blur": 0.6894,
+    "gaussian_noise": 0.7313,
+    "glass_blur": 0.7011,
+    "impulse_noise": 0.6201,
+    "jpeg_compression": 0.8264,
+    "motion_blur": 0.6915,
+    "pixelate": 0.8303,
+    "saturate": 0.7943,
+    "shot_noise": 0.7656,
+    "snow": 0.7767,
+    "spatter": 0.7629,
+    "speckle_noise": 0.7617,
+    "zoom_blur": 0.7048
+   }
+  },
+  {
+   "point": "lam1.0",
+   "c10c_mean": 0.7491,
+   "per_corruption": {
+    "brightness": 0.8487,
+    "contrast": 0.5871,
+    "defocus_blur": 0.769,
+    "elastic_transform": 0.7914,
+    "fog": 0.7245,
+    "frost": 0.7736,
+    "gaussian_blur": 0.7159,
+    "gaussian_noise": 0.7237,
+    "glass_blur": 0.7046,
+    "impulse_noise": 0.605,
+    "jpeg_compression": 0.8344,
+    "motion_blur": 0.7077,
+    "pixelate": 0.8346,
+    "saturate": 0.8029,
+    "shot_noise": 0.7633,
+    "snow": 0.7816,
+    "spatter": 0.7664,
+    "speckle_noise": 0.7604,
+    "zoom_blur": 0.7375
+   }
+  },
+  {
+   "point": "lam3.0",
+   "c10c_mean": 0.7501,
+   "per_corruption": {
+    "brightness": 0.85,
+    "contrast": 0.5756,
+    "defocus_blur": 0.7603,
+    "elastic_transform": 0.794,
+    "fog": 0.7268,
+    "frost": 0.7809,
+    "gaussian_blur": 0.7065,
+    "gaussian_noise": 0.7383,
+    "glass_blur": 0.6996,
+    "impulse_noise": 0.6205,
+    "jpeg_compression": 0.8367,
+    "motion_blur": 0.7044,
+    "pixelate": 0.8298,
+    "saturate": 0.8113,
+    "shot_noise": 0.7752,
+    "snow": 0.7781,
+    "spatter": 0.7673,
+    "speckle_noise": 0.7716,
+    "zoom_blur": 0.7251
+   }
+  }
+ ]
+}
