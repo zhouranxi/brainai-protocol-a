@@ -34,7 +34,7 @@ def main() -> int:
     rows = []
     for cfg in ("rec", "ff"):
         for s in (0, 1, 2):
-            ck = RUNS / f"n1p_{cfg}_s{s}" / f"{cfg}_last.pt"
+            ck = RUNS / f"n4_{cfg}_fd0.0_s{s}" / f"{cfg}_last.pt"
             if not ck.exists():
                 # 训练脚本没存 last ckpt——重建：用记录里的架构 + 重新评估不可行。
                 # fallback：直接查有没有已存权重（N4 发射脚本会先补存）。

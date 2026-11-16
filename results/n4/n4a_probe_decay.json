@@ -1,0 +1,112 @@
+{
+ "rows": [
+  {
+   "cfg": "rec",
+   "seed": 0,
+   "sigma": 0.0,
+   "c100_noisy": 0.1371
+  },
+  {
+   "cfg": "rec",
+   "seed": 0,
+   "sigma": 0.1,
+   "c100_noisy": 0.1365
+  },
+  {
+   "cfg": "rec",
+   "seed": 0,
+   "sigma": 0.3,
+   "c100_noisy": 0.1347
+  },
+  {
+   "cfg": "rec",
+   "seed": 1,
+   "sigma": 0.0,
+   "c100_noisy": 0.1355
+  },
+  {
+   "cfg": "rec",
+   "seed": 1,
+   "sigma": 0.1,
+   "c100_noisy": 0.1344
+  },
+  {
+   "cfg": "rec",
+   "seed": 1,
+   "sigma": 0.3,
+   "c100_noisy": 0.1324
+  },
+  {
+   "cfg": "rec",
+   "seed": 2,
+   "sigma": 0.0,
+   "c100_noisy": 0.1352
+  },
+  {
+   "cfg": "rec",
+   "seed": 2,
+   "sigma": 0.1,
+   "c100_noisy": 0.1355
+  },
+  {
+   "cfg": "rec",
+   "seed": 2,
+   "sigma": 0.3,
+   "c100_noisy": 0.1311
+  },
+  {
+   "cfg": "ff",
+   "seed": 0,
+   "sigma": 0.0,
+   "c100_noisy": 0.0925
+  },
+  {
+   "cfg": "ff",
+   "seed": 0,
+   "sigma": 0.1,
+   "c100_noisy": 0.0937
+  },
+  {
+   "cfg": "ff",
+   "seed": 0,
+   "sigma": 0.3,
+   "c100_noisy": 0.0916
+  },
+  {
+   "cfg": "ff",
+   "seed": 1,
+   "sigma": 0.0,
+   "c100_noisy": 0.099
+  },
+  {
+   "cfg": "ff",
+   "seed": 1,
+   "sigma": 0.1,
+   "c100_noisy": 0.0987
+  },
+  {
+   "cfg": "ff",
+   "seed": 1,
+   "sigma": 0.3,
+   "c100_noisy": 0.0963
+  },
+  {
+   "cfg": "ff",
+   "seed": 2,
+   "sigma": 0.0,
+   "c100_noisy": 0.0975
+  },
+  {
+   "cfg": "ff",
+   "seed": 2,
+   "sigma": 0.1,
+   "c100_noisy": 0.0972
+  },
+  {
+   "cfg": "ff",
+   "seed": 2,
+   "sigma": 0.3,
+   "c100_noisy": 0.0958
+  }
+ ]
+}
