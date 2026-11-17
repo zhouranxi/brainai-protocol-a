@@ -1,0 +1,55 @@
+{
+ "rows": [
+  {
+   "bottleneck": "width",
+   "cfg": "hfb",
+   "seed": 0,
+   "id_test": 0.9317,
+   "off_test": 0.9317,
+   "c100_probe": 0.2306,
+   "hist": [
+    {
+     "epoch": 10,
+     "test_acc": 0.7136
+    },
+    {
+     "epoch": 20,
+     "test_acc": 0.5442
+    },
+    {
+     "epoch": 30,
+     "test_acc": 0.4417
+    },
+    {
+     "epoch": 40,
+     "test_acc": 0.73
+    },
+    {
+     "epoch": 50,
+     "test_acc": 0.8005
+    },
+    {
+     "epoch": 60,
+     "test_acc": 0.7461
+    },
+    {
+     "epoch": 70,
+     "test_acc": 0.7049
+    },
+    {
+     "epoch": 80,
+     "test_acc": 0.8669
+    },
+    {
+     "epoch": 90,
+     "test_acc": 0.9105
+    },
+    {
+     "epoch": 100,
+     "test_acc": 0.9317
+    }
+   ],
+   "secs": 821.5
+  }
+ ]
+}

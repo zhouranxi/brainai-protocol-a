@@ -51,8 +51,8 @@ def main() -> int:
                      "hfb_minus_ff": round(hfb - ff, 4),
                      "per_seed_gaps": gaps, "consistent": consistent,
                      "hfb_minus_rec": round(hfb - rec, 4),
-                     "c100": {c: round(mean(
-                         rows[(b, c, s)]["c100_probe"] for s in range(3)), 4)
+                     "c100": {c: round(mean(list(
+                         rows[(b, c, s)]["c100_probe"] for s in range(3))), 4)
                          for c in CFGS}}
 
     go = [b for b in BNS
