@@ -111,14 +111,14 @@ def build_prompt(cond: str, q: str) -> list[dict]:
                 {"role": "user", "content": f"{filler}\n\nQuestion: {q}"}]
 
 
-def run_ollama(msgs):
+def run_ollama(msgs, timeout=300):
     req = urllib.request.Request(
         OLLAMA, data=json.dumps(
             {"model": MODEL, "messages": msgs, "stream": False,
              "options": {"temperature": 0}}).encode(),
         headers={"Content-Type": "application/json"})
     t0 = time.time()
-    with urllib.request.urlopen(req, timeout=300) as r:
+    with urllib.request.urlopen(req, timeout=timeout) as r:
         d = json.loads(r.read())
     return d["message"]["content"], d.get("eval_count", 0), round(time.time() - t0, 1)
 
