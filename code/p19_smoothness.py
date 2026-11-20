@@ -152,7 +152,7 @@ def main():
     arms = [("p8_s0_seed2", "lam{}"), ("p10_s0_seed3", "lam{}")]
     for prefix, _ in arms:
         for lam in ("0.03", "0.1", "1.0", "3.0"):
-            d = RUNS / "v2_p4_forcing" / f"{prefix}_{lam}"
+            d = RUNS / "v2_p4_forcing" / f"{prefix}_lam{lam}"
             cks = sorted(d.glob("*whiten*.pt"))
             if not cks:
                 continue
