@@ -1,0 +1,60 @@
+{
+ "rows": [
+  {
+   "tag": "p8_s0_seed2_lam0.03",
+   "family": "dose",
+   "S_loc": 2.1091,
+   "S_curv": 0.5,
+   "S_conf": 1.8039
+  },
+  {
+   "tag": "p8_s0_seed2_lam0.1",
+   "family": "dose",
+   "S_loc": 2.129,
+   "S_curv": 0.5,
+   "S_conf": 1.3984
+  },
+  {
+   "tag": "p8_s0_seed2_lam1.0",
+   "family": "dose",
+   "S_loc": 2.1501,
+   "S_curv": 0.5,
+   "S_conf": 0.9724
+  },
+  {
+   "tag": "p8_s0_seed2_lam3.0",
+   "family": "dose",
+   "S_loc": 2.1614,
+   "S_curv": 0.5,
+   "S_conf": 0.8112
+  },
+  {
+   "tag": "p10_s0_seed3_lam0.03",
+   "family": "dose",
+   "S_loc": 2.0945,
+   "S_curv": 0.5,
+   "S_conf": 1.875
+  },
+  {
+   "tag": "p10_s0_seed3_lam0.1",
+   "family": "dose",
+   "S_loc": 2.1204,
+   "S_curv": 0.5,
+   "S_conf": 1.5109
+  },
+  {
+   "tag": "p10_s0_seed3_lam1.0",
+   "family": "dose",
+   "S_loc": 2.1496,
+   "S_curv": 0.5,
+   "S_conf": 1.0109
+  },
+  {
+   "tag": "p10_s0_seed3_lam3.0",
+   "family": "dose",
+   "S_loc": 2.1589,
+   "S_curv": 0.5,
+   "S_conf": 0.8286
+  }
+ ]
+}
