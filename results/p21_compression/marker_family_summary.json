@@ -1,0 +1,13 @@
+{
+ "n": 40,
+ "r_L_c100": 0.9328,
+ "r_U_c100": -0.6106,
+ "r_D_c100": 0.8825,
+ "r_L_D": 0.9157,
+ "r_U_D": -0.3947,
+ "r_U_L": -0.6411,
+ "partial_L_given_D": 0.6597,
+ "partial_U_given_D": -0.6071,
+ "best_combo_weight": -1.0,
+ "best_combo_r": 0.924
+}
