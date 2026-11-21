@@ -595,6 +595,7 @@ def main() -> int:
           all(p < 0.05 for p in holm), True)
 
     check_nextmarker()
+    check_amendment7()
 
     print()
     if FAILURES:
@@ -616,6 +617,21 @@ def check_nextmarker() -> None:
     check("nextmarker: r(L, D)", s["r_L_D"], 0.916, tol=0.0005)
     check("nextmarker: r(U, D)", s["r_U_D"], -0.395, tol=0.0005)
     check("nextmarker: best combo |r|", s["best_combo_r"], 0.924, tol=0.0005)
+
+
+
+def check_amendment7() -> None:
+    """ADR-0022..0028 label-scope extensions quoted in Amendment 7."""
+    import json as _j
+    s = _j.loads((REPO / "results" / "p21_compression" / "marker_family_summary.json").read_text(encoding="utf-8"))
+    p22 = _j.loads((REPO / "results" / "p22_criticality" / "p22_phase0.json").read_text(encoding="utf-8"))["rows"]
+    phis = [r["phi_hat"] for r in p22]
+    # Amendment 7 numbers: r(L,D)=+0.92, partial +0.66, utility partial -0.61, Phi 0.002-0.035
+    check("A7: r(L_knn, D_eff) quoted +0.92", round(s["r_L_D"], 2), 0.92, tol=0.005)
+    check("A7: partial(L|D) quoted +0.66", round(s["partial_L_given_D"], 2), 0.66, tol=0.005)
+    check("A7: partial(U|D) quoted -0.61", round(s["partial_U_given_D"], 2), -0.61, tol=0.005)
+    check("A7: Phi span quoted 0.002-0.035",
+          (round(min(phis), 3), round(max(phis), 3)), (0.002, 0.035), tol=0.001)
 
 
 if __name__ == "__main__":
