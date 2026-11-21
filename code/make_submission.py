@@ -191,6 +191,12 @@ ZIP_EXCLUDES = [
     "upload_zenodo_curl.sh", "watch_and_finalize.sh", "make_submission.py",
     "check_references_bib.py",
     "FILL_DOI_CHECKLIST.md", "ZENODO_PUBLISHING.md", "zenodo_metadata.json",
+    # one-shot dev patch scripts (contain personal paths; not part of the
+    # reproducibility chain -- the patched sources themselves ship)
+    "patch_nextmarker.py", "patch_amendment7.py",
+    # box-specific data prep / verify helpers with personal absolute paths
+    "p19_prep_cifar.py", "p5_collapse_readout_verify.py",
+    "p18_wrapper.py", "p18b_chunk.py", "p18c_chunk.py", "p19_dose.py",
     # internal records that name the author
     "paper/protocol_verification_email.md",
     "paper/paper_draft_v1.md", "paper/paper_outline.md",
