@@ -594,12 +594,28 @@ def main() -> int:
     check("All three primary tests survive Holm at 0.05",
           all(p < 0.05 for p in holm), True)
 
+    check_nextmarker()
+
     print()
     if FAILURES:
         print(f"{len(FAILURES)} check(s) FAILED: {FAILURES}")
         return 1
     print("All checks passed: every asserted number matches the locked JSON data.")
     return 0
+
+
+
+def check_nextmarker() -> None:
+    """ADR-0026/0027/0028: new-marker subsection numbers (n=40 paired set)."""
+    import json as _j
+    s = _j.loads((REPO / "results" / "p21_compression" / "marker_family_summary.json").read_text(encoding="utf-8"))
+    check("nextmarker: r(L_knn, c100)", s["r_L_c100"], 0.933, tol=0.0005)
+    check("nextmarker: r(U, c100)", s["r_U_c100"], -0.611, tol=0.0005)
+    check("nextmarker: partial(U|D)", s["partial_U_given_D"], -0.607, tol=0.0005)
+    check("nextmarker: partial(L|D)", s["partial_L_given_D"], 0.660, tol=0.0005)
+    check("nextmarker: r(L, D)", s["r_L_D"], 0.916, tol=0.0005)
+    check("nextmarker: r(U, D)", s["r_U_D"], -0.395, tol=0.0005)
+    check("nextmarker: best combo |r|", s["best_combo_r"], 0.924, tol=0.0005)
 
 
 if __name__ == "__main__":
