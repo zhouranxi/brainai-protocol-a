@@ -1,0 +1,616 @@
+{
+ "rows": [
+  {
+   "tag": "regnet_y_400mf_lr0.125_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.1839,
+   "glue_r": 0.782,
+   "glue_u": 0.0382,
+   "alpha": 0.0009,
+   "phi_hat": 0.0045
+  },
+  {
+   "tag": "regnet_y_400mf_lr0.125_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.7793,
+   "glue_r": 0.7736,
+   "glue_u": 0.0508,
+   "alpha": 0.0008,
+   "phi_hat": 0.009
+  },
+  {
+   "tag": "regnet_y_400mf_lr0.5_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.008,
+   "glue_r": 0.3507,
+   "glue_u": 0.1096,
+   "alpha": 0.0099,
+   "phi_hat": 0.011
+  },
+  {
+   "tag": "regnet_y_400mf_lr0.5_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.0048,
+   "glue_r": 0.4897,
+   "glue_u": 0.0619,
+   "alpha": 0.0032,
+   "phi_hat": 0.0062
+  },
+  {
+   "tag": "resnet18_lr0.125_wd0.0001_s0",
+   "family": "grid",
+   "glue_d": 1.3193,
+   "glue_r": 0.7138,
+   "glue_u": 0.0423,
+   "alpha": 0.0009,
+   "phi_hat": 0.0056
+  },
+  {
+   "tag": "resnet18_lr0.125_wd0.0001_s1",
+   "family": "grid",
+   "glue_d": 1.1676,
+   "glue_r": 0.7361,
+   "glue_u": 0.0417,
+   "alpha": 0.001,
+   "phi_hat": 0.0049
+  },
+  {
+   "tag": "resnet18_lr0.125_wd0.0001_s2",
+   "family": "grid",
+   "glue_d": 1.1841,
+   "glue_r": 0.666,
+   "glue_u": 0.0374,
+   "alpha": 0.001,
+   "phi_hat": 0.0044
+  },
+  {
+   "tag": "resnet18_lr0.125_wd0.0001_s3",
+   "family": "grid",
+   "glue_d": 1.3737,
+   "glue_r": 0.7366,
+   "glue_u": 0.0489,
+   "alpha": 0.001,
+   "phi_hat": 0.0067
+  },
+  {
+   "tag": "resnet18_lr0.125_wd0.0001_s4",
+   "family": "grid",
+   "glue_d": 1.1907,
+   "glue_r": 0.7373,
+   "glue_u": 0.0426,
+   "alpha": 0.001,
+   "phi_hat": 0.0051
+  },
+  {
+   "tag": "resnet18_lr0.125_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.2064,
+   "glue_r": 0.6491,
+   "glue_u": 0.0368,
+   "alpha": 0.001,
+   "phi_hat": 0.0044
+  },
+  {
+   "tag": "resnet18_lr0.125_wd0.0002_s1",
+   "family": "grid",
+   "glue_d": 1.2487,
+   "glue_r": 0.6743,
+   "glue_u": 0.0371,
+   "alpha": 0.001,
+   "phi_hat": 0.0046
+  },
+  {
+   "tag": "resnet18_lr0.125_wd0.0002_s2",
+   "family": "grid",
+   "glue_d": 1.1482,
+   "glue_r": 0.6488,
+   "glue_u": 0.0333,
+   "alpha": 0.001,
+   "phi_hat": 0.0038
+  },
+  {
+   "tag": "resnet18_lr0.125_wd2.5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.9983,
+   "glue_r": 0.7617,
+   "glue_u": 0.0631,
+   "alpha": 0.0009,
+   "phi_hat": 0.0126
+  },
+  {
+   "tag": "resnet18_lr0.125_wd2.5e-05_s1",
+   "family": "grid",
+   "glue_d": 1.6415,
+   "glue_r": 0.7456,
+   "glue_u": 0.0464,
+   "alpha": 0.0008,
+   "phi_hat": 0.0076
+  },
+  {
+   "tag": "resnet18_lr0.125_wd2.5e-05_s2",
+   "family": "grid",
+   "glue_d": 1.8566,
+   "glue_r": 0.7304,
+   "glue_u": 0.0568,
+   "alpha": 0.0009,
+   "phi_hat": 0.0105
+  },
+  {
+   "tag": "resnet18_lr0.125_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.6276,
+   "glue_r": 0.7159,
+   "glue_u": 0.0489,
+   "alpha": 0.0009,
+   "phi_hat": 0.008
+  },
+  {
+   "tag": "resnet18_lr0.125_wd5e-05_s1",
+   "family": "grid",
+   "glue_d": 1.9168,
+   "glue_r": 0.723,
+   "glue_u": 0.0582,
+   "alpha": 0.0009,
+   "phi_hat": 0.0112
+  },
+  {
+   "tag": "resnet18_lr0.125_wd5e-05_s2",
+   "family": "grid",
+   "glue_d": 1.5901,
+   "glue_r": 0.6963,
+   "glue_u": 0.047,
+   "alpha": 0.0009,
+   "phi_hat": 0.0075
+  },
+  {
+   "tag": "resnet18_lr0.25_wd0.0001_s0",
+   "family": "grid",
+   "glue_d": 1.0807,
+   "glue_r": 0.6862,
+   "glue_u": 0.0398,
+   "alpha": 0.0011,
+   "phi_hat": 0.0043
+  },
+  {
+   "tag": "resnet18_lr0.25_wd0.0001_s1",
+   "family": "grid",
+   "glue_d": 1.031,
+   "glue_r": 0.6127,
+   "glue_u": 0.0368,
+   "alpha": 0.0013,
+   "phi_hat": 0.0038
+  },
+  {
+   "tag": "resnet18_lr0.25_wd0.0001_s2",
+   "family": "grid",
+   "glue_d": 1.0607,
+   "glue_r": 0.7327,
+   "glue_u": 0.0373,
+   "alpha": 0.001,
+   "phi_hat": 0.004
+  },
+  {
+   "tag": "resnet18_lr0.25_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.0699,
+   "glue_r": 0.6497,
+   "glue_u": 0.0311,
+   "alpha": 0.001,
+   "phi_hat": 0.0033
+  },
+  {
+   "tag": "resnet18_lr0.25_wd0.0002_s1",
+   "family": "grid",
+   "glue_d": 1.0826,
+   "glue_r": 0.6036,
+   "glue_u": 0.0332,
+   "alpha": 0.0011,
+   "phi_hat": 0.0036
+  },
+  {
+   "tag": "resnet18_lr0.25_wd0.0002_s2",
+   "family": "grid",
+   "glue_d": 1.1449,
+   "glue_r": 0.6256,
+   "glue_u": 0.0323,
+   "alpha": 0.001,
+   "phi_hat": 0.0037
+  },
+  {
+   "tag": "resnet18_lr0.25_wd2.5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.0548,
+   "glue_r": 0.7904,
+   "glue_u": 0.0351,
+   "alpha": 0.0009,
+   "phi_hat": 0.0037
+  },
+  {
+   "tag": "resnet18_lr0.25_wd2.5e-05_s1",
+   "family": "grid",
+   "glue_d": 1.3183,
+   "glue_r": 0.7695,
+   "glue_u": 0.0354,
+   "alpha": 0.0007,
+   "phi_hat": 0.0047
+  },
+  {
+   "tag": "resnet18_lr0.25_wd2.5e-05_s2",
+   "family": "grid",
+   "glue_d": 1.0171,
+   "glue_r": 0.7626,
+   "glue_u": 0.0321,
+   "alpha": 0.0009,
+   "phi_hat": 0.0033
+  },
+  {
+   "tag": "resnet18_lr0.25_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 0.9342,
+   "glue_r": 0.7569,
+   "glue_u": 0.032,
+   "alpha": 0.0009,
+   "phi_hat": 0.003
+  },
+  {
+   "tag": "resnet18_lr0.25_wd5e-05_s1",
+   "family": "grid",
+   "glue_d": 1.1372,
+   "glue_r": 0.7727,
+   "glue_u": 0.0424,
+   "alpha": 0.001,
+   "phi_hat": 0.0048
+  },
+  {
+   "tag": "resnet18_lr0.25_wd5e-05_s2",
+   "family": "grid",
+   "glue_d": 1.0802,
+   "glue_r": 0.7431,
+   "glue_u": 0.0373,
+   "alpha": 0.001,
+   "phi_hat": 0.004
+  },
+  {
+   "tag": "resnet18_lr0.5_wd0.0001_s0",
+   "family": "grid",
+   "glue_d": 0.9868,
+   "glue_r": 0.4557,
+   "glue_u": 0.0847,
+   "alpha": 0.005,
+   "phi_hat": 0.0084
+  },
+  {
+   "tag": "resnet18_lr0.5_wd0.0001_s1",
+   "family": "grid",
+   "glue_d": 0.9913,
+   "glue_r": 0.1541,
+   "glue_u": 0.0154,
+   "alpha": 0.0067,
+   "phi_hat": 0.0015
+  },
+  {
+   "tag": "resnet18_lr0.5_wd0.0001_s2",
+   "family": "grid",
+   "glue_d": 0.9976,
+   "glue_r": 0.2453,
+   "glue_u": 0.0285,
+   "alpha": 0.005,
+   "phi_hat": 0.0028
+  },
+  {
+   "tag": "resnet18_lr0.5_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.0119,
+   "glue_r": 0.4522,
+   "glue_u": 0.0923,
+   "alpha": 0.0054,
+   "phi_hat": 0.0093
+  },
+  {
+   "tag": "resnet18_lr0.5_wd0.0002_s1",
+   "family": "grid",
+   "glue_d": 1.016,
+   "glue_r": 0.4882,
+   "glue_u": 0.0784,
+   "alpha": 0.004,
+   "phi_hat": 0.008
+  },
+  {
+   "tag": "resnet18_lr0.5_wd0.0002_s2",
+   "family": "grid",
+   "glue_d": 0.973,
+   "glue_r": 0.3925,
+   "glue_u": 0.0493,
+   "alpha": 0.0038,
+   "phi_hat": 0.0048
+  },
+  {
+   "tag": "resnet18_lr0.5_wd2.5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.0718,
+   "glue_r": 0.7498,
+   "glue_u": 0.0487,
+   "alpha": 0.0013,
+   "phi_hat": 0.0052
+  },
+  {
+   "tag": "resnet18_lr0.5_wd2.5e-05_s1",
+   "family": "grid",
+   "glue_d": 0.9955,
+   "glue_r": 0.8159,
+   "glue_u": 0.0553,
+   "alpha": 0.0014,
+   "phi_hat": 0.0055
+  },
+  {
+   "tag": "resnet18_lr0.5_wd2.5e-05_s2",
+   "family": "grid",
+   "glue_d": 0.971,
+   "glue_r": 0.8205,
+   "glue_u": 0.0381,
+   "alpha": 0.001,
+   "phi_hat": 0.0037
+  },
+  {
+   "tag": "resnet18_lr0.5_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.0083,
+   "glue_r": 0.7294,
+   "glue_u": 0.06,
+   "alpha": 0.0017,
+   "phi_hat": 0.0061
+  },
+  {
+   "tag": "resnet18_lr0.5_wd5e-05_s1",
+   "family": "grid",
+   "glue_d": 0.9919,
+   "glue_r": 0.6879,
+   "glue_u": 0.0662,
+   "alpha": 0.0021,
+   "phi_hat": 0.0066
+  },
+  {
+   "tag": "resnet18_lr0.5_wd5e-05_s2",
+   "family": "grid",
+   "glue_d": 1.0023,
+   "glue_r": 0.662,
+   "glue_u": 0.0846,
+   "alpha": 0.0028,
+   "phi_hat": 0.0085
+  },
+  {
+   "tag": "resnet18_lr1.0_wd0.0001_s0",
+   "family": "grid",
+   "glue_d": 1.002,
+   "glue_r": 0.3699,
+   "glue_u": 0.1204,
+   "alpha": 0.01,
+   "phi_hat": 0.0121
+  },
+  {
+   "tag": "resnet18_lr1.0_wd0.0001_s1",
+   "family": "grid",
+   "glue_d": 1.0063,
+   "glue_r": 0.4405,
+   "glue_u": 0.1627,
+   "alpha": 0.0099,
+   "phi_hat": 0.0164
+  },
+  {
+   "tag": "resnet18_lr1.0_wd0.0001_s2",
+   "family": "grid",
+   "glue_d": 1.005,
+   "glue_r": 0.4741,
+   "glue_u": 0.1675,
+   "alpha": 0.0091,
+   "phi_hat": 0.0168
+  },
+  {
+   "tag": "resnet18_lr1.0_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 0.8942,
+   "glue_r": 0.6474,
+   "glue_u": 0.2974,
+   "alpha": 0.0113,
+   "phi_hat": 0.0266
+  },
+  {
+   "tag": "resnet18_lr1.0_wd0.0002_s1",
+   "family": "grid",
+   "glue_d": 0.8493,
+   "glue_r": 0.6764,
+   "glue_u": 0.3139,
+   "alpha": 0.0118,
+   "phi_hat": 0.0267
+  },
+  {
+   "tag": "resnet18_lr1.0_wd0.0002_s2",
+   "family": "grid",
+   "glue_d": 0.8476,
+   "glue_r": 0.8345,
+   "glue_u": 0.4105,
+   "alpha": 0.0118,
+   "phi_hat": 0.0348
+  },
+  {
+   "tag": "resnet18_lr1.0_wd2.5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.0204,
+   "glue_r": 0.431,
+   "glue_u": 0.093,
+   "alpha": 0.0058,
+   "phi_hat": 0.0095
+  },
+  {
+   "tag": "resnet18_lr1.0_wd2.5e-05_s1",
+   "family": "grid",
+   "glue_d": 1.0016,
+   "glue_r": 0.3078,
+   "glue_u": 0.0747,
+   "alpha": 0.0086,
+   "phi_hat": 0.0075
+  },
+  {
+   "tag": "resnet18_lr1.0_wd2.5e-05_s2",
+   "family": "grid",
+   "glue_d": 0.9816,
+   "glue_r": 0.4376,
+   "glue_u": 0.1479,
+   "alpha": 0.0094,
+   "phi_hat": 0.0145
+  },
+  {
+   "tag": "resnet18_lr1.0_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 0.9313,
+   "glue_r": 0.4985,
+   "glue_u": 0.1407,
+   "alpha": 0.0076,
+   "phi_hat": 0.0131
+  },
+  {
+   "tag": "resnet18_lr1.0_wd5e-05_s1",
+   "family": "grid",
+   "glue_d": 0.972,
+   "glue_r": 0.3981,
+   "glue_u": 0.0848,
+   "alpha": 0.0064,
+   "phi_hat": 0.0082
+  },
+  {
+   "tag": "resnet18_lr1.0_wd5e-05_s2",
+   "family": "grid",
+   "glue_d": 0.9615,
+   "glue_r": 0.4716,
+   "glue_u": 0.1051,
+   "alpha": 0.006,
+   "phi_hat": 0.0101
+  },
+  {
+   "tag": "resnet18_lr1.0_wd5e-05_s3",
+   "family": "grid",
+   "glue_d": 0.9762,
+   "glue_r": 0.4804,
+   "glue_u": 0.1087,
+   "alpha": 0.0059,
+   "phi_hat": 0.0106
+  },
+  {
+   "tag": "resnet18_lr1.0_wd5e-05_s4",
+   "family": "grid",
+   "glue_d": 0.9557,
+   "glue_r": 0.4757,
+   "glue_u": 0.0961,
+   "alpha": 0.0054,
+   "phi_hat": 0.0092
+  },
+  {
+   "tag": "resnet34_lr0.125_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.1861,
+   "glue_r": 0.6441,
+   "glue_u": 0.0356,
+   "alpha": 0.001,
+   "phi_hat": 0.0042
+  },
+  {
+   "tag": "resnet34_lr0.125_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.3104,
+   "glue_r": 0.7129,
+   "glue_u": 0.0367,
+   "alpha": 0.0008,
+   "phi_hat": 0.0048
+  },
+  {
+   "tag": "resnet34_lr0.5_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.0342,
+   "glue_r": 0.1198,
+   "glue_u": 0.0142,
+   "alpha": 0.0097,
+   "phi_hat": 0.0015
+  },
+  {
+   "tag": "resnet34_lr0.5_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.0634,
+   "glue_r": 0.6704,
+   "glue_u": 0.2284,
+   "alpha": 0.0069,
+   "phi_hat": 0.0243
+  },
+  {
+   "tag": "resnet50_lr0.125_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.1242,
+   "glue_r": 0.6224,
+   "glue_u": 0.0337,
+   "alpha": 0.0011,
+   "phi_hat": 0.0038
+  },
+  {
+   "tag": "resnet50_lr0.125_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 2.6516,
+   "glue_r": 0.7937,
+   "glue_u": 0.071,
+   "alpha": 0.0007,
+   "phi_hat": 0.0188
+  },
+  {
+   "tag": "resnet50_lr0.5_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.017,
+   "glue_r": 0.4131,
+   "glue_u": 0.1048,
+   "alpha": 0.0071,
+   "phi_hat": 0.0107
+  },
+  {
+   "tag": "resnet50_lr0.5_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 0.9641,
+   "glue_r": 0.7587,
+   "glue_u": 0.0409,
+   "alpha": 0.0012,
+   "phi_hat": 0.0039
+  },
+  {
+   "tag": "shufflenet_v2_x1_0_lr0.125_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.4525,
+   "glue_r": 0.7421,
+   "glue_u": 0.0338,
+   "alpha": 0.0007,
+   "phi_hat": 0.0049
+  },
+  {
+   "tag": "shufflenet_v2_x1_0_lr0.125_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 2.9478,
+   "glue_r": 0.8112,
+   "glue_u": 0.0665,
+   "alpha": 0.0006,
+   "phi_hat": 0.0196
+  },
+  {
+   "tag": "shufflenet_v2_x1_0_lr0.5_wd0.0002_s0",
+   "family": "grid",
+   "glue_d": 1.0215,
+   "glue_r": 0.4296,
+   "glue_u": 0.12,
+   "alpha": 0.0075,
+   "phi_hat": 0.0123
+  },
+  {
+   "tag": "shufflenet_v2_x1_0_lr0.5_wd5e-05_s0",
+   "family": "grid",
+   "glue_d": 1.0181,
+   "glue_r": 0.5281,
+   "glue_u": 0.1187,
+   "alpha": 0.0053,
+   "phi_hat": 0.0121
+  }
+ ]
+}
