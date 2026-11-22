@@ -136,12 +136,12 @@ def train_one(obj, seed, device):
         for sev, dl in tests.items():
             corr = tot = 0
             norms = []
-            for clean, occ, yb in dl:
-                occ = occ.to(device, non_blocking=True)
+            for xb, yb in dl:
+                xb = xb.to(device, non_blocking=True)
                 yb = yb.to(device, non_blocking=True)
-                corr += (model(occ).argmax(1) == yb).sum().item()
+                corr += (model(xb).argmax(1) == yb).sum().item()
                 tot += yb.numel()
-                norms.append(float(stage_feats(model, occ)[-1].pow(2).mean()))
+                norms.append(float(stage_feats(model, xb)[-1].pow(2).mean()))
             acc_s[str(sev)] = round(corr / tot, 4)
             norm_s[str(sev)] = round(float(np.mean(norms)), 4)
 
