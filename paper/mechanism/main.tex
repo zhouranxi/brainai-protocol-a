@@ -3,6 +3,7 @@
 
 \input{math_commands.tex}
 \usepackage{graphicx}
+\usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{url}
 
@@ -487,6 +488,26 @@ real, is practically unconfirmable at sane batch sizes. R1, by contrast,
 \emph{replicated and grew}: $+12/+33$\,pp at stages 1/2 on the merged
 set (\Mmaint{} vs.\ \Mstate{} recall).
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figs/fig_main.png}
+\caption{The merged 90-puzzle race separates the two claims.
+\textbf{(a)}~Endgame-metric trajectories (top-1 accuracy, gold ranked
+first): self-critique (\Mcrit{}, red) leads significantly at stages 1--2
+(paired sign tests vs.\ \Mmaint{}: $p = 0.019$, $p < 10^{-4}$) but the
+lead vanishes at stage 3 ($p = 0.71$)---an early-convergence effect, not
+a higher ceiling. \textbf{(b)}~Candidate-set recall (gold among the
+three listed candidates): hypothesis maintenance (\Mmaint{}, blue) holds
+a $+33$\,pp advantage over stateless (\Mstate{}) at stage 2, exactly
+where evidence is thinnest. Statelessly prompted mechanisms list a
+single answer at early stages, so their recall coincides with top-1;
+maintenance keeps three live candidates, and its endgame recall ($98\%$)
+is the highest of all mechanisms. All values: merged set, batch-1
+puzzles at temperature 0, confirmation puzzles scored by median rank
+over three temperature-0.7 resamples.}
+\label{fig:race}
+\end{figure}
+
 \section{The hypothesis-maintenance effect}
 \label{sec:maint}
 
@@ -633,7 +654,7 @@ bounds the \emph{endgame} claim in a clean setting; it does not
 adjudicate tool-augmented critique, where the feedback signal is external
 ground truth rather than self-generated. \textbf{CNN side is one stress
 family.} The attractor analysis covers occlusion grids; other stressors
-(noise, blur, 分布 shift) may not select collapse, and feedback might
+(noise, blur, distribution shift) may not select collapse, and feedback might
 show gains there. Our claim is that occlusion-trained racks---the exact
 setting motivating most robustness feedback papers---carry the confound,
 not that all stress racks do. \textbf{Scorer subjectivity.} The
