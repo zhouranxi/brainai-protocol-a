@@ -1,0 +1,720 @@
+\documentclass[10pt]{article}
+\usepackage{tmlr}
+
+\input{math_commands.tex}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{url}
+
+\title{Why Guided Feedback Does Not Help:\\
+Collapse Attractors, Hypothesis Maintenance, and the\\
+Early-Convergence Illusion Across Two Scales}
+
+\author{\name Anonymous Authors \AND \addr Anonymous Affiliation}
+
+\newcommand{\fix}{\marginpar{FIX}}
+
+\def\month{MM}
+\def\year{YYYY}
+\def\openreview{\url{https://openreview.net/forum?id=XXXX}}
+
+% Mechanism shorthands
+\newcommand{\dfx}{D_{\mathrm{eff}}}
+\newcommand{\Mstate}{\textsc{stateless}}
+\newcommand{\Mlock}{\textsc{lock}}
+\newcommand{\Mmaint}{\textsc{maintain}}
+\newcommand{\Mcrit}{\textsc{critique}}
+\newcommand{\rhoerr}{\rho_{\mathrm{err}}}
+
+\begin{document}
+
+\maketitle
+
+% TMLR requires a first-page disclosure that LLMs were used in preparing the
+% submission.
+\let\thefootnote\relax\footnotetext{\emph{Use of LLMs:} Large language models were used as writing and coding assistants in preparing this manuscript; all scientific content, analyses, and reported numbers were determined and verified by the authors. A detailed statement appears in the Use of AI tools section.}\let\thefootnote\arabic
+
+\begin{abstract}
+% One paragraph, TMLR style. All numbers from locked data:
+% results/p23_collapse, results/pc_a0, results/p24_cons (CNN side);
+% results/p25_reveal + results/p31_confirm (LLM side).
+Guided feedback---architectural top-down pathways that let higher stages
+correct lower ones, or inference-time procedures that let a model critique
+its own output---is a recurring proposal for improving robustness under
+distribution shift and for improving multi-step reasoning. Both strands
+implicitly assume that the feedback signal, once wired in or prompted for,
+carries usable corrective information. We test that assumption with two
+preregistered programs that span two scales. On the vision side, five
+independent feedback implementations (modulated, bottlenecked,
+belief-gated, prompt-hierarchical, and predictive-coding objectives) yield
+zero or negative gain on a stress rack, and we identify the confound that
+explains the uniformity: under occlusion training, the network converges to
+a \emph{collapse attractor}---error-direction correlations of $-0.92$ to
+$-0.98$ across six to nine runs, formed within 60 epochs, not reversed by a
+consistency objective (0/3)---so any added feedback competes with a
+solution the training distribution has already selected. On the language
+side, we give feedback its fairest test at the scale where the literature
+reports gains: a 27B instruction model, a graded-evidence-reveal task with
+preregistered mechanism races, and a confirmation batch of 90 puzzles with
+temperature resampling. Self-critique feedback again fails the frozen
+end-game criterion ($+3.3$\,pp, sign test $p = 0.71$), and we show why the
+earlier signal ($+23$\,pp, $p = 0.09$, 30 puzzles) was an artifact of
+sample size. The only replicable mechanism benefit is not feedback at all:
+\emph{hypothesis maintenance}---an explicit instruction to keep $\ge 3$
+ranked candidates while evidence is thin---raises early-stage candidate-set
+recall by $+12$ to $+33$\,pp and retains its advantage at the final stage.
+Self-critique's apparent benefit decomposes into an
+\emph{early-convergence} effect: it wins at intermediate evidence stages
+($p < 10^{-4}$) but not at the endgame, and its sign reverses from
+$+17$\,pp on hard puzzles to $-16$\,pp on medium ones. We conclude that
+guidance-based feedback has no endgame value in either regime tested, while
+hypothesis maintenance is a cheap, replicable alternative whose benefit
+concentrates exactly where feedback is presumed to act---early, under
+evidence scarcity.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+Two research communities keep arriving at the same design intuition from
+opposite directions. In computational neuroscience-inspired deep learning,
+the cortex's abundant top-down connections
+\citep{rao1999predictive,friston2010free} motivate architectural feedback:
+let higher stages modulate, gate, or correct lower ones, and recognition
+under degraded input should improve. In large-language-model (LLM) reasoning,
+self-improvement pipelines
+\citep{madaan2023selfrefine,yao2023tree} motivate procedural feedback: let
+the model critique its own candidate answers and revise, and multi-step
+reasoning should improve. The shared premise is that a feedback signal---%
+wherever it comes from---carries \emph{corrective information} that a purely
+feed-forward pass leaves on the table.
+
+This paper asks when that premise is actually true, and reports two
+preregistered programs that give it every chance to succeed and watch it
+fail in an informative way. The programs are linked: the first produces a
+mechanistic diagnosis (why feedback \emph{cannot} help in that regime), and
+the second uses that diagnosis to design feedback's fairest test in a
+different regime---where it \emph{still} fails, but for a different and
+newly measurable reason.
+
+\paragraph{Program A: why feedback cannot help under occlusion stress
+(CNN side).}
+We build a stress rack in which recognition degrades gracefully with input
+difficulty (occlusion severity as the dose axis), wire in five independent
+feedback implementations---modulation of lower-stage features, bottlenecked
+top-down reconstruction, belief-gated injection, hierarchical prompt
+structure, and a training-objective route (predictive-coding side
+objectives)---and find zero or negative gain in all five, with two
+sign reversals. The uniformity itself demands explanation. We supply one
+with a three-condition comparison across 68 checkpoints and 15 training
+runs: networks trained on the occlusion distribution converge to a
+\emph{collapse attractor}---representations of hard inputs contract toward
+a low-norm, low-variance solution whose error-direction signature
+($\rhoerr$, the correlation between per-layer prediction-error direction
+and a clean-data reference) is \emph{inverted} relative to cleanly trained
+networks ($-0.92$ to $-0.98$ vs.\ $+0.94$ median), forms within 60 epochs,
+and is \emph{not} reversed by adding a consistency objective (0/3 runs;
+the objective makes contraction \emph{deeper}). Under this reading, the
+feedback tests were never fair: each mechanism was competing against a
+representational solution that the training distribution and objective had
+already selected. Feedback did not fail to fire; it fired into a system
+whose state was already committed.
+
+\paragraph{Program B: feedback's fairest test at LLM scale.}
+The attractor diagnosis suggests the CNN tests were confounded by the
+training regime, so we re-test feedback where no training is needed and the
+literature reports gains: inference-time self-critique on a 27B instruction
+model \citep{qwen2.5}. We design a \emph{graded-evidence-reveal} task---a
+text puzzle whose clues are revealed in three graded stages, so that every
+mechanism faces the same evidence schedule---and run a preregistered
+four-mechanism race with frozen criteria. The first batch (30 puzzles)
+produced a near-miss: self-critique led the endgame by $+23$\,pp with
+$p = 0.09$. Instead of narrating this as a trend, we preregistered a
+confirmation batch---90 puzzles, temperature resampling, frozen gates
+requiring $\ge +10$\,pp, $p < 0.05$, and a bootstrap CI excluding zero.
+The confirmation batch returns $+3.3$\,pp, $p = 0.71$: the signal was
+sample-size luck, and its sign reverses on the new puzzles.
+
+\paragraph{What survives is not feedback.}
+The race does produce one robust mechanism effect, and it is the opposite
+of feedback: \emph{hypothesis maintenance}. An instruction to list $\ge 3$
+ranked candidates with confidence percentages, and to refuse convergence
+while evidence is thin, raises early-stage candidate-set recall (does the
+true answer survive in the considered set?) by $+12$ to $+33$\,pp over a
+stateless baseline---replicating across batches and growing with evidence
+stage. This is the LLM analogue of the P23/P24 prediction from the CNN
+side: a stateless single-shot mechanism should be worst exactly when
+evidence is scarce. Self-critique's own profile resolves into an
+\emph{early-convergence} effect: it reaches high-confidence answers
+significantly \emph{earlier} in the evidence schedule than maintenance
+alone ($p < 10^{-4}$ at the middle stage), but the two mechanisms are
+statistically indistinguishable at the endgame, and critique \emph{hurts}
+on medium-difficulty puzzles ($-16$\,pp) where the candidate ordering was
+already correct. Feedback, in this regime, buys speed at the price of
+accuracy---and only on the puzzles where speed was not needed.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item A preregistered negative result with mechanistic depth: five feedback
+  implementations fail on a stress rack, and a three-condition attractor
+  analysis (68 checkpoints, 15 runs, 60-epoch formation, 0/3 objective
+  reversal) explains the uniformity---under occlusion training, feedback
+  competes with an already-selected collapse solution (\S\ref{sec:collapse}).
+\item A graded-evidence-reveal task and frozen-criteria mechanism race that
+  gives LLM self-critique its fairest test: a 30-puzzle signal
+  ($+23$\,pp, $p = 0.09$) that a preregistered 90-puzzle confirmation batch
+  reduces to $+3.3$\,pp ($p = 0.71$)---a worked example of why
+  underpowered mechanism claims should be gated
+  (\S\ref{sec:race}--\ref{sec:confirm}).
+\item The hypothesis-maintenance effect: an instruction-only mechanism with
+  $+12$ to $+33$\,pp early recall gains that replicates across batches and
+  retains endgame parity---the only replicable benefit in the race, acting
+  where feedback is presumed to but does not (\S\ref{sec:maint}).
+\item The early-convergence decomposition of self-critique: its benefit is
+  timing (earlier high-confidence answers) not ceiling, with a difficulty
+  gradient ($+17$\,pp hard, $-16$\,pp medium) showing the critique perturbs
+  already-correct orderings (\S\ref{sec:early}).
+\end{enumerate}
+
+Together the programs delimit guided feedback from both sides: in a regime
+where the representation has already committed (A), and in a regime where
+the representation is free but the feedback has nothing real to add at the
+endgame (B). What generalizes is not the correction but the
+\emph{discipline} of not converging early---hypothesis maintenance.
+
+\section{Related work}
+\label{sec:related}
+
+\paragraph{Feedback architectures and predictive coding.}
+Top-down pathways as active computation---not just parameter sharing---are
+motivated by predictive coding accounts of cortex
+\citep{rao1999predictive,friston2010free} and by deep predictive-coding
+networks that interleave feed-forward and feedback passes
+\citep{lotter2017deep}. Reported gains concentrate on robustness under
+occlusion and noise, which is why our stress rack adopts occlusion as the
+dose axis. Our contribution is not another feedback variant but a
+\emph{systematic} negative: five implementations, frozen gates, and an
+attractor analysis that explains why this regime cannot show feedback gains.
+
+\paragraph{LLM self-correction.}
+Self-refine and search-based deliberation report gains from models critiquing
+their own outputs \citep{madaan2023selfrefine,yao2023tree}, but audits find
+the gains fragile: \citet{huang2024large} show that self-correction without
+external ground truth can \emph{degrade} reasoning accuracy, and
+PlanBench-style evaluations find LLM planners overconfident and
+unimproved by reflection \citep{valmeekam2023planbench}. Our confirmation
+batch agrees with the skeptical strand and adds two elements: a
+preregistered gate structure (so the near-miss could not be narrated into
+a win), and a decomposition showing \emph{where} the apparent benefit
+actually lives (earlier convergence, not better answers).
+
+\paragraph{Abduction and hypothesis maintenance.}
+Maintaining multiple hypotheses under evidence scarcity is the classical
+abductive-inference stance \citep{peirce1878abduction,josephson1996abductive}
+and appears in cognitive science as breadth in the hypothesis pool during
+category learning \citep{tenenbaum2011grow}. Fast-and-frugal heuristics
+research documents the opposite strategy---early commitment with few
+cues---and its environmental conditions of success
+\citep{gigerenzer1999fast}; confirmation-bias work shows commitment's
+update cost \citep{nickerson1998confirmation}. Our \Mmaint{} mechanism is
+a minimal operationalization of the maintain-many stance, and its
+$+12$ to $+33$\,pp early-recall gain is, to our knowledge, the first
+preregistered LLM measurement of that classical contrast.
+
+\paragraph{Collapse and shrinking representations.}
+Neural collapse describes geometric crystallization at training's terminal
+phase \citep{papyan2020prevalence}; intrinsic-dimension work shows
+representations shrink with depth \citep{ansuini2019intrinsic}. Our
+contribution is different in kind: a \emph{training-distribution-induced}
+collapse specific to degraded inputs, measured by an error-direction
+signature that flips sign, forming in 60 epochs, and resistant to a
+directly aimed objective. We treat it as an \emph{attractor} because six
+to nine independent runs converge to the same inverted signature and an
+explicit anti-collapse objective fails to escape it (0/3), contracting
+further instead.
+
+\paragraph{Companion papers.}
+This is the fourth paper in a series. \citet{zhou2026protocol} establishes
+when geometric markers predict OOD accuracy observationally;
+\citet{zhou2026measuring} measures what the markers track; and
+\citet{zhou2026causality} shows the causal reading of the geometry marker
+does not survive a four-part battery. That paper's stress rack and
+evaluation discipline (manipulation checks, placebo families, preregistered
+gates) carry over here; the present paper moves from \emph{descriptors} to
+\emph{mechanisms}---feedback pathways and inference-time procedures---and
+finds the same discipline rewarding: the two most seductive signals in the
+program (a $-9$ to $-23$\,pp belief-gate harm on the CNN side, a
+$+23$\,pp trend on the LLM side) both dissolve under the frozen gates, and
+what survives is a mechanism nobody was looking for.
+
+\section{Program A: the stress rack and five feedback failures}
+\label{sec:stressrack}
+
+\subsection{Task and stress axis}
+\label{sec:taskA}
+
+The vision side uses CIFAR-10/100 with a grid-mask occlusion stress axis:
+a $g \times g$ grid of square masks with severity $s \in [0, 5]$ controlling
+mask area fraction. Severity 0 reproduces the clean test set; severity 5
+occludes the majority of the object. All models are trained once (clean or
+occluded-augmented, per condition) and evaluated across the full severity
+sweep; the dose axis lets us separate ``accuracy drops with difficulty''
+(normal) from ``representations behave perversely as difficulty rises''
+(the collapse signature below).
+
+\subsection{Five feedback implementations, one gate}
+\label{sec:fivefeedback}
+
+Each mechanism was implemented independently, with a preregistered
+adoption gate: a mechanism is adopted only if it improves stressed
+accuracy at matched compute, with a manipulation check confirming the
+mechanism actually activated. The five:
+\begin{enumerate}
+\item \textbf{Modulated feedback}: higher-stage features gate lower-stage
+  channels via learned multiplicative modulation.
+\item \textbf{Bottlenecked top-down}: a compressed top-down reconstruction
+  path feeding lower stages.
+\item \textbf{Belief-gated injection}: an explicit belief state (a
+  maintained hypothesis vector) gates evidence injection into lower stages.
+\item \textbf{Hierarchical prompt (LLM side of the same rack)}: tree vs.\
+  flat prompt structure for the same sub-task decomposition.
+\item \textbf{Predictive-coding objectives}: side objectives training
+  higher stages to predict lower-stage activity, the training-time route
+  to feedback structure.
+\end{enumerate}
+All five return zero or negative gain; two reverse sign. The most
+diagnostic is the belief gate: its A0 preregistered probe requires that
+the belief state's variance \emph{rise} with input corruption (more
+uncertainty, wider belief). It falls---$\rho = -1.0$, the strongest
+possible inversion---and the module is net-harmful ($-9$ to $-23$\,pp).
+The belief state is not merely unhelpful; it responds \emph{inverted} to
+the quantity it exists to track. That inversion is the clue the next
+section explains.
+
+\section{The collapse attractor}
+\label{sec:collapse}
+
+\subsection{A three-condition comparison}
+\label{sec:threeway}
+
+We measure a per-layer \emph{error-direction signature} $\rhoerr$: fit a
+lightweight probe on clean-data layer activations to predict the
+clean-data error direction of the final layer, then correlate, on
+occluded test inputs, the probe's predicted-error direction with the
+model's realized error direction. In cleanly trained networks this is
+positive (the internal error signal points where the behavior error
+points: median $+0.94$, 68 checkpoints across recipes and architectures).
+Table~\ref{tab:attractor} shows the three conditions.
+
+\begin{table}[h]
+\centering
+\small
+\caption{The collapse attractor: error-direction signature $\rhoerr$ by
+training condition. Cleanly trained networks behave normally; occlusion
+training inverts the signature within 60 epochs and an explicit
+consistency objective does not repair it---it contracts representations
+further.}
+\label{tab:attractor}
+\begin{tabular}{llll}
+\toprule
+Condition & Runs & $\rhoerr$ & Reading \\
+\midrule
+Clean training (recipe grid) & 68 ckpts & $+0.94$ (median) & normal \\
+Occlusion training, 200 epochs & 6 & $-0.92$ to $-0.98$ & collapsed \\
+Occlusion training, 60 epochs & 3 & $-0.98$ & collapsed already \\
+Occlusion + consistency obj. & 3 & $-0.98$ (0/3 reversed) & deeper \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three facts make this an attractor rather than an accident. First,
+\emph{uniformity}: all 6--9 occluded runs land in the inverted band, none
+escape. Second, \emph{speed}: 60 epochs suffice; the signature is fully
+inverted long before convergence. Third, \emph{objective resistance}: the
+consistency objective (which explicitly pulls occluded features toward
+clean features) does not reverse the signature in any run, and the
+norm-ratio diagnostic shows it makes contraction \emph{deeper}
+(norm at severity 5 over severity 0: $0.51$ vs.\ $0.85$ under plain CE).
+Pulling hard features toward clean features is not repair when the clean
+features are themselves contracted: the objective chases a lower-variance
+target.
+
+\subsection{Why this explains the five failures}
+\label{sec:why}
+
+Under occlusion training, the distribution--objective pair has already
+selected a representational solution: map hard inputs to a low-norm,
+low-variance region where errors are internally invisible
+($\rhoerr < 0$: the internal error signal points \emph{away} from the
+behavioral error). Every feedback mechanism we wired in presupposes the
+opposite state---an error signal worth routing and correcting. The belief
+gate's inverted variance response is the cleanest single observation: the
+module tracks uncertainty through a representation in which uncertainty
+has been trained to disappear. We conclude that in this regime feedback
+failures are not implementation noise but a property of the trained state;
+the tests were structurally unfair to feedback, and no wiring refinement
+within this training distribution can make them fair. Two routes out
+exist: change the training problem so pressure is intrinsic, or move to a
+regime with no training at all. The next program takes the second.
+
+\section{Program B: the graded-evidence-reveal race}
+\label{sec:race}
+
+\subsection{Task design}
+\label{sec:taskB}
+
+The LLM side needs a task where evidence arrives in stages, candidate
+answers can be scored objectively, and mechanisms differ only in
+\emph{procedural} discipline---no training, no parameter access, a fair
+API-level comparison. We use \emph{graded-evidence-reveal} text puzzles:
+each puzzle has a unique one-word (or short-phrase) gold answer and three
+clue stages of increasing informativeness (category; strong cue; decisive
+cue). At each stage the mechanism outputs its top-three candidate
+hypotheses with confidence percentages. Scoring is anchored to
+\emph{structured commitment positions} (the confidence-bearing list
+entries), not first textual mention---an anchoring choice that proved
+decisive (\S\ref{sec:artifact}).
+
+Two observations are primary: \emph{candidate-set recall} (is the gold
+answer among the three listed candidates at stage $g$?) and \emph{endgame
+top-1} (is gold ranked first at the final stage?). Recall measures
+hypothesis-set quality; top-1 measures the final answer. The task has 90
+puzzles in seven template families (idioms, cities, animals, instruments,
+astronomy, persons, misc) with difficulty stratification
+(23 easy / 25 medium / 12 hard among the 60 confirmation puzzles).
+
+\subsection{Four mechanisms}
+\label{sec:mechs}
+
+All mechanisms are inference-time policies on the same 27B instruction
+model (Qwen, 4-bit-server deployment, temperature $0$ in the first batch;
+$0.7 \times 3$ resampling with median rank in the confirmation batch;
+no fine-tuning):
+\begin{itemize}
+\item \Mstate{} (stateless single-shot): each stage is asked
+  independently, no history. The collapse-analogue control: without a
+  maintained prior, evidence-scarce early stages should be hardest.
+\item \Mlock{} (greedy lock-in): history is carried, but the first stage
+  must commit to a single answer, subsequently tuned only. The
+  confirmation-bias control.
+\item \Mmaint{} (hypothesis maintenance): full history plus an explicit
+  instruction---list $\ge 3$ candidates with confidence percentages;
+  do not converge to one answer while evidence is thin. The
+  abductive-stance mechanism.
+\item \Mcrit{} (self-critique): \Mmaint{} plus one extra round per
+  stage---``review your candidate set: is an explanation missing?'',
+  then revise. The feedback mechanism under test.
+\end{itemize}
+
+\subsection{Frozen criteria}
+\label{sec:frozen}
+
+Criteria were frozen before each batch. G0 (health gate): the task must
+be resolvable---\Mmaint{} endgame top-1 in $[50\%, 95\%]$. R1
+(hypothesis maintenance): \Mmaint{} beats \Mstate{} on early-stage recall
+by $\ge 10$\,pp. R2 (feedback gain): \Mcrit{} beats \Mmaint{} on endgame
+top-1 by $\ge 5$\,pp (batch 1) with the confirmation batch requiring
+$\ge +10$\,pp, sign-test $p < 0.05$, and a bootstrap 95\% CI excluding
+zero. R3 (lock-in irreversibility): \Mlock{}'s reversal rate on a
+pre-specified subset at least 15\,pp below \Mmaint{}'s.
+
+\section{Batch 1: a 23-point signal that demanded a gate}
+\label{sec:batch1}
+
+Batch 1 (30 puzzles, 360 queries) passed G0 (endgame top-1 $60\%$) and
+returned three readings, one of each epistemic kind:
+\begin{itemize}
+\item \textbf{R1 passed decisively.} Early-stage top-3 recall:
+  \Mmaint{} $73\%/87\%$ vs.\ \Mstate{} $53\%/63\%$ at stages 1/2
+  ($+20/+23$\,pp against a 10-pp gate). The P23/P24 prediction
+  transferred: stateless is worst where evidence is scarce.
+\item \textbf{R2 near-missed.} Endgame top-1: \Mcrit{} $83\%$ vs.\
+  \Mmaint{} $60\%$---$+23$\,pp against a 5-pp gate, but with a bootstrap
+  CI of $[0\%, +47\%]$ touching zero and a sign test of $p = 0.09$
+  (10 wins / 3 losses / 17 ties on 30 puzzles). Under our frozen
+  discipline this is a \emph{signal}, not a finding.
+\item \textbf{R3 failed informatively.} The lock-in mechanism showed
+  \emph{no} irreversibility (reversal rate identical to \Mmaint{}): at
+  27B scale, the instruction-following model simply changes its answer
+  when new evidence arrives. Behavioral lock-in---the LLM analogue of the
+  collapse attractor's irreversibility---does not arise from instruction;
+  the CNN attractor is a property of training, and no prompt reproduces it.
+\end{itemize}
+
+A measurement artifact caught and repaired in this batch is documented in
+\S\ref{sec:artifact}; it matters to any group running similar races.
+
+\section{Confirmation batch: the signal dies}
+\label{sec:confirm}
+
+We preregistered the confirmation before unblinding anything from a
+larger sample: 60 new puzzles (same template families, difficulty
+stratified, gold answers globally unique, three clues each, manually
+audited for clue ambiguity), temperature $0.7$ with three resamples per
+cell scored by median rank, and frozen gates evaluated on the merged
+90-puzzle set with batch-1 puzzles scored at temperature 0.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Merged 90-puzzle results (endgame top-1 / 90; early stages in
+parentheses). \Mcrit{} leads at intermediate stages but the endgame
+leadership is gone; \Mmaint{} retains its early-recall advantage.}
+\label{tab:merged}
+\begin{tabular}{lccc}
+\toprule
+Mechanism & Stage 1 & Stage 2 & Stage 3 (endgame) \\
+\midrule
+\Mstate{} & 41 & 46 & 68 \\
+\Mlock{}  & 27 & 33 & 68 \\
+\Mmaint{} & 30 & 37 & 66 \\
+\Mcrit{}  & \textbf{43} & \textbf{63} & \textbf{69} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The merged verdict (\S\ref{sec:taskB} gates): G0 passes
+(\Mmaint{} endgame $73\%$); \textbf{R2 fails all three confirmation
+conditions}---\Mcrit{} $69/90$ ($77\%$) vs.\ \Mmaint{} $66/90$ ($73\%$),
+point estimate $+3.3$\,pp, paired sign test 16 wins / 13 losses / 29 ties,
+$p = 0.71$, bootstrap 95\% CI $[-7.8\%, +15.6\%]$. The batch-1 puzzle
+subset alone still shows $+7$ (the old $+23$\,pp); the 60 new puzzles
+show $-4$. The signal was sample-size luck plus single-sample
+determinism, and the preregistered gate caught it. A retrospective power
+calculation shows what confirming the observed $+3.3$\,pp effect would
+have required: at $N = 1000$ puzzles the power is $0.46$---the effect, if
+real, is practically unconfirmable at sane batch sizes. R1, by contrast,
+\emph{replicated and grew}: $+12/+33$\,pp at stages 1/2 on the merged
+set (\Mmaint{} vs.\ \Mstate{} recall).
+
+\section{The hypothesis-maintenance effect}
+\label{sec:maint}
+
+The race's one robust positive deserves its own statement, because it is
+the mirror image of feedback. \Mmaint{} is not a feedback mechanism: no
+signal is routed backward, no output is critiqued. It is a
+\emph{discipline}---maintain a ranked, confidence-annotated candidate set
+and refuse premature convergence. Its measured benefits:
+\begin{enumerate}
+\item \textbf{Early recall}. Candidate-set recall at stages 1/2 is higher
+  than every alternative: $+12/+33$\,pp over \Mstate{} on merged data,
+  with the advantage concentrated exactly where evidence is thinnest.
+  Under evidence scarcity, maintaining three live hypotheses is worth
+  more than any amount of single-shot deliberation.
+\item \textbf{Endgame parity without cost}. Unlike classic
+  explore/exploit trade-offs, maintenance does not pay for its early
+  breadth at the endgame: top-1 $73\%$ vs.\ \Mstate{}'s $76\%$ is within
+  noise, and its \emph{top-3 recall} at the endgame ($98\%$) is the
+  highest of all mechanisms---the candidate set it maintains stays honest
+  even after convergence is licensed.
+\item \textbf{A measurable failure mode that localizes it}. Maintenance's
+  cost surface appears as \emph{placeholder duplication}: when evidence
+  is overwhelming, \Mmaint{} fills its mandated three slots with the same
+  gold answer at $99.9\%$ plus two sub-1\% decoys (16/30 batch-1 puzzles
+  show $\ge 2$ duplicates). Instruction compliance (fill three slots)
+  and semantic convergence (one answer) pull apart. Self-critique
+  suppresses the duplication---the one concrete thing the critique round
+  demonstrably does.
+\end{enumerate}
+
+The alignment with the abduction literature
+\citep{peirce1878abduction,josephson1996abductive,tenenbaum2011grow} is
+direct, but the measurement is new: to our knowledge this is the first
+preregistered, multi-batch quantification of the maintain-vs-commit
+trade in an LLM, and it inverts the intuition that maintenance is a
+format tax---the maintained set is load-bearing for early recall, which
+is precisely the quantity that later convergence draws on.
+
+\section{Self-critique decomposed: early convergence, not a higher ceiling}
+\label{sec:early}
+
+Why did \Mcrit{} look like a winner in batch 1? Because its benefit is
+real but mislocated in time. Pairing \Mcrit{} against \Mmaint{} on
+endgame top-1 hides a strong stage-resolved effect:
+\begin{itemize}
+\item \textbf{Stage 1}: \Mcrit{} $43/90$ vs.\ \Mmaint{} $30/90$;
+  paired 20 wins / 7 losses, sign test $p = 0.019$.
+\item \textbf{Stage 2}: $63/90$ vs.\ $37/90$; 32 wins / 6 losses,
+  $p < 10^{-4}$.
+\item \textbf{Stage 3}: $69/90$ vs.\ $66/90$; 16 / 13, $p = 0.71$.
+\end{itemize}
+The critique round accelerates convergence: it pulls correct answers to
+the top earlier in the evidence schedule. But the endgame ceiling is
+identical---\Mmaint{} catches up once evidence suffices---so on an
+endgame-scored task the apparent batch-1 advantage was timing misread as
+accuracy. The difficulty gradient sharpens the point: on the 60
+confirmation puzzles, \Mcrit{} vs.\ \Mmaint{} endgame deltas are $+17$\,pp
+(hard), $-16$\,pp (medium), $-9$\,pp (easy). Where the candidate ordering
+was already correct (medium/easy), critique perturbs it; where it was
+wrong (hard), critique helps. Feedback's value tracks exactly the
+states where the base mechanism is \emph{not} already converged---the
+same lesson the collapse attractor taught on the CNN side, arrived at
+from the opposite direction.
+
+\section{The measurement artifact}
+\label{sec:artifact}
+
+A methodological note with general reach. Batch 1's first scorer counted
+a gold answer's rank by the number of list markers preceding its
+\emph{first textual occurrence}. Mechanisms \Mcrit{}/\Mmaint{} write an
+analysis paragraph before their final list; the analysis often mentions
+the gold answer (``only one province capital starts with this
+character\ldots''), which the scorer misread as a third-ranked list
+entry. The artifact systematically favored \Mlock{} (which gives answers
+without analysis) and manufactured part of the batch-1 anomaly
+(\Mlock{} leading the endgame). The repaired scorer anchors rank to
+\emph{structured commitment positions}: lines that both carry a list
+marker and carry (or are adjacent to) a confidence percentage, taking the
+highest-confidence entry mentioning the gold answer. It also counts
+\emph{duplicate} gold placements, which turned out to be a substantive
+signal (\S\ref{sec:maint}, item 3). The lesson generalizes: when
+comparing mechanisms with different output styles, score the position in
+the output where the mechanism \emph{commits}, not where the string first
+appears. All v1 batch data were discarded and re-run; both scorer
+versions are archived.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{One lesson, two regimes.}
+Program A shows feedback failing because the trained state has already
+absorbed the stress distribution's preferred solution; Program B shows
+feedback failing \emph{at the endgame} even in a training-free regime
+where the model is free to listen. The failure modes are different---%
+inverted belief responses vs.\ pure null effect---but the design moral is
+the same: feedback's presumed value (correction) presupposes a state
+worth correcting. In A that state never exists (it is collapsed); in B it
+exists but \Mmaint{} has already extracted the available value by stage 3.
+
+\paragraph{Where guided feedback might still work.}
+Our gates do not outlaw feedback everywhere; they locate it. Critique
+genuinely helps on hard puzzles ($+17$\,pp), where the pre-critique
+candidate set is wrong, and genuinely accelerates convergence at
+intermediate stages. A regime where evidence never saturates---%
+open-ended investigation rather than a three-stage reveal---would score
+the intermediate stages as the endgame and might legitimately favor
+critique. Our claim is narrower: on tasks with an evidence-terminus,
+feedback's speed benefit is invisible to endgame scoring, and its
+accuracy effect inverts on already-correct instances.
+
+\paragraph{The attractor as scope condition.}
+The collapse attractor result is also a scope condition for the broader
+stress-rack methodology: robustness evaluations that train on the stress
+distribution measure the attractor's behavior, not the architecture's
+feedback capacity. Any feedback claim tested under occlusion-style
+training must first show that the trained state still carries a usable
+error signal---$\rhoerr > 0$ is a cheap precondition (one forward pass
+plus a short probe fit). We suggest it as a standard gate for feedback
+papers in degraded-input regimes.
+
+\paragraph{Preregistration carried real weight.}
+Both of this paper's headline claims are gates that \emph{blocked}
+seductive alternatives: an inverted belief response that would have read
+as a mechanism discovery with a sign error, and a $+23$\,pp trend that
+would have survived any fixed narrative. The confirmation-batch design
+(freeze the effect size, the test, and the CI condition before enlarging
+the sample) cost one day of compute and converted a would-be false
+positive into a clean negative with a power calculation explaining why.
+
+\section{Limitations}
+\label{sec:limitations}
+
+\textbf{One LLM, one size.} All Program-B results are one 27B instruction
+model. The batch-1-to-confirmation sign reversal is within-model
+evidence about sample size, not about model generality; the
+hypothesis-maintenance effect and the early-convergence decomposition
+should be replicated across at least one other family
+(e.g.\ \citealp{gemma2024}) and one smaller size before any
+universality claim. \textbf{Task breadth.} Graded-evidence-reveal puzzles
+are short-horizon abduction with verifiable unique answers; they do not
+exercise long-chain reasoning or external-tool feedback, where
+self-correction's strongest published gains live. Our negative result
+bounds the \emph{endgame} claim in a clean setting; it does not
+adjudicate tool-augmented critique, where the feedback signal is external
+ground truth rather than self-generated. \textbf{CNN side is one stress
+family.} The attractor analysis covers occlusion grids; other stressors
+(noise, blur, 分布 shift) may not select collapse, and feedback might
+show gains there. Our claim is that occlusion-trained racks---the exact
+setting motivating most robustness feedback papers---carry the confound,
+not that all stress racks do. \textbf{Scorer subjectivity.} The
+confidence-anchored scorer depends on models emitting confidence-bearing
+structured lists; models that refuse the format would need a different
+commitment-position definition, and we cannot exclude scorer-model format
+interactions at other scales.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Across a CNN stress rack and an LLM mechanism race, guided feedback
+failed its preregistered endgame tests, and the two failures are
+diagnosed rather than merely recorded: one competes with a trained
+collapse attractor, the other dissolves into a timing effect with a
+difficulty gradient. The replicable benefit belongs to hypothesis
+maintenance---an instruction-level discipline that keeps candidate sets
+honest under evidence scarcity, buys early recall at no endgame cost,
+and needs no backward signal at all. For builders of robust perception
+pipelines and self-improving reasoners alike, the cheap first question
+is not ``how should feedback be wired'' but ``does the current state
+still carry a correctable error signal''---and if it does, whether the
+real scarcity is correction or simply the discipline of not
+converging first.
+
+\section*{Reproducibility statement}
+All batches were preregistered with frozen criteria (ADR-0029 through
+ADR-0031), including the confirmation batch's effect-size threshold,
+test, and CI condition, fixed before the 60 new puzzles were generated
+and run. Puzzle generators, race scripts, scorer versions (including the
+discarded first scorer), raw outputs with full texts, and analysis
+notebooks are archived; per-query records (2160 queries, confirmation
+batch) are released as machine-readable JSON. Bootstrap uses 20{,}000
+resamples with a fixed seed.
+
+\section*{Ethics statement}
+This study uses publicly available model weights served locally and
+synthetic text puzzles with no personal data; no human subjects were
+involved. Negative results are reported to reduce community waste on
+unpromising directions; we report power calculations alongside null
+results to prevent over-reading them.
+
+\section*{Use of AI tools}
+Large language models were used as writing and coding assistants
+(race-script implementation, scorer prototyping, and manuscript editing).
+All scientific decisions---task design, frozen criteria, adjudications,
+and every reported number---were determined by the authors and verified
+against archived machine-readable records.
+
+\bibliography{references}
+\bibliographystyle{tmlr}
+
+\appendix
+
+\section{Batch-level detail and per-stage tables}
+\label{app:tables}
+
+\paragraph{Batch 1 (30 puzzles, temperature 0).}
+Endgame top-1: \Mstate{} $23/30$, \Mlock{} $22/30$, \Mmaint{} $18/30$,
+\Mcrit{} $25/30$. Early-stage recall (\Mmaint{} vs.\ \Mstate{}):
+$73\%/87\%$ vs.\ $53\%/63\%$. Placeholder duplication (\Mmaint{}):
+mean 1.70 duplicates at stage 3; 16/30 puzzles with $\ge 2$; negative
+association with top-1 ($56\%$ vs.\ $64\%$ for high/low duplication).
+
+\paragraph{Confirmation batch (60 new puzzles, temperature $0.7 \times 3$).}
+2160 queries; median-rank scoring. Difficulty-stratified endgame deltas
+(\Mcrit{} $-$ \Mmaint{}): hard $+2$ of 12 ($+17\%$), medium $-4$ of 25
+($-16\%$), easy $-2$ of 23 ($-9\%$). Merged-set stage-resolved paired
+sign tests (\Mcrit{} vs.\ \Mmaint{} top-1): stage 1 $p = 0.019$, stage 2
+$p < 10^{-4}$, stage 3 $p = 0.71$.
+
+\section{Scorer specification}
+\label{app:scorer}
+
+A candidate entry is a line carrying a list marker (numbered, bulleted,
+or parenthesized) whose line or one of the two following lines contains a
+confidence percentage. Rank of gold = position (within the candidate
+sequence) of the \emph{highest-confidence} entry mentioning gold;
+duplicates = count of additional entries mentioning gold. Absent gold
+scores rank 0; API errors score $-1$ and are excluded from accuracy
+denominators. The discarded v1 scorer (first-mention anchoring) and the
+repair history are archived with the batch data.
+
+\end{document}
