@@ -167,10 +167,14 @@ accuracy---and only on the puzzles where speed was not needed.
   reduces to $+3.3$\,pp ($p = 0.71$)---a worked example of why
   underpowered mechanism claims should be gated
   (\S\ref{sec:race}--\ref{sec:confirm}).
-\item The hypothesis-maintenance effect: an instruction-only mechanism with
-  $+12$ to $+33$\,pp early recall gains that replicates across batches and
-  retains endgame parity---the only replicable benefit in the race, acting
-  where feedback is presumed to but does not (\S\ref{sec:maint}).
+\item The hypothesis-maintenance effect, decomposed: early recall gains
+  of $+12$ to $+33$\,pp replicate across batches, and a $2\times2$ probe
+  (history $\times$ output format) shows the effect is a
+  \emph{format-first synergy}---the three-candidate format is the
+  necessary condition ($+18$\,pp alone), history is the amplifier
+  ($+30$\,pp on top of format at stage 2, vs.\ $-2$\,pp without format;
+  interaction $p = 10^{-4}$). Format builds the candidate space; history
+  cashes it in as evidence accumulates (\S\ref{sec:maint}).
 \item The early-convergence decomposition of self-critique: its benefit is
   timing (earlier high-confidence answers) not ceiling, with a difficulty
   gradient ($+17$\,pp hard, $-16$\,pp medium) showing the critique perturbs
@@ -538,13 +542,77 @@ and refuse premature convergence. Its measured benefits:
   demonstrably does.
 \end{enumerate}
 
+\subsection{A $2\times2$ decomposition: format first, history second}
+\label{sec:twobytwo}
+
+\Mmaint{} differs from \Mstate{} in two ways at once: it keeps candidate
+history in context, and it demands the three-candidate confidence format.
+Which ingredient carries the early-recall benefit? We ran the missing
+cells: \emph{format-only} (\Mstate{} prompt replaced by \Mmaint{}'s
+first-turn prompt, standalone at each stage) and \emph{bare-history}
+(\Mlock{}'s single-answer discipline with conversational updating), on
+the 60 confirmation puzzles under the identical temperature and scoring
+protocol (1080 additional queries).
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcccccc}
+\toprule
+ & \multicolumn{3}{c}{Recall (top-3)} & \multicolumn{3}{c}{Top-1} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Arm & G1 & G2 & G3 & G1 & G2 & G3 \\
+\midrule
+\Mmaint{} (hist.+format) & 30 & 50 & 60 & 18 & 26 & 48 \\
+format-only             & 30 & 32 & 47 & 22 & 23 & 43 \\
+\Mlock{} (hist.+bare)    & 15 & 21 & 46 & 15 & 21 & 46 \\
+bare (no hist., no fmt) & 23 & 22 & 44 & 23 & 22 & 44 \\
+\bottomrule
+\end{tabular}
+\caption{The $2\times2$ on 60 confirmation puzzles (median rank over
+3 resamples). Recall counts: gold among the three listed candidates.}
+\label{tab:twobytwo}
+\end{table}
+
+The decomposition reverses the natural reading. The \emph{format main
+effect is the larger one} ($+32$\,pp at stage 2; 41/1/18 win/tie/loss,
+$p < 10^{-4}$): simply being asked to list three confidence-annotated
+candidates nearly doubles early recall. The \emph{history main effect}
+is $+14$\,pp ($p < 10^{-4}$), but it is entirely concentrated in the
+format arm: $+30$\,pp with format, $-2$\,pp without (interaction $+32$\,pp,
+$p = 10^{-4}$). At stage 1 the format-only arm already matches \Mmaint{}
+exactly (30/60 each)---the format alone creates the candidate space;
+history cannot be credited for stage-1 gains. What history buys is the
+\emph{realization} of that space as evidence accumulates: with the
+format demanding three live slots, the conversational record of prior
+candidates lifts stage-2 recall from 32 to 50.
+
+Placeholder duplication tells the same story from its failure side. It
+is a cost of the \emph{format}, not of maintenance: format-only shows
+$\ge 1$ duplicate on 18/60 puzzles (mean 0.57), history-less, and
+\Mmaint{} roughly doubles it (36/60, mean 1.18); the bare arms
+structurally never duplicate. The tension the duplication indexes
+---comply-with-three vs.\ converge-on-one---belongs to the format;
+history deepens rather than creates it.
+
+We therefore restate the effect: \emph{the format builds the candidate
+space; the history cashes it in}. Neither alone reproduces \Mmaint{}'s
+early profile, and the abductively virtuous component---refusing
+premature convergence under thin evidence---is present in the format
+instruction itself, a much cheaper intervention than conversational
+state. The endgame, as everywhere in this race, shows no meaningful
+spread (top-1 $72$--$80\%$ across all four arms).
+
 The alignment with the abduction literature
 \citep{peirce1878abduction,josephson1996abductive,tenenbaum2011grow} is
 direct, but the measurement is new: to our knowledge this is the first
 preregistered, multi-batch quantification of the maintain-vs-commit
-trade in an LLM, and it inverts the intuition that maintenance is a
-format tax---the maintained set is load-bearing for early recall, which
-is precisely the quantity that later convergence draws on.
+trade in an LLM. The $2\times2$ adds a twist the abduction frame does
+not predict: the discipline lives mostly in the \emph{output format},
+not the maintained state---asking for three ranked confidence-annotated
+candidates buys $+18$\,pp of early recall by itself, and the
+conversational record is the amplifier, not the engine
+(\S\ref{sec:twobytwo}).
 
 \section{Self-critique decomposed: early convergence, not a higher ceiling}
 \label{sec:early}
