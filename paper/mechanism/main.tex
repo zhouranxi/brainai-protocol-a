@@ -50,9 +50,11 @@ independent feedback implementations (modulated, bottlenecked,
 belief-gated, prompt-hierarchical, and predictive-coding objectives) yield
 zero or negative gain on a stress rack, and we identify the confound that
 explains the uniformity: under occlusion training, the network converges to
-a \emph{collapse attractor}---error-direction correlations of $-0.92$ to
-$-0.98$ across six to nine runs, formed within 60 epochs, not reversed by a
-consistency objective (0/3)---so any added feedback competes with a
+a \emph{collapse attractor}---error-direction correlations of $-0.86$ to
+$-0.98$ across 21 occluded runs, formed within 60 epochs, not reversed by a
+consistency objective (0/3) nor by post-hoc repair of the training
+distribution (1:1 clean interleaving and a clean-to-occluded curriculum,
+0/3 each)---so any added feedback competes with a
 solution the training distribution has already selected. On the language
 side, we give feedback its fairest test at the scale where the literature
 reports gains: a 27B instruction model, a graded-evidence-reveal task with
@@ -115,7 +117,11 @@ a low-norm, low-variance solution whose error-direction signature
 and a clean-data reference) is \emph{inverted} relative to cleanly trained
 networks ($-0.92$ to $-0.98$ vs.\ $+0.94$ median), forms within 60 epochs,
 and is \emph{not} reversed by adding a consistency objective (0/3 runs;
-the objective makes contraction \emph{deeper}). Under this reading, the
+the objective makes contraction \emph{deeper}). Repairing the distribution
+after the fact fails the same way: 1:1 interleaving of clean samples leaves
+the signature unchanged (0/3), and a clean-first curriculum retains a
+collapsed signature while catastrophically forgetting the clean solution
+(0/3; clean accuracy falls from 0.55 to chance). Under this reading, the
 feedback tests were never fair: each mechanism was competing against a
 representational solution that the training distribution and objective had
 already selected. Feedback did not fail to fire; it fired into a system
@@ -158,9 +164,10 @@ accuracy---and only on the puzzles where speed was not needed.
 \begin{enumerate}
 \item A preregistered negative result with mechanistic depth: five feedback
   implementations fail on a stress rack, and a three-condition attractor
-  analysis (68 checkpoints, 15 runs, 60-epoch formation, 0/3 objective
-  reversal) explains the uniformity---under occlusion training, feedback
-  competes with an already-selected collapse solution (\S\ref{sec:collapse}).
+  analysis (68 checkpoints, 27 runs, 60-epoch formation, 0/3 objective
+  and 0/6 distribution reversals) explains the uniformity---under occlusion
+  training, feedback competes with an already-selected collapse solution
+  (\S\ref{sec:collapse}).
 \item A graded-evidence-reveal task and frozen-criteria mechanism race that
   gives LLM self-critique its fairest test: a 30-puzzle signal
   ($+23$\,pp, $p = 0.09$) that a preregistered 90-puzzle confirmation batch
@@ -328,6 +335,8 @@ Clean training (recipe grid) & 68 ckpts & $+0.94$ (median) & normal \\
 Occlusion training, 200 epochs & 6 & $-0.92$ to $-0.98$ & collapsed \\
 Occlusion training, 60 epochs & 3 & $-0.98$ & collapsed already \\
 Occlusion + consistency obj. & 3 & $-0.98$ (0/3 reversed) & deeper \\
+Occlusion + 1:1 clean mixing & 3 & $-0.97$ (0/3 reversed) & diluted \\
+Occlusion + clean curriculum & 3 & $-0.89$ (0/3 reversed) & forgets \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -344,6 +353,31 @@ Pulling hard features toward clean features is not repair when the clean
 features are themselves contracted: the objective chases a lower-variance
 target.
 
+\subsection{Distribution repair fails the same way}
+\label{sec:distrepair}
+
+If the attractor is selected by the distribution--objective pair, two
+post-hoc repairs suggest themselves: dilute the stress or schedule it. We
+preregistered both (three seeds each, same probe machinery, frozen gates).
+\emph{Interleaving} adds clean images at a 1:1 ratio to every occluded
+batch; \emph{curriculum} trains 30 clean epochs first, then switches to
+occluded input for 30 more. Table~\ref{tab:attractor} shows both fail.
+Interleaving leaves the signature exactly where it was
+($-0.97$ vs.\ $-0.95$ baseline median) at no clean-accuracy cost---%
+the interleaved gradient signal is absorbed without changing the solution.
+The curriculum is more violent: after the switch, clean accuracy collapses
+from 0.55 (epoch 40) to chance (epoch 60), and the signature still lands
+in the collapsed band ($-0.89$). One separation is worth recording: the
+mixing arm completely flattens the norm--severity profile
+($\|\mathrm{feat}\|@s5/\|\mathrm{feat}\|@s0 = 1.01$--$1.04$ across seeds)
+yet the error-direction signature remains deeply negative. The two
+signatures are dissociable: contraction of feature norms is an
+accompaniment, not the cause; the inverted error signal is the load-bearing
+marker. Both routes into the attractor---through the objective
+(\S\ref{sec:threeway}) and through the data (here)---are closed from
+inside the occluded regime. The attractor is not undone by repairing the
+training input once the occluded solution has been reached.
+
 \subsection{Why this explains the five failures}
 \label{sec:why}
 
@@ -358,8 +392,12 @@ module tracks uncertainty through a representation in which uncertainty
 has been trained to disappear. We conclude that in this regime feedback
 failures are not implementation noise but a property of the trained state;
 the tests were structurally unfair to feedback, and no wiring refinement
-within this training distribution can make them fair. Two routes out
-exist: change the training problem so pressure is intrinsic, or move to a
+within this training distribution can make them fair. Worse, the two
+obvious post-hoc repairs are now both closed: repairing the objective
+deepens the contraction (\S\ref{sec:threeway}), and repairing the data
+changes neither the signature nor the trajectory
+(\S\ref{sec:distrepair}). Two routes out remain: change the training
+problem so pressure is intrinsic, or move to a
 regime with no training at all. The next program takes the second.
 
 \section{Program B: the graded-evidence-reveal race}
@@ -690,11 +728,15 @@ accuracy effect inverts on already-correct instances.
 The collapse attractor result is also a scope condition for the broader
 stress-rack methodology: robustness evaluations that train on the stress
 distribution measure the attractor's behavior, not the architecture's
-feedback capacity. Any feedback claim tested under occlusion-style
-training must first show that the trained state still carries a usable
-error signal---$\rhoerr > 0$ is a cheap precondition (one forward pass
-plus a short probe fit). We suggest it as a standard gate for feedback
-papers in degraded-input regimes.
+feedback capacity. The scope condition has teeth because both post-hoc
+repair routes are now empirically closed: an anti-collapse objective and
+two data-route repairs (interleaving, curriculum) all fail to restore the
+error signal once training has selected the collapsed solution
+(\S\ref{sec:threeway}--\ref{sec:distrepair}). Any feedback claim tested
+under occlusion-style training must therefore be gated \emph{before} the
+claim, not repaired after it: $\rhoerr > 0$ is a cheap precondition (one
+forward pass plus a short probe fit). We suggest it as a standard gate for
+feedback papers in degraded-input regimes.
 
 \paragraph{Preregistration carried real weight.}
 Both of this paper's headline claims are gates that \emph{blocked}
