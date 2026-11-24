@@ -109,8 +109,8 @@ top-down reconstruction, belief-gated injection, hierarchical prompt
 structure, and a training-objective route (predictive-coding side
 objectives)---and find zero or negative gain in all five, with two
 sign reversals. The uniformity itself demands explanation. We supply one
-with a three-condition comparison across 68 checkpoints and 15 training
-runs: networks trained on the occlusion distribution converge to a
+with a three-condition comparison across 68 checkpoints and 21 occluded
+training runs: networks trained on the occlusion distribution converge to a
 \emph{collapse attractor}---representations of hard inputs contract toward
 a low-norm, low-variance solution whose error-direction signature
 ($\rhoerr$, the correlation between per-layer prediction-error direction
@@ -164,10 +164,10 @@ accuracy---and only on the puzzles where speed was not needed.
 \begin{enumerate}
 \item A preregistered negative result with mechanistic depth: five feedback
   implementations fail on a stress rack, and a three-condition attractor
-  analysis (68 checkpoints, 27 runs, 60-epoch formation, 0/3 objective
-  and 0/6 distribution reversals) explains the uniformity---under occlusion
-  training, feedback competes with an already-selected collapse solution
-  (\S\ref{sec:collapse}).
+  analysis (68 clean checkpoints, 21 occluded runs, 60-epoch formation,
+  0/3 objective and 0/6 distribution reversals) explains the
+  uniformity---under occlusion training, feedback competes with an
+  already-selected collapse solution (\S\ref{sec:collapse}).
 \item A graded-evidence-reveal task and frozen-criteria mechanism race that
   gives LLM self-critique its fairest test: a 30-puzzle signal
   ($+23$\,pp, $p = 0.09$) that a preregistered 90-puzzle confirmation batch
@@ -342,8 +342,8 @@ Occlusion + clean curriculum & 3 & $-0.89$ (0/3 reversed) & forgets \\
 \end{table}
 
 Three facts make this an attractor rather than an accident. First,
-\emph{uniformity}: all 6--9 occluded runs land in the inverted band, none
-escape. Second, \emph{speed}: 60 epochs suffice; the signature is fully
+\emph{uniformity}: all 21 occluded runs---across durations, objectives,
+and data schedules---land in the inverted band, none escape. Second, \emph{speed}: 60 epochs suffice; the signature is fully
 inverted long before convergence. Third, \emph{objective resistance}: the
 consistency objective (which explicitly pulls occluded features toward
 clean features) does not reverse the signature in any run, and the
