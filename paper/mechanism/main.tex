@@ -685,14 +685,17 @@ from the opposite direction.
 A methodological note with general reach. Batch 1's first scorer counted
 a gold answer's rank by the number of list markers preceding its
 \emph{first textual occurrence}. Mechanisms \Mcrit{}/\Mmaint{} write an
-analysis paragraph before their final list; the analysis often mentions
-the gold answer (``only one province capital starts with this
-character\ldots''), which the scorer misread as a third-ranked list
-entry. The artifact systematically favored \Mlock{} (which gives answers
-without analysis) and manufactured part of the batch-1 anomaly
-(\Mlock{} leading the endgame). The repaired scorer anchors rank to
-\emph{structured commitment positions}: lines that both carry a list
-marker and carry (or are adjacent to) a confidence percentage, taking the
+analysis before their final list, and that analysis is itself often a
+numbered list (``1.\ category clue; 2.\ second clue; 3.\ third clue'')
+that names the gold answer in passing; the scorer counted those
+enumeration markers and recorded a third-ranked list entry. The artifact
+systematically favored \Mlock{} (which returns a bare answer with no
+analysis) and manufactured part of the batch-1 anomaly (\Mlock{}
+leading the endgame). A second artifact compounded it: a 400-token
+output cap cut the long analyses mid-sentence before the candidate
+list was reached. The repaired scorer anchors rank to \emph{structured
+commitment positions}: lines that both carry a list marker and carry
+(or are adjacent to) a confidence percentage, taking the
 highest-confidence entry mentioning the gold answer. It also counts
 \emph{duplicate} gold placements, which turned out to be a substantive
 signal (\S\ref{sec:maint}, item 3). The lesson generalizes: when
@@ -700,6 +703,33 @@ comparing mechanisms with different output styles, score the position in
 the output where the mechanism \emph{commits}, not where the string first
 appears. All v1 batch data were discarded and re-run; both scorer
 versions are archived.
+
+\paragraph{Residual truncation, disclosed.}
+Raising the cap to 1{,}200 tokens did not eliminate truncation; it made
+it mechanism-specific. Replaying the archived scorer on the 360 batch-1
+outputs gives zero rank mismatches, but a truncation census (output
+longer than 800 characters and not ending on a sentence terminator)
+finds 57.8\% of \Mcrit{} outputs cut mid-sentence, against 7.8\% for
+\Mmaint{}, 4.4\% for \Mstate{}, and 0\% for \Mlock{}. The cut does not
+reach the scored list---\Mcrit{} writes its revised candidates before
+its closing commentary---and top-1 is unchanged between truncated and
+complete \Mcrit{} outputs (65\% vs.\ 66\%). We therefore keep the
+recorded ranks, but flag the asymmetry: \Mcrit{} alone was run under a
+budget it routinely exhausted, so its early-convergence profile
+(\S\ref{sec:early}) was measured under a constraint none of the other
+mechanisms faced. The confirmation batch used the same cap and did not
+archive full texts, so the census could not be repeated there.
+
+\paragraph{Scorer tolerance, verified.}
+The repaired scorer lets a candidate borrow a confidence percentage from
+the next two lines, to accommodate the common ``\texttt{1.~answer} /
+confidence'' layout. This could in principle let a numbered reasoning
+step inherit the next candidate's percentage. On the batch-1 texts the
+borrowing path touches 5 rows, all prose justifications attached to the
+correct candidate, and changes no recorded rank; a stricter scorer that
+demands the percentage on the candidate's own line would move 7 of 360
+ranks, all in the lenient direction. The tolerance is load-bearing, not
+a leak.
 
 \section{Discussion}
 \label{sec:discussion}
@@ -785,7 +815,12 @@ is not reliable enough to date the transition. \textbf{Scorer subjectivity.} The
 confidence-anchored scorer depends on models emitting confidence-bearing
 structured lists; models that refuse the format would need a different
 commitment-position definition, and we cannot exclude scorer-model format
-interactions at other scales.
+interactions at other scales. \textbf{Unequal output budget.} The
+1{,}200-token cap truncated 58\% of \Mcrit{} outputs and under 8\% of
+every other mechanism's in the batch-1 archive; ranks were unaffected,
+but \Mcrit{}'s behavior was observed under a binding budget that the
+others did not hit, and the confirmation batch's full texts were not
+retained to repeat the census.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -812,9 +847,11 @@ puzzles were generated and run, and the $2\times2$ decomposition's
 main-effect gates), and the distribution-intervention batch under
 ADR-0033 (three arms, three seeds, reversal gates fixed before launch).
 Puzzle generators, race scripts, scorer versions (including the
-discarded first scorer), raw outputs with full texts, and analysis
-notebooks are archived; per-query records (2160 queries, confirmation
-batch) are released as machine-readable JSON, as are the per-run probe
+discarded first scorer), and analysis
+notebooks are archived; batch-1 outputs with full texts (360 records) and
+per-query records for the confirmation batch (2160 queries: ranks,
+duplicate counts, difficulty, no full texts) and the $2\times2$ probe are
+released as machine-readable JSON, as are the per-run probe
 outputs for every training condition in Table~\ref{tab:attractor}.
 Bootstrap uses 20{,}000 resamples with a fixed seed.
 
