@@ -240,10 +240,11 @@ representations shrink with depth \citep{ansuini2019intrinsic}. Our
 contribution is different in kind: a \emph{training-distribution-induced}
 collapse specific to degraded inputs, measured by an error-direction
 signature that flips sign, forming in 60 epochs, and resistant to a
-directly aimed objective. We treat it as an \emph{attractor} because six
-to nine independent runs converge to the same inverted signature and an
-explicit anti-collapse objective fails to escape it (0/3), contracting
-further instead.
+directly aimed objective. We treat it as an \emph{attractor} because 21
+independent runs---spanning training durations, objectives, and data
+schedules---converge to the same inverted signature, and neither an
+explicit anti-collapse objective nor two repairs of the training
+distribution escape it (0/3 and 0/6), contracting further instead.
 
 \paragraph{Companion papers.}
 This is the fourth paper in a series. \citet{zhou2026protocol} establishes
@@ -306,7 +307,7 @@ section explains.
 \section{The collapse attractor}
 \label{sec:collapse}
 
-\subsection{A three-condition comparison}
+\subsection{Training conditions and the signature}
 \label{sec:threeway}
 
 We measure a per-layer \emph{error-direction signature} $\rhoerr$: fit a
@@ -316,16 +317,16 @@ occluded test inputs, the probe's predicted-error direction with the
 model's realized error direction. In cleanly trained networks this is
 positive (the internal error signal points where the behavior error
 points: median $+0.94$, 68 checkpoints across recipes and architectures).
-Table~\ref{tab:attractor} shows the three conditions.
+Table~\ref{tab:attractor} lists the training conditions.
 
 \begin{table}[h]
 \centering
 \small
 \caption{The collapse attractor: error-direction signature $\rhoerr$ by
 training condition. Cleanly trained networks behave normally; occlusion
-training inverts the signature within 60 epochs and an explicit
-consistency objective does not repair it---it contracts representations
-further.}
+training inverts the signature within 60 epochs, and neither an explicit
+consistency objective nor two post-hoc repairs of the training
+distribution restore it.}
 \label{tab:attractor}
 \begin{tabular}{llll}
 \toprule
@@ -333,10 +334,10 @@ Condition & Runs & $\rhoerr$ & Reading \\
 \midrule
 Clean training (recipe grid) & 68 ckpts & $+0.94$ (median) & normal \\
 Occlusion training, 200 epochs & 6 & $-0.92$ to $-0.98$ & collapsed \\
-Occlusion training, 60 epochs & 3 & $-0.98$ & collapsed already \\
+Occlusion training, 60 epochs & 3 & $-0.97$ (median) & collapsed already \\
 Occlusion + consistency obj. & 3 & $-0.98$ (0/3 reversed) & deeper \\
-Occlusion + 1:1 clean mixing & 3 & $-0.97$ (0/3 reversed) & diluted \\
-Occlusion + clean curriculum & 3 & $-0.89$ (0/3 reversed) & forgets \\
+Occlusion + 1:1 clean mixing & 3 & $-0.97$ (median; 0/3 reversed) & diluted \\
+Occlusion + clean curriculum & 3 & $-0.90$ (median; 0/3 reversed) & forgets \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -362,12 +363,12 @@ preregistered both (three seeds each, same probe machinery, frozen gates).
 \emph{Interleaving} adds clean images at a 1:1 ratio to every occluded
 batch; \emph{curriculum} trains 30 clean epochs first, then switches to
 occluded input for 30 more. Table~\ref{tab:attractor} shows both fail.
-Interleaving leaves the signature exactly where it was
-($-0.97$ vs.\ $-0.95$ baseline median) at no clean-accuracy cost---%
+Interleaving leaves the signature exactly where it was (median $-0.97$ in
+both the mixed and the occlusion-only arm) at no clean-accuracy cost---%
 the interleaved gradient signal is absorbed without changing the solution.
 The curriculum is more violent: after the switch, clean accuracy collapses
 from 0.55 (epoch 40) to chance (epoch 60), and the signature still lands
-in the collapsed band ($-0.89$). One separation is worth recording: the
+in the collapsed band (median $-0.90$). One separation is worth recording: the
 mixing arm completely flattens the norm--severity profile
 ($\|\mathrm{feat}\|@s5/\|\mathrm{feat}\|@s0 = 1.01$--$1.04$ across seeds)
 yet the error-direction signature remains deeply negative. The two
@@ -739,13 +740,16 @@ forward pass plus a short probe fit). We suggest it as a standard gate for
 feedback papers in degraded-input regimes.
 
 \paragraph{Preregistration carried real weight.}
-Both of this paper's headline claims are gates that \emph{blocked}
+Three of this paper's readings are gates or checks that \emph{blocked}
 seductive alternatives: an inverted belief response that would have read
-as a mechanism discovery with a sign error, and a $+23$\,pp trend that
-would have survived any fixed narrative. The confirmation-batch design
+as a mechanism discovery with a sign error, a $+23$\,pp trend that
+would have survived any fixed narrative, and a mid-training probe whose
+single-seed reading suggested a clean-vs-curriculum divergence that two
+further control seeds dissolved. The confirmation-batch design
 (freeze the effect size, the test, and the CI condition before enlarging
 the sample) cost one day of compute and converted a would-be false
 positive into a clean negative with a power calculation explaining why.
+Preregistration fixed the claim; only replication fixed the probe.
 
 \section{Limitations}
 \label{sec:limitations}
@@ -767,7 +771,17 @@ family.} The attractor analysis covers occlusion grids; other stressors
 (noise, blur, distribution shift) may not select collapse, and feedback might
 show gains there. Our claim is that occlusion-trained racks---the exact
 setting motivating most robustness feedback papers---carry the confound,
-not that all stress racks do. \textbf{Scorer subjectivity.} The
+not that all stress racks do. \textbf{Repairs are two, not all.} The
+distribution route was tested with exactly two interventions---1:1
+interleaving and a fixed 30/30 clean-to-occluded schedule---and the
+objective route with one consistency term. Our claim is that the obvious
+post-hoc repairs fail, not that no data schedule could prevent the
+attractor; earlier, gentler, or continuously annealed exposure to clean
+data is untested. \textbf{Formation time is bracketed, not located.} The
+signature is inverted by epoch 60; a mid-training probe (25-epoch probe
+fit at epoch 30) returned seed-inconsistent values even in the
+clean-training control (range $-1.00$ to $+0.96$ across three seeds) and
+is not reliable enough to date the transition. \textbf{Scorer subjectivity.} The
 confidence-anchored scorer depends on models emitting confidence-bearing
 structured lists; models that refuse the format would need a different
 commitment-position definition, and we cannot exclude scorer-model format
@@ -791,14 +805,18 @@ real scarcity is correction or simply the discipline of not
 converging first.
 
 \section*{Reproducibility statement}
-All batches were preregistered with frozen criteria (ADR-0029 through
-ADR-0031), including the confirmation batch's effect-size threshold,
-test, and CI condition, fixed before the 60 new puzzles were generated
-and run. Puzzle generators, race scripts, scorer versions (including the
+All batches were preregistered with frozen criteria: the LLM race batches
+under ADR-0029 through ADR-0032 (including the confirmation batch's
+effect-size threshold, test, and CI condition, fixed before the 60 new
+puzzles were generated and run, and the $2\times2$ decomposition's
+main-effect gates), and the distribution-intervention batch under
+ADR-0033 (three arms, three seeds, reversal gates fixed before launch).
+Puzzle generators, race scripts, scorer versions (including the
 discarded first scorer), raw outputs with full texts, and analysis
 notebooks are archived; per-query records (2160 queries, confirmation
-batch) are released as machine-readable JSON. Bootstrap uses 20{,}000
-resamples with a fixed seed.
+batch) are released as machine-readable JSON, as are the per-run probe
+outputs for every training condition in Table~\ref{tab:attractor}.
+Bootstrap uses 20{,}000 resamples with a fixed seed.
 
 \section*{Ethics statement}
 This study uses publicly available model weights served locally and
