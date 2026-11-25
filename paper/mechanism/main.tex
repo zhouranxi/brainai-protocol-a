@@ -722,7 +722,14 @@ archived (same cap, same prompts) gives 61\% for \Mcrit{}, against 7\% for
 \Mmaint{} and 2\% for \Mstate{}, now counted by the server's native
 finish-reason flag rather than the heuristic; the pre-critique candidate
 step was cut in only 7\% of \Mcrit{} calls, so the cut falls on the
-critique pass itself.
+critique pass itself. A further arm raised the cap to 2{,}400 tokens for
+\Mcrit{} alone, which lowered the cut rate to 9\% (15\% at stage 3) and
+moved its top-1 by $-1.7$, $-11.7$, and $-13.3$\,pp at stages 1/2/3.
+None of these shifts passed the preregistered paired sign test
+($p = 1.00$, $0.21$, $0.12$), so the truncation is not a demonstrated
+behavioral confound; nor is it demonstrated to be harmless, since the
+stage-2 and stage-3 shifts are larger than the gate's own 10\,pp margin
+(\S\ref{sec:limitations}, \emph{Unequal output budget}).
 
 \paragraph{Scorer tolerance, verified.}
 The repaired scorer lets a candidate borrow a confidence percentage from
@@ -833,10 +840,29 @@ stage-1 lead should be read as suggestive, not established, and the
 per-puzzle instability sits in the control arm, which was not the subject
 of the re-run. \textbf{Unequal output budget.} The
 1{,}200-token cap truncated 58\% of \Mcrit{} outputs and under 8\% of
-every other mechanism's in the batch-1 archive; ranks were unaffected,
-but \Mcrit{}'s behavior was observed under a binding budget that the
-others did not hit, and the confirmation batch's full texts were not
-retained to repeat the census.
+every other mechanism's in the batch-1 archive; the re-run of the
+confirmation batch puts the figure for \Mcrit{} at 61\%, counted by the
+server's native finish-reason flag. Ranks were unaffected, but
+\Mcrit{}'s behavior was observed under a binding budget that the
+others did not hit. We therefore re-ran \Mcrit{} with the cap raised to
+2{,}400 tokens on the same 60 confirmation puzzles. This cuts the
+truncation rate to 9\% without eliminating it (15\% at stage 3), so the
+arm is budget-relaxed rather than budget-free. The preregistered gate
+(a top-1 difference of at least 10\,pp at any stage \emph{and} a paired
+sign test at $p < 0.05$) did not fire: top-1 moved by $-1.7$, $-11.7$,
+and $-13.3$\,pp at stages 1/2/3, with $p = 1.00$, $0.21$, and $0.12$.
+We read this as \emph{not detected}, not as \emph{no effect}. The
+stage-2 and stage-3 differences are as large as the cap was expected to
+produce and point the same way, the paired bootstrap intervals
+($[-26.7, +3.3]$ and $[-26.7, +1.7]$\,pp) do not exclude a 10\,pp
+effect, and the sign test sees only about 20 discordant puzzles per
+stage. The relaxed arm also produced longer critiques that restated the
+gold answer in more list entries (mean duplicate-gold count 0.73 vs.\
+1.38 at stage 2, 0.96 vs.\ 1.89 at stage 3). On top-1 the relaxed arm
+scored \Mcrit{} no higher at any stage, so the cap, if it biases
+\Mcrit{}, inflates it; the stage-2 lead in \S\ref{sec:early} is
+therefore a figure obtained under the binding budget, not a budget-free
+one.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -860,7 +886,9 @@ All batches were preregistered with frozen criteria: the LLM race batches
 under ADR-0029 through ADR-0032 (including the confirmation batch's
 effect-size threshold, test, and CI condition, fixed before the 60 new
 puzzles were generated and run, and the $2\times2$ decomposition's
-main-effect gates), and the distribution-intervention batch under
+main-effect gates), the truncation re-run and its relaxed-budget arm
+under ADR-0034 (the top-1 difference and sign-test threshold fixed
+before launch), and the distribution-intervention batch under
 ADR-0033 (three arms, three seeds, reversal gates fixed before launch).
 Puzzle generators, race scripts, scorer versions (including the
 discarded first scorer), and analysis
@@ -872,7 +900,8 @@ outputs for every training condition in Table~\ref{tab:attractor}.
 The confirmation batch itself retained no full texts; a re-run of it
 under ADR-0034 (same puzzles, prompts, and cap) archived them, and that
 re-run is released in \texttt{results/p35\_fulltext} alongside the
-per-query records.
+per-query records, together with the 2{,}400-token \Mcrit{} arm and the
+read-out scripts.
 Bootstrap uses 20{,}000 resamples with a fixed seed.
 
 \section*{Ethics statement}

@@ -1,0 +1,66 @@
+== untouched regions are byte-identical to HEAD ==
+  [PASS] 'Three resamples per cell' paragraph unchanged
+  [PASS] Table 2 (first table environment, 917 chars) unchanged
+  [PASS] everything from the first \section up to 'The measurement artifact' unchanged (32634 chars; covers sec:early, Table 2, Fig. 1)
+  [PASS] Discussion section unchanged
+  [PASS] Conclusion section unchanged
+  [PASS] Ethics / AI-tools / everything after Reproducibility unchanged
+  [PASS] phase-A text of 'Residual truncation' kept verbatim (1249 chars == HEAD 1249 chars); phase B appended 523 chars after 'critique pass itself.'
+  [PASS] 'Scorer tolerance' paragraph unchanged
+
+== Limitations, 'Unequal output budget' ==
+  [PASS] contradiction removed: no 'were not retained' / 'not retained to repeat' in Limitations
+  [PASS] no full-text contradiction anywhere in the paper: every 'retained no full texts' is about the ORIGINAL batch
+  [PASS] no template sentence claiming 'unchanged at every grade'
+  [PASS] no claim of verified harmlessness: 'verified' not used for the truncation
+  [PASS] no sentence claims truncation was eliminated (sentences mentioning 'eliminat': 1, offending: 0)
+  [PASS] residual truncation is stated in the Limitations sentence ('9\% without eliminating it (15\% at stage 3)')
+  [PASS] batch-1 heuristic truncation: critique 57.8% -> '58%', others max 7.8% -> 'under 8%'
+  [PASS] re-run truncation for critique 60.9% -> '61%'
+  [PASS] relaxed arm truncation 48/540 = 8.9% -> '9%'
+  [PASS] stage-3 residual truncation 15.0% -> '15%'
+  [PASS] stage 1: diff -1.7 pp, sign p = 1.00 (written -1.7, 1.00)
+  [PASS] stage 2: diff -11.7 pp, sign p = 0.21 (written -11.7, 0.21)
+  [PASS] stage 3: diff -13.3 pp, sign p = 0.12 (written -13.3, 0.12)
+  [PASS] differences printed in order $-1.7$, $-11.7$, $-13.3$ at stages 1/2/3
+  [PASS] p-values printed in order $p = 1.00$, $0.21$, $0.12$
+  [PASS] stage 2 paired bootstrap 95% CI [-26.7, +3.3] (written -26.7, +3.3)
+  [PASS] stage 2 CI does NOT exclude a 10 pp effect (statement in paper)
+  [PASS] stage 3 paired bootstrap 95% CI [-26.7, +1.7] (written -26.7, +1.7)
+  [PASS] stage 3 CI does NOT exclude a 10 pp effect (statement in paper)
+  [PASS] CI text: $[-26.7, +3.3]$ and $[-26.7, +1.7]$ present
+  [PASS] 'stage-2 and stage-3 differences are larger than 10pp' is true
+  [PASS] discordant puzzles per stage {1: 19, 2: 23, 3: 20} -> 'about 20'
+  [PASS] dup stage 2 0.73 vs 1.38; stage 3 0.96 vs 1.89 (written 0.73/1.38, 0.96/1.89)
+  [PASS] dup sentence present verbatim
+
+== direction statement ==
+    top-1 count R2400-R1200 by stage (median caliber): [-1, -7, -8]; row-level: [-10, -24, -16]; top-3 recall pp: [-3.3, 1.7, 1.7]
+  [PASS] 'scored critique no higher at any stage' holds in BOTH calibers (top-1)
+  [PASS] statement is scoped to top-1 (top-3 recall does NOT move the same way): 'On top-1 the relaxed arm' / 'scored \\Mcrit{} no higher at any stage'
+  [PASS] top-3 recall is NOT lower at every stage, so scoping the sentence to top-1 is necessary
+  [PASS] 'stage-2 lead' is a real quantity in sec:early (critique above maintenance at stage 2 in the preregistered draw)
+
+== measurement artifact section, appended sentences ==
+  [PASS] appended text reports 2,400 tokens
+  [PASS] appended text reports 9% and 15% at stage 3
+  [PASS] appended text reports the three differences
+  [PASS] appended text reports the three p-values
+  [PASS] appended text neither declares harmlessness nor a confound
+  [PASS] appended text cross-references Limitations / Unequal output budget
+  [PASS] 'only critique' was re-run at 2,400 (R2400 is M-d only)
+
+== Reproducibility statement ==
+  [PASS] ADR-0034 added to the preregistered list
+  [PASS] ADR-0033 half-sentence intact
+  [PASS] re-run released in results/p35_fulltext
+  [PASS] 2,400-token arm mentioned as released
+  [PASS] 'full texts archived' statement present (phase A, kept)
+
+== build ==
+  [PASS] 0 TeX errors
+  [PASS] 0 undefined references/citations
+  [PASS] 0 overfull hboxes
+    pages: 14
+
+0 FAIL -- all checks pass
