@@ -46,21 +46,33 @@ def load(mt, mech=None):
 
 
 def med(rows):
+    """(mech, grade, puzzle) -> upper-median rank."""
     acc = defaultdict(list)
     for r in rows:
-        acc[(r["grade"], r["puzzle"])].append(r["rank"])
+        acc[(r["mech"], r["grade"], r["puzzle"])].append(r["rank"])
     return {k: um(v) for k, v in acc.items()}
+
+
+# Baseline for every "unchanged" assertion: the last mechanism-paper commit BEFORE phase B
+# (stage-A edits + Lance's 'Three resamples per cell' decision). Pinned, not HEAD, so the
+# audit keeps the same meaning after the phase-B commits land.
+BASELINE = "bf8391a"
 
 
 def main():
     tex = TEX.read_text(encoding="utf-8")
-    head = subprocess.run(["git", "show", "HEAD:paper/mechanism/main.tex"], cwd=REPO, capture_output=True).stdout.decode("utf-8")
+    head = subprocess.run(["git", "show", f"{BASELINE}:paper/mechanism/main.tex"], cwd=REPO, capture_output=True).stdout.decode("utf-8")
+    assert len(head) > 1000, f"baseline {BASELINE} not readable"
 
     r12, r24 = load(1200, "d"), load(2400, "d")
-    m12, m24 = med(r12), med(r24)
+    c12 = load(1200, "c")
+    # m12 / m24 are M-d only, keyed (grade, puzzle) -- the R2400-vs-R1200 comparison is within M-d
+    m12 = {k[1:]: v for k, v in med(r12).items()}
+    m24 = {k[1:]: v for k, v in med(r24).items()}
+    assert all(k[0] == "d" for k in med(r12)) and all(k[0] == "d" for k in med(r24))
     pz = sorted({k[1] for k in m24})
 
-    print("== untouched regions are byte-identical to HEAD ==")
+    print(f"== untouched regions are byte-identical to baseline {BASELINE} (last commit before phase B) ==")
     def block(s, start, end):
         i = s.index(start)
         return s[i:s.index(end, i)]
@@ -88,8 +100,8 @@ def main():
     anchor = "critique pass itself."
     appended = b[b.index(anchor) + len(anchor):]
     kept = b[:b.index(anchor) + len(anchor)]
-    check(f"phase-A text of 'Residual truncation' kept verbatim ({len(kept)} chars == HEAD {len(a.rstrip())} chars); "
-          f"phase B appended {len(appended.strip())} chars after 'critique pass itself.'",
+    check("phase-A text of 'Residual truncation' kept verbatim against the baseline "
+          f"(kept {len(kept)} chars == baseline {len(a.rstrip())} chars); phase B appended {len(appended.strip())} chars after 'critique pass itself.'",
           a.count(anchor) == 1 and kept == a.rstrip() and len(appended.strip()) > 0)
     a = block(head, r"\paragraph{Scorer tolerance, verified.}", r"\section{Discussion}")
     b = block(tex, r"\paragraph{Scorer tolerance, verified.}", r"\section{Discussion}")
@@ -173,16 +185,31 @@ def main():
     check("dup sentence present verbatim", "0.73 vs.\\\n1.38 at stage 2, 0.96 vs.\\ 1.89 at stage 3" in lim)
 
     print("\n== direction statement ==")
-    # 'The relaxed arm scored critique no higher at any stage' -- median caliber
+    # 'On top-1 the relaxed arm scored critique no higher at any stage'
     hi_med = [sum(1 for p in pz if m24[(g, p)] == 1) - sum(1 for p in pz if m12[(g, p)] == 1) for g in (1, 2, 3)]
     lo_med = [100 * sum(1 for p in pz if m24[(g, p)] in (1, 2, 3)) / 60 - 100 * sum(1 for p in pz if m12[(g, p)] in (1, 2, 3)) / 60 for g in (1, 2, 3)]
     hi_row = [sum(1 for r in r24 if r["grade"] == g and r["rank"] == 1) - sum(1 for r in r12 if r["grade"] == g and r["rank"] == 1) for g in (1, 2, 3)]
     print(f"    top-1 count R2400-R1200 by stage (median caliber): {hi_med}; row-level: {hi_row}; top-3 recall pp: {[round(x, 1) for x in lo_med]}")
-    check("'scored critique no higher at any stage' holds in BOTH calibers (top-1)", all(v <= 0 for v in hi_med) and all(v <= 0 for v in hi_row))
-    check("statement is scoped to top-1 (top-3 recall does NOT move the same way): 'On top-1 the relaxed arm' / 'scored \\\\Mcrit{} no higher at any stage'",
+    check("'scored critique no higher at any stage' holds on top-1 in BOTH calibers", all(v <= 0 for v in hi_med) and all(v <= 0 for v in hi_row))
+    check("statement is scoped to top-1: 'On top-1 the relaxed arm' / 'scored \\\\Mcrit{} no higher at any stage'",
           "On top-1 the relaxed arm\nscored \\Mcrit{} no higher at any stage" in lim)
     check("top-3 recall is NOT lower at every stage, so scoping the sentence to top-1 is necessary",
           not all(v < 0 for v in lo_med))
+    # the paper must NOT claim the stage-2 lead shrinks: that depends on which M-c draw is the partner
+    check("no claim that the cap inflates the stage-2 LEAD (the cross-budget comparison is draw-dependent)",
+          "inflates it" not in lim and "therefore a figure" not in lim and "upper bound" not in lim)
+    check("says only critique was re-run at the larger budget", "only \\Mcrit{} was re-run at the larger\nbudget" in lim)
+    # three-key maps: (mech, grade, puzzle)
+    m12x, m24x = med(r12), med(r24)
+    m31x = med([r for r in json.loads((RES / "p31_confirm" / "p31_race.json").read_text(encoding="utf-8"))["rows"] if r["mech"] in "cd"])
+    c12x = med(c12)
+    g = 2
+    gap_12 = sum(1 for p in pz if m12x[("d", g, p)] == 1) - sum(1 for p in pz if c12x[("c", g, p)] == 1)
+    gap_rel_r12c = sum(1 for p in pz if m24x[("d", g, p)] == 1) - sum(1 for p in pz if c12x[("c", g, p)] == 1)
+    gap_rel_p31c = sum(1 for p in pz if m24x[("d", g, p)] == 1) - sum(1 for p in pz if m31x[("c", g, p)] == 1)
+    print(f"    stage-2 M-d minus M-c (top-1 puzzles of 60): both@1200 {gap_12:+d}; relaxed vs R1200 M-c {gap_rel_r12c:+d}; relaxed vs P31 M-c {gap_rel_p31c:+d}")
+    check("why the lead claim is forbidden: the relaxed stage-2 gap shrinks against one M-c draw and grows against the other",
+          (gap_rel_r12c - gap_12) < 0 < (gap_rel_p31c - gap_12))
     # 'stage-2 lead' exists in the paper
     early = block(tex, r"\section{", r"\section{The measurement artifact}")
     check("'stage-2 lead' is a real quantity in sec:early (critique above maintenance at stage 2 in the preregistered draw)",

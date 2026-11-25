@@ -1,4 +1,4 @@
-phase-B block: 63 lines, starts at ADR line 117
+phase-B block: 66 lines, starts at ADR line 117
 
 -- integrity / execution record
   [PASS] R2400 has 540 rows
@@ -119,5 +119,23 @@ phase-B block: 63 lines, starts at ADR line 117
 
 -- md5 of the pulled file (full digest must appear verbatim in the ADR)
   [PASS] full md5 4fcefc9860c840924083605453272697 appears verbatim in the phase-B block
+
+-- open question 5: cross-budget M-d vs M-c (exploratory; M-c has no 2,400 arm)
+  [PASS] G2 M-d vs M-c, partner both@1200: 15/6, diff +9, p=0.0784 (written 15/6, +9, 0.078)
+  [PASS] G2 partner both@1200: the wins/losses string '15 胜 6 负' appears in the ADR open-question block
+  [PASS] G2 M-d vs M-c, partner R1200c: 15/13, diff +2, p=0.8506 (written 15/13, +2, 0.851)
+  [PASS] G2 partner R1200c: the wins/losses string '15 胜 13 负' appears in the ADR open-question block
+  [PASS] G2 M-d vs M-c, partner P31c: 21/10, diff +11, p=0.0708 (written 21/10, +11, 0.071)
+  [PASS] G2 partner P31c: the wins/losses string '21 胜 10 负' appears in the ADR open-question block
+  [PASS] G3 M-d vs M-c, partner R1200c: 11/16, diff -5, p=0.4421 (written 11/16, -5, 0.442)
+  [PASS] G3 partner R1200c: the wins/losses string '11 胜 16 负' appears in the ADR open-question block
+  [PASS] G3 M-d vs M-c, partner P31c: 6/17, diff -11, p=0.0347 (written 6/17, -11, 0.035)
+  [PASS] G3 partner P31c: the wins/losses string '6 胜 17 负' appears in the ADR open-question block
+  [PASS] G2 differences written as +9 / +2 / +11 puzzles
+  [PASS] G3 differences written as −5 / −11 puzzles and p=.035 flagged
+  [PASS] the stage-2 lead claim is draw-dependent: gap +2 vs R1200's M-c (below +9) but +11 vs P31's M-c (above +9)
+  [PASS] top-3 recall R2400-R1200 G1/G2/G3 = ('-3.3', '+1.7', '+1.7') pp (written -3.3 / +1.7 / +1.7)
+  [PASS] top-3 differences appear in the ADR as −3.3 / +1.7 / +1.7pp
+  [PASS] top-3 recall is not lower at every stage (so 'budget effect is top-1 only' is a fair reading)
 
 0 FAIL -- all checks pass

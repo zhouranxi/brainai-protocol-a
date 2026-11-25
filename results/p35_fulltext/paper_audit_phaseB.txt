@@ -1,11 +1,11 @@
-== untouched regions are byte-identical to HEAD ==
+== untouched regions are byte-identical to baseline bf8391a (last commit before phase B) ==
   [PASS] 'Three resamples per cell' paragraph unchanged
   [PASS] Table 2 (first table environment, 917 chars) unchanged
   [PASS] everything from the first \section up to 'The measurement artifact' unchanged (32634 chars; covers sec:early, Table 2, Fig. 1)
   [PASS] Discussion section unchanged
   [PASS] Conclusion section unchanged
   [PASS] Ethics / AI-tools / everything after Reproducibility unchanged
-  [PASS] phase-A text of 'Residual truncation' kept verbatim (1249 chars == HEAD 1249 chars); phase B appended 523 chars after 'critique pass itself.'
+  [PASS] phase-A text of 'Residual truncation' kept verbatim against the baseline (kept 1249 chars == baseline 1249 chars); phase B appended 523 chars after 'critique pass itself.'
   [PASS] 'Scorer tolerance' paragraph unchanged
 
 == Limitations, 'Unequal output budget' ==
@@ -36,9 +36,13 @@
 
 == direction statement ==
     top-1 count R2400-R1200 by stage (median caliber): [-1, -7, -8]; row-level: [-10, -24, -16]; top-3 recall pp: [-3.3, 1.7, 1.7]
-  [PASS] 'scored critique no higher at any stage' holds in BOTH calibers (top-1)
-  [PASS] statement is scoped to top-1 (top-3 recall does NOT move the same way): 'On top-1 the relaxed arm' / 'scored \\Mcrit{} no higher at any stage'
+  [PASS] 'scored critique no higher at any stage' holds on top-1 in BOTH calibers
+  [PASS] statement is scoped to top-1: 'On top-1 the relaxed arm' / 'scored \\Mcrit{} no higher at any stage'
   [PASS] top-3 recall is NOT lower at every stage, so scoping the sentence to top-1 is necessary
+  [PASS] no claim that the cap inflates the stage-2 LEAD (the cross-budget comparison is draw-dependent)
+  [PASS] says only critique was re-run at the larger budget
+    stage-2 M-d minus M-c (top-1 puzzles of 60): both@1200 +9; relaxed vs R1200 M-c +2; relaxed vs P31 M-c +11
+  [PASS] why the lead claim is forbidden: the relaxed stage-2 gap shrinks against one M-c draw and grows against the other
   [PASS] 'stage-2 lead' is a real quantity in sec:early (critique above maintenance at stage 2 in the preregistered draw)
 
 == measurement artifact section, appended sentences ==

@@ -303,6 +303,53 @@ def main():
     h = hashlib.md5((RES / "p35_fulltext" / "p35_race_2400.json").read_bytes()).hexdigest()
     check(f"full md5 {h} appears verbatim in the phase-B block", h in phase_b)
 
+    print("\n-- open question 5: cross-budget M-d vs M-c (exploratory; M-c has no 2,400 arm)")
+    all12 = json.loads((RES / "p35_fulltext" / "p35_race_1200.json").read_text(encoding="utf-8"))["rows"]
+    p31all = json.loads((RES / "p31_confirm" / "p31_race.json").read_text(encoding="utf-8"))["rows"]
+
+    def medx(rw):
+        acc = defaultdict(list)
+        for r in rw:
+            acc[(r["mech"], r["grade"], r["puzzle"])].append(r["rank"])
+        return {k: um(v) for k, v in acc.items()}
+
+    mx12, mx24, mx31 = medx(all12), medx(r24), medx(p31all)
+    exp_x = {  # grade -> {partner: (wins, losses, diff, p printed to 3 decimals)}
+        2: {"both@1200": (15, 6, 9, "0.078"), "R1200c": (15, 13, 2, "0.851"), "P31c": (21, 10, 11, "0.071")},
+        3: {"R1200c": (11, 16, -5, "0.442"), "P31c": (6, 17, -11, "0.035")},
+    }
+    for g, part in exp_x.items():
+        for partner, (ew, el, ed, eps) in part.items():
+            md = mx12 if partner == "both@1200" else mx24
+            mc = {"both@1200": mx12, "R1200c": mx12, "P31c": mx31}[partner]
+            w = sum(1 for p in pz if md[("d", g, p)] == 1 and mc[("c", g, p)] != 1)
+            l = sum(1 for p in pz if mc[("c", g, p)] == 1 and md[("d", g, p)] != 1)
+            d = sum(1 for p in pz if md[("d", g, p)] == 1) - sum(1 for p in pz if mc[("c", g, p)] == 1)
+            p = sign_p(w, l)
+            # the ADR prints p to 3 decimals
+            check(f"G{g} M-d vs M-c, partner {partner}: {w}/{l}, diff {d:+d}, p={p:.4f} (written {ew}/{el}, {ed:+d}, {eps})",
+                  (w, l, d) == (ew, el, ed) and f"{p:.3f}" == eps)
+            s_w = f"{ew} 胜 {el} 负" if not (partner == "both@1200") else f"{ew} 胜 {el} 负"
+            check(f"G{g} partner {partner}: the wins/losses string '{s_w}' appears in the ADR open-question block",
+                  s_w in phase_b)
+    check("G2 differences written as +9 / +2 / +11 puzzles", all(s in phase_b for s in ("差 +9 题", "差 **+2** 题", "差 **+11** 题")))
+    check("G3 differences written as −5 / −11 puzzles and p=.035 flagged", "差 −5 题（p=.442）" in phase_b and "差 −11 题（**p=.035**）" in phase_b)
+    # the logical point: the stage-2 gap shrinks against one M-c draw and grows against the other
+    g2 = {k: v for k, v in exp_x[2].items()}
+    check("the stage-2 lead claim is draw-dependent: gap +2 vs R1200's M-c (below +9) but +11 vs P31's M-c (above +9)",
+          g2["R1200c"][2] < g2["both@1200"][2] < g2["P31c"][2])
+    # top-3 recall, median caliber
+    t3 = {}
+    for g in (1, 2, 3):
+        a = 100 * sum(1 for p in pz if m12[(g, p)] in (1, 2, 3)) / 60
+        b = 100 * sum(1 for p in pz if m24[(g, p)] in (1, 2, 3)) / 60
+        t3[g] = b - a
+    got = tuple(f"{t3[g]:+.1f}" for g in (1, 2, 3))
+    check(f"top-3 recall R2400-R1200 G1/G2/G3 = {got} pp (written -3.3 / +1.7 / +1.7)",
+          all(abs(t3[g] - e) < 0.06 for g, e in zip((1, 2, 3), (-3.3, 1.7, 1.7))))
+    check("top-3 differences appear in the ADR as −3.3 / +1.7 / +1.7pp", "−3.3 / +1.7 / +1.7pp" in phase_b)
+    check("top-3 recall is not lower at every stage (so 'budget effect is top-1 only' is a fair reading)", not all(v < 0 for v in t3.values()))
+
     print(f"\n{len(fails)} FAIL" + (f": {fails}" if fails else " -- all checks pass"))
     sys.exit(1 if fails else 0)
 
