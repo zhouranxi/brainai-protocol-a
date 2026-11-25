@@ -111,3 +111,43 @@ commit（push 若网络失败则稍后重试，不强求）。
 ### 8. 工作日志
 
 在工作区 .workbuddy/memory/2026-11-25.md 追加判读日志（文件不存在则创建）。
+
+## 阶段 A 交接（2026-11-25 14:15 追加；阶段 B 执行者必读，上面步骤 1–8 原文未改）
+
+阶段 A 已完成，commit `22abdcd`（ADR §六 + 读出脚本 + 数据）与 `00c2ee4`（机制文）。
+
+**已做**
+- `results/p35_fulltext/p35_race_1200.json` 已入库（2160 行，md5 `64f16bbc…b7f1d`）。
+- 读出脚本 **`code/p35_analyze.py`** 已写好并经独立复算核对。阶段 B 直接运行 `PYTHONIOENCODING=utf-8 python code/p35_analyze.py 1200 2400`，
+  它会重跑 Q1、一致性检查，并输出 Q2（两种口径 + 按题配对 sign test + R-T1/R-T0 判定 + dup 次要读出）。
+  步骤 4 里 Q2 的所有数字都从它取，不要另写一套。
+- Q1 结论：M-d 60.9%、M-c 7.0%、M-a 1.7%、M-b 0%（API 原生 `finish_reason == "length"`）；M-d 的 base 步截断 7.4%，88.8% 的截断落在批判调用。
+- ADR §六已写入 Q1 与一致性检查；机制文「Residual truncation」段与 Reproducibility 段已按步骤 6 阶段 A 改完并编译（13 页，0 错误，x1 最大 540.3）。
+
+**一致性检查的结果与步骤 6 原文的差别（重要）**
+- 步骤 4 末尾写的是「差 < 10pp」。实测 **M-a、M-b、M-d 十二格最大 3.3pp，但 M-c 有两格越线**：
+  中位口径 G2 43.3→58.3（+15.0pp）、G3 80.0→70.0（−10.0pp）。已按规则标红、未改 main.tex 正文数字。
+- 该红标的性质已查清并记在 ADR §六：**不是行为偏移，是「每题 3 次取中位」口径的抽样放大**。
+  行级 top-1 两批最大差 5.0pp；配对 sign test G2 p=0.078、G3 p=0.33；M-d 的 base 步（同一 M-c prompt、独立 540 条）行级 top-1 与两批 M-c 同带。
+- **但这不改变一个事实：论文表 2 的 M-c 列对单次重采样敏感。** 用 R1200 替换 P31 重算合并 90 题（exploratory，见 ADR §六），
+  终局 M-d − M-c 由 +3.3pp 变为 +11.1pp，G1 的 M-d vs M-c 由 p=.019 变为 p=.071（不再显著），G2 仍显著（p=.006）。
+  **R2 否定判决两次都不翻，不重判。** 这是开放问题，处置权在 Lance，阶段 B 不要自行改表 2 或 ADR-0031。
+
+**阶段 B 必须处理的遗留矛盾**
+- 机制文 **Reproducibility 段**现在说重跑批已归档全文，而 **Limitations「Unequal output budget」段**仍写
+  "the confirmation batch's full texts were not retained to repeat the census"。阶段 A 按指令没动后者，**两句目前互相矛盾**。
+  阶段 B 改 Limitations 段时务必清掉这个矛盾（R-T0 与 R-T1 两个分支都要）。
+- Reproducibility 段首句 "the LLM race batches under ADR-0029 through ADR-0032" 未含 ADR-0034，阶段 B 顺手补上（ADR-0033 之后那半句是另一批，别动）。
+
+**R2400 的已知情况**
+- 13:02:17 启动，实测约 72 s/行，540 行 → 预计 11-26 00:00 前后完成。若 00:30 仍未完成：按步骤 2「R1200 未完成」同样的逻辑处理进度与 ETA，
+  **若预计 1h 内完成则建对应时间的一次性检查任务，否则只报告、不再续建**。
+- **2400 token 并未完全消除截断**：中途 51 行里 10 行 `length`（19.6%）。按预注册「不再加码，如实报告」。
+  这会影响步骤 6 的措辞——R-T0 分支模板里的 "lifting the cap to 2,400 tokens" 与 R-T1 分支的说明，都要用**实测残余截断率**如实写，
+  不要写成「已完全解除」。
+- 读 Q2 时注意：sign test 的单位是**题**（同一 puzzle、同一 grade 的 M-d top-1 指示），不是行；行级配对只作敏感性参考。
+
+**环境备忘**
+- ssh/scp 单条命令发射，不要用 `&&` 串多条（阶段 A 首次 scp 被前一条命令的非零退出码短路，文件没落盘）。
+- 落盘后核对 md5 与服务器一致再读。
+- 阶段 A 结束时 `git push` 失败（github.com:443 连不上，本机代理隧道掉线）。阶段 B 先试一次 push，失败就走 `push_via_api.py`，仍失败则如实报告不强求。
