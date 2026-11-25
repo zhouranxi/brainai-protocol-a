@@ -132,6 +132,11 @@ commit（push 若网络失败则稍后重试，不强求）。
 - **但这不改变一个事实：论文表 2 的 M-c 列对单次重采样敏感。** 用 R1200 替换 P31 重算合并 90 题（exploratory，见 ADR §六），
   终局 M-d − M-c 由 +3.3pp 变为 +11.1pp，G1 的 M-d vs M-c 由 p=.019 变为 p=.071（不再显著），G2 仍显著（p=.006）。
   **R2 否定判决两次都不翻，不重判。** 这是开放问题，处置权在 Lance，阶段 B 不要自行改表 2 或 ADR-0031。
+- **【2026-11-25 15:21 更新：此事已由 Lance 定夺，按「维持表 2 + Limitations 披露」执行完毕，本问题关闭。】**
+  已在 Limitations 的「Scorer subjectivity」与「Unequal output budget」之间新增一段 **「Three resamples per cell」**
+  （M-c 30/37/66 → 33/46/60、M-d 43/63/69 → 44/63/70、终局差 +3 → +10 题、G1 p=.019 → .07，stage-1 领按 suggestive 读）。
+  表 2、图 1、§early、附录数字**一律不动**。**阶段 B 不要再碰这一段，也不要改表 2。**
+  注意阶段 B 改 Limitations「Unequal output budget」时，它现在紧跟在「Three resamples per cell」之后，别把前一段碰坏。
 
 **阶段 B 必须处理的遗留矛盾**
 - 机制文 **Reproducibility 段**现在说重跑批已归档全文，而 **Limitations「Unequal output budget」段**仍写

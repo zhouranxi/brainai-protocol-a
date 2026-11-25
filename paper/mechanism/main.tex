@@ -819,7 +819,19 @@ is not reliable enough to date the transition. \textbf{Scorer subjectivity.} The
 confidence-anchored scorer depends on models emitting confidence-bearing
 structured lists; models that refuse the format would need a different
 commitment-position definition, and we cannot exclude scorer-model format
-interactions at other scales. \textbf{Unequal output budget.} The
+interactions at other scales. \textbf{Three resamples per cell.} Scoring the
+confirmation batch by median rank over three temperature-0.7 resamples is
+cheap but coarse: the median of three binary indicators moves by whole
+puzzle counts. A re-run of the batch under identical prompts, temperature,
+and cap (ADR-0034) left \Mcrit{}'s column of Table~\ref{tab:merged} within
+one puzzle of the reported counts ($44/63/70$) but moved \Mmaint{}'s to
+$33/46/60$ (reported $30/37/66$), so the merged endgame difference becomes
+$+10$ puzzles and the stage-1 paired test $p = 0.07$ (reported $+3$ and
+$p = 0.019$); stage 2 stays significant and the endgame stays null under
+both draws. Table~\ref{tab:merged} reports the preregistered draw; the
+stage-1 lead should be read as suggestive, not established, and the
+per-puzzle instability sits in the control arm, which was not the subject
+of the re-run. \textbf{Unequal output budget.} The
 1{,}200-token cap truncated 58\% of \Mcrit{} outputs and under 8\% of
 every other mechanism's in the batch-1 archive; ranks were unaffected,
 but \Mcrit{}'s behavior was observed under a binding budget that the
