@@ -1,0 +1,180 @@
+
+[integrity mt=1200] rows=2160 expected=2160 unique_keys=2160 puzzles=60 mechs=abcd reps=[0, 1, 2] api_errors=0 all_have_text=True -> OK
+
+[integrity mt=2400] rows=540 expected=540 unique_keys=540 puzzles=60 mechs=d reps=[0, 1, 2] api_errors=0 all_have_text=True -> OK
+
+===== Q1 truncation census (R1200; flag = finish_reason == 'length') =====
+  mech      cut/n  API rate  P34 heur.  batch-1  median chars    p90
+  d     329/540       60.9%      48.3%    57.8%          1954   2097
+  c      38/540        7.0%       5.4%     7.8%          1062   1705
+  a       9/540        1.7%       3.0%     4.4%           658   1129
+  b       0/540        0.0%       0.0%     0.0%             4    331
+    flag x-flag M-d: API&heur=259 API-only=70 heur-only=2 neither=209
+    flag x-flag M-c: API&heur=29 API-only=9 heur-only=0 neither=502
+    flag x-flag M-a: API&heur=9 API-only=0 heur-only=7 neither=524
+    flag x-flag M-b: API&heur=0 API-only=0 heur-only=0 neither=540
+
+  M-d base (pre-critique candidate step) finish_reason:
+    all  stop=500 (92.6%)  length=40 (7.4%)   n=540
+    G1   stop=180 (100.0%)   n=180
+    G2   stop=160 (88.9%)  length=20 (11.1%)   n=180
+    G3   stop=160 (88.9%)  length=20 (11.1%)   n=180
+    critique-step cut & base-step cut: 37/329 of the cut rows (11.2%) -> the cut falls on the critique pass in 88.8%
+    M-d cut rate by grade: G1=71/180  G2=132/180  G3=126/180
+
+  top-1 by truncation status (rows, caliber b):
+    M-d G1: cut    32/71 | complete   46/109
+    M-d G2: cut   84/132 | complete    32/48
+    M-d G3: cut   90/126 | complete    34/54
+    M-c G1: cut      0/2 | complete   56/178
+    M-c G2: cut    12/17 | complete   75/163
+    M-c G3: cut    16/19 | complete   98/161
+    M-a G1: cut      0/0 | complete   79/180
+    M-a G2: cut      3/3 | complete   79/177
+    M-a G3: cut      2/6 | complete  127/174
+    M-b G1: cut      0/0 | complete   59/180
+    M-b G2: cut      0/0 | complete   69/180
+    M-b G3: cut      0/0 | complete  143/180
+
+  why the two truncation flags disagree (M-d): last 6 characters of the text
+    API-cut but heuristic says complete: 70 rows; last-character counts: {'。': 28, '*': 30, '.': 4, '？': 4, ')': 3, '）': 1}
+      ...'，语义完全相同，只是语序不同，在某些文学作品中可能出现。'
+      ...'的，概率应降至0%或忽略。\n真正的竞争在于**语序**。'
+      ...'*。\n\n因此，修订后的候选列表应该只包含**部分匹配**'
+      ...'三者交集的答案。\n\n    **修订点**：\n    *'
+      ...'至少一个条件。\n*   “举棋不定” 满足“与棋有关”。'
+      ...'   因此，**Candidate 1 (奋发图强)**'
+    heuristic says cut but API says stop: 2 rows; lengths [1665, 1766]
+      ...'吗？” 或 “它是中国民族乐队中弹拨乐组的领奏乐器吗？”'
+      ...'位置/星座**：（如“在猎户座”）→ 指向参宿四/参宿七'
+
+R1200 top-1, median rank per puzzle:
+  mech             G1            G2            G3
+  a        41.7% ( 60)    43.3% ( 60)    76.7% ( 60)
+  b        28.3% ( 60)    35.0% ( 60)    78.3% ( 60)
+  c        35.0% ( 60)    58.3% ( 60)    70.0% ( 60)
+  d        48.3% ( 60)    73.3% ( 60)    75.0% ( 60)
+
+R1200 top-1, row-level:
+  mech             G1            G2            G3
+  a        43.9% (180)    45.6% (180)    71.7% (180)
+  b        32.8% (180)    38.3% (180)    79.4% (180)
+  c        31.1% (180)    48.3% (180)    63.3% (180)
+  d        43.3% (180)    64.4% (180)    68.9% (180)
+
+===== consistency check: R1200 re-run vs original P31 (same 60 puzzles, temp 0.7 x 3) =====
+  key sets identical: True
+  puzzle universe: 60 old / 60 new
+
+  mech grade         P31     R1200   diff pp   flag   | rows: P31        R1200        diff
+  a    G1          41.7%     41.7%      +0.0          |       45.6%  43.9%   -1.7
+  a    G2          45.0%     43.3%      -1.7          |       45.0%  45.6%   +0.6
+  a    G3          75.0%     76.7%      +1.7          |       71.1%  71.7%   +0.6
+  a      G3 top-3 recall  P31 75.0%  R1200 76.7%  (+1.7 pp)
+  b    G1          25.0%     28.3%      +3.3          |       28.3%  32.8%   +4.4
+  b    G2          35.0%     35.0%      +0.0          |       38.9%  38.3%   -0.6
+  b    G3          76.7%     78.3%      +1.7          |       77.8%  79.4%   +1.7
+  b      G3 top-3 recall  P31 76.7%  R1200 78.3%  (+1.7 pp)
+  c    G1          30.0%     35.0%      +5.0          |       29.4%  31.1%   +1.7
+  c    G2          43.3%     58.3%     +15.0    RED   |       46.1%  48.3%   +2.2
+  c    G3          80.0%     70.0%     -10.0    RED   |       68.3%  63.3%   -5.0
+  c      G3 top-3 recall  P31 100.0%  R1200 96.7%  (-3.3 pp)
+  d    G1          46.7%     48.3%      +1.7          |       43.3%  43.3%   +0.0
+  d    G2          73.3%     73.3%      +0.0          |       64.4%  64.4%   +0.0
+  d    G3          73.3%     75.0%      +1.7          |       67.2%  68.9%   +1.7
+  d      G3 top-3 recall  P31 100.0%  R1200 96.7%  (-3.3 pp)
+
+  consistency (< 10pp on every mechanism-grade cell): FAIL
+
+  P31 headline re-derived on R1200 (60 confirmation puzzles, median rank):
+    P31  M-d vs M-c G1: wins 13 / losses 3 / ties 44, sign p = 0.0213
+    P31  M-d vs M-c G2: wins 21 / losses 3 / ties 36, sign p = 0.000277
+    P31  M-d vs M-c G3: wins 6 / losses 10 / ties 44, sign p = 0.454
+    R1200 M-d vs M-c G1: wins 14 / losses 6 / ties 40, sign p = 0.115
+    R1200 M-d vs M-c G2: wins 15 / losses 6 / ties 39, sign p = 0.0784
+    R1200 M-d vs M-c G3: wins 11 / losses 8 / ties 41, sign p = 0.648
+    M-a: per-puzzle median-rank agreement 96.7%; top-1 indicator flips 6/180 (top-1 53.9% -> 53.9%)
+    M-b: per-puzzle median-rank agreement 89.4%; top-1 indicator flips 19/180 (top-1 45.6% -> 47.2%)
+    M-c: per-puzzle median-rank agreement 60.0%; top-1 indicator flips 62/180 (top-1 51.1% -> 54.4%)
+    M-d: per-puzzle median-rank agreement 67.2%; top-1 indicator flips 50/180 (top-1 64.4% -> 65.6%)
+
+===== EXPLORATORY (not pre-registered; re-adjudicates nothing) =====
+merged 90 puzzles, confirmation 60 taken from P31 vs from R1200 (batch-1 30 at temp 0 fixed)
+  anchor: paper Table 2 recomputed from P31 + batch-1 = {'a': [41, 46, 68], 'b': [27, 33, 68], 'c': [30, 37, 66], 'd': [43, 63, 69]} -> MATCH
+  M-a top-1 /90 at G1/G2/G3:  P31   41/46/68   R1200   41/45/69
+  M-b top-1 /90 at G1/G2/G3:  P31   27/33/68   R1200   29/33/69
+  M-c top-1 /90 at G1/G2/G3:  P31   30/37/66   R1200   33/46/60
+  M-d top-1 /90 at G1/G2/G3:  P31   43/63/69   R1200   44/63/70
+  P31: M-d vs M-c paired sign test (wins/losses) G1 20/7 p=0.0192; G2 32/6 p=2.43e-05; G3 16/13 p=0.711
+      endgame M-d - M-c = +3/90 = +3.3 pp, bootstrap 95% CI [-7.8, +14.4] pp;  M-c endgame top-1 66/90 = 73% (health band 50-95%);  M-c - M-a top-3 recall G1/G2 = +12/+33 pp
+  R1200: M-d vs M-c paired sign test (wins/losses) G1 21/10 p=0.0708; G2 26/9 p=0.00599; G3 21/11 p=0.11
+      endgame M-d - M-c = +10/90 = +11.1 pp, bootstrap 95% CI [-1.1, +23.3] pp;  M-c endgame top-1 60/90 = 67% (health band 50-95%);  M-c - M-a top-3 recall G1/G2 = +16/+42 pp
+
+===== EXPLORATORY: is the M-c gap a shift or sampling noise? =====
+  M-c G1 row-level top-1 per rep: P31 26.7% 31.7% 30.0%  | R1200 33.3% 31.7% 28.3%
+      pooled top-1 (180 rows each): P31 29.4%  R1200 31.1%  diff +1.7 pp
+  M-c G2 row-level top-1 per rep: P31 40.0% 51.7% 46.7%  | R1200 45.0% 51.7% 48.3%
+      pooled top-1 (180 rows each): P31 46.1%  R1200 48.3%  diff +2.2 pp
+  M-c G3 row-level top-1 per rep: P31 71.7% 63.3% 70.0%  | R1200 66.7% 61.7% 61.7%
+      pooled top-1 (180 rows each): P31 68.3%  R1200 63.3%  diff -5.0 pp
+  M-c G1 per-puzzle median top-1, paired P31 vs R1200: R1200 wins 9 / P31 wins 6 / ties 45; sign p = 0.607
+  M-c G2 per-puzzle median top-1, paired P31 vs R1200: R1200 wins 15 / P31 wins 6 / ties 39; sign p = 0.0784
+  M-c G3 per-puzzle median top-1, paired P31 vs R1200: R1200 wins 10 / P31 wins 16 / ties 34; sign p = 0.327
+
+  split-half of R1200 itself (median over disjoint reps is undefined for 3 reps, so use single-rep top-1):
+    M-c G2: rep top-1 = [45.0, 51.7, 48.3]%; max within-run gap between two reps = 6.7 pp
+    M-c G3: rep top-1 = [66.7, 61.7, 61.7]%; max within-run gap between two reps = 5.0 pp
+
+  M-d's base step = the identical M-c prompt, scored on its own text:
+    puzzles loaded from code\p31_puzzles.json; gold answers for 60 puzzles
+    scorer replay on the 540 M-d final texts: 0 mismatches
+    base step, as M-c: G1 top-1 median-per-puzzle 33.3% | row-level 30.0% (P31 M-c: 30.0% / 29.4%; R1200 M-c: 35.0% / 31.1%)
+    base step, as M-c: G2 top-1 median-per-puzzle 58.3% | row-level 49.4% (P31 M-c: 43.3% / 46.1%; R1200 M-c: 58.3% / 48.3%)
+    base step, as M-c: G3 top-1 median-per-puzzle 65.0% | row-level 61.7% (P31 M-c: 80.0% / 68.3%; R1200 M-c: 70.0% / 63.3%)
+
+===== Q1 truncation census (R2400; flag = finish_reason == 'length') =====
+  mech      cut/n  API rate  P34 heur.  batch-1  median chars    p90
+  d      48/540        8.9%       8.7%        -          2200   3855
+    flag x-flag M-d: API&heur=37 API-only=11 heur-only=10 neither=482
+
+  M-d base (pre-critique candidate step) finish_reason:
+    all  stop=531 (98.3%)  length=9 (1.7%)   n=540
+    G1   stop=180 (100.0%)   n=180
+    G2   stop=178 (98.9%)  length=2 (1.1%)   n=180
+    G3   stop=173 (96.1%)  length=7 (3.9%)   n=180
+    critique-step cut & base-step cut: 4/48 of the cut rows (8.3%) -> the cut falls on the critique pass in 91.7%
+    M-d cut rate by grade: G1=1/180  G2=20/180  G3=27/180
+
+  top-1 by truncation status (rows, caliber b):
+    M-d G1: cut      1/1 | complete   67/179
+    M-d G2: cut    12/20 | complete   80/160
+    M-d G3: cut    17/27 | complete   91/153
+
+===== Q2: M-d, R2400 (cap lifted) vs R1200 =====
+
+  grade     (a) R1200   (a) R2400   diff pp      (b) R1200   (b) R2400   diff pp
+  G1            48.3%       46.7%      -1.7          43.3%       37.8%      -5.6
+  G2            73.3%       61.7%     -11.7          64.4%       51.1%     -13.3
+  G3            75.0%       61.7%     -13.3          68.9%       60.0%      -8.9
+
+  sign test, paired per puzzle on the M-d top-1 indicator (median-rank caliber):
+    G1: R2400 wins 9 / R1200 wins 10 / ties 41; diff -1.7 pp; p = 1 -> no hit
+    G2: R2400 wins 8 / R1200 wins 15 / ties 37; diff -11.7 pp; p = 0.21 -> no hit
+    G3: R2400 wins 6 / R1200 wins 14 / ties 40; diff -13.3 pp; p = 0.115 -> no hit
+
+  sensitivity (row-level pairing by (puzzle, grade, rep); not the pre-registered unit):
+    G1: n=180 R2400 wins 27 / R1200 wins 37 / ties 116; p = 0.26
+    G2: n=180 R2400 wins 27 / R1200 wins 51 / ties 102; p = 0.00877
+    G3: n=180 R2400 wins 32 / R1200 wins 48 / ties 100; p = 0.0929
+
+  VERDICT: R-T0 (no behavioral effect of truncation)
+
+  secondary: duplicate-gold count, mean per row
+    G1: R1200 0.48  R2400 0.48  (+0.00)
+    G2: R1200 0.73  R2400 1.38  (+0.66)
+    G3: R1200 0.96  R2400 1.89  (+0.93)
+    dup distribution (count -> rows):
+      R1200: {0: 330, 1: 105, 2: 60, 3: 24, 4: 16, 5: 2, 6: 2, 8: 1}
+      R2400: {0: 240, 1: 127, 2: 76, 3: 43, 4: 31, 5: 10, 6: 6, 7: 2, 8: 3, 10: 2}
+
+integrity: OK

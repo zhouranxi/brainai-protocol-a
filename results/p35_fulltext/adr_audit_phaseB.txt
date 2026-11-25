@@ -1,0 +1,123 @@
+phase-B block: 63 lines, starts at ADR line 117
+
+-- integrity / execution record
+  [PASS] R2400 has 540 rows
+  [PASS] R2400 is M-d only
+  [PASS] R2400: 60 puzzles x 3 grades x 3 reps, unique keys
+  [PASS] R2400: no API errors
+
+-- Q2 main table, median-rank caliber (a)
+  [PASS] G1 (a) R1200 29/60 and R2400 28/60 as written (29 -> 28)
+  [PASS] G1 (a) diff printed as −1.7 pp (data -1.7)
+  [PASS] G1 (a) literal '48.3%（29/60）' and '46.7%（28/60）' present in ADR
+  [PASS] G2 (a) R1200 44/60 and R2400 37/60 as written (44 -> 37)
+  [PASS] G2 (a) diff printed as −11.7 pp (data -11.7)
+  [PASS] G2 (a) literal '73.3%（44/60）' and '61.7%（37/60）' present in ADR
+  [PASS] G3 (a) R1200 45/60 and R2400 37/60 as written (45 -> 37)
+  [PASS] G3 (a) diff printed as −13.3 pp (data -13.3)
+  [PASS] G3 (a) literal '75.0%（45/60）' and '61.7%（37/60）' present in ADR
+
+-- Q2 main table, row-level caliber (b)
+  [PASS] G1 (b) R1200 78/180 and R2400 68/180 as written (78 -> 68)
+  [PASS] G1 (b) diff printed as −5.6 pp (data -5.6)
+  [PASS] G2 (b) R1200 116/180 and R2400 92/180 as written (116 -> 92)
+  [PASS] G2 (b) diff printed as −13.3 pp (data -13.3)
+  [PASS] G3 (b) R1200 124/180 and R2400 108/180 as written (124 -> 108)
+  [PASS] G3 (b) diff printed as −8.9 pp (data -8.9)
+
+-- pre-registered sign test, paired per puzzle
+  [PASS] G1 R2400 wins 9 / R1200 wins 10 / ties 41; p = 1.000 (written 9/10/41, 1.000)
+  [PASS] G2 R2400 wins 8 / R1200 wins 15 / ties 37; p = 0.210 (written 8/15/37, 0.210)
+  [PASS] G3 R2400 wins 6 / R1200 wins 14 / ties 40; p = 0.115 (written 6/14/40, 0.115)
+  [PASS] no grade meets both R-T1 conditions  =>  verdict R-T0
+
+-- row-level sensitivity
+  [PASS] G1 row-level 27/37 p = 0.26 (written 27/37, 0.26)
+  [PASS] G2 row-level 27/51 p = 0.00877 (written 27/51, 0.009)
+  [PASS] G3 row-level 32/48 p = 0.0929 (written 32/48, 0.093)
+
+-- power (n discordant, split needed)
+  [PASS] G1: 19 discordant puzzles, significance needs 15:4 (written 19, 15:4)
+  [PASS] G2: 23 discordant puzzles, significance needs 17:6 (written 23, 17:6)
+  [PASS] G2: observed split written as 8:15 (data 8:15)
+  [PASS] G3: 20 discordant puzzles, significance needs 15:5 (written 20, 15:5)
+  [PASS] G3: observed split written as 6:14 (data 6:14)
+  [PASS] 10 pp on 60 puzzles is 6 puzzles
+
+-- bootstrap CIs (recomputed with the same stream: seed 0 per grade, 20,000 resamples)
+  [PASS] G1 95% CI [−16.7, +11.7] (written −16.7, +11.7)
+  [PASS] G1 CI not inside +/-10 pp
+  [PASS] G2 95% CI [−26.7, +3.3] (written −26.7, +3.3)
+  [PASS] G2 CI not inside +/-10 pp
+  [PASS] G3 95% CI [−26.7, +1.7] (written −26.7, +1.7)
+  [PASS] G3 CI not inside +/-10 pp
+
+-- three draws of the same cell
+  [PASS] G1 P31/R1200/R2400 = ('46.7', '48.3', '46.7') (written ('46.7', '48.3', '46.7'))
+  [PASS] G2 P31/R1200/R2400 = ('73.3', '73.3', '61.7') (written ('73.3', '73.3', '61.7'))
+  [PASS] G3 P31/R1200/R2400 = ('73.3', '75.0', '61.7') (written ('73.3', '75.0', '61.7'))
+  [PASS] G1 paired p P31~R1200 / P31~R2400 / R1200~R2400 = ('1.00', '1.00', '1.00') (written ('1.00', '1.00', '1.00'))
+  [PASS] G2 paired p P31~R1200 / P31~R2400 / R1200~R2400 = ('1.00', '0.25', '0.21') (written ('1.00', '0.25', '0.21'))
+  [PASS] G3 paired p P31~R1200 / P31~R2400 / R1200~R2400 = ('1.00', '0.19', '0.12') (written ('1.00', '0.19', '0.12'))
+  [PASS] R1200-vs-R2400 p at G2/G3 quoted as .21/.12 in open question 5
+
+-- finish_reason, R2400
+  [PASS] M-d cut 48/540 = 8.9% (written 8.9%)
+  [PASS] G1 residual cut 1/180 = 0.6% (written 1, 0.6%)
+  [PASS] G2 residual cut 20/180 = 11.1% (written 20, 11.1%)
+  [PASS] G3 residual cut 27/180 = 15.0% (written 27, 15.0%)
+  [PASS] drop 60.9 -> 8.9 is 52pp as written
+  [PASS] R2400 base step stop 531, length 9 = 1.7% (written 531, 9, 1.7%)
+  [PASS] R2400 base-step cut by grade G1/G2/G3 = 0/2/7 (written 0, 2, 7)
+  [PASS] R2400 cut rows with base also cut: 4/48; critique pass share 91.7% (written 4, 91.7%)
+  [PASS] R1200 base-step cut quoted as 7.4% (phase-A value, re-derived)
+
+-- output length (characters), median [p10, p90]
+  [PASS] R1200 G1 1846 [1361, 2063] (written (1846, 1361, 2063))
+  [PASS] R1200 G2 1975 [1663, 2099] (written (1975, 1663, 2099))
+  [PASS] R1200 G3 1974 [1657, 2113] (written (1974, 1657, 2113))
+  [PASS] R2400 G1 1842 [1359, 2442] (written (1842, 1359, 2442))
+  [PASS] R2400 G2 2392 [1699, 3989] (written (2392, 1699, 3989))
+  [PASS] R2400 G3 2544 [1624, 4020] (written (2544, 1624, 4020))
+  [PASS] G1 cut rate R1200 = 39% (written 39%)
+
+-- dup
+  [PASS] G1 mean dup R1200 0.48 -> R2400 0.48 (written ('0.48', '0.48'))
+  [PASS] G2 mean dup R1200 0.73 -> R2400 1.38 (written ('0.73', '1.38'))
+  [PASS] G3 mean dup R1200 0.96 -> R2400 1.89 (written ('0.96', '1.89'))
+  [PASS] R1200 dup distribution literal '{0: 330, 1: 105, 2: 60, 3: 24, 4: 16, 5: 2, 6: 2, 8: 1}' in ADR
+  [PASS] R2400 dup distribution literal '{0: 240, 1: 127, 2: 76, 3: 43, 4: 31, 5: 10, 6: 6, 7: 2, 8: 3, 10: 2}' in ADR
+  [PASS] dup per-puzzle sign G1: 6/9, p = 0.607 (written 6/9, 0.607)
+  [PASS] dup per-puzzle sign G2: 32/8, p = 0.000182 (written 32/8, 0.000182)
+  [PASS] dup per-puzzle sign G3: 36/8, p = 2.54e-05 (written 36/8, 2.54e-05)
+
+-- dup mechanism (exploratory): item lines and length-adjusted difference
+  [PASS] G2 confidence-bearing item lines R1200 4.61 -> R2400 8.21 (written 4.61 -> 8.21)
+  [PASS] G3 confidence-bearing item lines R1200 3.58 -> R2400 6.89 (written 3.58 -> 6.89)
+  [PASS] G2 length-adjusted dup difference +0.50, raw +0.66 (written +0.50, +0.66)
+  [PASS] G2 common strata span 1600-1999 (ADR says 1600-1999)
+  [PASS] G3 length-adjusted dup difference +0.36, raw +0.93 (written +0.36, +0.93)
+  [PASS] G3 common strata span 1600-1999 (ADR says 1600-1999)
+
+-- dup >= 2 vs top-1
+  [PASS] R1200 G1: dup>=2 rows 24, top-1 among them 4, top-1 among dup<2 74 (written (24, 4, 74))
+  [PASS] R1200 G2: dup>=2 rows 33, top-1 among them 13, top-1 among dup<2 103 (written (33, 13, 103))
+  [PASS] R1200 G3: dup>=2 rows 48, top-1 among them 12, top-1 among dup<2 112 (written (48, 12, 112))
+  [PASS] R2400 G1: dup>=2 rows 19, top-1 among them 4, top-1 among dup<2 64 (written (19, 4, 64))
+  [PASS] R2400 G2: dup>=2 rows 67, top-1 among them 27, top-1 among dup<2 65 (written (67, 27, 65))
+  [PASS] R2400 G3: dup>=2 rows 87, top-1 among them 33, top-1 among dup<2 75 (written (87, 33, 75))
+  [PASS] R2400 G2 percentages written 27/67 = 40%, 65/113 = 58%
+  [PASS] R2400 G3 percentages written 33/87 = 38%, 75/93 = 81%
+
+-- within-arm truncation contrast
+  [PASS] R1200 G1: cut top-1 32/71, complete 46/109 (written (32, 71, 46, 109))
+  [PASS] R1200 G2: cut top-1 84/132, complete 32/48 (written (84, 132, 32, 48))
+  [PASS] R1200 G3: cut top-1 90/126, complete 34/54 (written (90, 126, 34, 54))
+  [PASS] R2400 G1: cut top-1 1/1, complete 67/179 (written (1, 1, 67, 179))
+  [PASS] R2400 G2: cut top-1 12/20, complete 80/160 (written (12, 20, 80, 160))
+  [PASS] R2400 G3: cut top-1 17/27, complete 91/153 (written (17, 27, 91, 153))
+
+-- md5 of the pulled file (full digest must appear verbatim in the ADR)
+  [PASS] full md5 4fcefc9860c840924083605453272697 appears verbatim in the phase-B block
+
+0 FAIL -- all checks pass

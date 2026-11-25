@@ -1,0 +1,76 @@
+[0] replay: recomputed gold-item-line count vs recorded `dup`
+    R1200: mismatches 0/540
+    R2400: mismatches 0/540
+
+[1] dup vs number of confidence-bearing item lines (both arms pooled)
+     0 item lines : mean dup 0.00   n=181
+     1 item lines : mean dup 0.17   n=36
+     2 item lines : mean dup 0.52   n=50
+     3 item lines : mean dup 0.36   n=108
+     4 item lines : mean dup 0.44   n=80
+     5 item lines : mean dup 1.02   n=58
+     6 item lines : mean dup 0.85   n=141
+     7 item lines : mean dup 1.13   n=55
+     8 item lines : mean dup 1.26   n=73
+     9 item lines : mean dup 1.39   n=75
+    10 item lines : mean dup 1.67   n=57
+    11 item lines : mean dup 1.68   n=38
+    12 item lines+: mean dup 2.85   n=128
+
+    item lines per row, mean:
+    R1200: G1: items 6.20, gold-item 0.48   G2: items 4.61, gold-item 0.73   G3: items 3.58, gold-item 0.96
+    R2400: G1: items 6.33, gold-item 0.48   G2: items 8.21, gold-item 1.38   G3: items 6.89, gold-item 1.89
+
+[2] dup stratified on text length, COMPLETE rows only (200-character bins)
+    G2
+        800-999  : R1200     1.00 (n=  1)   R2400     0.00 (n=  1)
+       1000-1199 : R1200     0.00 (n=  1)   R2400     1.33 (n=  3)
+       1200-1399 : R1200     1.50 (n=  6)   R2400     0.25 (n=  4)
+       1400-1599 : R1200     2.00 (n=  6)   R2400     0.83 (n=  6)
+       1600-1799 : R1200     0.57 (n= 14)   R2400     0.86 (n= 14)
+       1800-1999 : R1200     0.72 (n= 18)   R2400     1.39 (n= 18)
+       2000-2199 : R1200     0.50 (n=  2)   R2400     1.63 (n= 19)
+       2200-2399 : R1200    -               R2400     1.00 (n= 28)
+       2400-2599 : R1200    -               R2400     1.26 (n= 19)
+       2600-2799 : R1200    -               R2400     1.36 (n= 11)
+       2800-2999 : R1200    -               R2400     2.22 (n=  9)
+       3000-3199 : R1200    -               R2400     2.00 (n=  4)
+       3200-3399 : R1200    -               R2400     1.75 (n=  8)
+       3400-3599 : R1200    -               R2400     1.38 (n=  8)
+       3800-3999 : R1200    -               R2400     1.33 (n=  3)
+       4000-4199 : R1200    -               R2400     3.00 (n=  5)
+    G3
+        800-999  : R1200     4.00 (n=  1)   R2400     3.00 (n=  1)
+       1000-1199 : R1200     2.00 (n=  1)   R2400     1.60 (n=  5)
+       1200-1399 : R1200     1.25 (n=  8)   R2400     1.80 (n=  5)
+       1400-1599 : R1200     1.00 (n=  4)   R2400     0.67 (n=  6)
+       1600-1799 : R1200     1.53 (n= 15)   R2400     1.28 (n= 18)
+       1800-1999 : R1200     1.19 (n= 21)   R2400     2.15 (n= 13)
+       2000-2199 : R1200     1.75 (n=  4)   R2400     1.71 (n= 14)
+       2200-2399 : R1200    -               R2400     1.94 (n= 18)
+       2400-2599 : R1200    -               R2400     1.94 (n= 18)
+       2600-2799 : R1200    -               R2400     2.08 (n= 12)
+       2800-2999 : R1200    -               R2400     2.89 (n=  9)
+       3000-3199 : R1200    -               R2400     2.00 (n=  5)
+       3200-3399 : R1200    -               R2400     1.14 (n=  7)
+       3400-3599 : R1200    -               R2400     2.08 (n= 13)
+       3800-3999 : R1200    -               R2400     2.75 (n=  4)
+       4000-4199 : R1200    -               R2400     2.00 (n=  4)
+       4400-4599 : R1200    -               R2400     2.00 (n=  1)
+
+    common length support (bins with >= 10 complete rows in BOTH arms), weighted by pooled n:
+      G2: bins [8, 9]; length-adjusted dup  R1200 0.66  R2400 1.16  (difference +0.50; raw difference +0.66)
+      G3: bins [8, 9]; length-adjusted dup  R1200 1.36  R2400 1.72  (difference +0.36; raw difference +0.93)
+
+[3] per-puzzle paired comparison on dup (upper median over 3 reps), R2400 vs R1200
+    G1: R2400 higher 6 / R1200 higher 9 / equal 45; sign p = 0.607
+    G2: R2400 higher 32 / R1200 higher 8 / equal 20; sign p = 0.000182
+    G3: R2400 higher 36 / R1200 higher 8 / equal 16; sign p = 2.54e-05
+
+[4] does the extra dup sit on the gold answer's rank? (rank unchanged => the commitment is the same)
+    R1200 G1: rows with dup>=2: 24/180; top-1 among them 4/24; top-1 among dup<2 74/156
+    R1200 G2: rows with dup>=2: 33/180; top-1 among them 13/33; top-1 among dup<2 103/147
+    R1200 G3: rows with dup>=2: 48/180; top-1 among them 12/48; top-1 among dup<2 112/132
+    R2400 G1: rows with dup>=2: 19/180; top-1 among them 4/19; top-1 among dup<2 64/161
+    R2400 G2: rows with dup>=2: 67/180; top-1 among them 27/67; top-1 among dup<2 65/113
+    R2400 G3: rows with dup>=2: 87/180; top-1 among them 33/87; top-1 among dup<2 75/93

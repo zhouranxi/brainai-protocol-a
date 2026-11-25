@@ -1,0 +1,78 @@
+rows: R1200 M-d 540, R2400 M-d 540, P31 M-d 540; puzzles 60
+same puzzle keys in both arms: True
+
+[1] gate replay (independent re-computation)
+    G1: R1200 48.3% (29/60)  R2400 46.7% (28/60)  diff -1.7 pp; R2400 wins 9 / R1200 wins 10; p = 1.000; hit = False
+    G2: R1200 73.3% (44/60)  R2400 61.7% (37/60)  diff -11.7 pp; R2400 wins 8 / R1200 wins 15; p = 0.210; hit = False
+    G3: R1200 75.0% (45/60)  R2400 61.7% (37/60)  diff -13.3 pp; R2400 wins 6 / R1200 wins 14; p = 0.115; hit = False
+    -> any hit: False  =>  R-T0
+
+[2] paired bootstrap over the 60 puzzles (20,000 resamples, seed 0): R2400 - R1200 top-1
+    G1: -1.7 pp, 95% CI [-16.7, +11.7] pp -> NOT inside +/-10 pp (equivalence NOT supported)
+    G2: -11.7 pp, 95% CI [-26.7, +3.3] pp -> NOT inside +/-10 pp (equivalence NOT supported)
+    G3: -13.3 pp, 95% CI [-26.7, +1.7] pp -> NOT inside +/-10 pp (equivalence NOT supported)
+
+[3] power of the pre-registered test (exact, two-sided alpha .05, per grade)
+    G1: discordant pairs 19/60; significance needs a split of at least 15:4; power when each discordant pair favours R2400 with prob q=50%: 2%, q=80%: 67%, q=90%: 96%, q=100%: 100%
+    G2: discordant pairs 23/60; significance needs a split of at least 17:6; power when each discordant pair favours R2400 with prob q=50%: 3%, q=80%: 84%, q=90%: 99%, q=100%: 100%
+    G3: discordant pairs 20/60; significance needs a split of at least 15:5; power when each discordant pair favours R2400 with prob q=50%: 4%, q=80%: 80%, q=90%: 99%, q=100%: 100%
+    reading: a 10 pp shift in a 60-puzzle cell is 6 puzzles; with ~20 discordant puzzles per grade
+    that is a 13:7 split, which the two-sided sign test does not reach (it needs about 15:4).
+
+[5] within-arm top-1, truncated vs complete rows (descriptive; truncation is not randomised)
+    R1200 G1: cut 32/71 (45.1%)  |  complete 46/109 (42.2%)
+    R1200 G2: cut 84/132 (63.6%)  |  complete 32/48 (66.7%)
+    R1200 G3: cut 90/126 (71.4%)  |  complete 34/54 (63.0%)
+    R2400 G1: cut 1/1 (100.0%)  |  complete 67/179 (37.4%)
+    R2400 G2: cut 12/20 (60.0%)  |  complete 80/160 (50.0%)
+    R2400 G3: cut 17/27 (63.0%)  |  complete 91/153 (59.5%)
+
+[6] M-d critique-pass output length (characters), median [p10, p90]
+    R1200 G1: 1846 [1361, 2063]
+    R1200 G2: 1975 [1663, 2099]
+    R1200 G3: 1974 [1657, 2113]
+    R2400 G1: 1842 [1359, 2442]
+    R2400 G2: 2392 [1699, 3989]
+    R2400 G3: 2544 [1624, 4020]
+
+[7] duplicate-gold count vs text length
+    R1200: dup mean, shorter half 0.76 (n=272, median len 1954)  |  longer half 0.69 (n=268)
+      G1: dup mean all 0.48; among the 71 cut rows 0.51
+      G2: dup mean all 0.73; among the 132 cut rows 0.66
+      G3: dup mean all 0.96; among the 126 cut rows 0.78
+    R2400: dup mean, shorter half 0.91 (n=272, median len 2200)  |  longer half 1.60 (n=268)
+      G1: dup mean all 0.48; among the 1 cut rows 0.00
+      G2: dup mean all 1.38; among the 20 cut rows 1.60
+      G3: dup mean all 1.89; among the 27 cut rows 2.00
+
+[8] three draws of the same 60-puzzle M-d cell, median-rank caliber
+    G1: P31 46.7%  R1200 48.3%  R2400 46.7%
+    G2: P31 73.3%  R1200 73.3%  R2400 61.7%
+    G3: P31 73.3%  R1200 75.0%  R2400 61.7%
+    per-pair paired sign test (median-rank caliber):
+      P31 vs R1200 (same cap, independent draws): G1 10/9 p=1.00;  G2 8/8 p=1.00;  G3 8/7 p=1.00
+      P31 vs R2400: G1 8/8 p=1.00;  G2 10/17 p=0.25;  G3 7/14 p=0.19
+      R1200 vs R2400: G1 9/10 p=1.00;  G2 8/15 p=0.21;  G3 6/14 p=0.12
+    rep-to-rep spread inside each arm (single-rep top-1, 60 rows per rep):
+      P31 G1:  40.0%  51.7%  38.3%   max gap  13.3 pp
+      P31 G2:  75.0%  55.0%  63.3%   max gap  20.0 pp
+      P31 G3:  68.3%  66.7%  66.7%   max gap   1.7 pp
+      R1200 G1:  50.0%  36.7%  43.3%   max gap  13.3 pp
+      R1200 G2:  68.3%  66.7%  58.3%   max gap  10.0 pp
+      R1200 G3:  58.3%  75.0%  73.3%   max gap  16.7 pp
+      R2400 G1:  36.7%  41.7%  35.0%   max gap   6.7 pp
+      R2400 G2:  55.0%  53.3%  45.0%   max gap  10.0 pp
+      R2400 G3:  71.7%  58.3%  50.0%   max gap  21.7 pp
+
+[9] R2400 residual truncation by grade
+    G1: 1/180 = 0.6%
+    G2: 20/180 = 11.1%
+    G3: 27/180 = 15.0%
+
+[10] rank distribution, M-d, row-level
+    R1200 G1: rank 0: 62  rank 1: 78  rank 2: 7  rank 3: 33
+    R1200 G2: rank 0: 19  rank 1: 116  rank 2: 5  rank 3: 40
+    R1200 G3: rank 0: 6  rank 1: 124  rank 3: 50
+    R2400 G1: rank 0: 72  rank 1: 68  rank 2: 8  rank 3: 32
+    R2400 G2: rank 0: 20  rank 1: 92  rank 2: 5  rank 3: 63
+    R2400 G3: rank 0: 4  rank 1: 108  rank 2: 6  rank 3: 62
