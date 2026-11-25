@@ -717,8 +717,12 @@ complete \Mcrit{} outputs (65\% vs.\ 66\%). We therefore keep the
 recorded ranks, but flag the asymmetry: \Mcrit{} alone was run under a
 budget it routinely exhausted, so its early-convergence profile
 (\S\ref{sec:early}) was measured under a constraint none of the other
-mechanisms faced. The confirmation batch used the same cap and did not
-archive full texts, so the census could not be repeated there.
+mechanisms faced. A re-run of the confirmation batch with full texts
+archived (same cap, same prompts) gives 61\% for \Mcrit{}, against 7\% for
+\Mmaint{} and 2\% for \Mstate{}, now counted by the server's native
+finish-reason flag rather than the heuristic; the pre-critique candidate
+step was cut in only 7\% of \Mcrit{} calls, so the cut falls on the
+critique pass itself.
 
 \paragraph{Scorer tolerance, verified.}
 The repaired scorer lets a candidate borrow a confidence percentage from
@@ -848,11 +852,15 @@ main-effect gates), and the distribution-intervention batch under
 ADR-0033 (three arms, three seeds, reversal gates fixed before launch).
 Puzzle generators, race scripts, scorer versions (including the
 discarded first scorer), and analysis
-notebooks are archived; batch-1 outputs with full texts (360 records) and
+notebooks are archived; batch-1 outputs with full texts (360 records),
 per-query records for the confirmation batch (2160 queries: ranks,
-duplicate counts, difficulty, no full texts) and the $2\times2$ probe are
+duplicate counts, difficulty), and the $2\times2$ probe are
 released as machine-readable JSON, as are the per-run probe
 outputs for every training condition in Table~\ref{tab:attractor}.
+The confirmation batch itself retained no full texts; a re-run of it
+under ADR-0034 (same puzzles, prompts, and cap) archived them, and that
+re-run is released in \texttt{results/p35\_fulltext} alongside the
+per-query records.
 Bootstrap uses 20{,}000 resamples with a fixed seed.
 
 \section*{Ethics statement}
