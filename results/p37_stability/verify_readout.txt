@@ -1,0 +1,25 @@
+== truncation (finish_reason) ==
+  T0: {'stop': 495, 'length': 45}  truncated 45/540 = 8.3%  by grade {1: 0, 2: 15, 3: 30}
+  T7: {'stop': 487, 'length': 53}  truncated 53/540 = 9.8%  by grade {1: 1, 2: 26, 3: 26}
+  T7b: {'stop': 540}  truncated 0/540 = 0.0%  by grade {1: 0, 2: 0, 3: 0}
+== T0 determinism at the text level ==
+  cells with 3 identical texts: 180/180  distinct-text cells: 0
+== T7: per-puzzle top-1 flip(3) split by whether the cell was truncated ==
+  G1: uncut cells flip 19/59 =32%   cells with >=1 cut flip  0/1  
+  G2: uncut cells flip 29/42 =69%   cells with >=1 cut flip  9/18 
+  G3: uncut cells flip 28/43 =65%   cells with >=1 cut flip  9/17 
+== T7 top-3 recall: per-grade, the rank multiset of the flipping cells ==
+  G1: {(0, 2, 3): 1, (0, 1, 3): 4, (0, 0, 3): 5, (0, 3, 3): 1, (0, 0, 1): 2, (0, 1, 1): 2}
+  G2: {(0, 1, 1): 2, (0, 3, 3): 1, (0, 1, 2): 1, (0, 0, 2): 1, (0, 0, 1): 4, (0, 1, 3): 2}
+  G3: {(0, 3, 3): 2}
+== top-3 recall level (share of rows with rank in 1..3) ==
+  T0 G1: 90/180 = 50%   top-1 32%   rank0(absent) 90
+  T0 G2: 159/180 = 88%   top-1 45%   rank0(absent) 21
+  T0 G3: 174/180 = 97%   top-1 58%   rank0(absent) 6
+  T7 G1: 89/180 = 49%   top-1 31%   rank0(absent) 91
+  T7 G2: 155/180 = 86%   top-1 47%   rank0(absent) 25
+  T7 G3: 175/180 = 97%   top-1 63%   rank0(absent) 5
+== T7 rows: truncated vs complete, top-1 and top-3, per grade (descriptive, not stratified by difficulty) ==
+  G1: cut n=  1 top-1 0% top-3 0% | complete n=179 top-1 31% top-3 50%
+  G2: cut n= 26 top-1 77% top-3 100% | complete n=154 top-1 42% top-3 84%
+  G3: cut n= 26 top-1 62% top-3 88% | complete n=154 top-1 63% top-3 99%

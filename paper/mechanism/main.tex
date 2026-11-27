@@ -864,7 +864,23 @@ $p = 0.019$); stage 2 stays significant and the endgame stays null under
 both draws. Table~\ref{tab:merged} reports the preregistered draw; the
 stage-1 lead should be read as suggestive, not established, and the
 per-puzzle instability sits in the control arm, which was not the subject
-of the re-run. \textbf{Unequal output budget.} The
+of the re-run. \textbf{Output-format sampling noise.} The instability is
+not specific to the confirmation batch. We re-ran \Mmaint{} on the same
+60 puzzles at temperature 0 and at 0.7, three resamples per cell
+(ADR-0036). At temperature 0 the three outputs of every cell were
+byte-identical and no puzzle's top-1 changed (0/60 at each stage); at
+0.7 the top-1 of 32\%, 63\%, and 62\% of puzzles differed across the
+three resamples (stages 1/2/3), against 17\%, 28\%, and 15\% for the
+single-answer mechanism run the same way, so the noise enters through
+sampling and is amplified by the three-candidate format. Top-3 recall
+is not immune: it changed for 25\%, 18\%, and 3\% of puzzles, always by
+the gold answer leaving the list altogether, so the damage concentrates
+at stage 1. A majority vote over three resamples did not help (agreement
+with the temperature-0 reading 64\% for one draw and for three). The
+preregistered gate for top-3 (at most 15\% pooled) was not met (15.6\%).
+Per-puzzle readings of top-1, and of top-3 recall at stage 1, should
+therefore be read at the set level, where the two temperatures agree to
+within five points at every stage. \textbf{Unequal output budget.} The
 1{,}200-token cap truncated 58\% of \Mcrit{} outputs and under 8\% of
 every other mechanism's in the batch-1 archive; the re-run of the
 confirmation batch puts the figure for \Mcrit{} at 61\%, counted by the

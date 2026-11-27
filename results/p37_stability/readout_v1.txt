@@ -1,0 +1,43 @@
+T0: rows 540, errors 0, truncated 45 (0%)
+T7: rows 540, errors 0, truncated 53 (0%)
+T7b: rows 540, errors 0, truncated 0 (0%)
+
+== flip(k): share of puzzles whose k draws disagree on top-1 ==
+arm    k          G1          G2          G3{'pooled':>12}
+T0     2    0/60     0/60     0/60      0/180
+T0     3    0/60     0/60     0/60      0/180
+T7     2   14/60    27/60    25/60     66/180
+T7     3   19/60    38/60    37/60     94/180
+T7b    2    4/60    14/60     6/60     24/180
+T7b    3   10/60    17/60     9/60     36/180
+
+== S-1 noise floor: T0 flip(3) ==
+  T0 flip(3) pooled = 0.0%  (per grade G1 0/60, G2 0/60, G3 0/60)  -> PASS
+
+== S-2 temperature effect: T7 flip(3) - T0 flip(3) ==
+  grade           T7          T0   diff pp
+  G1      19/60      32%   0/60       0%     +31.7
+  G2      38/60      63%   0/60       0%     +63.3
+  G3      37/60      62%   0/60       0%     +61.7
+  pooled diff +52.2pp (descriptive); Fisher p = 2.17e-12; same sign in all grades: True  -> PASS
+
+== S-3 format effect: T7 flip(3) - T7b flip(3) ==
+  grade       T7 (c)     T7b (b)   diff pp
+  G1      19/60      32%  10/60      17%     +15.0
+  G2      38/60      63%  17/60      28%     +35.0
+  G3      37/60      62%   9/60      15%     +46.7
+  pooled diff +32.2pp (descriptive); Fisher p = 2.40e-10; same sign in all grades: True  -> PASS
+
+== S-4 (DESCRIPTIVE, not a gate): T7 k-draw mode vs T0 3-draw mode, top-1 ==
+  k              G1            G2            G3{'pooled':>14}
+  1      46/60 = 77%    33/60 = 55%    37/60 = 62%          64%
+  3      48/60 = 80%    32/60 = 53%    35/60 = 58%          64%
+
+== S-4' top-3 recall noise: T7 top-3-recall flip(3) ==
+  grade     top-3 flip    top-1 flip
+  G1        15/60  =  25%    19/60  =  32%
+  G2        11/60  =  18%    38/60  =  63%
+  G3         2/60  =   3%    37/60  =  62%
+  pooled 15.6% (gate <=15%), max grade 25.0% (gate <=20%)  -> NOT DETECTED
+
+VERDICTS: {'S1': 'PASS', 'S2': 'PASS', 'S3': 'PASS', 'S4p_top3': 'NOT DETECTED', 'S4_majority': 'DESCRIPTIVE'}

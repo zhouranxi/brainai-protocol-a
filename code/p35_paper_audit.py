@@ -76,9 +76,19 @@ def main():
     def block(s, start, end):
         i = s.index(start)
         return s[i:s.index(end, i)]
+    # Lance's 2026-11-27 P37 read-out (ADR-0036 sec 12; instructions paper/p37_judge_prompt.md sec 6)
+    # authorises ONE new Limitations entry, placed right after this paragraph. The end anchor is
+    # therefore moved from 'Unequal output budget' to the new entry's own start, so the protection
+    # of the original paragraph is kept exactly (it is still compared byte-for-byte with the baseline).
+    NEW_ENTRY = r"\textbf{Output-format sampling noise.}"
+    # Defensive: if the entry is missing, record a FAIL and fall back to the old end anchor, so the
+    # protected paragraph is still compared and the audit keeps running instead of crashing.
+    _i_tr, _i_ne, _i_uo = tex.find(r"\textbf{Three resamples per cell.}"), tex.find(NEW_ENTRY), tex.find(r"\textbf{Unequal output budget.}")
+    check("the new entry appears exactly once and sits between 'Three resamples per cell' and 'Unequal output budget', in this order",
+          tex.count(NEW_ENTRY) == 1 and 0 <= _i_tr < _i_ne < _i_uo)
     a = block(head, r"\textbf{Three resamples per cell.}", r"\textbf{Unequal output budget.}")
-    b = block(tex, r"\textbf{Three resamples per cell.}", r"\textbf{Unequal output budget.}")
-    check("'Three resamples per cell' paragraph unchanged", a == b and len(a) > 500)
+    b = block(tex, r"\textbf{Three resamples per cell.}", NEW_ENTRY if _i_ne > _i_tr else r"\textbf{Unequal output budget.}")
+    check("'Three resamples per cell' paragraph unchanged (end anchor now = the authorised new entry)", a == b and len(a) > 500)
     a = block(head, r"\begin{table}", r"\end{table}")
     b = block(tex, r"\begin{table}", r"\end{table}")
     check(f"Table 2 (first table environment, {len(a)} chars) unchanged", a == b)
@@ -330,6 +340,76 @@ def main():
     check("paper does not cite the pooled 63% vs 53% comparison", "63\\% vs.\\ 53\\%" not in tex and "63\\% vs\\ 53\\%" not in tex)
     check("ADR-0035 sec 7 records the withdrawal of the pooled-gap inference",
           "辛普森" in (REPO / "paper" / "adr_0035.md").read_text(encoding="utf-8"))
+
+    print("\n== ADR-0036 (P37): the 'Output-format sampling noise' Limitations entry ==")
+    D37 = RES / "p37_stability"
+    A37 = {"T0": "p37_c_t00_r3.json", "T7": "p37_c_t07_r3.json", "T7b": "p37_b_t07_r3.json"}
+    R37 = {a: json.loads((D37 / f).read_text(encoding="utf-8"))["rows"] for a, f in A37.items()}
+    for a, rows in R37.items():
+        keys = {(r["puzzle"], r["grade"], r["rep"]) for r in rows}
+        check(f"{a}: 540 rows, 540 unique cells, no API errors", len(rows) == 540 and len(keys) == 540 and not any(r["finish_reason"] == "error" for r in rows))
+
+    def cells(rows, key):
+        o = defaultdict(dict)
+        for r in rows:
+            o[(r["puzzle"], r["grade"])][r["rep"]] = r[key]
+        return o
+
+    def flip3(rows, key):
+        c = cells(rows, key)
+        return [sum(1 for (p, g), v in c.items() if g == gg and len({v[k] == 1 for k in v}) > 1) for gg in (1, 2, 3)]
+
+    f0 = flip3(R37["T0"], "rank"); f7 = flip3(R37["T7"], "rank"); fb = flip3(R37["T7b"], "rank"); t3 = flip3(R37["T7"], "top3")
+    check(f"T0 top-1 flips at stages 1/2/3 = {f0} (entry: 0/60 each)", f0 == [0, 0, 0])
+    check(f"T0: the three outputs of every cell are byte-identical (180/180)",
+          sum(1 for v in cells(R37["T0"], "text").values() if len(set(v.values())) == 1) == 180)
+    check(f"T7 top-1 flips = {f7} -> {sum(f7[:1])}/60, {f7[1]}/60, {f7[2]}/60 = {f7[0]/60:.0%}/{f7[1]/60:.0%}/{f7[2]/60:.0%} (entry: 32/63/62%)",
+          f7 == [19, 38, 37] and [round(100 * x / 60) for x in f7] == [32, 63, 62])
+    check(f"T7-b top-1 flips = {fb} -> {[round(100 * x / 60) for x in fb]} (entry: 17/28/15%)",
+          fb == [10, 17, 9] and [round(100 * x / 60) for x in fb] == [17, 28, 15])
+    check(f"T7 top-3 flips = {t3} -> {[round(100 * x / 60) for x in t3]} (entry: 25/18/3%)",
+          t3 == [15, 11, 2] and [round(100 * x / 60) for x in t3] == [25, 18, 3])
+    pooled3 = sum(t3) / 180
+    check(f"T7 top-3 flips pooled = {sum(t3)}/180 = {pooled3:.1%} (entry: 15.6%, gate 15% not met)", f"{pooled3:.1%}" == "15.6%" and pooled3 > 0.15)
+    # every top-3 flip is gold LEAVING the list (a 0 among the three ranks), never a move inside it
+    c7 = cells(R37["T7"], "top3"); r7 = cells(R37["T7"], "rank")
+    fl = [(k, v) for k, v in c7.items() if len(set(v.values())) > 1]
+    check(f"all {len(fl)} top-3 flips are gold leaving the list (rank 0 present in each)",
+          len(fl) == 28 and all(0 in r7[k].values() for k, _ in fl))
+    # majority vote (descriptive): mode of T7's k draws vs the T0 reading, top-1
+    def agree(k):
+        agree_ = n = 0
+        for key, v in cells(R37["T7"], "rank").items():
+            truth = 1 if 1 in cells(R37["T0"], "rank")[key].values() else 0
+            draws = [int(v[i] == 1) for i in range(k)]
+            pred = max(set(draws), key=draws.count) if len(set(draws)) != len(draws) else draws[0]
+            agree_ += pred == truth; n += 1
+        return agree_ / n
+    a1, a3 = agree(1), agree(3)
+    check(f"majority vote agreement with the temperature-0 reading: k=1 {a1:.0%}, k=3 {a3:.0%} (entry: 64% and 64%)",
+          f"{a1:.0%}" == "64%" and f"{a3:.0%}" == "64%")
+    # set level agreement between the two temperatures: median-rank top-1 differs by <= 5 pp at every stage
+    def med_top1(rows, g):
+        return sum(1 for (p, gg), v in cells(rows, "rank").items() if gg == g and sorted(v.values())[1] == 1)
+    diffs = [med_top1(R37["T7"], g) - med_top1(R37["T0"], g) for g in (1, 2, 3)]
+    check(f"set-level top-1, T7 minus T0, in puzzles = {diffs} (entry: 'within five points at every stage')",
+          all(abs(d) <= 3 for d in diffs))
+    # the frozen gates, recomputed
+    check("S-1 PASS (T0 flip(3) <= 10%)", sum(f0) / 180 <= 0.10)
+    check("S-2 PASS (>=30 pp pooled, same sign per stage)", sum(f7) / 180 - sum(f0) / 180 >= 0.30 and all(x > y for x, y in zip(f7, f0)))
+    check("S-3 PASS (>=20 pp pooled, same sign per stage)", sum(f7) / 180 - sum(fb) / 180 >= 0.20 and all(x > y for x, y in zip(f7, fb)))
+    check("S-4' NOT DETECTED as frozen (pooled <=15% AND every stage <=20%)", not (pooled3 <= 0.15 and all(x / 60 <= 0.20 for x in t3)))
+    # the entry's own words
+    # Defensive: an empty entry text makes every literal check FAIL explicitly (no exception, no skipped checks).
+    e0, e1 = tex.find(NEW_ENTRY), tex.find(r"\textbf{Unequal output budget.}")
+    ent = " ".join(tex[e0:e1].split()) if 0 <= e0 < e1 else ""
+    for lit in ("top-1 of 32\\%, 63\\%, and 62\\% of puzzles differed", "17\\%, 28\\%, and 15\\% for the single-answer mechanism",
+                "it changed for 25\\%, 18\\%, and 3\\% of puzzles, always by the gold answer leaving the list altogether",
+                "A majority vote over three resamples did not help (agreement with the temperature-0 reading 64\\% for one draw and for three)",
+                "was not met (15.6\\%)", "agree to within five points at every stage"):
+        check(f"entry states: {lit[:70]!r}", lit in ent)
+    check("entry does not claim top-3 is noise-free", "top-3 recall is not immune" in ent.lower() and "noise-free" not in ent.lower())
+    check("entry does not claim majority voting helps", "majority vote over three resamples did not help" in ent.lower())
     print("\n== build ==")
     log = next((q for q in (Path("/tmp/tex3.log"), Path("/tmp/p35b_tex3.log")) if q.exists()), Path("/tmp/tex3.log"))
     if log.exists():
