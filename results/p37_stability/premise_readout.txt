@@ -1,0 +1,22 @@
+Per-puzzle top-1 instability (3 reps disagree), by grade -- the 2x2 of format x history
+arm                           G1        G2        G3       all   unstable type (G3): order-flip / member-flip
+b3 (format only)        22/60  21/60  26/60   69/180   22 / 4
+b4 (neither)            17/60   9/60   7/60   33/180   0 / 7
+M-c (both)              23/60  33/60  39/60   95/180   37 / 2
+M-b (history only)      18/60  15/60   8/60   41/180   0 / 8
+
+Format main effect on instability (format arms minus single-answer arms, pp), split by history:
+  history+ G1: M-c 23/60 = 38%  vs  M-b 18/60 = 30%   diff +8pp
+  history+ G2: M-c 33/60 = 55%  vs  M-b 15/60 = 25%   diff +30pp
+  history+ G3: M-c 39/60 = 65%  vs  M-b 8/60 = 13%   diff +52pp
+  history- G1: b3 22/60 = 37%  vs  b4 17/60 = 28%   diff +8pp
+  history- G2: b3 21/60 = 35%  vs  b4 9/60 = 15%   diff +20pp
+  history- G3: b3 26/60 = 43%  vs  b4 7/60 = 12%   diff +32pp
+
+Is instability shared across mechanisms on the same puzzle? (G3, pooled P31+R1200 for M-c/M-d; P32 for b3/b4)
+  M-c ∩ M-d: 41 puzzles (expected if independent 40.7)  overlap ratio 1.01
+  M-c ∩ b3: 22 puzzles (expected if independent 22.5)  overlap ratio 0.98
+  M-c ∩ b4: 6 puzzles (expected if independent 6.1)  overlap ratio 0.99
+  M-d ∩ b3: 22 puzzles (expected if independent 20.4)  overlap ratio 1.08
+  M-d ∩ b4: 5 puzzles (expected if independent 5.5)  overlap ratio 0.91
+  b3 ∩ b4: 5 puzzles (expected if independent 3.0)  overlap ratio 1.65
