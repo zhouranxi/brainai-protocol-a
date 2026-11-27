@@ -314,6 +314,22 @@ def main():
     check("original sentence kept verbatim (history visible), correction appended in the same paragraph",
           "The cut does not\nreach the scored list---\\Mcrit{} writes its revised candidates before\nits closing commentary---" in art
           and art.find("Correction (ADR-0035)") > art.find("closing commentary") >= 0)
+
+    # Simpson guard: the pooled truncated-minus-complete top-1 gap for critique (+9.5 pp) DISAPPEARS once
+    # stratified by grade. The paper must not cite the pooled gap as a truncation effect, and the
+    # correction paragraph must not claim that truncation shifts critique's top-1 in either direction.
+    print("\n== ADR-0035: pooled truncated-vs-complete gap is a Simpson artefact ==")
+    r12d = [r for r in json.loads((RES / "p35_fulltext" / "p35_race_1200.json").read_text(encoding="utf-8"))["rows"] if r["mech"] == "d"]
+    def _t1(rs): return sum(1 for r in rs if r["rank"] == 1) / len(rs)
+    pooled = _t1([r for r in r12d if r["finish_reason"] == "length"]) - _t1([r for r in r12d if r["finish_reason"] == "stop"])
+    strat = {g: _t1([r for r in r12d if r["grade"] == g and r["finish_reason"] == "length"]) - _t1([r for r in r12d if r["grade"] == g and r["finish_reason"] == "stop"]) for g in (1, 2, 3)}
+    check(f"pooled gap = {pooled*100:+.1f} pp but within-grade gaps are small: " + ", ".join(f"G{g} {v*100:+.1f}" for g, v in strat.items()),
+          0.08 < pooled < 0.11 and all(abs(v) < 0.10 for v in strat.values()))
+    check("paper does not claim truncation raised (or lowered) critique's top-1",
+          not re.search(r"truncat\w*[^.]*\b(raised|lowered|inflated|shifted)\b[^.]*top-1", tex, flags=re.I))
+    check("paper does not cite the pooled 63% vs 53% comparison", "63\\% vs.\\ 53\\%" not in tex and "63\\% vs\\ 53\\%" not in tex)
+    check("ADR-0035 sec 7 records the withdrawal of the pooled-gap inference",
+          "辛普森" in (REPO / "paper" / "adr_0035.md").read_text(encoding="utf-8"))
     print("\n== build ==")
     log = next((q for q in (Path("/tmp/tex3.log"), Path("/tmp/p35b_tex3.log")) if q.exists()), Path("/tmp/tex3.log"))
     if log.exists():
