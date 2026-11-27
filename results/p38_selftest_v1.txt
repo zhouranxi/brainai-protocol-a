@@ -1,0 +1,8 @@
+  [OK] H1 clean: identical texts -> H1 PASS, Q2 readable
+  [OK] H1 noisy: 15% non-identical cells -> H1 FAIL and stop
+  [OK] Q2 T-A: 12 stage-1 cells flip under 0.7 only (0/12 at temp 0) -> T-A at G1
+  [OK] Q2 T-0: temp 0.7 draws scatter around the same truth -> T-0
+  [OK] Q2 opposite signs: +8 cells at G1, -8 at G3 (pooled ~0; each grade 13pp, p=.008) -> T-A by the frozen single-grade rule
+  [OK] Q2 Simpson trap: +4 cells at every grade (pooled +7pp, no grade reaches 10pp) -> T-0
+
+ALL SELF-TESTS PASS
