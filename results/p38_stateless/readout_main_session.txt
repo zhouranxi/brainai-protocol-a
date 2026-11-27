@@ -1,0 +1,56 @@
+== completeness ==
+  OK  arm A (M-a, temp 0): 540 rows (expect 540), unique 540, errors 0
+  OK  arm B (M-a, temp 0.7, reps 3-6): 720 rows (expect 720), unique 720, errors 0
+  OK  P31 M-a: 540 rows (expect 540), unique 540, errors 0
+  OK  R1200 M-a: 540 rows (expect 540), unique 540, errors 0
+H2 (completeness / no API errors): PASS
+
+== H1: arm A (temp 0) - are the three outputs of each cell byte-identical? ==
+  identical-text cells: 180/180 = 100.0%   (gate >= 95% = 108/180)  -> PASS
+
+== Q1 (descriptive, NO gate): R1 at temperature 0 - M-c top-3 recall vs M-a top-3 recall ==
+  grade    n     M-c     M-a     gain      W/L   sign p
+  G1      60     50%     45%      +5pp      5/2    0.453
+  G2      60     88%     45%     +43pp     27/1    0.000
+  G3      60     97%     82%     +15pp     10/1    0.012
+  (pre-registered: no gate at any grade; stage 1 has 10-38% power with 60 puzzles and is descriptive only)
+
+== Q2: M-a at temp 0.7 (majority of 10 draws) vs M-a at temp 0 - paired per grade ==
+  grade    M-a@0  M-a@0.7     diff      W/L   sign p   gate (p<.05 and |diff|>=10pp)
+  G1         45%      42%      -3pp      0/2    0.500   -
+  G2         45%      43%      -2pp      0/1    1.000   -
+  G3         82%      73%      -8pp      0/5    0.062   -
+  VERDICT Q2: T-0 (no shift detected at any grade)
+
+== Q3 (descriptive): early gain M-c minus M-a, 2x2 temperature x caliper, per grade ==
+  G1:
+       T0 / single draw                                  +5pp   (5/2, p=0.45)
+       T0.7 / P31 M-c vs P31 M-a, median-3               +8pp   (6/1, p=0.12)
+       T0.7 / P37-T7 M-c vs R1200 M-a, median-3          +8pp   (6/1, p=0.12)
+       T0.7 / P37-T7 M-c vs pooled M-a, majority-10      +8pp   (5/0, p=0.06)
+  G2:
+       T0 / single draw                                 +43pp   (27/1, p=0.00)
+       T0.7 / P31 M-c vs P31 M-a, median-3              +38pp   (24/1, p=0.00)
+       T0.7 / P37-T7 M-c vs R1200 M-a, median-3         +43pp   (27/1, p=0.00)
+       T0.7 / P37-T7 M-c vs pooled M-a, majority-10     +43pp   (27/1, p=0.00)
+  G3:
+       T0 / single draw                                 +15pp   (10/1, p=0.01)
+       T0.7 / P31 M-c vs P31 M-a, median-3              +25pp   (15/0, p=0.00)
+       T0.7 / P37-T7 M-c vs R1200 M-a, median-3         +22pp   (13/0, p=0.00)
+       T0.7 / P37-T7 M-c vs pooled M-a, majority-10     +25pp   (15/0, p=0.00)
+  (each cell uses a different draw of M-a / M-c; differences across cells of a row are sampling spread, not effects)
+
+== Q4 (descriptive): M-a at temp 0.7 - gold-in-top-3 count per cell out of 10 draws ==
+  G1: {0: 19, 1: 6, 2: 6, 3: 1, 4: 3, 7: 1, 8: 4, 9: 2, 10: 18}
+       unstable cells 23/60 = 38%  (biased 1-2/8-9: 18, fair 3-7: 5)
+  G2: {0: 21, 1: 7, 2: 3, 3: 1, 4: 1, 5: 1, 8: 3, 9: 2, 10: 21}
+       unstable cells 18/60 = 30%  (biased 1-2/8-9: 15, fair 3-7: 3)
+  G3: {0: 7, 1: 1, 2: 3, 3: 1, 4: 2, 5: 2, 8: 1, 9: 3, 10: 40}
+       unstable cells 13/60 = 22%  (biased 1-2/8-9: 8, fair 3-7: 5)
+
+  flip(3) of M-a using P31's three draws (the same caliper as P37):
+    G1: top-3 flip(3) 11/60 = 18%
+    G2: top-3 flip(3) 11/60 = 18%
+    G3: top-3 flip(3) 7/60 = 12%
+
+VERDICTS: {"H1": "PASS", "H2": "PASS", "Q2": "T-0", "Q1": {"G1": {"c": 30, "a": 27, "W": 5, "L": 2, "p": 0.4531}, "G2": {"c": 53, "a": 27, "W": 27, "L": 1, "p": 0.0}, "G3": {"c": 58, "a": 49, "W": 10, "L": 1, "p": 0.0117}}}
