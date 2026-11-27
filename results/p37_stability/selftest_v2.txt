@@ -1,0 +1,15 @@
+fisher() matches brute-force reference on 4 tables
+  [OK] A clean floor + big temp & format effects + stable top-3: expected {'S1': 'PASS', 'S2': 'PASS', 'S3': 'PASS', 'S4p_top3': 'PASS', 'S4_majority': 'DESCRIPTIVE'}
+        got {'S1': 'PASS', 'S2': 'PASS', 'S3': 'PASS', 'S4p_top3': 'PASS', 'S4_majority': 'DESCRIPTIVE'}
+  [OK] B noisy engine at temp 0 -> batch INVALID, later gates not read: expected {'S1': 'FAIL'}
+        got {'S1': 'FAIL'}
+  [OK] C no temperature effect: expected {'S1': 'PASS', 'S2': 'NOT DETECTED', 'S3': 'NOT DETECTED', 'S4p_top3': 'PASS', 'S4_majority': 'DESCRIPTIVE'}
+        got {'S1': 'PASS', 'S2': 'NOT DETECTED', 'S3': 'NOT DETECTED', 'S4p_top3': 'PASS', 'S4_majority': 'DESCRIPTIVE'}
+  [OK] D Simpson trap: pooled S2 large, one grade flat -> NOT DETECTED: expected {'S1': 'PASS', 'S2': 'NOT DETECTED', 'S3': 'NOT DETECTED', 'S4p_top3': 'PASS', 'S4_majority': 'DESCRIPTIVE'}
+        got {'S1': 'PASS', 'S2': 'NOT DETECTED', 'S3': 'NOT DETECTED', 'S4p_top3': 'PASS', 'S4_majority': 'DESCRIPTIVE'}
+  [OK] E top-3 recall is noisy too -> S-4' NOT DETECTED: expected {'S1': 'PASS', 'S2': 'PASS', 'S3': 'PASS', 'S4p_top3': 'NOT DETECTED', 'S4_majority': 'DESCRIPTIVE'}
+        got {'S1': 'PASS', 'S2': 'PASS', 'S3': 'PASS', 'S4p_top3': 'NOT DETECTED', 'S4_majority': 'DESCRIPTIVE'}
+  [OK] F top-3 noisy in ONE grade only (30%) -> S-4' NOT DETECTED (per-grade cap): expected {'S1': 'PASS', 'S2': 'PASS', 'S3': 'PASS', 'S4p_top3': 'NOT DETECTED', 'S4_majority': 'DESCRIPTIVE'}
+        got {'S1': 'PASS', 'S2': 'PASS', 'S3': 'PASS', 'S4p_top3': 'NOT DETECTED', 'S4_majority': 'DESCRIPTIVE'}
+
+ALL SELF-TESTS PASS

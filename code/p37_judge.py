@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""P37 (ADR-0036) frozen read-out. Written before any P37 data existed.
+"""P37 (ADR-0036) frozen read-out, REVISED before launch (ADR-0036 sec 10, Lance 2026-11-27 12:33).
+Written before any P37 data existed; revised before any P37 call was made.
 Reads only rank / finish_reason / top3 — never the text.
-Arms: T0  = p37_c_t00_r5   (mech c, temp 0.0, 5 reps)
-      T7  = p37_c_t07_r5   (mech c, temp 0.7, 5 reps)
-      T7b = p37_b_t07_r5   (mech b, temp 0.7, 5 reps)
-Gates (frozen in ADR-0036 sec 3):
-  S-1 noise floor: T0 flip(5) > 10%  -> batch INVALID, stop.
+Arms: T0  = p37_c_t00_r3   (mech c, temp 0.0, 3 reps)
+      T7  = p37_c_t07_r3   (mech c, temp 0.7, 3 reps)
+      T7b = p37_b_t07_r3   (mech b, temp 0.7, 3 reps)
+Gates (as revised):
+  S-1 noise floor: T0 flip(3) > 10%  -> batch INVALID, stop.
   S-2 temperature : T7 flip(3) - T0 flip(3) >= 30pp
   S-3 format     : T7 flip(3) - T7b flip(3) >= 20pp
-  S-4 majority   : T7 5-rep mode agreement with the T0 truth, vs single draw, +>=15pp
+  S-4' top-3     : T7 top-3-recall flip(3) <= 15% pooled AND <= 20% in every grade
+  S-4 majority   : DESCRIPTIVE ONLY (was a >=15pp gate; demoted, see sec 10).
 Stratification rule: every difference is reported per grade FIRST; a PASS requires the same
 sign in all three grades. Pooled values are descriptive only.
 """
@@ -18,7 +20,8 @@ from collections import Counter, defaultdict
 from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 D = REPO / "results" / "p37_stability"
-ARMS = {"T0": "p37_c_t00_r5.json", "T7": "p37_c_t07_r5.json", "T7b": "p37_b_t07_r5.json"}
+ARMS = {"T0": "p37_c_t00_r3.json", "T7": "p37_c_t07_r3.json", "T7b": "p37_b_t07_r3.json"}
+REPS = 3
 
 
 def wilson(k, n, z=1.96):
@@ -70,10 +73,10 @@ def main():
     missing = [a for a, r in arms.items() if r is None]
     if missing: print("not run yet:", missing); sys.exit(0)
     for a, r in arms.items():
-        assert len(r) == 900, f"{a}: expected 900 rows, got {len(r)}"
-        assert {(x["puzzle"], x["grade"], x["rep"]) for x in r} == {(p, g, k) for p in {x["puzzle"] for x in r} for g in (1, 2, 3) for k in range(5)}, f"{a}: incomplete grid"
+        assert len(r) == 60 * 3 * REPS, f"{a}: expected {60*3*REPS} rows, got {len(r)}"
+        assert {(x["puzzle"], x["grade"], x["rep"]) for x in r} == {(p, g, k) for p in {x["puzzle"] for x in r} for g in (1, 2, 3) for k in range(REPS)}, f"{a}: incomplete grid"
         err = sum(1 for x in r if x["finish_reason"] == "error")
-        print(f"{a}: 900 rows, errors {err}, truncated {sum(1 for x in r if x['finish_reason']=='length')} ({sum(1 for x in r if x['finish_reason']=='length')/9:.0f}%)")
+        print(f"{a}: rows {len(r)}, errors {err}, truncated {sum(1 for x in r if x['finish_reason']=='length')} ({sum(1 for x in r if x['finish_reason']=='length')/len(r):.0f}%)")
     top1 = {a: by_puzzle(r, "rank") for a, r in arms.items()}
     for a in top1:  # convert rank -> top-1 indicator
         for k in top1[a]: top1[a][k] = {rep: int(rk == 1) for rep, rk in top1[a][k].items()}
@@ -82,17 +85,17 @@ def main():
     print(f"{'arm':<5}{'k':>3}" + "".join(f"{'G'+str(g):>12}" for g in (1, 2, 3)) + "{'pooled':>12}")
     F = {}
     for a in ("T0", "T7", "T7b"):
-        for k in (2, 3, 5):
+        for k in (2, 3):
             cells = [flip(top1[a], k, g) for g in (1, 2, 3)]
             F[(a, k)] = cells
             tot = (sum(c[0] for c in cells), sum(c[1] for c in cells))
             print(f"{a:<5}{k:>3}" + "".join(f"{c[0]:>5}/{c[1]:<3}" for c in cells) + f"{tot[0]:>6}/{tot[1]}")
     t3 = lambda a, g: F[(a, 3)][g - 1]
 
-    print("\n== S-1 noise floor: T0 flip(5) ==")
-    c5 = F[("T0", 5)]; pooled = sum(c[0] for c in c5) / sum(c[1] for c in c5)
+    print("\n== S-1 noise floor: T0 flip(3) ==")
+    c5 = F[("T0", 3)]; pooled = sum(c[0] for c in c5) / sum(c[1] for c in c5)
     s1 = pooled > 0.10
-    print(f"  T0 flip(5) pooled = {pooled:.1%}  (per grade {', '.join(f'G{g+1} {c[0]}/{c[1]}' for g, c in enumerate(c5))})  -> {'FAIL: batch INVALID' if s1 else 'PASS'}")
+    print(f"  T0 flip(3) pooled = {pooled:.1%}  (per grade {', '.join(f'G{g+1} {c[0]}/{c[1]}' for g, c in enumerate(c5))})  -> {'FAIL: batch INVALID' if s1 else 'PASS'}")
     if s1:
         print("\nVERDICT: S-1 FAIL - the engine is not deterministic at temp 0; stop here."); return
 
@@ -120,25 +123,26 @@ def main():
     s3 = same_sign3 and pooled_d3 >= 20
     print(f"  pooled diff {pooled_d3:+.1f}pp (descriptive); Fisher p = {fisher(p7[0], p7[1]-p7[0], pb_[0], pb_[1]-pb_[0]):.2e}; same sign in all grades: {same_sign3}  -> {'PASS' if s3 else 'NOT DETECTED'}")
 
-    print("\n== S-4 majority vote: T7 k-draw mode vs T0 5-draw truth (top-1) ==")
+    print("\n== S-4 (DESCRIPTIVE, not a gate): T7 k-draw mode vs T0 3-draw mode, top-1 ==")
     print(f"  {'k':<3}" + "".join(f"{'G'+str(g):>14}" for g in (1, 2, 3)) + "{'pooled':>14}")
-    A = {}
-    for k in (1, 3, 5):
-        cells = [mode_agreement(top1["T7"], top1["T0"], k, g) for g in (1, 2, 3)]; A[k] = cells
+    for k in (1, 3):
+        cells = [mode_agreement(top1["T7"], top1["T0"], k, g) for g in (1, 2, 3)]
         tot = (sum(c[0] for c in cells), sum(c[1] for c in cells))
         print(f"  {k:<3}" + "".join(f"{c[0]:>6}/{c[1]:<3}={c[0]/c[1]:>4.0%}" for c in cells) + f"{tot[0]/tot[1]:>13.0%}")
-    gain = [(A[5][g][0]/A[5][g][1] - A[1][g][0]/A[1][g][1]) * 100 for g in range(3)]
-    pooled_gain = (A[5][0][0]+A[5][1][0]+A[5][2][0])/(A[5][0][1]+A[5][1][1]+A[5][2][1]) * 100 - (A[1][0][0]+A[1][1][0]+A[1][2][0])/(A[1][0][1]+A[1][1][1]+A[1][2][1]) * 100
-    s4 = all(x > 0 for x in gain) and pooled_gain >= 15
-    print(f"  gain k=5 vs k=1: per grade {', '.join(f'{x:+.0f}pp' for x in gain)}; pooled {pooled_gain:+.1f}pp  -> {'PASS' if s4 else 'NOT DETECTED'}")
 
-    print("\n== secondary: does the noise hurt top-3 recall too? (T7, flip(3)) ==")
+    print("\n== S-4' top-3 recall noise: T7 top-3-recall flip(3) ==")
     t3r = by_puzzle(arms["T7"], "top3")
+    cells = [flip(t3r, 3, g) for g in (1, 2, 3)]
+    pooled3 = sum(c[0] for c in cells) / sum(c[1] for c in cells)
+    print(f"  {'grade':<6}{'top-3 flip':>14}{'top-1 flip':>14}")
     for g in (1, 2, 3):
-        f, n = flip(t3r, 3, g); (f1, n1) = t3("T7", g)
-        print(f"  G{g}: top-1 flip {f1}/{n1} = {f1/n1:.0%}   top-3 recall flip {f}/{n} = {f/n:.0%}")
+        f, n = cells[g - 1]; f1, n1 = t3("T7", g)
+        print(f"  G{g:<5}{f:>6}/{n:<4}={f/n:>5.0%}{f1:>6}/{n1:<4}={f1/n1:>5.0%}")
+    s4p = (pooled3 <= 0.15) and all(c[0] / c[1] <= 0.20 for c in cells)
+    print(f"  pooled {pooled3:.1%} (gate <=15%), max grade {max(c[0]/c[1] for c in cells):.1%} (gate <=20%)  -> {'PASS' if s4p else 'NOT DETECTED'}")
 
-    v = {"S1": "PASS" if not s1 else "FAIL", "S2": "PASS" if s2 else "NOT DETECTED", "S3": "PASS" if s3 else "NOT DETECTED", "S4": "PASS" if s4 else "NOT DETECTED"}
+    v = {"S1": "PASS" if not s1 else "FAIL", "S2": "PASS" if s2 else "NOT DETECTED", "S3": "PASS" if s3 else "NOT DETECTED",
+         "S4p_top3": "PASS" if s4p else "NOT DETECTED", "S4_majority": "DESCRIPTIVE"}
     (D / "readout.json").write_text(json.dumps(v, indent=1), encoding="utf-8")
     print("\nVERDICTS:", v)
 
