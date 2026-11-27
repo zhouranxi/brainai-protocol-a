@@ -736,6 +736,26 @@ None of these shifts passed the preregistered paired sign test
 behavioral confound; nor is it demonstrated to be harmless, since the
 stage-2 and stage-3 shifts are larger than the gate's own 10\,pp margin
 (\S\ref{sec:limitations}, \emph{Unequal output budget}).
+\emph{Correction (ADR-0035).} The sentence above that the cut ``does
+not reach the scored list'' was inferred from the near-equal top-1 of
+truncated and complete outputs, and that inference was wrong. A blinded
+manual read of 60 randomly sampled truncated \Mcrit{} outputs from the
+confirmation-batch re-run (judged on text alone, ranks merged afterwards)
+finds that in 48\% (29/60; Wilson 95\% CI 36--61\%) the cut falls
+\emph{before} any final ranked candidate set was written: in 16 the
+output never gives three candidates with confidences, in 3 it ranks
+three candidates without confidences, and in 10 the list is cut after
+one or two entries. In those rows the scorer necessarily took its rank
+from a candidate or a confidence mentioned in the reasoning. The
+recorded ranks are unchanged---they are faithful outputs of the
+scorer---but 23 of the 29 no-commitment rows carry rank 1, so 62\% of
+the rank-1 rows in the sample are not readings of a final commitment.
+The same read on 30 truncated outputs of the 2{,}400-token arm gives
+47\% (14/30), with half of its cuts at an incomplete list. We therefore
+withdraw the claim that truncation spares the scored list for \Mcrit{}.
+The read covered \Mcrit{} only; whether \Mmaint{}'s far fewer cuts
+(7\%) fall before or after its list was not judged, and the claim is
+not made for it either.
 
 \paragraph{Scorer tolerance, verified.}
 The repaired scorer lets a candidate borrow a confidence percentage from
@@ -848,8 +868,14 @@ of the re-run. \textbf{Unequal output budget.} The
 1{,}200-token cap truncated 58\% of \Mcrit{} outputs and under 8\% of
 every other mechanism's in the batch-1 archive; the re-run of the
 confirmation batch puts the figure for \Mcrit{} at 61\%, counted by the
-server's native finish-reason flag. Ranks were unaffected, but
-\Mcrit{}'s behavior was observed under a binding budget that the
+server's native finish-reason flag. Truncated and complete \Mcrit{}
+outputs scored alike (65\% vs.\ 66\% top-1 in batch 1), but a blinded
+read of the truncated outputs (\S\ref{sec:artifact},
+\emph{Correction}) found that about half were cut before any final
+candidate list was written, so their ranks were taken from the
+reasoning rather than from a final commitment; alike scores do not
+mean the scored position was the same. \Mcrit{}'s behavior was
+observed under a binding budget that the
 others did not hit. We therefore re-ran \Mcrit{} with the cap raised to
 2{,}400 tokens on the same 60 confirmation puzzles. This cuts the
 truncation rate to 9\% without eliminating it (15\% at stage 3), so the

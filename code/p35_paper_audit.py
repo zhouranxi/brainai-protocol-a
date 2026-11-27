@@ -269,8 +269,53 @@ def main():
     check("2,400-token arm mentioned as released", "2{,}400-token \\Mcrit{} arm" in rep)
     check("'full texts archived' statement present (phase A, kept)", "archived them" in rep)
 
+
+    print("\n== ADR-0035 (P36): where the truncated critique output was scored ==")
+    ro = json.loads((RES / "p36_commit" / "readout.json").read_text(encoding="utf-8"))
+    J = ro["judgements"]
+    # the judgements file itself must still merge cleanly and reproduce the read-out
+    r2 = subprocess.run([sys.executable, str(REPO / "code" / "p36_judge.py")], cwd=REPO, capture_output=True, text=True, encoding="utf-8")
+    check("p36_judge.py reruns cleanly and reports R-C1", r2.returncode == 0 and "VERDICT: R-C1" in r2.stdout)
+    # independent recount straight from the jsonl (no reuse of p36_judge's numbers)
+    jl = [json.loads(l) for l in (RES / "p36_commit" / "judgments.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+    key = json.loads((RES / "p36_commit" / "key.json").read_text(encoding="utf-8"))
+    for j in jl: j.update(key[j["id"]])
+    j12 = [j for j in jl if j["id"].startswith("R1200-")]; j24 = [j for j in jl if j["id"].startswith("R2400-")]
+    n12 = sum(1 for j in j12 if j["verdict"] == "N"); n24 = sum(1 for j in j24 if j["verdict"] == "N")
+    t1n = sum(1 for j in j12 if j["verdict"] == "N" and j["rank"] == 1); t1c = sum(1 for j in j12 if j["verdict"] == "C" and j["rank"] == 1)
+    u = __import__("re")
+    by = {k: sum(1 for j in j12 if j["verdict"] == "N" and u.match(r"U(\d)", j["rule"]).group(1) == k[-1]) for k in ("U1", "U3", "U4")}
+    u24_4 = sum(1 for j in j24 if j["verdict"] == "N" and u.match(r"U(\d)", j["rule"]).group(1) == "4")
+    check(f"sample sizes frozen (60 / 30), judged blind, ids unique", len(j12) == 60 and len(j24) == 30 and len({j['id'] for j in jl}) == 90)
+    check(f"no-commitment R1200 = {n12}/60 = {n12/60:.1%}", n12 == 29)
+    check(f"no-commitment R2400 = {n24}/30 = {n24/30:.1%}", n24 == 14)
+    check(f"no-commitment by rule U1/U3/U4 = {by['U1']}/{by['U3']}/{by['U4']}", by == {"U1": 16, "U3": 3, "U4": 10})
+    check(f"rank==1 among no-commitment rows = {t1n}/{n12} = {t1n/n12:.0%}", t1n == 23)
+    check(f"rank==1 rows without commitment = {t1n}/{t1n+t1c} = {t1n/(t1n+t1c):.0%}", t1n + t1c == 37)
+    check(f"R2400: incomplete-list share of no-commitment = {u24_4}/{n24} = '{u24_4/n24:.0%}'", u24_4 * 2 == n24)
+    # the paper text
+    # Look up the correction block defensively: if it is missing the audit must record a FAIL and go on,
+    # not crash (a crash would skip every later check and look like 'nothing failed' to a log reader).
+    ci = tex.find(r"\emph{Correction (ADR-0035).}")
+    check("correction block present in the artifact section", ci >= 0)
+    corr = tex[ci:tex.find(r"\paragraph{Scorer tolerance, verified.}", ci)] if ci >= 0 else ""
+    art = block(tex, r"\paragraph{Residual truncation, disclosed.}", r"\paragraph{Scorer tolerance, verified.}")
+    for lit in ("48\\% (29/60; Wilson 95\\% CI 36--61\\%)", "in 16 the", "in 3 it ranks", "in 10 the list",
+                "23 of the 29 no-commitment rows carry rank 1", "62\\% of\nthe rank-1 rows", "47\\% (14/30)"):
+        check(f"correction states: {lit!r}", lit in corr)
+    check("the withdrawn claim is named explicitly", 'that the cut ``does\nnot reach the scored list\'\' was inferred' in corr or "does\nnot reach the scored list'' was inferred" in corr)
+    check("withdrawal sentence present", "withdraw the claim that truncation spares the scored list for \\Mcrit{}" in corr)
+    check("no unverified claim about M-maint's cuts (the read covered critique only)",
+          "was not judged, and the claim is\nnot made for it either" in corr and "nearly every case" not in corr)
+    check("Limitations no longer says ranks were unaffected", "Ranks were unaffected" not in block(tex, r"\textbf{Unequal output budget.}", r"\section{Conclusion}"))
+    check("Limitations points to the correction and says alike scores != same scored position",
+          "alike scores do not\nmean the scored position was the same" in tex)
+    # the original (wrong) sentence is still there verbatim, immediately followed by the correction -> history is visible
+    check("original sentence kept verbatim (history visible), correction appended in the same paragraph",
+          "The cut does not\nreach the scored list---\\Mcrit{} writes its revised candidates before\nits closing commentary---" in art
+          and art.find("Correction (ADR-0035)") > art.find("closing commentary") >= 0)
     print("\n== build ==")
-    log = Path("/tmp/p35b_tex3.log")
+    log = next((q for q in (Path("/tmp/tex3.log"), Path("/tmp/p35b_tex3.log")) if q.exists()), Path("/tmp/tex3.log"))
     if log.exists():
         L = log.read_text(encoding="utf-8", errors="replace")
         check("0 TeX errors", len(re.findall(r"^!", L, flags=re.M)) == 0)

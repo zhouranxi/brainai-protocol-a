@@ -1,0 +1,722 @@
+{
+ "R1200-001": {
+  "arm": 1200,
+  "puzzle": "P53",
+  "grade": 2,
+  "rep": 0,
+  "rank": 1,
+  "len": 1919
+ },
+ "R1200-002": {
+  "arm": 1200,
+  "puzzle": "P81",
+  "grade": 3,
+  "rep": 2,
+  "rank": 1,
+  "len": 1960
+ },
+ "R1200-003": {
+  "arm": 1200,
+  "puzzle": "P73",
+  "grade": 3,
+  "rep": 1,
+  "rank": 1,
+  "len": 2063
+ },
+ "R1200-004": {
+  "arm": 1200,
+  "puzzle": "P76",
+  "grade": 3,
+  "rep": 0,
+  "rank": 3,
+  "len": 2294
+ },
+ "R1200-005": {
+  "arm": 1200,
+  "puzzle": "P42",
+  "grade": 2,
+  "rep": 0,
+  "rank": 3,
+  "len": 1916
+ },
+ "R1200-006": {
+  "arm": 1200,
+  "puzzle": "P62",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 1981
+ },
+ "R1200-007": {
+  "arm": 1200,
+  "puzzle": "P33",
+  "grade": 2,
+  "rep": 2,
+  "rank": 1,
+  "len": 1954
+ },
+ "R1200-008": {
+  "arm": 1200,
+  "puzzle": "P63",
+  "grade": 2,
+  "rep": 2,
+  "rank": 1,
+  "len": 2095
+ },
+ "R1200-009": {
+  "arm": 1200,
+  "puzzle": "P90",
+  "grade": 2,
+  "rep": 0,
+  "rank": 1,
+  "len": 2092
+ },
+ "R1200-010": {
+  "arm": 1200,
+  "puzzle": "P59",
+  "grade": 1,
+  "rep": 0,
+  "rank": 0,
+  "len": 1973
+ },
+ "R1200-011": {
+  "arm": 1200,
+  "puzzle": "P84",
+  "grade": 1,
+  "rep": 0,
+  "rank": 0,
+  "len": 1952
+ },
+ "R1200-012": {
+  "arm": 1200,
+  "puzzle": "P36",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 1913
+ },
+ "R1200-013": {
+  "arm": 1200,
+  "puzzle": "P89",
+  "grade": 2,
+  "rep": 0,
+  "rank": 3,
+  "len": 2024
+ },
+ "R1200-014": {
+  "arm": 1200,
+  "puzzle": "P57",
+  "grade": 3,
+  "rep": 1,
+  "rank": 1,
+  "len": 1946
+ },
+ "R1200-015": {
+  "arm": 1200,
+  "puzzle": "P41",
+  "grade": 2,
+  "rep": 0,
+  "rank": 1,
+  "len": 2016
+ },
+ "R1200-016": {
+  "arm": 1200,
+  "puzzle": "P48",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 2098
+ },
+ "R1200-017": {
+  "arm": 1200,
+  "puzzle": "P45",
+  "grade": 2,
+  "rep": 0,
+  "rank": 1,
+  "len": 2064
+ },
+ "R1200-018": {
+  "arm": 1200,
+  "puzzle": "P81",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 1972
+ },
+ "R1200-019": {
+  "arm": 1200,
+  "puzzle": "P49",
+  "grade": 3,
+  "rep": 0,
+  "rank": 3,
+  "len": 2065
+ },
+ "R1200-020": {
+  "arm": 1200,
+  "puzzle": "P41",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 1944
+ },
+ "R1200-021": {
+  "arm": 1200,
+  "puzzle": "P31",
+  "grade": 3,
+  "rep": 2,
+  "rank": 3,
+  "len": 1750
+ },
+ "R1200-022": {
+  "arm": 1200,
+  "puzzle": "P45",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 1978
+ },
+ "R1200-023": {
+  "arm": 1200,
+  "puzzle": "P90",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 2098
+ },
+ "R1200-024": {
+  "arm": 1200,
+  "puzzle": "P40",
+  "grade": 3,
+  "rep": 0,
+  "rank": 0,
+  "len": 2069
+ },
+ "R1200-025": {
+  "arm": 1200,
+  "puzzle": "P68",
+  "grade": 2,
+  "rep": 1,
+  "rank": 3,
+  "len": 1947
+ },
+ "R1200-026": {
+  "arm": 1200,
+  "puzzle": "P78",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 2029
+ },
+ "R1200-027": {
+  "arm": 1200,
+  "puzzle": "P75",
+  "grade": 1,
+  "rep": 0,
+  "rank": 0,
+  "len": 2014
+ },
+ "R1200-028": {
+  "arm": 1200,
+  "puzzle": "P70",
+  "grade": 2,
+  "rep": 2,
+  "rank": 0,
+  "len": 1969
+ },
+ "R1200-029": {
+  "arm": 1200,
+  "puzzle": "P42",
+  "grade": 2,
+  "rep": 2,
+  "rank": 1,
+  "len": 1910
+ },
+ "R1200-030": {
+  "arm": 1200,
+  "puzzle": "P57",
+  "grade": 3,
+  "rep": 2,
+  "rank": 1,
+  "len": 2013
+ },
+ "R1200-031": {
+  "arm": 1200,
+  "puzzle": "P61",
+  "grade": 1,
+  "rep": 1,
+  "rank": 0,
+  "len": 2044
+ },
+ "R1200-032": {
+  "arm": 1200,
+  "puzzle": "P32",
+  "grade": 1,
+  "rep": 1,
+  "rank": 1,
+  "len": 2059
+ },
+ "R1200-033": {
+  "arm": 1200,
+  "puzzle": "P89",
+  "grade": 1,
+  "rep": 2,
+  "rank": 1,
+  "len": 2065
+ },
+ "R1200-034": {
+  "arm": 1200,
+  "puzzle": "P89",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 1995
+ },
+ "R1200-035": {
+  "arm": 1200,
+  "puzzle": "P82",
+  "grade": 1,
+  "rep": 0,
+  "rank": 0,
+  "len": 2020
+ },
+ "R1200-036": {
+  "arm": 1200,
+  "puzzle": "P83",
+  "grade": 1,
+  "rep": 0,
+  "rank": 3,
+  "len": 2041
+ },
+ "R1200-037": {
+  "arm": 1200,
+  "puzzle": "P42",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 1959
+ },
+ "R1200-038": {
+  "arm": 1200,
+  "puzzle": "P86",
+  "grade": 2,
+  "rep": 0,
+  "rank": 3,
+  "len": 2138
+ },
+ "R1200-039": {
+  "arm": 1200,
+  "puzzle": "P53",
+  "grade": 3,
+  "rep": 1,
+  "rank": 1,
+  "len": 1979
+ },
+ "R1200-040": {
+  "arm": 1200,
+  "puzzle": "P86",
+  "grade": 2,
+  "rep": 1,
+  "rank": 3,
+  "len": 2185
+ },
+ "R1200-041": {
+  "arm": 1200,
+  "puzzle": "P87",
+  "grade": 1,
+  "rep": 1,
+  "rank": 0,
+  "len": 1931
+ },
+ "R1200-042": {
+  "arm": 1200,
+  "puzzle": "P42",
+  "grade": 3,
+  "rep": 2,
+  "rank": 1,
+  "len": 2071
+ },
+ "R1200-043": {
+  "arm": 1200,
+  "puzzle": "P46",
+  "grade": 3,
+  "rep": 1,
+  "rank": 3,
+  "len": 2082
+ },
+ "R1200-044": {
+  "arm": 1200,
+  "puzzle": "P82",
+  "grade": 2,
+  "rep": 1,
+  "rank": 3,
+  "len": 1934
+ },
+ "R1200-045": {
+  "arm": 1200,
+  "puzzle": "P52",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 1968
+ },
+ "R1200-046": {
+  "arm": 1200,
+  "puzzle": "P56",
+  "grade": 1,
+  "rep": 1,
+  "rank": 0,
+  "len": 1996
+ },
+ "R1200-047": {
+  "arm": 1200,
+  "puzzle": "P63",
+  "grade": 2,
+  "rep": 0,
+  "rank": 1,
+  "len": 2267
+ },
+ "R1200-048": {
+  "arm": 1200,
+  "puzzle": "P32",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 1958
+ },
+ "R1200-049": {
+  "arm": 1200,
+  "puzzle": "P39",
+  "grade": 3,
+  "rep": 2,
+  "rank": 1,
+  "len": 2033
+ },
+ "R1200-050": {
+  "arm": 1200,
+  "puzzle": "P81",
+  "grade": 1,
+  "rep": 0,
+  "rank": 1,
+  "len": 2108
+ },
+ "R1200-051": {
+  "arm": 1200,
+  "puzzle": "P59",
+  "grade": 2,
+  "rep": 0,
+  "rank": 0,
+  "len": 1917
+ },
+ "R1200-052": {
+  "arm": 1200,
+  "puzzle": "P53",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 2005
+ },
+ "R1200-053": {
+  "arm": 1200,
+  "puzzle": "P70",
+  "grade": 2,
+  "rep": 1,
+  "rank": 0,
+  "len": 1959
+ },
+ "R1200-054": {
+  "arm": 1200,
+  "puzzle": "P64",
+  "grade": 2,
+  "rep": 2,
+  "rank": 1,
+  "len": 2000
+ },
+ "R1200-055": {
+  "arm": 1200,
+  "puzzle": "P77",
+  "grade": 1,
+  "rep": 1,
+  "rank": 1,
+  "len": 2155
+ },
+ "R1200-056": {
+  "arm": 1200,
+  "puzzle": "P33",
+  "grade": 2,
+  "rep": 0,
+  "rank": 1,
+  "len": 2060
+ },
+ "R1200-057": {
+  "arm": 1200,
+  "puzzle": "P50",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 2079
+ },
+ "R1200-058": {
+  "arm": 1200,
+  "puzzle": "P35",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 1993
+ },
+ "R1200-059": {
+  "arm": 1200,
+  "puzzle": "P69",
+  "grade": 1,
+  "rep": 1,
+  "rank": 0,
+  "len": 1915
+ },
+ "R1200-060": {
+  "arm": 1200,
+  "puzzle": "P65",
+  "grade": 2,
+  "rep": 0,
+  "rank": 1,
+  "len": 1900
+ },
+ "R2400-001": {
+  "arm": 2400,
+  "puzzle": "P63",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 4412
+ },
+ "R2400-002": {
+  "arm": 2400,
+  "puzzle": "P52",
+  "grade": 3,
+  "rep": 0,
+  "rank": 3,
+  "len": 4226
+ },
+ "R2400-003": {
+  "arm": 2400,
+  "puzzle": "P47",
+  "grade": 3,
+  "rep": 1,
+  "rank": 1,
+  "len": 4434
+ },
+ "R2400-004": {
+  "arm": 2400,
+  "puzzle": "P64",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 4236
+ },
+ "R2400-005": {
+  "arm": 2400,
+  "puzzle": "P45",
+  "grade": 2,
+  "rep": 1,
+  "rank": 3,
+  "len": 4321
+ },
+ "R2400-006": {
+  "arm": 2400,
+  "puzzle": "P39",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 3977
+ },
+ "R2400-007": {
+  "arm": 2400,
+  "puzzle": "P86",
+  "grade": 2,
+  "rep": 2,
+  "rank": 3,
+  "len": 4199
+ },
+ "R2400-008": {
+  "arm": 2400,
+  "puzzle": "P35",
+  "grade": 3,
+  "rep": 2,
+  "rank": 3,
+  "len": 3718
+ },
+ "R2400-009": {
+  "arm": 2400,
+  "puzzle": "P38",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 3719
+ },
+ "R2400-010": {
+  "arm": 2400,
+  "puzzle": "P39",
+  "grade": 2,
+  "rep": 0,
+  "rank": 1,
+  "len": 3861
+ },
+ "R2400-011": {
+  "arm": 2400,
+  "puzzle": "P78",
+  "grade": 3,
+  "rep": 2,
+  "rank": 1,
+  "len": 3975
+ },
+ "R2400-012": {
+  "arm": 2400,
+  "puzzle": "P61",
+  "grade": 3,
+  "rep": 2,
+  "rank": 3,
+  "len": 3674
+ },
+ "R2400-013": {
+  "arm": 2400,
+  "puzzle": "P78",
+  "grade": 3,
+  "rep": 1,
+  "rank": 1,
+  "len": 4064
+ },
+ "R2400-014": {
+  "arm": 2400,
+  "puzzle": "P32",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 3989
+ },
+ "R2400-015": {
+  "arm": 2400,
+  "puzzle": "P69",
+  "grade": 3,
+  "rep": 1,
+  "rank": 3,
+  "len": 4107
+ },
+ "R2400-016": {
+  "arm": 2400,
+  "puzzle": "P33",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 4026
+ },
+ "R2400-017": {
+  "arm": 2400,
+  "puzzle": "P41",
+  "grade": 3,
+  "rep": 2,
+  "rank": 1,
+  "len": 3917
+ },
+ "R2400-018": {
+  "arm": 2400,
+  "puzzle": "P34",
+  "grade": 2,
+  "rep": 0,
+  "rank": 1,
+  "len": 3727
+ },
+ "R2400-019": {
+  "arm": 2400,
+  "puzzle": "P41",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 4067
+ },
+ "R2400-020": {
+  "arm": 2400,
+  "puzzle": "P32",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 3828
+ },
+ "R2400-021": {
+  "arm": 2400,
+  "puzzle": "P78",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 3699
+ },
+ "R2400-022": {
+  "arm": 2400,
+  "puzzle": "P31",
+  "grade": 3,
+  "rep": 2,
+  "rank": 3,
+  "len": 3855
+ },
+ "R2400-023": {
+  "arm": 2400,
+  "puzzle": "P48",
+  "grade": 3,
+  "rep": 0,
+  "rank": 3,
+  "len": 4103
+ },
+ "R2400-024": {
+  "arm": 2400,
+  "puzzle": "P36",
+  "grade": 3,
+  "rep": 2,
+  "rank": 1,
+  "len": 4335
+ },
+ "R2400-025": {
+  "arm": 2400,
+  "puzzle": "P47",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 4714
+ },
+ "R2400-026": {
+  "arm": 2400,
+  "puzzle": "P47",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 4284
+ },
+ "R2400-027": {
+  "arm": 2400,
+  "puzzle": "P37",
+  "grade": 3,
+  "rep": 1,
+  "rank": 1,
+  "len": 4233
+ },
+ "R2400-028": {
+  "arm": 2400,
+  "puzzle": "P49",
+  "grade": 2,
+  "rep": 1,
+  "rank": 1,
+  "len": 4604
+ },
+ "R2400-029": {
+  "arm": 2400,
+  "puzzle": "P63",
+  "grade": 2,
+  "rep": 0,
+  "rank": 1,
+  "len": 4347
+ },
+ "R2400-030": {
+  "arm": 2400,
+  "puzzle": "P89",
+  "grade": 3,
+  "rep": 0,
+  "rank": 1,
+  "len": 4111
+ }
+}
