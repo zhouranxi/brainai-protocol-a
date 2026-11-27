@@ -82,9 +82,42 @@ def main():
     a = block(head, r"\begin{table}", r"\end{table}")
     b = block(tex, r"\begin{table}", r"\end{table}")
     check(f"Table 2 (first table environment, {len(a)} chars) unchanged", a == b)
-    a = block(head, r"\section{", r"\section{The measurement artifact}")
-    b = block(tex, r"\section{", r"\section{The measurement artifact}")
-    check(f"everything from the first \\section up to 'The measurement artifact' unchanged ({len(a)} chars; covers sec:early, Table 2, Fig. 1)", a == b)
+    # Lance (2026-11-27 10:32) authorised ONE addition to sec:early: a budget qualifier appended
+    # after 'from the opposite direction.'. The blanket byte-identical check over the whole
+    # span is therefore replaced by three finer ones that keep the same protection:
+    # Table 2 unchanged, Fig. 1 unchanged, and sec:early unchanged APART FROM that appended
+    # sentence (original text must be a prefix, and the three stage numbers must still be there).
+    a = block(head, r"\section{Self-critique decomposed", r"\section{The measurement artifact}")
+    b = block(tex, r"\section{Self-critique decomposed", r"\section{The measurement artifact}")
+    anchor = "from the opposite direction."
+    assert a.count(anchor) == 1 and b.count(anchor) == 1
+    orig, new = a[:a.index(anchor) + len(anchor)], b[:b.index(anchor) + len(anchor)]
+    appended = b[b.index(anchor) + len(anchor):].strip()
+    # compare the opening words with whitespace normalised (the qualifier wraps lines in the source)
+    opening_ok = " ".join(appended.split()).startswith("One condition on these stage-resolved numbers:")
+    # and lock the tail + length, so nothing can be smuggled INTO the authorised qualifier either
+    tail_ok = " ".join(appended.split()).endswith("the budget's effect on it is not resolved.")
+    check(f"sec:early original text is a byte-identical prefix of the current text ({len(orig)} chars); "
+          f"exactly one qualifier appended ({len(appended)} chars) starting with 'One condition on these stage-resolved numbers:'",
+          orig == new and len(orig) > 1000 and opening_ok)
+    check(f"the authorised qualifier is exactly the authorised sentence: 430 <= len ({len(appended)}) <= 470 chars, "
+          f"single paragraph, ends with 'the budget's effect on it is not resolved.'",
+          430 <= len(appended) <= 470 and "\n\n" not in appended and tail_ok)
+    for s in (r"\Mcrit{} $43/90$ vs.\ \Mmaint{} $30/90$", "paired 20 wins / 7 losses, sign test $p = 0.019$",
+              r"$63/90$ vs.\ $37/90$; 32 wins / 6 losses", r"$69/90$ vs.\ $66/90$; 16 / 13, $p = 0.71$",
+              "$+17$\,pp", "(hard), $-16$\,pp (medium), $-9$\,pp (easy)"):
+        check(f"sec:early stage number still present verbatim: {s[:48]}", s in b)
+    # numbers inside the qualifier must match the phase-B Limitations block and the JSON
+    for s in ("61\\%", "-1.7$", "-11.7$", "-13.3$", "1.00$", "0.21$", "0.12$"):
+        check(f"qualifier number matches Limitations / phase B: {s}", s in appended)
+    # Fig. 1 figure environment must be untouched
+    a = block(head, r"\begin{figure}", r"\end{figure}")
+    b = block(tex, r"\begin{figure}", r"\end{figure}")
+    check(f"Fig. 1 figure environment unchanged ({len(a)} chars)", a == b and len(a) > 200)
+    # everything else in the old span (from first \section up to sec:early) is still blanket-checked
+    a = head[head.index(r"\section{"):head.index(r"\section{Self-critique decomposed")]
+    b = tex[tex.index(r"\section{"):tex.index(r"\section{Self-critique decomposed")]
+    check(f"everything from the first \\section up to sec:early unchanged ({len(a)} chars; covers intro, Table 2)", a == b)
     a = head[head.index(r"\section{Discussion}"):head.index(r"\section{Limitations}")]
     b = tex[tex.index(r"\section{Discussion}"):tex.index(r"\section{Limitations}")]
     check("Discussion section unchanged", a == b)

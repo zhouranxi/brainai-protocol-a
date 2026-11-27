@@ -677,7 +677,13 @@ was already correct (medium/easy), critique perturbs it; where it was
 wrong (hard), critique helps. Feedback's value tracks exactly the
 states where the base mechanism is \emph{not} already converged---the
 same lesson the collapse attractor taught on the CNN side, arrived at
-from the opposite direction.
+from the opposite direction. One condition on these stage-resolved
+numbers: they were measured under a 1{,}200-token output cap that
+\Mcrit{} exhausted in 61\% of confirmation-batch calls, and when the cap
+was raised to 2{,}400 for \Mcrit{} alone its top-1 was no higher at any
+stage ($-1.7$, $-11.7$, $-13.3$\,pp; sign $p = 1.00$, $0.21$, $0.12$;
+Limitations). The stage-2 lead is therefore a comparison made under the
+binding budget, and the budget's effect on it is not resolved.
 
 \section{The measurement artifact}
 \label{sec:artifact}
