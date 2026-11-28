@@ -410,6 +410,77 @@ def main():
         check(f"entry states: {lit[:70]!r}", lit in ent)
     check("entry does not claim top-3 is noise-free", "top-3 recall is not immune" in ent.lower() and "noise-free" not in ent.lower())
     check("entry does not claim majority voting helps", "majority vote over three resamples did not help" in ent.lower())
+
+    print("\n== ADR-0036/0037 addendum: the 'Stage 1 cannot be decided' sentences appended to the sampling-noise entry ==")
+    # every number re-derived from the raw JSON with no shared helper beyond sign_p
+    t3 = lambda r: int(r["rank"] in (1, 2, 3))
+    A0 = json.loads((RES / "p38_stateless" / "p38_a_t00_s0r3.json").read_text(encoding="utf-8"))["rows"]
+    C0 = json.loads((RES / "p37_stability" / "p37_c_t00_r3.json").read_text(encoding="utf-8"))["rows"]
+    C7 = json.loads((RES / "p37_stability" / "p37_c_t07_r3.json").read_text(encoding="utf-8"))["rows"]
+    P31 = [r for r in json.loads((RES / "p31_confirm" / "p31_race.json").read_text(encoding="utf-8"))["rows"] if r["mech"] == "a"]
+    R12 = [r for r in json.loads((RES / "p35_fulltext" / "p35_race_1200.json").read_text(encoding="utf-8"))["rows"] if r["mech"] == "a"]
+    B38 = json.loads((RES / "p38_stateless" / "p38_a_t07_s3r4.json").read_text(encoding="utf-8"))["rows"]
+    B1 = json.loads((RES / "p25_reveal" / "p25_race_v2.json").read_text(encoding="utf-8"))["rows"]
+    a0 = {(r["puzzle"], r["grade"]): t3(r) for r in A0 if r["rep"] == 0}
+    c0 = {(r["puzzle"], r["grade"]): r["top3"] for r in C0 if r["rep"] == 0}
+    def cellset(rows, key):
+        o = defaultdict(dict)
+        for r in rows: o[(r["puzzle"], r["grade"])][r["rep"]] = r[key]
+        return o
+    def med3(o): return {k: int(sorted(v.values())[1] == 1) for k, v in o.items()}
+    c7 = med3(cellset(C7, "top3")); a7 = med3(cellset(P31, "rank"))
+    pool = defaultdict(dict)
+    for r in P31: pool[(r["puzzle"], r["grade"])][r["rep"]] = t3(r)
+    for r in R12: pool[(r["puzzle"], r["grade"])][3 + r["rep"]] = t3(r)
+    for r in B38: pool[(r["puzzle"], r["grade"])][6 + (r["rep"] - 3)] = t3(r)
+    maj = {k: int(sum(v.values()) >= 6) for k, v in pool.items()}
+    def four(c, a, g):
+        ks = [k for k in c if k[1] == g and k in a]
+        both = sum(1 for k in ks if c[k] and a[k]); nei = sum(1 for k in ks if not c[k] and not a[k])
+        w = sum(1 for k in ks if c[k] and not a[k]); l = sum(1 for k in ks if a[k] and not c[k])
+        return len(ks), both, nei, w, l
+    n, both, nei, w, l = four(c0, a0, 1)
+    check(f"stage 1 at temp 0: same membership on {both+nei} of {n} (both {both}, neither {nei}); {w} favour maintenance, {l} favour stateless = +{round((w-l)*100/60)} points; p={sign_p(w, l):.2f}",
+          (n, both, nei, w, l) == (60, 25, 28, 5, 2) and round((w - l) * 100 / 60) == 5 and f"{sign_p(w, l):.2f}" == "0.45")
+    n2, _, _, w2, l2 = four(c0, a0, 2)
+    pts = lambda x: round(x * 100 / 60)          # puzzles -> percentage points on 60
+    check(f"stage 2 at temp 0: {w2+l2} of {n2} discordant, +{w2-l2} puzzles = +{pts(w2-l2)} points, p<0.001",
+          (n2, w2, l2) == (60, 27, 1) and pts(w2 - l2) == 43 and sign_p(w2, l2) < 0.001)
+    # temperature movement of each mechanism's set-level reading, per stage
+    def lvl(d, g): return sum(v for k, v in d.items() if k[1] == g)
+    dmv_a = [lvl(maj, g) - lvl(a0, g) for g in (1, 2, 3)]
+    dmv_c = [lvl(c7, g) - lvl(c0, g) for g in (1, 2, 3)]
+    dmv_a_pts = [pts(x) for x in dmv_a]; dmv_c_pts = [pts(x) for x in dmv_c]
+    check(f"stateless set-level reading, 0.7 minus 0: {dmv_a} puzzles = {dmv_a_pts} points at stages 1/2/3 (entry: -3, -2, -8)", dmv_a_pts == [-3, -2, -8])
+    check(f"maintenance set-level reading, 0.7 minus 0: {dmv_c} puzzles = {dmv_c_pts} points (entry: at most 2 in absolute value, and it reaches 2)",
+          all(abs(x) <= 2 for x in dmv_c_pts) and max(abs(x) for x in dmv_c_pts) == 2)
+    g0 = pts(lvl(c0, 1) - lvl(a0, 1)); g7 = pts(lvl(c7, 1) - lvl(a7, 1))
+    check(f"stage-1 gain at temp 0 = {g0} points and at 0.7 (median-3) = {g7} points (entry: +5 and +8)", (g0, g7) == (5, 8))
+    # batch 1 at stage 1: both at temp 0, single draw
+    b1 = defaultdict(dict)
+    for r in B1: b1[(r["puzzle"], r["grade"])][r["mech"]] = t3(r)
+    ks = [k for k in b1 if k[1] == 1 and "a" in b1[k] and "c" in b1[k]]
+    w1 = sum(1 for k in ks if b1[k]["c"] and not b1[k]["a"]); l1 = sum(1 for k in ks if b1[k]["a"] and not b1[k]["c"])
+    check(f"batch-1 stage 1: {w1+l1} discordant of {len(ks)}, +{w1-l1} puzzles = +{round((w1-l1)*100/30)} points, p={sign_p(w1, l1):.2f} (entry: 8 of 30, +20, p=0.07)",
+          (len(ks), w1, l1) == (30, 7, 1) and round((w1 - l1) * 100 / 30) == 20 and f"{sign_p(w1, l1):.2f}" == "0.07")
+    # the entry's own words (appended after the locked P37 sentences, before 'Unequal output budget')
+    e0 = tex.find(NEW_ENTRY); e1 = tex.find(r"\textbf{Unequal output budget.}")
+    ent = " ".join(tex[e0:e1].split()) if 0 <= e0 < e1 else ""
+    for lit in (r"\textbf{Stage 1 cannot be decided.}",
+                "same candidate-set membership on 53 of the 60 confirmation puzzles at stage 1 (both list gold on 25, neither on 28)",
+                "5 puzzles favour \\Mmaint{} and 2 favour \\Mstate{}, a difference of 5 points ($p = 0.45$)",
+                "moved by $-3$, $-2$, and $-8$ points between temperatures 0 and 0.7 (ADR-0037), and the maintenance mechanism's by at most 2",
+                "so the stage-1 gain is $+5$ points at temperature 0 and $+8$ points at 0.7",
+                "Stage 2 is where the mechanisms actually separate (28 of 60 puzzles discordant, $+43$ points, $p < 0.001$)",
+                "differ only in wording (the maintenance prompt adds confidence percentages and a no-collapse instruction)",
+                "they diverge structurally from the second turn on",
+                "should therefore be read as a descriptive property of this puzzle set, not as evidence for or against hypothesis maintenance",
+                "the batch-1 figure of $+20$ points rests on 8 discordant puzzles out of 30 ($p = 0.07$)"):
+        check(f"stage-1 sentences state: {lit[:64]!r}", lit in ent)
+    check("stage-1 sentences do NOT claim the two prompts are equivalent / identical at turn 1",
+          "equivalent" not in ent[ent.find("Stage 1 cannot be decided"):] and "identical at" not in ent[ent.find("Stage 1 cannot be decided"):])
+    check("stage-1 sentences appear exactly once, inside the sampling-noise entry, before 'Unequal output budget'",
+          tex.count(r"\textbf{Stage 1 cannot be decided.}") == 1 and 0 <= e0 < tex.find(r"\textbf{Stage 1 cannot be decided.}") < e1)
     print("\n== build ==")
     log = next((q for q in (Path("/tmp/tex3.log"), Path("/tmp/p35b_tex3.log")) if q.exists()), Path("/tmp/tex3.log"))
     if log.exists():

@@ -880,7 +880,27 @@ with the temperature-0 reading 64\% for one draw and for three). The
 preregistered gate for top-3 (at most 15\% pooled) was not met (15.6\%).
 Per-puzzle readings of top-1, and of top-3 recall at stage 1, should
 therefore be read at the set level, where the two temperatures agree to
-within five points at every stage. \textbf{Unequal output budget.} The
+within five points at every stage. \textbf{Stage 1 cannot be decided.}
+The stage-1 reading is limited by the comparison itself, not only by
+sampling noise. With both mechanisms run at temperature 0 (deterministic,
+one draw each; ADR-0036 and ADR-0037), the two mechanisms returned the
+same candidate-set membership on 53 of the 60 confirmation puzzles at
+stage 1 (both list gold on 25, neither on 28); 5 puzzles favour \Mmaint{}
+and 2 favour \Mstate{}, a difference of 5 points ($p = 0.45$). Sampling
+temperature does not account for the difference: the stateless
+mechanism's set-level reading moved by $-3$, $-2$, and $-8$ points
+between temperatures 0 and 0.7 (ADR-0037), and the maintenance
+mechanism's by at most 2, so the stage-1 gain is $+5$ points at
+temperature 0 and $+8$ points at 0.7. Stage 2 is where the mechanisms
+actually separate (28 of 60 puzzles discordant, $+43$ points, $p <
+0.001$). The two prompts both ask for a ranked top-three list at the
+first turn and differ only in wording (the maintenance prompt adds
+confidence percentages and a no-collapse instruction); they diverge
+structurally from the second turn on, where maintenance carries its
+candidate history. The stage-1 gain should therefore be read as a
+descriptive property of this puzzle set, not as evidence for or against
+hypothesis maintenance, and the batch-1 figure of $+20$ points rests on
+8 discordant puzzles out of 30 ($p = 0.07$). \textbf{Unequal output budget.} The
 1{,}200-token cap truncated 58\% of \Mcrit{} outputs and under 8\% of
 every other mechanism's in the batch-1 archive; the re-run of the
 confirmation batch puts the figure for \Mcrit{} at 61\%, counted by the
